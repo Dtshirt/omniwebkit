@@ -352,7 +352,7 @@ export default function PhotoCollageClient() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center pb-3 border-b border-slate-50">
                   <span className="text-slate-500">Total Size</span>
-                  <span className={\`font-bold \${totalSizeMB > MAX_CLIENT_SIZE_MB ? 'text-orange-500' : 'text-green-600'}\`}>
+                  <span className={`font-bold ${totalSizeMB > MAX_CLIENT_SIZE_MB ? 'text-orange-500' : 'text-green-600'}`}>
                     {totalSizeMB.toFixed(2)} MB
                   </span>
                 </div>
@@ -399,7 +399,7 @@ export default function PhotoCollageClient() {
                  <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                     <div 
                       className="h-full bg-pink-500 transition-all duration-300" 
-                      style={{ width: \`\${progress}%\` }} 
+                      style={{ width: `${progress}%` }} 
                     />
                  </div>
               </div>

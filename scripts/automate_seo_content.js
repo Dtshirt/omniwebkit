@@ -38,7 +38,7 @@ if (!API_KEY) {
 // ==========================================
 // SYSTEM PROMPT
 // ==========================================
-const SYSTEM_PROMPT = \`You are an expert, 35-year veteran SEO content strategist. 
+const SYSTEM_PROMPT = `You are an expert, 35-year veteran SEO content strategist. 
 Your task is to take the provided short SEO description of a web tool and expand it into a "Gold Standard", highly authoritative, 1,500+ word SEO content block written in React JSX.
 
 Follow this exact structure:

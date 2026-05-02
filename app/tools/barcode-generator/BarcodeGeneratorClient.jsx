@@ -475,7 +475,7 @@ export default function BarcodeGeneratorClient() {
                     <div className="w-full max-w-md h-4 bg-slate-100 rounded-full mt-6 border border-slate-200 overflow-hidden relative">
                       <div 
                         className="h-full bg-gradient-to-r from-indigo-500 to-blue-500 transition-all duration-300 ease-out absolute left-0 top-0" 
-                        style={{ width: \`\${bulkProgress}%\` }} 
+                        style={{ width: `${bulkProgress}%` }} 
                       />
                     </div>
                     <p className="text-sm font-bold text-indigo-600 mt-2">{bulkProgress}%</p>
