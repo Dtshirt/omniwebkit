@@ -1,0 +1,809 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import {
+  Copy, Download, Settings, Shield, Globe, Zap,
+  RefreshCw, AlertTriangle, CheckCircle, Plus, Trash2,
+  Lock, Server, Link2, ArrowRightLeft, CornerDownRight,
+} from 'lucide-react';
+import toast from 'react-hot-toast';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
+
+// ─── Toggle Switch ───────────────────────────────────
+function Toggle({ checked, onChange }) {
+  return (
+    <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
+      <input type="checkbox" checked={checked} onChange={onChange} className="sr-only peer" />
+      <div className="w-9 h-5 rounded-full bg-slate-200 dark:bg-slate-700 peer-checked:bg-primary-600 transition-colors" />
+      <div className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform peer-checked:translate-x-4" />
+    </label>
+  );
+}
+
+// ─── Section Card ────────────────────────────────────
+function SectionCard({ icon: Icon, iconColor = 'text-primary-600 dark:text-primary-400', iconBg = 'bg-primary-100 dark:bg-primary-900/30', title, subtitle, children }) {
+  return (
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6">
+      <div className="flex items-center gap-3 mb-5">
+        <div className={`w-9 h-9 ${iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+          <Icon className={`h-5 w-5 ${iconColor}`} />
+        </div>
+        <div>
+          <h3 className="text-base font-semibold text-slate-900 dark:text-white">{title}</h3>
+          {subtitle && <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{subtitle}</p>}
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// ─── Option Row ──────────────────────────────────────
+function OptionRow({ label, desc, checked, onChange }) {
+  return (
+    <div className="flex items-start justify-between gap-3 py-2.5 border-b border-slate-100 dark:border-slate-700/60 last:border-0">
+      <div className="min-w-0">
+        <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{label}</p>
+        {desc && <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">{desc}</p>}
+      </div>
+      <Toggle checked={checked} onChange={(e) => onChange(e.target.checked)} />
+    </div>
+  );
+}
+
+export default function HtaccessGenerator() {
+  const [config, setConfig] = useState({
+    serverType: 'apache',
+    domain: '',
+    redirects: [],
+    urlRewrites: [],           // { pattern, replacement, flags }
+    forceHttps: true,
+    removeWww: false,
+    addWww: false,
+    hideServerInfo: true,
+    preventDirectoryBrowsing: true,
+    blockSensitiveFiles: true,
+    enableXssProtection: true,
+    enableContentTypeNosniff: true,
+    enableFrameOptions: true,
+    enableHsts: true,
+    enableBrowserCaching: true,
+    enableCompression: true,
+    cacheImages: true,
+    cacheStatic: true,
+    cacheDuration: '1M',
+    enableStaticOptimization: true,
+    preventHotlinking: false,
+    hotlinkDomains: '',
+    // Nginx reverse proxy
+    proxyPort: '3000',
+    proxyProtocol: 'http',
+    enableProxyWs: true,       // websocket upgrade
+    enableProxySsl: false,     // SSL termination block
+    customRules: '',
+  });
+
+  const [generatedConfig, setGeneratedConfig] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const set = (key, val) => setConfig(prev => ({ ...prev, [key]: val }));
+
+  const cacheMap = {
+    '1d': { apache: '1d', nginx: '1d' },
+    '1w': { apache: '1w', nginx: '7d' },
+    '1M': { apache: '1M', nginx: '30d' },
+    '3M': { apache: '3M', nginx: '90d' },
+    '6M': { apache: '6M', nginx: '180d' },
+    '1y': { apache: '1y', nginx: '365d' },
+  };
+
+  // ─── Redirect helpers ───────────────────────────────
+  const addRedirect = () => setConfig(prev => ({ ...prev, redirects: [...prev.redirects, { from: '', to: '', type: '301' }] }));
+  const updateRedirect = (i, field, val) => setConfig(prev => ({ ...prev, redirects: prev.redirects.map((r, idx) => idx === i ? { ...r, [field]: val } : r) }));
+  const removeRedirect = (i) => setConfig(prev => ({ ...prev, redirects: prev.redirects.filter((_, idx) => idx !== i) }));
+
+  // ─── URL Rewrite helpers ────────────────────────────
+  const addRewrite = () => setConfig(prev => ({ ...prev, urlRewrites: [...prev.urlRewrites, { pattern: '', replacement: '', flags: 'L' }] }));
+  const updateRewrite = (i, field, val) => setConfig(prev => ({ ...prev, urlRewrites: prev.urlRewrites.map((r, idx) => idx === i ? { ...r, [field]: val } : r) }));
+  const removeRewrite = (i) => setConfig(prev => ({ ...prev, urlRewrites: prev.urlRewrites.filter((_, idx) => idx !== i) }));
+
+  // ─── Apache generator ───────────────────────────────
+  const generateApache = () => {
+    const d = config.cacheDuration;
+    let h = `# .htaccess — Generated by OmniWebKit .htaccess Generator\n# Date: ${new Date().toISOString().split('T')[0]}\n\n`;
+
+    h += `# ── Rewrite Engine ──────────────────────────────────\nRewriteEngine On\n\n`;
+
+    if (config.forceHttps) {
+      h += `# Force HTTPS\nRewriteCond %{HTTPS} off\nRewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]\n\n`;
+    }
+    if (config.removeWww) {
+      h += `# Remove WWW\nRewriteCond %{HTTP_HOST} ^www\\.(.*)$ [NC]\nRewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n`;
+    } else if (config.addWww) {
+      h += `# Add WWW\nRewriteCond %{HTTP_HOST} !^www\\. [NC]\nRewriteCond %{HTTP_HOST} !^localhost [NC]\nRewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]\n\n`;
+    }
+
+    if (config.redirects.filter(r => r.from && r.to).length > 0) {
+      h += `# ── Custom Redirects ────────────────────────────────\n`;
+      config.redirects.forEach(r => { if (r.from && r.to) h += `Redirect ${r.type} ${r.from} ${r.to}\n`; });
+      h += '\n';
+    }
+
+    if (config.urlRewrites.filter(r => r.pattern && r.replacement).length > 0) {
+      h += `# ── URL Rewrites ────────────────────────────────────\n`;
+      config.urlRewrites.forEach(r => {
+        if (r.pattern && r.replacement) {
+          const flags = r.flags ? ` [${r.flags}]` : '';
+          h += `RewriteRule ${r.pattern} ${r.replacement}${flags}\n`;
+        }
+      });
+      h += '\n';
+    }
+
+    const needsSecHeaders = config.hideServerInfo || config.enableXssProtection || config.enableContentTypeNosniff || config.enableFrameOptions || config.enableHsts;
+    if (needsSecHeaders) {
+      h += `# ── Security Headers ────────────────────────────────\n<IfModule mod_headers.c>\n`;
+      if (config.hideServerInfo) h += `    Header unset Server\n    Header unset X-Powered-By\n`;
+      if (config.enableXssProtection) h += `    Header always set X-XSS-Protection "1; mode=block"\n`;
+      if (config.enableContentTypeNosniff) h += `    Header always set X-Content-Type-Options "nosniff"\n`;
+      if (config.enableFrameOptions) h += `    Header always set X-Frame-Options "SAMEORIGIN"\n`;
+      if (config.enableHsts) h += `    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"\n`;
+      h += `</IfModule>\n\n`;
+    }
+
+    if (config.preventDirectoryBrowsing) h += `# Prevent Directory Browsing\nOptions -Indexes\n\n`;
+
+    if (config.blockSensitiveFiles) {
+      h += `# ── Block Sensitive Files ───────────────────────────\n<FilesMatch "\\.(env|log|ini|conf)$">\n    Require all denied\n</FilesMatch>\n<FilesMatch "^(next\\.config\\.|package\\.json|package-lock\\.json|\\.env)">\n    Require all denied\n</FilesMatch>\n<DirectoryMatch "^\\.next">\n    Require all denied\n</DirectoryMatch>\n\n`;
+    }
+
+    if (config.enableCompression) {
+      h += `# ── Gzip Compression ────────────────────────────────\n<IfModule mod_deflate.c>\n    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml text/javascript\n    AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json\n    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml\n    AddOutputFilterByType DEFLATE image/svg+xml image/x-icon font/woff font/woff2\n    BrowserMatch ^Mozilla/4 gzip-only-text/html\n    BrowserMatch ^Mozilla/4\\.0[678] no-gzip\n    BrowserMatch \\bMSIE !no-gzip !gzip-only-text/html\n    Header append Vary User-Agent\n</IfModule>\n\n`;
+    }
+
+    if (config.enableBrowserCaching) {
+      h += `# ── Browser Caching ─────────────────────────────────\n<IfModule mod_expires.c>\n    ExpiresActive On\n    ExpiresDefault "access plus ${cacheMap[d].apache}"\n`;
+      if (config.cacheImages) h += `    ExpiresByType image/jpg "access plus ${cacheMap[d].apache}"\n    ExpiresByType image/jpeg "access plus ${cacheMap[d].apache}"\n    ExpiresByType image/png "access plus ${cacheMap[d].apache}"\n    ExpiresByType image/gif "access plus ${cacheMap[d].apache}"\n    ExpiresByType image/webp "access plus ${cacheMap[d].apache}"\n    ExpiresByType image/svg+xml "access plus ${cacheMap[d].apache}"\n`;
+      if (config.cacheStatic) h += `    ExpiresByType text/css "access plus ${cacheMap[d].apache}"\n    ExpiresByType application/javascript "access plus ${cacheMap[d].apache}"\n    ExpiresByType font/woff "access plus ${cacheMap[d].apache}"\n    ExpiresByType font/woff2 "access plus ${cacheMap[d].apache}"\n`;
+      h += `</IfModule>\n\n<IfModule mod_headers.c>\n    <filesMatch "\\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$">\n        Header set Cache-Control "max-age=2628000, public"\n    </filesMatch>\n    <filesMatch "\\.(html|htm)$">\n        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"\n    </filesMatch>\n</IfModule>\n\n`;
+    }
+
+    if (config.enableStaticOptimization) {
+      h += `# ── SPA / Static Site Routing ───────────────────────\nRewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_FILENAME} !-d\nRewriteCond %{REQUEST_URI} !\\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|pdf)$ [NC]\nRewriteRule ^(.*)$ /index.html [L]\n\n`;
+    }
+
+    if (config.preventHotlinking) {
+      const d2 = config.domain || 'yourdomain.com';
+      h += `# ── Hotlink Protection ──────────────────────────────\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^http(s)?://(.*\\.)?${d2} [NC]\n`;
+      if (config.hotlinkDomains) config.hotlinkDomains.split(',').forEach(dm => { h += `RewriteCond %{HTTP_REFERER} !^http(s)?://(.*\\.)?${dm.trim()} [NC]\n`; });
+      h += `RewriteRule \\.(jpg|jpeg|png|gif|svg|webp)$ - [F]\n\n`;
+    }
+
+    if (config.customRules.trim()) h += `# ── Custom Rules ────────────────────────────────────\n${config.customRules.trim()}\n\n`;
+
+    h += `# ── End of .htaccess ────────────────────────────────`;
+    return h;
+  };
+
+  // ─── Nginx generator ────────────────────────────────
+  const generateNginx = () => {
+    const domain = config.domain || 'yourdomain.com';
+    const dur = cacheMap[config.cacheDuration].nginx;
+    let c = `# nginx.conf — Generated by OmniWebKit .htaccess Generator\n# Date: ${new Date().toISOString().split('T')[0]}\n\n`;
+
+    if (config.forceHttps) {
+      c += `server {\n    listen 80;\n    server_name ${domain}${config.addWww ? ` www.${domain}` : ''};\n    return 301 https://$server_name$request_uri;\n}\n\n`;
+    }
+
+    c += `server {\n    listen 443 ssl http2;\n    server_name ${domain}${config.addWww ? ` www.${domain}` : ''};\n    root /var/www/${domain}/public;\n\n`;
+
+    if (config.hideServerInfo) c += `    server_tokens off;\n\n`;
+    if (config.preventDirectoryBrowsing) c += `    autoindex off;\n\n`;
+
+    if (config.enableCompression) {
+      c += `    # Gzip\n    gzip on;\n    gzip_min_length 1000;\n    gzip_types text/plain text/css application/json application/javascript text/xml application/xml image/svg+xml font/woff font/woff2;\n\n`;
+    }
+
+    const hasSecHeaders = config.enableXssProtection || config.enableContentTypeNosniff || config.enableFrameOptions || config.enableHsts;
+    if (hasSecHeaders) {
+      c += `    # Security Headers\n`;
+      if (config.enableXssProtection) c += `    add_header X-XSS-Protection "1; mode=block" always;\n`;
+      if (config.enableContentTypeNosniff) c += `    add_header X-Content-Type-Options nosniff always;\n`;
+      if (config.enableFrameOptions) c += `    add_header X-Frame-Options SAMEORIGIN always;\n`;
+      if (config.enableHsts) c += `    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;\n`;
+      c += '\n';
+    }
+
+    if (config.blockSensitiveFiles) {
+      c += `    location ~ \\.(env|log|ini|conf)$ { deny all; }\n    location ~ /\\.next/ { deny all; }\n\n`;
+    }
+
+    if (config.removeWww) {
+      c += `    if ($host = 'www.${domain}') { return 301 $scheme://${domain}$request_uri; }\n\n`;
+    } else if (config.addWww) {
+      c += `    if ($host = '${domain}') { return 301 $scheme://www.${domain}$request_uri; }\n\n`;
+    }
+
+    config.redirects.forEach(r => {
+      if (r.from && r.to) c += `    location = ${r.from} {\n        return ${r.type} ${r.to};\n    }\n\n`;
+    });
+
+    config.urlRewrites.forEach(r => {
+      if (r.pattern && r.replacement) {
+        c += `    location ~ ${r.pattern} {\n        rewrite ${r.pattern} ${r.replacement} ${r.flags === 'R=301' ? 'permanent' : r.flags === 'R=302' ? 'redirect' : 'last'};\n    }\n\n`;
+      }
+    });
+
+    if (config.enableBrowserCaching) {
+      let types = '';
+      if (config.cacheImages) types += 'jpg|jpeg|gif|png|svg|webp|ico|';
+      if (config.cacheStatic) types += 'css|js|woff|woff2|ttf|eot|';
+      if (types) c += `    location ~* \\.(${types.slice(0, -1)})$ {\n        expires ${dur};\n        add_header Cache-Control "public, immutable";\n    }\n    location ~* \\.(html|htm)$ {\n        expires off;\n        add_header Cache-Control "no-cache, no-store, must-revalidate";\n    }\n\n`;
+    }
+
+    if (config.enableStaticOptimization) {
+      c += `    location / {\n        try_files $uri $uri/ $uri.html /index.html;\n    }\n\n`;
+    }
+
+    if (config.preventHotlinking) {
+      c += `    location ~* \\.(jpg|jpeg|png|gif|svg|webp)$ {\n        valid_referers none blocked ~\\.google\\. ~\\.bing\\. ${domain} *.${domain}`;
+      if (config.hotlinkDomains) config.hotlinkDomains.split(',').forEach(dm => { c += ` ${dm.trim()} *.${dm.trim()}`; });
+      c += `;\n        if ($invalid_referer) { return 403; }\n    }\n\n`;
+    }
+
+    if (config.customRules.trim()) c += `    # Custom Rules\n    ${config.customRules.trim()}\n\n`;
+
+    c += `}\n# End of nginx.conf`;
+    return c;
+  };
+
+  // ─── Nginx Reverse Proxy generator ─────────────────
+  const generateNginxProxy = () => {
+    const domain = config.domain || 'yourdomain.com';
+    const port = config.proxyPort || '3000';
+    const proto = config.proxyProtocol || 'http';
+    let c = `# nginx.conf (Reverse Proxy) — Generated by OmniWebKit .htaccess Generator\n# Date: ${new Date().toISOString().split('T')[0]}\n# Proxies ${domain} → ${proto}://localhost:${port}\n\n`;
+
+    // HTTP → HTTPS redirect block (if SSL enabled)
+    if (config.enableProxySsl) {
+      c += `server {\n    listen 80;\n    listen [::]:80;\n    server_name ${domain} www.${domain};\n    return 301 https://$server_name$request_uri;\n}\n\n`;
+      c += `server {\n    listen 443 ssl http2;\n    listen [::]:443 ssl http2;\n    server_name ${domain} www.${domain};\n\n`;
+      c += `    ssl_certificate     /etc/letsencrypt/live/${domain}/fullchain.pem;\n`;
+      c += `    ssl_certificate_key /etc/letsencrypt/live/${domain}/privkey.pem;\n`;
+      c += `    ssl_protocols TLSv1.2 TLSv1.3;\n    ssl_ciphers HIGH:!aNULL:!MD5;\n\n`;
+    } else {
+      c += `server {\n    listen 80;\n    listen [::]:80;\n    server_name ${domain} www.${domain};\n\n`;
+    }
+
+    if (config.hideServerInfo) c += `    server_tokens off;\n\n`;
+
+    const hasSec = config.enableXssProtection || config.enableContentTypeNosniff || config.enableFrameOptions || config.enableHsts;
+    if (hasSec) {
+      if (config.enableXssProtection) c += `    add_header X-XSS-Protection "1; mode=block" always;\n`;
+      if (config.enableContentTypeNosniff) c += `    add_header X-Content-Type-Options nosniff always;\n`;
+      if (config.enableFrameOptions) c += `    add_header X-Frame-Options SAMEORIGIN always;\n`;
+      if (config.enableHsts && config.enableProxySsl) c += `    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;\n`;
+      c += '\n';
+    }
+
+    config.redirects.forEach(r => {
+      if (r.from && r.to) c += `    location = ${r.from} {\n        return ${r.type} ${r.to};\n    }\n\n`;
+    });
+
+    c += `    location / {\n`;
+    c += `        proxy_pass ${proto}://localhost:${port};\n`;
+    c += `        proxy_http_version 1.1;\n`;
+    if (config.enableProxyWs) {
+      c += `        proxy_set_header Upgrade $http_upgrade;\n`;
+      c += `        proxy_set_header Connection 'upgrade';\n`;
+    }
+    c += `        proxy_set_header Host $host;\n`;
+    c += `        proxy_set_header X-Real-IP $remote_addr;\n`;
+    c += `        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n`;
+    c += `        proxy_set_header X-Forwarded-Proto $scheme;\n`;
+    if (config.enableProxyWs) c += `        proxy_cache_bypass $http_upgrade;\n`;
+    c += `        proxy_read_timeout 86400;\n`;
+    c += `    }\n\n`;
+
+    if (config.customRules.trim()) c += `    # Custom Rules\n    ${config.customRules.trim()}\n\n`;
+
+    c += `}\n# End of nginx.conf`;
+    return c;
+  };
+
+  useEffect(() => {
+    if (config.serverType === 'apache') setGeneratedConfig(generateApache());
+    else if (config.serverType === 'nginx-proxy') setGeneratedConfig(generateNginxProxy());
+    else setGeneratedConfig(generateNginx());
+  }, [config]);
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(generatedConfig);
+      setCopied(true);
+      toast.success('Copied to clipboard!');
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error('Copy failed');
+    }
+  };
+
+  const downloadFile = () => {
+    const filename = config.serverType === 'apache' ? '.htaccess' : 'nginx.conf';
+    const blob = new Blob([generatedConfig], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast.success(`Downloaded ${filename}`);
+  };
+
+  const isProxy = config.serverType === 'nginx-proxy';
+
+  const inputCls = 'w-full px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition';
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-8">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <Breadcrumbs items={[{ name: '.htaccess Generator', href: '/tools/htaccess-generator' }]} />
+
+        {/* ── Hero ── */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 dark:bg-primary-900/40 rounded-2xl mb-5">
+            <Settings className="h-8 w-8 text-primary-600 dark:text-primary-400" />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+            .htaccess Generator
+          </h1>
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Build a production-ready <code className="text-primary-600 dark:text-primary-400 font-mono text-base">.htaccess</code> or <code className="text-primary-600 dark:text-primary-400 font-mono text-base">nginx.conf</code> file in seconds.
+            Set up HTTPS, security headers, caching, redirects, and more — no server experience needed.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+          {/* ── LEFT: Configuration ── */}
+          <div className="space-y-5">
+
+            {/* Server type */}
+            <SectionCard icon={Server} title="Server Type" subtitle="Choose your web server">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  { val: 'apache', label: 'Apache', sub: 'Generates .htaccess' },
+                  { val: 'nginx', label: 'Nginx Standard', sub: 'Generates nginx.conf' },
+                  { val: 'nginx-proxy', label: 'Nginx Proxy', sub: 'Node.js / Next.js app' },
+                ].map(({ val, label, sub }) => (
+                  <button
+                    key={val}
+                    onClick={() => set('serverType', val)}
+                    className={`p-4 rounded-xl border-2 text-left transition-all ${config.serverType === val
+                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                        : 'border-slate-200 dark:border-slate-700 hover:border-primary-300 dark:hover:border-primary-700'
+                      }`}
+                  >
+                    <p className={`font-semibold text-sm ${config.serverType === val ? 'text-primary-700 dark:text-primary-300' : 'text-slate-800 dark:text-slate-200'}`}>{label}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{sub}</p>
+                  </button>
+                ))}
+              </div>
+            </SectionCard>
+
+            {/* Domain */}
+            <SectionCard icon={Globe} title="Domain" subtitle="Used in redirect and hotlink rules">
+              <input
+                type="text"
+                placeholder="yourdomain.com"
+                value={config.domain}
+                onChange={(e) => set('domain', e.target.value)}
+                className={inputCls}
+              />
+            </SectionCard>
+
+            {/* Redirects */}
+            <SectionCard
+              icon={RefreshCw}
+              iconColor="text-violet-600 dark:text-violet-400"
+              iconBg="bg-violet-100 dark:bg-violet-900/30"
+              title="Redirects & URLs"
+              subtitle="HTTPS enforcement, WWW preference, custom redirects"
+            >
+              <div className="space-y-1 mb-5">
+                <OptionRow label="Force HTTPS" desc="Redirect all HTTP traffic to HTTPS (301)." checked={config.forceHttps} onChange={v => set('forceHttps', v)} />
+                <OptionRow label="Remove WWW" desc="Always redirect www.domain.com → domain.com." checked={config.removeWww} onChange={v => set('removeWww', v ? true : false) || (v && set('addWww', false))} />
+                <OptionRow label="Add WWW" desc="Always redirect domain.com → www.domain.com." checked={config.addWww} onChange={v => { set('addWww', v); if (v) set('removeWww', false); }} />
+              </div>
+
+              <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">Custom Redirects</h4>
+                  <button onClick={addRedirect} className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition">
+                    <Plus className="h-3.5 w-3.5" /> Add Rule
+                  </button>
+                </div>
+                {config.redirects.length === 0 && (
+                  <p className="text-xs text-slate-400 dark:text-slate-500 text-center py-3">No redirects added yet.</p>
+                )}
+                <div className="space-y-2">
+                  {config.redirects.map((r, i) => (
+                    <div key={i} className="grid grid-cols-12 gap-2">
+                      <input placeholder="/old-path" value={r.from} onChange={e => updateRedirect(i, 'from', e.target.value)} className={`col-span-4 ${inputCls}`} />
+                      <input placeholder="/new-path" value={r.to} onChange={e => updateRedirect(i, 'to', e.target.value)} className={`col-span-4 ${inputCls}`} />
+                      <select value={r.type} onChange={e => updateRedirect(i, 'type', e.target.value)} className={`col-span-3 ${inputCls}`}>
+                        <option value="301">301 — Permanent</option>
+                        <option value="302">302 — Temporary</option>
+                      </select>
+                      <button onClick={() => removeRedirect(i)} className="col-span-1 flex items-center justify-center rounded-xl border border-red-200 dark:border-red-800 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </SectionCard>
+
+            {/* Security */}
+            <SectionCard
+              icon={Shield}
+              iconColor="text-emerald-600 dark:text-emerald-400"
+              iconBg="bg-emerald-100 dark:bg-emerald-900/30"
+              title="Security"
+              subtitle="Harden your server against common attacks"
+            >
+              <div>
+                {[
+                  { key: 'hideServerInfo', label: 'Hide Server Info', desc: 'Removes Server and X-Powered-By headers.' },
+                  { key: 'preventDirectoryBrowsing', label: 'Prevent Directory Listing', desc: 'Disables browsing folder contents.' },
+                  { key: 'blockSensitiveFiles', label: 'Block Sensitive Files', desc: 'Denies access to .env, config, log files.' },
+                  { key: 'enableXssProtection', label: 'XSS Protection Header', desc: 'Sets X-XSS-Protection: 1; mode=block.' },
+                  { key: 'enableContentTypeNosniff', label: 'MIME Sniffing Protection', desc: 'Sets X-Content-Type-Options: nosniff.' },
+                  { key: 'enableFrameOptions', label: 'Clickjacking Protection', desc: 'Sets X-Frame-Options: SAMEORIGIN.' },
+                  { key: 'enableHsts', label: 'HSTS (Strict Transport)', desc: 'Forces HTTPS for 1 year via Strict-Transport-Security.' },
+                ].map(({ key, label, desc }) => (
+                  <OptionRow key={key} label={label} desc={desc} checked={config[key]} onChange={v => set(key, v)} />
+                ))}
+              </div>
+            </SectionCard>
+
+            {/* Custom URL Rewrites — Apache / Nginx standard only */}
+            {!isProxy && (
+              <SectionCard
+                icon={ArrowRightLeft}
+                iconColor="text-sky-600 dark:text-sky-400"
+                iconBg="bg-sky-100 dark:bg-sky-900/30"
+                title="Custom URL Rewrites"
+                subtitle="RewriteRule (Apache) / rewrite (Nginx) — serve content from a different internal path"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Pattern is a regex. Replacement is the target path. Flags: L, R=301, R=302, NC, QSA, etc.</p>
+                  <button onClick={addRewrite} className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition flex-shrink-0 ml-3">
+                    <Plus className="h-3.5 w-3.5" /> Add Rewrite
+                  </button>
+                </div>
+                {config.urlRewrites.length === 0 && (
+                  <p className="text-xs text-slate-400 dark:text-slate-500 text-center py-3">No rewrite rules added yet.</p>
+                )}
+                <div className="space-y-2">
+                  {config.urlRewrites.map((r, i) => (
+                    <div key={i} className="grid grid-cols-12 gap-2 items-center">
+                      <input placeholder="^/old-page$" value={r.pattern} onChange={e => updateRewrite(i, 'pattern', e.target.value)} className={`col-span-4 font-mono ${inputCls}`} />
+                      <input placeholder="/new-page" value={r.replacement} onChange={e => updateRewrite(i, 'replacement', e.target.value)} className={`col-span-4 font-mono ${inputCls}`} />
+                      <input placeholder="L" value={r.flags} onChange={e => updateRewrite(i, 'flags', e.target.value)} className={`col-span-3 font-mono ${inputCls}`} />
+                      <button onClick={() => removeRewrite(i)} className="col-span-1 flex items-center justify-center h-10 rounded-xl border border-red-200 dark:border-red-800 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                {config.urlRewrites.length > 0 && (
+                  <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">Columns: Pattern · Replacement · Flags</p>
+                )}
+              </SectionCard>
+            )}
+
+            {/* Performance */}
+            <SectionCard
+              icon={Zap}
+              iconColor="text-amber-600 dark:text-amber-400"
+              iconBg="bg-amber-100 dark:bg-amber-900/30"
+              title="Performance"
+              subtitle="Browser caching and compression"
+            >
+              <div className="mb-4">
+                {[
+                  { key: 'enableCompression', label: 'Gzip Compression', desc: 'Compresses responses to save bandwidth.' },
+                  { key: 'enableBrowserCaching', label: 'Browser Caching', desc: 'Instructs browsers to cache static assets.' },
+                  { key: 'cacheImages', label: 'Cache Images', desc: 'jpg, png, gif, webp, svg.' },
+                  { key: 'cacheStatic', label: 'Cache CSS / JS / Fonts', desc: 'css, js, woff, woff2, ttf, eot.' },
+                  { key: 'enableStaticOptimization', label: 'SPA / Static Site Routing', desc: 'Fallback all routes to index.html for SPAs.' },
+                ].map(({ key, label, desc }) => (
+                  <OptionRow key={key} label={label} desc={desc} checked={config[key]} onChange={v => set(key, v)} />
+                ))}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Cache Duration</label>
+                <select value={config.cacheDuration} onChange={e => set('cacheDuration', e.target.value)} className={inputCls}>
+                  <option value="1d">1 Day</option>
+                  <option value="1w">1 Week</option>
+                  <option value="1M">1 Month</option>
+                  <option value="3M">3 Months</option>
+                  <option value="6M">6 Months</option>
+                  <option value="1y">1 Year</option>
+                </select>
+              </div>
+            </SectionCard>
+
+            {/* Hotlink protection — hide on proxy mode */}
+            {!isProxy && (
+              <SectionCard
+                icon={Lock}
+                iconColor="text-rose-600 dark:text-rose-400"
+                iconBg="bg-rose-100 dark:bg-rose-900/30"
+                title="Hotlink Protection"
+                subtitle="Stop other sites from using your images"
+              >
+                <OptionRow label="Enable Hotlink Protection" desc="Blocks requests for images from other domains." checked={config.preventHotlinking} onChange={v => set('preventHotlinking', v)} />
+                {config.preventHotlinking && (
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Allowed Domains (comma-separated)</label>
+                    <input type="text" placeholder="partner.com, cdn.example.com" value={config.hotlinkDomains} onChange={e => set('hotlinkDomains', e.target.value)} className={inputCls} />
+                  </div>
+                )}
+              </SectionCard>
+            )}
+
+            {/* Nginx Reverse Proxy settings — only shown when proxy type selected */}
+            {isProxy && (
+              <SectionCard
+                icon={CornerDownRight}
+                iconColor="text-violet-600 dark:text-violet-400"
+                iconBg="bg-violet-100 dark:bg-violet-900/30"
+                title="Reverse Proxy Settings"
+                subtitle="Proxy all traffic to your Node.js / Next.js app running on localhost"
+              >
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">App Port</label>
+                    <input
+                      type="number"
+                      placeholder="3000"
+                      value={config.proxyPort}
+                      onChange={e => set('proxyPort', e.target.value)}
+                      className={inputCls}
+                    />
+                    <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Port your app listens on (e.g. 3000, 4007, 8080).</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Protocol</label>
+                    <select value={config.proxyProtocol} onChange={e => set('proxyProtocol', e.target.value)} className={inputCls}>
+                      <option value="http">http</option>
+                      <option value="https">https</option>
+                    </select>
+                    <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Almost always http for local apps.</p>
+                  </div>
+                </div>
+                <OptionRow
+                  label="WebSocket Support"
+                  desc="Adds Upgrade + Connection headers — required for Socket.io and Next.js HMR."
+                  checked={config.enableProxyWs}
+                  onChange={v => set('enableProxyWs', v)}
+                />
+                <OptionRow
+                  label="SSL Termination (HTTPS)"
+                  desc="Adds a listen 443 ssl block with Let's Encrypt certificate paths."
+                  checked={config.enableProxySsl}
+                  onChange={v => set('enableProxySsl', v)}
+                />
+
+                {/* Preview snippet */}
+                <div className="mt-4 rounded-xl bg-slate-900 dark:bg-slate-950 p-4 font-mono text-xs text-emerald-400 overflow-x-auto">
+                  <p className="text-slate-500 mb-1"># Quick preview</p>
+                  <p className="text-sky-400">server {'{'}</p>
+                  <p className="ml-4">listen 80; listen [::]:80;</p>
+                  <p className="ml-4">server_name <span className="text-amber-300">{config.domain || 'yourdomain.com'} www.{config.domain || 'yourdomain.com'}</span>;</p>
+                  <p className="ml-4 mt-1">location / {'{'}</p>
+                  <p className="ml-8">proxy_pass <span className="text-amber-300">{config.proxyProtocol}://localhost:{config.proxyPort || '3000'}</span>;</p>
+                  {config.enableProxyWs && <p className="ml-8">proxy_set_header Upgrade $http_upgrade;</p>}
+                  <p className="ml-4">{'}'}</p>
+                  <p className="text-sky-400">{'}'}</p>
+                </div>
+              </SectionCard>
+            )}
+
+            {/* Custom rules */}
+            <SectionCard
+              icon={Link2}
+              iconColor="text-sky-600 dark:text-sky-400"
+              iconBg="bg-sky-100 dark:bg-sky-900/30"
+              title="Custom Rules"
+              subtitle="Append any directives you need"
+            >
+              <textarea
+                rows={5}
+                value={config.customRules}
+                onChange={e => set('customRules', e.target.value)}
+                placeholder={'# Paste any custom Apache or Nginx rules here\nHeader set Access-Control-Allow-Origin "*"'}
+                className={`${inputCls} font-mono resize-y`}
+              />
+            </SectionCard>
+
+          </div>
+
+          {/* ── RIGHT: Output ── */}
+          <div className="xl:sticky xl:top-8 xl:self-start">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+              {/* Header bar */}
+              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-400" />
+                    <div className="w-3 h-3 rounded-full bg-amber-400" />
+                    <div className="w-3 h-3 rounded-full bg-emerald-400" />
+                  </div>
+                  <span className="text-sm font-mono text-slate-600 dark:text-slate-400 ml-2">
+                    {config.serverType === 'apache' ? '.htaccess' : 'nginx.conf'}
+                    {isProxy && <span className="ml-1 text-xs text-violet-400">(proxy)</span>}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={copyToClipboard}
+                    className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition"
+                  >
+                    {copied ? <CheckCircle className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? 'Copied!' : 'Copy'}
+                  </button>
+                  <button
+                    onClick={downloadFile}
+                    className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition"
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                    Download
+                  </button>
+                </div>
+              </div>
+
+              {/* Code output */}
+              <div className="relative">
+                <pre className="overflow-auto max-h-[70vh] p-5 text-xs font-mono leading-relaxed text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 whitespace-pre">
+                  {generatedConfig}
+                </pre>
+                <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white dark:from-slate-900 to-transparent pointer-events-none" />
+              </div>
+
+              {/* Line count */}
+              <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  {generatedConfig.split('\n').length} lines · {new Blob([generatedConfig]).size} bytes
+                </p>
+              </div>
+            </div>
+
+            {/* Quick tips */}
+            <div className="mt-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-5">
+              <div className="flex items-start gap-2.5">
+                <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-1">Before you upload</p>
+                  <ul className="text-xs text-amber-700 dark:text-amber-400 space-y-1 leading-relaxed list-disc ml-3">
+                    <li>Test in a staging environment first.</li>
+                    <li>Keep a backup of your existing .htaccess.</li>
+                    <li>HSTS is permanent after activation — be sure HTTPS works before enabling.</li>
+                    <li>Apache requires mod_headers, mod_deflate, and mod_expires to be active.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── SEO Content ── */}
+        <div className="mt-16 space-y-6">
+
+          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+              What Is an .htaccess File?
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+              An <strong>.htaccess</strong> file is a configuration file used by Apache web servers. It lets you control how the server handles requests for a specific directory and all the folders inside it — without touching the main server configuration. You place it in the root of your website, and it takes effect immediately.
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+              With a single .htaccess file you can force HTTPS, create redirects, add security headers, enable Gzip compression, set browser caching rules, block access to sensitive files, and much more. This tool generates a complete, production-ready file based on the options you choose — no manual coding required.
+            </p>
+          </section>
+
+          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+              How to Use This .htaccess Generator
+            </h2>
+            <ol className="space-y-4">
+              {[
+                { n: '1', t: 'Select your server type', d: 'Choose Apache (.htaccess) or Nginx (nginx.conf). Both generators produce clean, production-ready output.' },
+                { n: '2', t: 'Enter your domain name', d: 'Your domain is used in redirect rules and hotlink protection. Without it, placeholder values are used.' },
+                { n: '3', t: 'Configure redirects', d: 'Toggle Force HTTPS, Add/Remove WWW, and add any custom path redirects you need.' },
+                { n: '4', t: 'Choose security options', d: 'Enable headers like HSTS, XSS Protection, and Clickjacking Protection to harden your server.' },
+                { n: '5', t: 'Set caching and compression', d: 'Turn on Gzip and browser caching to improve page speed scores and reduce server load.' },
+                { n: '6', t: 'Copy or download the file', d: 'Click Copy to grab the code, or Download to save the file directly. Then upload it to your server root.' },
+              ].map(({ n, t, d }) => (
+                <li key={n} className="flex gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-bold flex items-center justify-center">{n}</span>
+                  <div>
+                    <p className="font-semibold text-slate-900 dark:text-white">{t}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">{d}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+              What This Generator Creates
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { icon: Lock, title: 'Security Headers', desc: 'HSTS, XSS Protection, Clickjacking (X-Frame-Options), MIME sniffing prevention, server signature removal.', c: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
+                { icon: RefreshCw, title: 'HTTPS & Redirects', desc: 'Force all traffic to HTTPS, enforce www/non-www preference, and set up custom 301/302 redirects.', c: 'text-violet-600 dark:text-violet-400', bg: 'bg-violet-50 dark:bg-violet-900/20' },
+                { icon: Zap, title: 'Speed Optimisation', desc: 'Gzip compression for HTML, CSS, JS, and fonts. Browser caching with configurable expiry for all static assets.', c: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-900/20' },
+                { icon: Shield, title: 'File Protection', desc: 'Block access to .env files, config files, logs, and build directories so sensitive data never reaches visitors.', c: 'text-rose-600 dark:text-rose-400', bg: 'bg-rose-50 dark:bg-rose-900/20' },
+                { icon: Globe, title: 'SPA Routing', desc: 'Fallback routing for React, Vue, Angular, and Next.js static exports so all URLs serve index.html correctly.', c: 'text-primary-600 dark:text-primary-400', bg: 'bg-primary-50 dark:bg-primary-900/20' },
+                { icon: Link2, title: 'Hotlink Protection', desc: 'Prevent external sites from embedding your images and stealing your bandwidth.', c: 'text-sky-600 dark:text-sky-400', bg: 'bg-sky-50 dark:bg-sky-900/20' },
+              ].map(({ icon: Icon, title, desc, c, bg }) => (
+                <div key={title} className="flex gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
+                  <div className={`flex-shrink-0 w-10 h-10 ${bg} rounded-xl flex items-center justify-center`}>
+                    <Icon className={`h-5 w-5 ${c}`} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900 dark:text-white text-sm">{title}</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-0.5 leading-relaxed">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+              Apache vs Nginx — Which Should You Use?
+            </h2>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+              If you are on shared hosting (cPanel, Hostinger, Bluehost, SiteGround, etc.), you almost certainly need the <strong>Apache .htaccess</strong> file. Shared hosting almost always runs Apache. Place the generated file in the root of your WordPress site, static site, or any PHP project.
+            </p>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+              If you manage a VPS or dedicated server yourself (DigitalOcean, Linode, AWS EC2, etc.), you are likely running <strong>Nginx</strong>. Use the Nginx config output and include it inside your <code className="font-mono text-sm bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded text-slate-800 dark:text-slate-200">server</code> block or as a separate virtual host file.
+            </p>
+          </section>
+
+          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {[
+                { q: 'Do I need technical knowledge to use this generator?', a: 'No. Each option has a plain-English description. Toggle what you need, copy the output, and upload it. If you are unsure about an option, hover over the description before enabling it.' },
+                { q: 'Where do I upload the .htaccess file?', a: 'Upload it to the root directory of your website — the same folder that contains your index.html or index.php. On cPanel, this is usually the public_html folder.' },
+                { q: 'Will this break my website?', a: 'A well-configured .htaccess should not break anything. However, always test in a staging environment first and keep a backup of your current file before replacing it.' },
+                { q: 'What is HSTS and should I enable it?', a: 'HSTS (HTTP Strict Transport Security) tells browsers to always use HTTPS for your domain for the next year. It is a strong security measure, but it is permanent once a browser caches it. Only enable it if your HTTPS certificate is fully set up and working.' },
+                { q: 'Can I use this for WordPress?', a: 'Yes. WordPress already creates a basic .htaccess for permalink support. You can merge the rules generated here with your existing WordPress .htaccess, placing the new security and performance rules before the # BEGIN WordPress block.' },
+                { q: 'Why is my .htaccess not working?', a: 'Check that mod_rewrite, mod_headers, mod_deflate, and mod_expires are enabled on your Apache server. On shared hosting, contact your host if you are unsure. Also make sure the file is named exactly .htaccess (with no other extension).' },
+                { q: 'Does this generate a config for Nginx too?', a: 'Yes. Switch the server type toggle to Nginx and the tool generates an nginx.conf file with the same settings. Include the output inside your existing server {} block.' },
+              ].map(({ q, a }) => (
+                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none">
+                    <span>{q}</span>
+                    <span className="text-slate-400 dark:text-slate-500 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
+                  </summary>
+                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">
+                    {a}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  );
+}

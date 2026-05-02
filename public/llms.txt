@@ -1,0 +1,22 @@
+# OmniWebKit LLM Documentation
+
+## Project Overview
+OmniWebKit is a collection of free, client-side online tools for developers, designers, and general users.
+URL: https://omniwebkit.com
+
+## Tools Available
+We offer a wide range of tools including:
+- PDF Tools: PDF Editor, PDF to Word, Image to PDF, etc.
+- Image Tools: Converter, Compressor, Resizer, etc.
+- Developer Tools: JSON Formatter, JWT Decoder, Regex Tester, etc.
+- SEO Tools: Meta Tag Extractor, Sitemap Generator, Robots.txt Generator, etc.
+- Text Tools: Case Converter, Word Counter, etc.
+- Math/Calculators: BMI Calculator, Aspect Ratio Calculator, etc.
+
+## core Principles
+- Privacy First: Most tools run entirely in the browser (client-side).
+- Free: All tools are free to use.
+- Accessible: Designed to be easy to use for everyone.
+
+## Contact
+For support or inquiries, please visit https://omniwebkit.com/contact

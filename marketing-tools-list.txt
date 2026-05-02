@@ -1,0 +1,563 @@
+look for this tool htaccess-generator and fix text color problem. and improve design and make it rresponsive and also improve functionality and make it more professional and write SEO optamised and humanized contetn with readibility of grade 8. use proper keywords and schema in layout file and delete the preexisitn content or schema and use freshed and seo optamized. that can be ranked on 1 page 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+================================================================================
+                    OmniWebKit — 70+ Free Online Tools
+                         https://omniwebkit.com
+================================================================================
+
+OmniWebKit is a free, all-in-one online toolkit with 70+ powerful tools for
+images, PDFs, videos, text, SEO, development, math, and more. No signups, 
+no downloads — everything runs right in your browser.
+
+Website: https://omniwebkit.com
+All Tools: https://omniwebkit.com/tools
+
+
+================================================================================
+                         📷 IMAGE TOOLS
+================================================================================
+
+1. Image Converter
+   Convert between JPG, PNG, WebP, GIF, and more formats.
+   Features: Batch conversion, quality control, watermark support.
+   URL: https://omniwebkit.com/tools/image-converter
+
+2. Image Compressor
+   Reduce image file size while maintaining quality.
+   Features: Lossless compression, batch processing, size preview.
+   URL: https://omniwebkit.com/tools/image-compressor
+
+3. Image Resizer
+   Resize images to specific dimensions or percentages.
+   Features: Custom dimensions, aspect ratio lock, batch resize.
+   URL: https://omniwebkit.com/tools/image-resizer
+
+4. Background Remover
+   Remove background from images automatically using AI.
+   Features: AI-powered, transparent PNG, batch processing.
+   URL: https://omniwebkit.com/tools/background-remover
+
+5. Image Cropper
+   Crop images to desired size and aspect ratio.
+   Features: Free crop, preset ratios, round crop.
+   URL: https://omniwebkit.com/tools/image-cropper
+
+6. Image Watermark Tool
+   Add text, image, or tiled watermarks to your images.
+   Features: Text watermarks, image watermarks, tiled patterns, position control.
+   URL: https://omniwebkit.com/tools/image-watermark
+
+7. Digital Signature Pad
+   Create and save digital signatures online.
+   Features: Freehand drawing, download as PNG/SVG, clear & redraw.
+   URL: https://omniwebkit.com/tools/digital-signature-pad
+
+8. YouTube Thumbnail Downloader
+   Download YouTube video thumbnails in HD quality.
+   Features: HD & SD quality, fast download, works with any video.
+   URL: https://omniwebkit.com/tools/youtube-thumbnail-downloader
+
+9. SVG Editor
+   Edit, preview, optimize, and export SVG graphics.
+   Features: Code editor, live preview, shape insertion, export SVG/PNG/JPG.
+   URL: https://omniwebkit.com/tools/svg-editor
+
+
+================================================================================
+                     📄 FILE & DOCUMENT TOOLS
+================================================================================
+
+10. PDF Compressor
+    Compress PDF files to reduce size without losing quality.
+    Features: High compression, quality levels, batch processing.
+    URL: https://omniwebkit.com/tools/pdf-compressor
+
+11. PDF Merger
+    Combine multiple PDF files into one document.
+    Features: Drag & drop order, page range selection, bookmarks.
+    URL: https://omniwebkit.com/tools/pdf-merger
+
+12. PDF Editor
+    Edit PDF files online — add text, draw, highlight, insert images.
+    Features: Add & edit text, freehand drawing, shapes & highlights, insert images.
+    URL: https://omniwebkit.com/tools/pdf-editor
+
+13. PDF to Image
+    Convert PDF pages to PNG, JPG, or WebP images.
+    Features: PNG, JPG, WebP output, resolution control, page selection, batch download.
+    URL: https://omniwebkit.com/tools/pdf-to-image
+
+14. PDF to Word
+    Extract text from PDF and convert to Word (.doc) document.
+    Features: Text extraction, Word .doc output, plain text export.
+    URL: https://omniwebkit.com/tools/pdf-to-word
+
+15. PDF Password Protector
+    Add password protection to your PDF files.
+    Features: Password protection, strength meter, permission controls, client-side.
+    URL: https://omniwebkit.com/tools/pdf-password-protector
+
+16. Image to PDF
+    Convert multiple images into a single PDF document.
+    Features: Multiple images, page size options, image reordering, quality control.
+    URL: https://omniwebkit.com/tools/image-to-pdf
+
+17. Excel to PDF
+    Convert Excel spreadsheets and CSV files to styled PDF documents.
+    Features: XLSX & CSV support, multi-sheet, data preview, styled tables.
+    URL: https://omniwebkit.com/tools/excel-to-pdf
+
+18. Word to PDF
+    Convert Word documents to PDF format.
+    Features: Preserve formatting, batch conversion, password protection.
+    URL: https://omniwebkit.com/tools/word-to-pdf
+
+19. Certificate Generator
+    Create custom certificates online with ease.
+    Features: Customizable templates, download as PDF/PNG, easy to edit.
+    URL: https://omniwebkit.com/tools/certificate-generator
+
+20. Invoice Generator
+    Generate professional invoices instantly.
+    Features: Custom branding, multiple currencies, download as PDF.
+    URL: https://omniwebkit.com/tools/invoice-generator
+
+21. Receipt Generator
+    Create receipts quickly for transactions.
+    Features: Customizable fields, printable format, multiple templates.
+    URL: https://omniwebkit.com/tools/receipt-generator
+
+22. vCard Generator
+    Create vCard files for sharing contacts easily.
+    Features: Customizable fields, download as VCF, easy sharing.
+    URL: https://omniwebkit.com/tools/vcard-generator
+
+23. JSON to CSV Converter
+    Easily convert JSON data into CSV format.
+    Features: Upload & convert, supports nested JSON, download CSV.
+    URL: https://omniwebkit.com/tools/json-to-csv-converter
+
+24. Format Converter
+    Convert between multiple text and file formats.
+    Features: Supports multiple formats, fast conversion, download output.
+    URL: https://omniwebkit.com/tools/format-converter
+
+25. Zip File Creator
+    Create ZIP archives from multiple files online.
+    Features: Upload multiple files, compress to ZIP, download instantly.
+    URL: https://omniwebkit.com/tools/zip-file-creator
+
+26. Video Compressor
+    Compress videos online without losing quality — works in your browser.
+    Features: Client-side processing, multiple quality presets, MP4 & WebM support.
+    URL: https://omniwebkit.com/tools/video-compressor
+
+
+================================================================================
+                        🎬 MEDIA TOOLS
+================================================================================
+
+27. YouTube Video Downloader
+    Download YouTube videos directly in any quality.
+    Features: Video info extraction, thumbnail downloads, direct video downloads.
+    URL: https://omniwebkit.com/tools/youtube-downloader
+
+28. Social Media Video Downloader
+    Download videos from Instagram, Twitter/X, and TikTok.
+    Features: Instagram Reels & Posts, Twitter/X videos, TikTok downloads, auto platform detection.
+    URL: https://omniwebkit.com/tools/social-media-downloader
+
+
+================================================================================
+                      📝 TEXT & WRITING TOOLS
+================================================================================
+
+29. Case Converter
+    Convert text between UPPERCASE, lowercase, Title Case, and more.
+    Features: Multiple cases, bulk text, custom formats.
+    URL: https://omniwebkit.com/tools/case-converter
+
+30. Password Generator
+    Generate secure, random passwords with custom options.
+    Features: Custom length, character sets, strength meter.
+    URL: https://omniwebkit.com/tools/password-generator
+
+31. Word Counter
+    Count words, characters, paragraphs, and reading time.
+    Features: Real-time counting, reading time, statistics.
+    URL: https://omniwebkit.com/tools/word-counter
+
+32. Base64 Data URI Converter
+    Convert Base64 strings to Data URI format and vice versa.
+    Features: Base64 to URI, URI to Base64, copy with one click.
+    URL: https://omniwebkit.com/tools/base64-data-uri-converter
+
+33. Regex Tester
+    Test and validate regular expressions with live preview.
+    Features: Live regex testing, match highlighting, error detection.
+    URL: https://omniwebkit.com/tools/regex-tester
+
+34. Text Reverser
+    Reverse any text or string instantly.
+    Features: Reverse words or letters, copy with one click.
+    URL: https://omniwebkit.com/tools/text-reverser
+
+
+================================================================================
+                     🔢 MATH & CALCULATOR TOOLS
+================================================================================
+
+35. Basic Calculator
+    Standard calculator for basic arithmetic operations.
+    Features: Memory functions, history, keyboard support.
+    URL: https://omniwebkit.com/tools/basic-calculator
+
+36. Percentage Calculator
+    Calculate percentages, ratios, and percentage changes.
+    Features: Multiple calculations, increase/decrease, ratio finder.
+    URL: https://omniwebkit.com/tools/percentage-calculator
+
+37. BMI Calculator
+    Calculate Body Mass Index with health insights.
+    Features: Metric & Imperial, body fat estimate, BMR calculation.
+    URL: https://omniwebkit.com/tools/bmi-calculator
+
+38. Quadratic Equation Solver
+    Solve quadratic equations and find roots instantly.
+    Features: Step-by-step solution, real & complex roots, graph preview.
+    URL: https://omniwebkit.com/tools/quadratic-equation-solver
+
+39. Matrix Calculator
+    Perform matrix operations like addition, multiplication, and inverse.
+    Features: Matrix addition & multiplication, determinant & inverse.
+    URL: https://omniwebkit.com/tools/matrix-calculator
+
+40. Equation Solver
+    Solve linear, quadratic, and higher-order equations.
+    Features: Multiple equation types, step-by-step solutions.
+    URL: https://omniwebkit.com/tools/equation-solver
+
+41. Loan/EMI Calculator
+    Calculate monthly EMI, total interest, and view amortization schedule.
+    Features: EMI calculation, amortization schedule, visual breakdown.
+    URL: https://omniwebkit.com/tools/loan-emi-calculator
+
+42. Aspect Ratio Calculator
+    Calculate and convert aspect ratios for images, video, and screens.
+    Features: Common ratios, device presets, live preview.
+    URL: https://omniwebkit.com/tools/aspect-ratio-calculator
+
+
+================================================================================
+                    🌐 WEB & DEVELOPER TOOLS
+================================================================================
+
+43. JSON Formatter
+    Format, validate, and minify JSON data.
+    Features: Syntax highlighting, validation, minify/beautify.
+    URL: https://omniwebkit.com/tools/json-formatter
+
+44. HTML Minifier
+    Minify HTML code for better performance.
+    Features: Remove whitespace, compress, preserve structure.
+    URL: https://omniwebkit.com/tools/html-minifier
+
+45. Color Picker
+    Pick colors and generate beautiful color palettes.
+    Features: HEX, RGB, HSL support, palette generator, gradient maker.
+    URL: https://omniwebkit.com/tools/color-picker
+
+46. CSS Shadow Generator
+    Generate CSS box shadows with live preview.
+    Features: Custom shadow styles, copy CSS code, live preview.
+    URL: https://omniwebkit.com/tools/css-shadow-generator
+
+47. CSS Grid Generator
+    Generate CSS grid layouts visually.
+    Features: Drag & resize, export CSS code, responsive support.
+    URL: https://omniwebkit.com/tools/css-grid-generator
+
+48. Glassmorphism Generator
+    Create beautiful glassmorphism UI effects with CSS.
+    Features: Custom blur & opacity, color presets, copy CSS instantly.
+    URL: https://omniwebkit.com/tools/glassmorphism-generator
+
+49. Neumorphism Generator
+    Design neumorphism-style UI elements with live preview.
+    Features: Custom depth & shadows, copy CSS code, live preview.
+    URL: https://omniwebkit.com/tools/neumorphism-generator
+
+50. Animation Generator
+    Generate CSS animations with real-time preview.
+    Features: Custom duration & easing, copy CSS code, live preview.
+    URL: https://omniwebkit.com/tools/animation-generator
+
+51. Code Highlighter
+    Highlight code syntax in multiple programming languages.
+    Features: Multiple languages, copy highlighted code, custom themes.
+    URL: https://omniwebkit.com/tools/code-highlighter
+
+52. .htaccess Generator
+    Generate .htaccess rules for redirects, security, and SEO.
+    Features: Redirect rules, security settings, SEO friendly.
+    URL: https://omniwebkit.com/tools/htaccess-generator
+
+53. Website Content Extractor
+    Extract structured content, meta tags, and SEO data from any website.
+    Features: Meta tag extraction, SEO analysis, content structure, export.
+    URL: https://omniwebkit.com/tools/website-content-extractor
+
+54. Website Image Downloader
+    Extract and download images from any website in bulk.
+    Features: Image extraction, bulk download, format options.
+    URL: https://omniwebkit.com/tools/website-image-downloader
+
+55. Website Screenshot Tool
+    Capture high-quality, full-page website screenshots.
+    Features: PNG or PDF output, full-page capture, server-side processing.
+    URL: https://omniwebkit.com/tools/website-screenshot
+
+56. Text to Handwriting Converter
+    Turn your typed text into realistic handwritten documents.
+    Features: Realistic micro-jitter, multiple fonts/inks, multi-page PDF output.
+    URL: https://omniwebkit.com/tools/text-to-handwriting
+
+57. CSS Gradient Generator
+    Build beautiful linear, radial, and conic gradients with live preview.
+    Features: Advanced chroma.js smooth color scales, instant CSS export.
+    URL: https://omniwebkit.com/tools/css-gradient-generator
+
+55. What's My IP
+    Check your public IP address instantly.
+    Features: Shows IPv4 & IPv6, location details, copy easily.
+    URL: https://omniwebkit.com/tools/whats-my-ip
+
+56. Backlink Auditor
+    Analyze and audit backlinks for better SEO performance.
+    Features: Backlink checker, SEO metrics, export reports.
+    URL: https://omniwebkit.com/tools/backlink-auditor
+
+57. YAML Creator & Validator
+    Create, validate, and generate YAML files with deployment templates.
+    Features: YAML validation, template library, real-time editing, export.
+    URL: https://omniwebkit.com/tools/yaml-creator-validator
+
+
+================================================================================
+                    👨‍💻 DEVELOPER TOOLS
+================================================================================
+
+58. JWT Decoder
+    Decode and inspect JSON Web Tokens — view header, payload, expiration.
+    Features: Color-coded parts, claims table, expiration check, sample tokens.
+    URL: https://omniwebkit.com/tools/jwt-decoder
+
+59. Markdown Editor
+    Write and preview Markdown with live rendering and toolbar.
+    Features: Live preview, split view, formatting toolbar, export HTML & MD.
+    URL: https://omniwebkit.com/tools/markdown-editor
+
+60. IP Lookup
+    Look up IP address geolocation, ISP, timezone, and network details.
+    Features: Auto-detect IP, geolocation map, ISP & timezone info.
+    URL: https://omniwebkit.com/tools/ip-lookup
+
+61. Text Encrypt & Decrypt
+    Encrypt and decrypt text using AES, Caesar, ROT13, Base64, Hex, Morse.
+    Features: 7 cipher methods, encrypt & decrypt, secret key support.
+    URL: https://omniwebkit.com/tools/text-encrypt-decrypt
+
+62. Hash Generator
+    Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes.
+    Features: 5 hash algorithms, file hashing, checksum verification.
+    URL: https://omniwebkit.com/tools/hash-generator
+
+63. Image to Base64
+    Convert images to Base64 strings and decode Base64 back to images.
+    Features: Multiple output formats, Base64 to image, drag & drop.
+    URL: https://omniwebkit.com/tools/image-to-base64
+
+64. Cron Expression Generator
+    Build cron expressions with visual editor and next run predictions.
+    Features: Visual editor, common presets, human-readable description.
+    URL: https://omniwebkit.com/tools/cron-expression-generator
+
+65. SQL Formatter
+    Format, beautify, and minify SQL queries with syntax highlighting.
+    Features: Format & minify, syntax highlighting, sample queries.
+    URL: https://omniwebkit.com/tools/sql-formatter
+
+66. API Tester
+    Test HTTP APIs directly from your browser with custom headers & body.
+    Features: All HTTP methods, custom headers, request body, response viewer.
+    URL: https://omniwebkit.com/tools/api-tester
+
+67. Pastebin
+    Share code snippets and text with syntax highlighting and expiry.
+    Features: 20+ languages, expiry settings, line numbers, paste history.
+    URL: https://omniwebkit.com/tools/pastebin
+
+68. Public API Directory
+    Discover 30+ free public APIs for your next project.
+    Features: 30+ APIs, category filters, auth info, favorites.
+    URL: https://omniwebkit.com/tools/public-api-directory
+
+
+================================================================================
+                       🔍 SEO TOOLS
+================================================================================
+
+69. UTM Link Builder
+    Build UTM-tagged URLs for campaign tracking with quick presets.
+    Features: Quick presets, URL validation, copy link, history tracking.
+    URL: https://omniwebkit.com/tools/utm-link-builder
+
+70. Schema Markup Generator
+    Generate JSON-LD structured data for SEO rich results.
+    Features: 7 schema types, JSON-LD output, copy script tag.
+    URL: https://omniwebkit.com/tools/schema-markup-generator
+
+71. Broken Link Checker
+    Find broken links on any webpage to improve SEO.
+    Features: Page crawling, status codes, progress tracking, export report.
+    URL: https://omniwebkit.com/tools/broken-link-checker
+
+72. robots.txt Generator
+    Build a robots.txt file with presets for WordPress, Next.js, and more.
+    Features: Quick presets, multiple rules, sitemap support, download file.
+    URL: https://omniwebkit.com/tools/robots-txt-generator
+
+73. Sitemap Generator
+    Generate professional XML & HTML sitemaps for your website.
+    Features: XML sitemaps, HTML sitemaps, priority & frequency, bulk URL import.
+    URL: https://omniwebkit.com/tools/sitemap-generator
+
+74. Sitemap URL Extractor
+    Extract and analyze URLs from existing XML sitemaps.
+    Features: Parse XML sitemaps, export URLs, sitemap analysis.
+    URL: https://omniwebkit.com/tools/sitemap-url-extractor
+
+
+================================================================================
+                      🎯 MISCELLANEOUS TOOLS
+================================================================================
+
+75. QR Code Generator
+    Generate QR codes for text, URLs, WiFi, and more.
+    Features: Multiple types, customizable, high resolution.
+    URL: https://omniwebkit.com/tools/qr-generator
+
+76. Unit Converter
+    Convert between different units of measurement.
+    Features: Length, weight, temperature, currency, multiple units.
+    URL: https://omniwebkit.com/tools/unit-converter
+
+77. Currency Converter
+    Convert between world currencies with real-time exchange rates.
+    Features: Real-time exchange rates, multiple currencies, fast conversion.
+    URL: https://omniwebkit.com/tools/currency-converter
+
+78. AI Prompt Generator
+    Generate professional AI prompts for ChatGPT, Claude, and more.
+    Features: 8+ categories, professional prompts, form-based input, copy & download.
+    URL: https://omniwebkit.com/tools/ai-prompt-generator
+
+79. Secure Text Vault
+    Encrypt and store sensitive text securely.
+    Features: AES encryption, password protected, privacy-first.
+    URL: https://omniwebkit.com/tools/secure-text-vault
+
+80. Keyboard Tester
+    Test all keys on your keyboard to check functionality.
+    Features: Real-time key press detection, visual keyboard display.
+    URL: https://omniwebkit.com/tools/keyboard-tester
+
+81. Text to Speech Converter
+    Convert written text into natural-sounding speech.
+    Features: Multiple voices, adjust speed & pitch, download audio.
+    URL: https://omniwebkit.com/tools/text-to-speech-converter
+
+82. Exit Viewer Cleaner
+    Clear browser traces, sessions, and cached views easily.
+    Features: Clear cache & history, session cleanup, one-click reset.
+    URL: https://omniwebkit.com/tools/exit-viewer-cleaner
+
+83. Email Validator
+    Validate email addresses for format, domain, and disposable detection.
+    Features: Format check, bulk validation, disposable detection, score rating.
+    URL: https://omniwebkit.com/tools/email-validator
+
+84. URL Shortener
+    Create short, shareable links with custom aliases.
+    Features: Custom aliases, link history, copy on create.
+    URL: https://omniwebkit.com/tools/url-shortener
+
+
+================================================================================
+                    ⏰ DATE & TIME TOOLS
+================================================================================
+
+85. Age Calculator
+    Calculate exact age in years, months, days, and more.
+    Features: Precise calculation, multiple formats, next birthday.
+    URL: https://omniwebkit.com/tools/age-calculator
+
+86. World Time Zone Converter
+    Convert time between different time zones worldwide.
+    Features: EST to PST conversion, IST support, world clock.
+    URL: https://omniwebkit.com/tools/timezone-converter
+
+
+================================================================================
+                     🎮 GAMES & FUN TOOLS
+================================================================================
+
+87. Decision Maker
+    Wheels, coins, dice, and random choices.
+    Features: Decision maker, roll dice, flip coin, custom options.
+    URL: https://omniwebkit.com/tools/decision-maker
+
+88. Typing Speed Test
+    Test your typing speed and accuracy with real-time WPM tracking.
+    Features: WPM & accuracy, difficulty levels, session history.
+    URL: https://omniwebkit.com/tools/typing-speed-test
+
+
+================================================================================
+                        WHY USE OmniWebKit?
+================================================================================
+
+✅ 100% Free — No hidden costs, no premium walls
+✅ No Signup Required — Start using tools instantly
+✅ Privacy First — Files are processed in your browser, not uploaded to servers
+✅ Fast & Lightweight — Optimized for speed on any device
+✅ Mobile Friendly — Works perfectly on phones, tablets, and desktops
+✅ 70+ Tools — One website for all your daily tasks
+✅ No Downloads — Everything runs directly in your browser
+✅ Regular Updates — New tools and features added frequently
+
+================================================================================
+                        CONTACT & LINKS
+================================================================================
+
+Website:    https://omniwebkit.com
+All Tools:  https://omniwebkit.com/tools
+Email:      hello@omniwebkit.com
+
+================================================================================
+             © 2026 OmniWebKit. All rights reserved.
+================================================================================

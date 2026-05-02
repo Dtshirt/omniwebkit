@@ -1,0 +1,2018 @@
+<div className="w-16 h-16 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Calendar className="h-8 w-8 text-red-600" />
+                </div>
+                <h3 className="text-xl font-bold text-red-800 dark:text-red-200 mb-2">
+                  Invalid Date Range
+                </h3>
+                <p className="text-red-600 dark:text-red-300">{ageData.error}</p>
+              </div>
+            )}
+
+            {!((calculationMode === 'age' && birthDate) || (calculationMode === 'between' && fromDate && (useCurrentDate || toDate))) && (
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-12 text-center border-2 border-dashed border-gray-300 dark:border-gray-600">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-indigo-100 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  {calculationMode === 'age' ? <Gift className="h-10 w-10 text-purple-500" /> : <Calculator className="h-10 w-10 text-purple-500" />}
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                  {calculationMode === 'age' ? 'Ready to Calculate Your Age?' : 'Ready to Calculate Date Difference?'}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                  {calculationMode === 'age' 
+                    ? 'Enter your birth date to discover amazing insights about your life journey, from basic age calculations to fascinating fun facts and astrological information.'
+                    : 'Select two dates to calculate the exact time difference between them. Perfect for project timelines, relationship anniversaries, or any date range analysis.'
+                  }
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center space-x-2">
+                    <Zap className="h-4 w-4 text-green-500" />
+                    <span>Instant Results</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Activity className="h-4 w-4 text-blue-500" />
+                    <span>Live Updates</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Sparkles className="h-4 w-4 text-purple-500" />
+                    <span>Fun Facts</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {ageData && !ageData.error && (
+              <div className="space-y-6 animate-fade-in">
+                {selectedView === 'detailed' && (
+                  <>
+                    {/* Main Display */}
+                    <div className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                      <div className="text-center mb-8">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                          {calculationMode === 'age' ? 'Your Current Age' : 'Time Difference'}
+                        </h2>
+                        <div className="text-6xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+                          {ageData.basic.years}
+                        </div>
+                        <p className="text-xl text-gray-600 dark:text-gray-300">
+                          {ageData.detailed.exactAge}
+                        </p>
+                        {showLiveAge && (
+                          <div className="flex items-center justify-center space-x-2 mt-4 text-sm text-purple-600">
+                            <div className="w-2 h-2 bg-purple-600 rounded-full animate-pulse"></div>
+                            <span>Live updating</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Age/Time Breakdown Grid */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                          <div className="text-2xl font-bold text-blue-600">{ageData.detailed.totalMonths.toLocaleString()}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Months</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                          <div className="text-2xl font-bold text-green-600">{ageData.detailed.totalWeeks.toLocaleString()}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Weeks</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                          <div className="text-2xl font-bold text-orange-600">{formatNumber(ageData.basic.totalMinutes)}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Minutes</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                          <div className="text-2xl font-bold text-purple-600">{formatNumber(ageData.basic.totalSeconds)}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Seconds</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Next Birthday Card (only for age mode) */}
+                    {calculationMode === 'age' && ageData.birthday && (
+                      <div className="bg-gradient-to-br from-white to-orange-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-4 mb-6">
+                          <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl flex items-center justify-center">
+                            <Gift className="h-8 w-8 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Next Birthday</h3>
+                            <p className="text-gray-600 dark:text-gray-400">You'll be {ageData.birthday.nextAge} years old</p>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <div className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                              {ageData.birthday.next}
+                            </div>
+                            <div className="text-gray-600 dark:text-gray-400 mb-4">
+                              {ageData.birthday.dayOfWeek}
+                            </div>
+                            
+                            <div className="flex items-center space-x-2 text-sm">
+                              <Timer className="h-4 w-4 text-orange-500" />
+                              <span className="text-gray-600 dark:text-gray-400">
+                                {ageData.birthday.daysUntil} days to go
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-gray-600 dark:text-gray-400">Progress to next birthday</span>
+                              <span className="text-sm font-medium text-gray-900 dark:text-white">
+                                {Math.round((365 - ageData.birthday.daysUntil) / 365 * 100)}%
+                              </span>
+                            </div>
+                            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                              <div 
+                                className="bg-gradient-to-r from-orange-400 to-pink-500 h-2 rounded-full transition-all duration-1000"
+                                style={{ width: `${Math.round((365 - ageData.birthday.daysUntil) / 365 * 100)}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Date Information */}
+                    <div className="bg-gradient-to-br from-white to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
+                        <Calendar className="h-5 w-5 text-indigo-600" />
+                        <span>Date Information</span>
+                      </h3>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                            {calculationMode === 'age' ? 'Birth Date' : 'From Date'}
+                          </div>
+                          <div className="font-semibold text-gray-900 dark:text-white">{ageData.start.date}</div>
+                          <div className="text-sm text-gray-500">{ageData.start.dayOfWeek}</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                            {calculationMode === 'age' ? 'Current Date' : 'To Date'}
+                          </div>
+                          <div className="font-semibold text-gray-900 dark:text-white">{ageData.end.date}</div>
+                          <div className="text-sm text-gray-500">{ageData.end.dayOfWeek}</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                            {calculationMode === 'age' ? 'Birth Year Type' : 'Start Year Type'}
+                          </div>
+                          <div className="font-semibold text-gray-900 dark:text-white">
+                            {ageData.start.wasLeapYear ? 'Leap Year' : 'Regular Year'}
+                          </div>
+                        </div>
+                        {calculationMode === 'age' && ageData.demographics.generation && (
+                          <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Generation</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">{ageData.demographics.generation.name}</div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {selectedView === 'funfacts' && (
+                  <>
+                    {/* Life Progress (only for age mode) */}
+                    {calculationMode === 'age' && ageData.funFacts.lifeProgress && (
+                      <div className="bg-gradient-to-br from-white to-green-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-4 mb-6">
+                          <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center">
+                            <TrendingUp className="h-8 w-8 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Life Progress</h3>
+                            <p className="text-gray-600 dark:text-gray-400">Based on average lifespan of 80 years</p>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <span className="text-lg font-medium text-gray-900 dark:text-white">Life Progress</span>
+                            <span className="text-2xl font-bold text-green-600">{ageData.funFacts.lifeProgress}%</span>
+                          </div>
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+                            <div 
+                              className="bg-gradient-to-r from-green-400 to-emerald-500 h-4 rounded-full transition-all duration-2000 flex items-center justify-end pr-2"
+                              style={{ width: `${Math.min(parseFloat(ageData.funFacts.lifeProgress), 100)}%` }}
+                            >
+                              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            You've lived {ageData.funFacts.lifeProgress}% of an average human lifespan
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Fun Facts Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="bg-gradient-to-br from-white to-red-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-500 rounded-xl flex items-center justify-center">
+                            <Heart className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Heartbeats</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {calculationMode === 'age' ? 'Total heartbeats' : 'If this was a lifetime'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-3xl font-bold text-red-500 mb-2">{ageData.funFacts.heartBeats}</div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Based on average 70 BPM
+                        </p>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-white to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center">
+                            <Activity className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Breaths</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {calculationMode === 'age' ? 'Breaths taken' : 'If this was a lifetime'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-3xl font-bold text-blue-500 mb-2">{ageData.funFacts.breathsTaken}</div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Based on 16 breaths per minute
+                        </p>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-white to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center">
+                            <Moon className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Sleep</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {calculationMode === 'age' ? 'Hours slept' : 'If this was a lifetime'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-3xl font-bold text-indigo-500 mb-2">{ageData.funFacts.sleepHours}</div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          About 8 hours per day
+                        </p>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-white to-orange-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-xl flex items-center justify-center">
+                            <Trophy className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Meals</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {calculationMode === 'age' ? 'Meals eaten' : 'If this was a lifetime'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-3xl font-bold text-orange-500 mb-2">{ageData.funFacts.mealsEaten}</div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Approximately 3 meals per day
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Milestones (adapted for both modes) */}
+                    <div className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center space-x-2">
+                        <Target className="h-5 w-5 text-purple-600" />
+                        <span>{calculationMode === 'age' ? 'Life Milestones Achieved' : 'Time Milestones'}</span>
+                      </h3>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className={`p-4 rounded-xl ${ageData.basic.totalDays >= 1000 ? 'bg-green-100 dark:bg-green-900/20 border-2 border-green-300' : 'bg-gray-100 dark:bg-gray-700 opacity-50'}`}>
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">{ageData.basic.totalDays >= 1000 ? '🎉' : '⏳'}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">1,000 Days</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {ageData.basic.totalDays >= 1000 ? 'Achieved!' : `${1000 - ageData.basic.totalDays} to go`}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className={`p-4 rounded-xl ${ageData.basic.totalDays >= 10000 ? 'bg-green-100 dark:bg-green-900/20 border-2 border-green-300' : 'bg-gray-100 dark:bg-gray-700 opacity-50'}`}>
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">{ageData.basic.totalDays >= 10000 ? '🌟' : '⏳'}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">10,000 Days</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {ageData.basic.totalDays >= 10000 ? 'Achieved!' : `${(10000 - ageData.basic.totalDays).toLocaleString()} to go`}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className={`p-4 rounded-xl ${ageData.basic.totalHours >= 100000 ? 'bg-green-100 dark:bg-green-900/20 border-2 border-green-300' : 'bg-gray-100 dark:bg-gray-700 opacity-50'}`}>
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">{ageData.basic.totalHours >= 100000 ? '⚡' : '⏳'}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">100K Hours</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {ageData.basic.totalHours >= 100000 ? 'Achieved!' : `${(100000 - ageData.basic.totalHours).toLocaleString()} to go`}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className={`p-4 rounded-xl ${ageData.basic.totalMinutes >= 1000000 ? 'bg-green-100 dark:bg-green-900/20 border-2 border-green-300' : 'bg-gray-100 dark:bg-gray-700 opacity-50'}`}>
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">{ageData.basic.totalMinutes >= 1000000 ? '💎' : '⏳'}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">1M Minutes</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {ageData.basic.totalMinutes >= 1000000 ? 'Achieved!' : `${(1000000 - ageData.basic.totalMinutes).toLocaleString()} to go`}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {selectedView === 'astrology' && calculationMode === 'age' && (
+                  <>
+                    {/* Zodiac Information */}
+                    <div className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                      <div className="text-center mb-8">
+                        <div className="text-8xl mb-4">{ageData.astrology.zodiac.icon}</div>
+                        <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                          {ageData.astrology.zodiac.name}
+                        </h3>
+                        <div className="inline-flex items-center space-x-2 bg-purple-100 dark:bg-purple-900/20 px-4 py-2 rounded-full">
+                          <Star className="h-4 w-4 text-purple-600" />
+                          <span className="text-purple-700 dark:text-purple-300 font-medium">
+                            {ageData.astrology.zodiac.element} Sign
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Western Zodiac</h4>
+                          <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-gray-900 dark:text-white">Sign</span>
+                              <span className="text-purple-600">{ageData.astrology.zodiac.name}</span>
+                            </div>
+                          </div>
+                          <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-gray-900 dark:text-white">Element</span>
+                              <span className="text-purple-600">{ageData.astrology.zodiac.element}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Chinese Zodiac</h4>
+                          <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                            <div className="text-4xl mb-2">
+                              {ageData.astrology.chineseZodiac === 'Rat' ? '🐭' :
+                               ageData.astrology.chineseZodiac === 'Ox' ? '🐂' :
+                               ageData.astrology.chineseZodiac === 'Tiger' ? '🐅' :
+                               ageData.astrology.chineseZodiac === 'Rabbit' ? '🐰' :
+                               ageData.astrology.chineseZodiac === 'Dragon' ? '🐉' :
+                               ageData.astrology.chineseZodiac === 'Snake' ? '🐍' :
+                               ageData.astrology.chineseZodiac === 'Horse' ? '🐎' :
+                               ageData.astrology.chineseZodiac === 'Goat' ? '🐐' :
+                               ageData.astrology.chineseZodiac === 'Monkey' ? '🐒' :
+                               ageData.astrology.chineseZodiac === 'Rooster' ? '🐓' :
+                               ageData.astrology.chineseZodiac === 'Dog' ? '🐕' : '🐷'}
+                            </div>
+                            <div className="font-semibold text-gray-900 dark:text-white">
+                              Year of the {ageData.astrology.chineseZodiac}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Generation Information */}
+                    {ageData.demographics.generation && (
+                      <div className="bg-gradient-to-br from-white to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                        <div className="text-center mb-6">
+                          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                            You're a {ageData.demographics.generation.name}
+                          </h3>
+                          <div className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/20 px-4 py-2 rounded-full">
+                            <Globe className="h-4 w-4 text-blue-600" />
+                            <span className="text-blue-700 dark:text-blue-300 font-medium">
+                              Born {ageData.demographics.generation.range}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-6 rounded-xl">
+                          <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
+                            {ageData.demographics.generation.name} Characteristics:
+                          </h4>
+                          <div className="space-y-2 text-gray-600 dark:text-gray-400">
+                            {ageData.demographics.generation.name === 'Gen Z' && (
+                              <>
+                                <p>• Digital natives who grew up with smartphones and social media</p>
+                                <p>• Known for entrepreneurial spirit and social consciousness</p>
+                                <p>• Values authenticity, diversity, and mental health awareness</p>
+                              </>
+                            )}
+                            {ageData.demographics.generation.name === 'Millennial' && (
+                              <>
+                                <p>• Experienced the transition from analog to digital</p>
+                                <p>• Known for work-life balance and experiences over possessions</p>
+                                <p>• Highly educated but faced economic challenges</p>
+                              </>
+                            )}
+                            {ageData.demographics.generation.name === 'Gen X' && (
+                              <>
+                                <p>• Independent and self-reliant generation</p>
+                                <p>• Witnessed the rise of personal computers and internet</p>
+                                <p>• Values work-life balance and skeptical of authority</p>
+                              </>
+                            )}
+                            {ageData.demographics.generation.name === 'Baby Boomer' && (
+                              <>
+                                <p>• Post-war generation that experienced economic prosperity</p>
+                                <p>• Known for idealism and challenging traditional values</p>
+                                <p>• Values hard work and career achievement</p>
+                              </>
+                            )}
+                            {ageData.demographics.generation.name === 'Gen Alpha' && (
+                              <>
+                                <p>• First generation born entirely in the 21st century</p>
+                                <p>• Growing up with AI, VR, and advanced technology</p>
+                                <p>• Expected to be the most educated generation</p>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Fun Facts Banner */}
+        {ageData && !ageData.error && (
+          <div className="mt-12 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-2xl p-8 text-white text-center shadow-2xl">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <Sparkles className="h-6 w-6" />
+              <h3 className="text-2xl font-bold">Amazing Fact!</h3>
+            </div>
+            {calculationMode === 'age' ? (
+              <>
+                <p className="text-lg mb-4">
+                  In the time you've been alive, your heart has beaten approximately{' '}
+                  <span className="font-bold text-yellow-300">{ageData.funFacts.heartBeats}</span> times!
+                </p>
+                <p className="text-white/80">
+                  That's roughly {Math.round(parseInt(ageData.funFacts.heartBeats.replace(/,/g, '')) / 1000000)} million heartbeats keeping you alive! 💓
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-lg mb-4">
+                  During this {ageData.basic.totalDays.toLocaleString()}-day period, if someone was alive, their heart would have beaten approximately{' '}
+                  <span className="font-bold text-yellow-300">{ageData.funFacts.heartBeats}</span> times!
+                </p>
+                <p className="text-white/80">
+                  That's {Math.round(ageData.basic.totalDays / 365 * 10) / 10} years worth of heartbeats! ⏰
+                </p>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Quick Examples for Date Difference Mode */}
+        {calculationMode === 'between' && !ageData && (
+          <div className="mt-12 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+              Popular Date Calculations
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl">
+                <div className="text-center">
+                  <div className="text-3xl mb-3">💑</div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">Relationship Anniversary</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Calculate how long you've been together
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl">
+                <div className="text-center">
+                  <div className="text-3xl mb-3">🏢</div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">Work Experience</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    How long you've been at your job
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-purple-50 to-pink-100 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl">
+                <div className="text-center">
+                  <div className="text-3xl mb-3">🎯</div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">Project Duration</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Track project timelines and deadlines
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-yellow-50 to-orange-100 dark:from-yellow-900/20 dark:to-orange-900/20 p-6 rounded-xl">
+                <div className="text-center">
+                  <div className="text-3xl mb-3">🎓</div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">School Duration</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Calculate study periods and graduations
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-red-50 to-pink-100 dark:from-red-900/20 dark:to-pink-900/20 p-6 rounded-xl">
+                <div className="text-center">
+                  <div className="text-3xl mb-3">🌍</div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">Historical Events</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Time since important historical dates
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-br from-cyan-50 to-blue-100 dark:from-cyan-900/20 dark:to-blue-900/20 p-6 rounded-xl">
+                <div className="text-center">
+                  <div className="text-3xl mb-3">🎉</div>
+                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">Event Planning</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Plan events and countdown to special days
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default AgeCalculator;'use client';
+
+import { useState, useEffect, useMemo } from 'react';
+import { 
+  Calendar, 
+  Clock, 
+  Gift, 
+  Heart, 
+  Star, 
+  Cake,
+  Sun,
+  Moon,
+  Globe,
+  Download,
+  Share2,
+  Copy,
+  Sparkles,
+  Timer,
+  Trophy,
+  Target,
+  TrendingUp,
+  Activity,
+  Zap,
+  ArrowRight,
+  RotateCcw,
+  Calculator
+} from 'lucide-react';
+import { format, differenceInYears, differenceInMonths, differenceInWeeks, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, addYears, isLeapYear, getDaysInYear, startOfYear, endOfYear } from 'date-fns';
+import toast from 'react-hot-toast';
+
+const AgeCalculator = () => {
+  const [calculationMode, setCalculationMode] = useState('age'); // 'age' or 'between'
+  const [birthDate, setBirthDate] = useState('');
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [useCurrentDate, setUseCurrentDate] = useState(true);
+  const [showLiveAge, setShowLiveAge] = useState(false);
+  const [selectedView, setSelectedView] = useState('detailed');
+  const [ageStats, setAgeStats] = useState(null);
+
+  // Live timer for real-time age updates
+  useEffect(() => {
+    let interval;
+    if (showLiveAge && ((calculationMode === 'age' && birthDate) || (calculationMode === 'between' && fromDate && useCurrentDate))) {
+      interval = setInterval(() => {
+        setCurrentDate(new Date());
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [showLiveAge, birthDate, fromDate, calculationMode, useCurrentDate]);
+
+  // Calculate comprehensive age/date difference data
+  const ageData = useMemo(() => {
+    let startDate, endDate;
+    
+    if (calculationMode === 'age') {
+      if (!birthDate) return null;
+      startDate = new Date(birthDate);
+      endDate = currentDate;
+    } else {
+      if (!fromDate) return null;
+      startDate = new Date(fromDate);
+      
+      if (useCurrentDate) {
+        endDate = currentDate;
+      } else {
+        if (!toDate) return null;
+        endDate = new Date(toDate);
+      }
+    }
+
+    // Validate dates
+    if (startDate > endDate) {
+      return { error: 'Start date cannot be later than end date!' };
+    }
+
+    // Basic age calculations
+    const years = differenceInYears(endDate, startDate);
+    const totalMonths = differenceInMonths(endDate, startDate);
+    const totalWeeks = differenceInWeeks(endDate, startDate);
+    const totalDays = differenceInDays(endDate, startDate);
+    const totalHours = differenceInHours(endDate, startDate);
+    const totalMinutes = differenceInMinutes(endDate, startDate);
+    const totalSeconds = differenceInSeconds(endDate, startDate);
+
+    // Detailed age breakdown
+    const yearsDiff = differenceInYears(endDate, startDate);
+    const monthsAfterYears = differenceInMonths(endDate, addYears(startDate, yearsDiff));
+    const daysAfterMonths = differenceInDays(endDate, addYears(startDate, yearsDiff));
+
+    // For age mode, calculate next birthday
+    let birthdayInfo = null;
+    if (calculationMode === 'age') {
+      const thisYearBirthday = new Date(endDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      const nextBirthday = thisYearBirthday > endDate 
+        ? thisYearBirthday 
+        : new Date(endDate.getFullYear() + 1, startDate.getMonth(), startDate.getDate());
+      
+      const daysUntilBirthday = differenceInDays(nextBirthday, endDate);
+      const nextAge = years + (thisYearBirthday > endDate ? 0 : 1);
+
+      birthdayInfo = {
+        next: format(nextBirthday, 'MMMM d, yyyy'),
+        daysUntil: daysUntilBirthday,
+        nextAge,
+        dayOfWeek: format(nextBirthday, 'EEEE'),
+        isLeapYear: isLeapYear(nextBirthday)
+      };
+    }
+
+    // Zodiac sign calculation (only for age mode)
+    let zodiacInfo = null;
+    let chineseZodiac = null;
+    if (calculationMode === 'age') {
+      const zodiacSigns = [
+        { name: 'Capricorn', dates: [[12, 22], [1, 19]], icon: '♑', element: 'Earth' },
+        { name: 'Aquarius', dates: [[1, 20], [2, 18]], icon: '♒', element: 'Air' },
+        { name: 'Pisces', dates: [[2, 19], [3, 20]], icon: '♓', element: 'Water' },
+        { name: 'Aries', dates: [[3, 21], [4, 19]], icon: '♈', element: 'Fire' },
+        { name: 'Taurus', dates: [[4, 20], [5, 20]], icon: '♉', element: 'Earth' },
+        { name: 'Gemini', dates: [[5, 21], [6, 20]], icon: '♊', element: 'Air' },
+        { name: 'Cancer', dates: [[6, 21], [7, 22]], icon: '♋', element: 'Water' },
+        { name: 'Leo', dates: [[7, 23], [8, 22]], icon: '♌', element: 'Fire' },
+        { name: 'Virgo', dates: [[8, 23], [9, 22]], icon: '♍', element: 'Earth' },
+        { name: 'Libra', dates: [[9, 23], [10, 22]], icon: '♎', element: 'Air' },
+        { name: 'Scorpio', dates: [[10, 23], [11, 21]], icon: '♏', element: 'Water' },
+        { name: 'Sagittarius', dates: [[11, 22], [12, 21]], icon: '♐', element: 'Fire' }
+      ];
+
+      const birthMonth = startDate.getMonth() + 1;
+      const birthDay = startDate.getDate();
+      zodiacInfo = zodiacSigns.find(sign => {
+        const [start, end] = sign.dates;
+        return (birthMonth === start[0] && birthDay >= start[1]) ||
+               (birthMonth === end[0] && birthDay <= end[1]);
+      });
+
+      // Chinese zodiac calculation
+      const chineseZodiacAnimals = [
+        'Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake',
+        'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig'
+      ];
+      chineseZodiac = chineseZodiacAnimals[(startDate.getFullYear() - 1900) % 12];
+    }
+
+    // Birth day of week
+    const startDayOfWeek = format(startDate, 'EEEE');
+    const endDayOfWeek = format(endDate, 'EEEE');
+
+    // Generation calculation (only for age mode)
+    let generation = null;
+    if (calculationMode === 'age') {
+      const getGeneration = (birthYear) => {
+        if (birthYear >= 2010) return { name: 'Gen Alpha', range: '2010-2025' };
+        if (birthYear >= 1997) return { name: 'Gen Z', range: '1997-2009' };
+        if (birthYear >= 1981) return { name: 'Millennial', range: '1981-1996' };
+        if (birthYear >= 1965) return { name: 'Gen X', range: '1965-1980' };
+        if (birthYear >= 1946) return { name: 'Baby Boomer', range: '1946-1964' };
+        return { name: 'Silent Generation', range: '1928-1945' };
+      };
+      generation = getGeneration(startDate.getFullYear());
+    }
+
+    // Fun facts (more relevant for age mode but can apply to any time period)
+    const heartBeats = Math.floor(totalMinutes * 70); // Average 70 BPM
+    const breathsTaken = Math.floor(totalMinutes * 16); // Average 16 breaths/min
+    const sleepHours = Math.floor(totalHours * 0.33); // Average 8 hours/day
+    const mealsEaten = Math.floor(totalDays * 3); // 3 meals per day
+
+    // Life progress (only for age mode)
+    let lifeProgress = null;
+    if (calculationMode === 'age') {
+      const lifeExpectancy = 80;
+      lifeProgress = Math.min((years / lifeExpectancy) * 100, 100);
+    }
+
+    return {
+      mode: calculationMode,
+      basic: {
+        years,
+        months: monthsAfterYears,
+        days: daysAfterMonths - (monthsAfterYears * 30),
+        totalDays,
+        totalHours,
+        totalMinutes,
+        totalSeconds
+      },
+      detailed: {
+        totalMonths,
+        totalWeeks,
+        exactAge: `${years} years, ${monthsAfterYears} months, ${daysAfterMonths - (monthsAfterYears * 30)} days`
+      },
+      birthday: birthdayInfo,
+      start: {
+        date: format(startDate, 'MMMM d, yyyy'),
+        dayOfWeek: startDayOfWeek,
+        wasLeapYear: isLeapYear(startDate)
+      },
+      end: {
+        date: format(endDate, 'MMMM d, yyyy'),
+        dayOfWeek: endDayOfWeek,
+        isLeapYear: isLeapYear(endDate)
+      },
+      astrology: {
+        zodiac: zodiacInfo || { name: 'Unknown', icon: '?', element: 'Unknown' },
+        chineseZodiac: chineseZodiac
+      },
+      demographics: {
+        generation
+      },
+      funFacts: {
+        heartBeats: heartBeats.toLocaleString(),
+        breathsTaken: breathsTaken.toLocaleString(),
+        sleepHours: sleepHours.toLocaleString(),
+        mealsEaten: mealsEaten.toLocaleString(),
+        lifeProgress: lifeProgress?.toFixed(1)
+      }
+    };
+  }, [birthDate, currentDate, fromDate, toDate, useCurrentDate, calculationMode]);
+
+  // Format large numbers
+  const formatNumber = (num) => {
+    if (num >= 1000000000) {
+      return (num / 1000000000).toFixed(1) + 'B';
+    }
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M';
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toLocaleString();
+  };
+
+  // Share age/date difference data
+  const shareAge = async () => {
+    if (!ageData) return;
+
+    const shareText = calculationMode === 'age' 
+      ? `I'm ${ageData.detailed.exactAge} old! That's ${ageData.basic.totalDays.toLocaleString()} days, ${formatNumber(ageData.basic.totalHours)} hours, and ${formatNumber(ageData.basic.totalMinutes)} minutes of life! 🎂 Calculate your age at omniwebkit.com`
+      : `Time difference: ${ageData.detailed.exactAge} - That's ${ageData.basic.totalDays.toLocaleString()} days between ${ageData.start.date} and ${ageData.end.date}! ⏰ Calculate date differences at omniwebkit.com`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: calculationMode === 'age' ? 'My Age Statistics' : 'Date Difference Calculation',
+          text: shareText,
+          url: window.location.href
+        });
+        toast.success('Shared successfully!');
+      } catch (error) {
+        navigator.clipboard.writeText(shareText);
+        toast.success('Copied to clipboard!');
+      }
+    } else {
+      navigator.clipboard.writeText(shareText);
+      toast.success('Copied to clipboard!');
+    }
+  };
+
+  // Download report
+  const downloadReport = () => {
+    if (!ageData) return;
+
+    const report = calculationMode === 'age' ? `
+AGE CALCULATION REPORT
+=====================
+
+Basic Information:
+- Birth Date: ${ageData.start.date} (${ageData.start.dayOfWeek})
+- Current Age: ${ageData.detailed.exactAge}
+- Next Birthday: ${ageData.birthday.next} (${ageData.birthday.daysUntil} days away)
+
+Detailed Statistics:
+- Total Days Lived: ${ageData.basic.totalDays.toLocaleString()}
+- Total Hours: ${ageData.basic.totalHours.toLocaleString()}
+- Total Minutes: ${ageData.basic.totalMinutes.toLocaleString()}
+- Total Seconds: ${ageData.basic.totalSeconds.toLocaleString()}
+
+Astrological Information:
+- Zodiac Sign: ${ageData.astrology.zodiac.name} ${ageData.astrology.zodiac.icon}
+- Element: ${ageData.astrology.zodiac.element}
+- Chinese Zodiac: ${ageData.astrology.chineseZodiac}
+
+Demographics:
+- Generation: ${ageData.demographics.generation.name} (${ageData.demographics.generation.range})
+
+Fun Facts:
+- Estimated Heartbeats: ${ageData.funFacts.heartBeats}
+- Estimated Breaths: ${ageData.funFacts.breathsTaken}
+- Hours Slept: ${ageData.funFacts.sleepHours}
+- Meals Eaten: ${ageData.funFacts.mealsEaten}
+- Life Progress: ${ageData.funFacts.lifeProgress}%
+
+Generated by omniwebkit.com - Age Calculator
+Report created on: ${format(new Date(), 'MMMM d, yyyy HH:mm:ss')}
+    `.trim() : `
+DATE DIFFERENCE CALCULATION REPORT
+==================================
+
+Date Range:
+- From: ${ageData.start.date} (${ageData.start.dayOfWeek})
+- To: ${ageData.end.date} (${ageData.end.dayOfWeek})
+- Duration: ${ageData.detailed.exactAge}
+
+Detailed Statistics:
+- Total Days: ${ageData.basic.totalDays.toLocaleString()}
+- Total Weeks: ${ageData.detailed.totalWeeks.toLocaleString()}
+- Total Months: ${ageData.detailed.totalMonths.toLocaleString()}
+- Total Hours: ${ageData.basic.totalHours.toLocaleString()}
+- Total Minutes: ${ageData.basic.totalMinutes.toLocaleString()}
+- Total Seconds: ${ageData.basic.totalSeconds.toLocaleString()}
+
+Interesting Facts:
+- If this was a lifetime, estimated heartbeats: ${ageData.funFacts.heartBeats}
+- If this was a lifetime, estimated breaths: ${ageData.funFacts.breathsTaken}
+- If this was a lifetime, hours slept: ${ageData.funFacts.sleepHours}
+- If this was a lifetime, meals eaten: ${ageData.funFacts.mealsEaten}
+
+Generated by omniwebkit.com - Age Calculator
+Report created on: ${format(new Date(), 'MMMM d, yyyy HH:mm:ss')}
+    `.trim();
+
+    const blob = new Blob([report], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${calculationMode === 'age' ? 'age' : 'date-difference'}-report-${format(new Date(), 'yyyy-MM-dd')}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast.success('Report downloaded!');
+  };
+
+  const views = [
+    { id: 'detailed', name: 'Detailed View', icon: Calendar },
+    { id: 'funfacts', name: 'Fun Facts', icon: Sparkles },
+    ...(calculationMode === 'age' ? [{ id: 'astrology', name: 'Astrology', icon: Star }] : [])
+  ];
+
+  // Reset function
+  const resetCalculator = () => {
+    setBirthDate('');
+    setFromDate('');
+    setToDate('');
+    setUseCurrentDate(true);
+    setShowLiveAge(false);
+    setSelectedView('detailed');
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 py-8">
+      <div className="container mx-auto px-4 max-w-6xl">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-3xl mb-6 shadow-lg">
+            <Calculator className="h-10 w-10 text-white animate-bounce-gentle" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+            Age & Date Calculator
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6">
+            Calculate your exact age or find the difference between any two dates. 
+            Discover fascinating insights about time periods and life milestones!
+          </p>
+          
+          {/* Mode Selector */}
+          <div className="inline-flex bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-2 border border-white/20 shadow-lg mb-6">
+            <button
+              onClick={() => setCalculationMode('age')}
+              className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                calculationMode === 'age'
+                  ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-700/50'
+              }`}
+            >
+              <Cake className="h-5 w-5" />
+              <span>Calculate Age</span>
+            </button>
+            <button
+              onClick={() => setCalculationMode('between')}
+              className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                calculationMode === 'between'
+                  ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-gray-700/50'
+              }`}
+            >
+              <ArrowRight className="h-5 w-5" />
+              <span>Date Difference</span>
+            </button>
+          </div>
+          
+          {/* Quick Stats Bar */}
+          {ageData && !ageData.error && (
+            <div className="inline-flex items-center space-x-6 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl px-8 py-4 border border-white/20 shadow-lg">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">{ageData.basic.years}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Years</div>
+              </div>
+              <div className="w-px h-8 bg-gray-300 dark:bg-gray-600"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">{formatNumber(ageData.basic.totalDays)}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Days</div>
+              </div>
+              <div className="w-px h-8 bg-gray-300 dark:bg-gray-600"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-indigo-600">{formatNumber(ageData.basic.totalHours)}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Hours</div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Input Panel */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Date Input Card */}
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                    {calculationMode === 'age' ? <Cake className="h-6 w-6 text-white" /> : <Calendar className="h-6 w-6 text-white" />}
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                      {calculationMode === 'age' ? 'Birth Date' : 'Date Range'}
+                    </h2>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {calculationMode === 'age' ? 'Enter your birth date' : 'Select start and end dates'}
+                    </p>
+                  </div>
+                </div>
+                
+                <button
+                  onClick={resetCalculator}
+                  className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                  title="Reset"
+                >
+                  <RotateCcw className="h-5 w-5" />
+                </button>
+              </div>
+              
+              {calculationMode === 'age' ? (
+                <input
+                  type="date"
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                  max={format(new Date(), 'yyyy-MM-dd')}
+                  className="w-full p-4 text-lg border-2 border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-purple-500 dark:focus:border-purple-400 transition-all duration-200"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      From Date
+                    </label>
+                    <input
+                      type="date"
+                      value={fromDate}
+                      onChange={(e) => setFromDate(e.target.value)}
+                      className="w-full p-4 text-lg border-2 border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-purple-500 dark:focus:border-purple-400 transition-all duration-200"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      To Date
+                    </label>
+                    
+                    {/* Current Date Toggle */}
+                    <div className="flex items-center space-x-3 mb-3">
+                      <input
+                        type="checkbox"
+                        id="useCurrentDate"
+                        checked={useCurrentDate}
+                        onChange={(e) => setUseCurrentDate(e.target.checked)}
+                        className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500"
+                      />
+                      <label htmlFor="useCurrentDate" className="text-sm text-gray-700 dark:text-gray-300">
+                        Use current date ({format(new Date(), 'MMM d, yyyy')})
+                      </label>
+                    </div>
+                    
+                    {!useCurrentDate && (
+                      <input
+                        type="date"
+                        value={toDate}
+                        onChange={(e) => setToDate(e.target.value)}
+                        className="w-full p-4 text-lg border-2 border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-purple-500 dark:focus:border-purple-400 transition-all duration-200"
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Live Age Toggle */}
+              {((calculationMode === 'age' && birthDate) || (calculationMode === 'between' && fromDate && useCurrentDate)) && (
+                <div className="flex items-center justify-between mt-6 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 rounded-xl">
+                  <div className="flex items-center space-x-3">
+                    <Activity className="h-5 w-5 text-purple-600" />
+                    <div>
+                      <div className="font-medium text-gray-900 dark:text-white">Live Updates</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Real-time calculations</div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowLiveAge(!showLiveAge)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      showLiveAge ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        showLiveAge ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* View Selector */}
+            {ageData && !ageData.error && (
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">View Options</h3>
+                <div className="space-y-2">
+                  {views.map((view) => {
+                    const IconComponent = view.icon;
+                    const isSelected = selectedView === view.id;
+                    return (
+                      <button
+                        key={view.id}
+                        onClick={() => setSelectedView(view.id)}
+                        className={`w-full flex items-center space-x-3 p-3 rounded-xl transition-all ${
+                          isSelected
+                            ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg'
+                            : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                        }`}
+                      >
+                        <IconComponent className="h-5 w-5" />
+                        <span className="font-medium">{view.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            {ageData && !ageData.error && (
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Share & Export</h3>
+                <div className="space-y-3">
+                  <button
+                    onClick={shareAge}
+                    className="w-full btn-primary flex items-center justify-center space-x-2"
+                  >
+                    <Share2 className="h-4 w-4" />
+                    <span>Share Results</span>
+                  </button>
+                  <button
+                    onClick={downloadReport}
+                    className="w-full btn-secondary flex items-center justify-center space-x-2"
+                  >
+                    <Download className="h-4 w-4" />
+                    <span>Download Report</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Results Panel */}
+          <div className="lg:col-span-2">
+            {ageData?.error && (
+              <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-2xl p-8 text-center">
+                <div className="w-16 h-16 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Calendar className="h-8 w-8 text-red-600" />
+                'use client';
+
+import { useState, useEffect, useMemo } from 'react';
+import { 
+  Calendar, 
+  Clock, 
+  Gift, 
+  Heart, 
+  Star, 
+  Cake,
+  Sun,
+  Moon,
+  Globe,
+  Download,
+  Share2,
+  Copy,
+  Sparkles,
+  Timer,
+  Trophy,
+  Target,
+  TrendingUp,
+  Activity,
+  Zap
+} from 'lucide-react';
+import { format, differenceInYears, differenceInMonths, differenceInWeeks, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, addYears, isLeapYear, getDaysInYear, startOfYear, endOfYear } from 'date-fns';
+import toast from 'react-hot-toast';
+
+const AgeCalculator = () => {
+  const [birthDate, setBirthDate] = useState('');
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [showLiveAge, setShowLiveAge] = useState(false);
+  const [selectedView, setSelectedView] = useState('detailed');
+  const [ageStats, setAgeStats] = useState(null);
+
+  // Live timer for real-time age updates
+  useEffect(() => {
+    let interval;
+    if (showLiveAge && birthDate) {
+      interval = setInterval(() => {
+        setCurrentDate(new Date());
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [showLiveAge, birthDate]);
+
+  // Calculate comprehensive age data
+  const ageData = useMemo(() => {
+    if (!birthDate) return null;
+
+    const birth = new Date(birthDate);
+    const now = currentDate;
+
+    // Validate birth date
+    if (birth > now) {
+      return { error: 'Birth date cannot be in the future!' };
+    }
+
+    // Basic age calculations
+    const years = differenceInYears(now, birth);
+    const totalMonths = differenceInMonths(now, birth);
+    const totalWeeks = differenceInWeeks(now, birth);
+    const totalDays = differenceInDays(now, birth);
+    const totalHours = differenceInHours(now, birth);
+    const totalMinutes = differenceInMinutes(now, birth);
+    const totalSeconds = differenceInSeconds(now, birth);
+
+    // Detailed age breakdown
+    const yearsDiff = differenceInYears(now, birth);
+    const monthsAfterYears = differenceInMonths(now, addYears(birth, yearsDiff));
+    const daysAfterMonths = differenceInDays(now, addYears(birth, yearsDiff));
+
+    // Next birthday calculations
+    const thisYearBirthday = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
+    const nextBirthday = thisYearBirthday > now 
+      ? thisYearBirthday 
+      : new Date(now.getFullYear() + 1, birth.getMonth(), birth.getDate());
+    
+    const daysUntilBirthday = differenceInDays(nextBirthday, now);
+    const nextAge = years + (thisYearBirthday > now ? 0 : 1);
+
+    // Zodiac sign calculation
+    const zodiacSigns = [
+      { name: 'Capricorn', dates: [[12, 22], [1, 19]], icon: '♑', element: 'Earth' },
+      { name: 'Aquarius', dates: [[1, 20], [2, 18]], icon: '♒', element: 'Air' },
+      { name: 'Pisces', dates: [[2, 19], [3, 20]], icon: '♓', element: 'Water' },
+      { name: 'Aries', dates: [[3, 21], [4, 19]], icon: '♈', element: 'Fire' },
+      { name: 'Taurus', dates: [[4, 20], [5, 20]], icon: '♉', element: 'Earth' },
+      { name: 'Gemini', dates: [[5, 21], [6, 20]], icon: '♊', element: 'Air' },
+      { name: 'Cancer', dates: [[6, 21], [7, 22]], icon: '♋', element: 'Water' },
+      { name: 'Leo', dates: [[7, 23], [8, 22]], icon: '♌', element: 'Fire' },
+      { name: 'Virgo', dates: [[8, 23], [9, 22]], icon: '♍', element: 'Earth' },
+      { name: 'Libra', dates: [[9, 23], [10, 22]], icon: '♎', element: 'Air' },
+      { name: 'Scorpio', dates: [[10, 23], [11, 21]], icon: '♏', element: 'Water' },
+      { name: 'Sagittarius', dates: [[11, 22], [12, 21]], icon: '♐', element: 'Fire' }
+    ];
+
+    const birthMonth = birth.getMonth() + 1;
+    const birthDay = birth.getDate();
+    let zodiac = zodiacSigns.find(sign => {
+      const [start, end] = sign.dates;
+      return (birthMonth === start[0] && birthDay >= start[1]) ||
+             (birthMonth === end[0] && birthDay <= end[1]);
+    });
+
+    // Chinese zodiac calculation
+    const chineseZodiac = [
+      'Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake',
+      'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig'
+    ];
+    const chineseYear = chineseZodiac[(birth.getFullYear() - 1900) % 12];
+
+    // Birth day of week
+    const birthDayOfWeek = format(birth, 'EEEE');
+
+    // Generation calculation
+    const getGeneration = (birthYear) => {
+      if (birthYear >= 2010) return { name: 'Gen Alpha', range: '2010-2025' };
+      if (birthYear >= 1997) return { name: 'Gen Z', range: '1997-2009' };
+      if (birthYear >= 1981) return { name: 'Millennial', range: '1981-1996' };
+      if (birthYear >= 1965) return { name: 'Gen X', range: '1965-1980' };
+      if (birthYear >= 1946) return { name: 'Baby Boomer', range: '1946-1964' };
+      return { name: 'Silent Generation', range: '1928-1945' };
+    };
+
+    const generation = getGeneration(birth.getFullYear());
+
+    // Fun facts
+    const heartBeats = Math.floor(totalMinutes * 70); // Average 70 BPM
+    const breathsTaken = Math.floor(totalMinutes * 16); // Average 16 breaths/min
+    const sleepHours = Math.floor(totalHours * 0.33); // Average 8 hours/day
+    const mealsEaten = Math.floor(totalDays * 3); // 3 meals per day
+
+    // Life progress (assuming average lifespan of 80 years)
+    const lifeExpectancy = 80;
+    const lifeProgress = Math.min((years / lifeExpectancy) * 100, 100);
+
+    return {
+      basic: {
+        years,
+        months: monthsAfterYears,
+        days: daysAfterMonths - (monthsAfterYears * 30),
+        totalDays,
+        totalHours,
+        totalMinutes,
+        totalSeconds
+      },
+      detailed: {
+        totalMonths,
+        totalWeeks,
+        exactAge: `${years} years, ${monthsAfterYears} months, ${daysAfterMonths - (monthsAfterYears * 30)} days`
+      },
+      birthday: {
+        next: format(nextBirthday, 'MMMM d, yyyy'),
+        daysUntil: daysUntilBirthday,
+        nextAge,
+        dayOfWeek: format(nextBirthday, 'EEEE'),
+        isLeapYear: isLeapYear(nextBirthday)
+      },
+      birth: {
+        date: format(birth, 'MMMM d, yyyy'),
+        dayOfWeek: birthDayOfWeek,
+        wasLeapYear: isLeapYear(birth)
+      },
+      astrology: {
+        zodiac: zodiac || { name: 'Unknown', icon: '?', element: 'Unknown' },
+        chineseZodiac: chineseYear
+      },
+      demographics: {
+        generation
+      },
+      funFacts: {
+        heartBeats: heartBeats.toLocaleString(),
+        breathsTaken: breathsTaken.toLocaleString(),
+        sleepHours: sleepHours.toLocaleString(),
+        mealsEaten: mealsEaten.toLocaleString(),
+        lifeProgress: lifeProgress.toFixed(1)
+      }
+    };
+  }, [birthDate, currentDate]);
+
+  // Format large numbers
+  const formatNumber = (num) => {
+    if (num >= 1000000000) {
+      return (num / 1000000000).toFixed(1) + 'B';
+    }
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M';
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toLocaleString();
+  };
+
+  // Share age data
+  const shareAge = async () => {
+    if (!ageData) return;
+
+    const shareText = `I'm ${ageData.detailed.exactAge} old! That's ${ageData.basic.totalDays.toLocaleString()} days, ${formatNumber(ageData.basic.totalHours)} hours, and ${formatNumber(ageData.basic.totalMinutes)} minutes of life! 🎂 Calculate your age at omniwebkit.com`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'My Age Statistics',
+          text: shareText,
+          url: window.location.href
+        });
+        toast.success('Shared successfully!');
+      } catch (error) {
+        // Fallback to clipboard
+        navigator.clipboard.writeText(shareText);
+        toast.success('Copied to clipboard!');
+      }
+    } else {
+      navigator.clipboard.writeText(shareText);
+      toast.success('Copied to clipboard!');
+    }
+  };
+
+  // Download age report
+  const downloadReport = () => {
+    if (!ageData) return;
+
+    const report = `
+AGE CALCULATION REPORT
+=====================
+
+Basic Information:
+- Birth Date: ${ageData.birth.date} (${ageData.birth.dayOfWeek})
+- Current Age: ${ageData.detailed.exactAge}
+- Next Birthday: ${ageData.birthday.next} (${ageData.birthday.daysUntil} days away)
+
+Detailed Statistics:
+- Total Days Lived: ${ageData.basic.totalDays.toLocaleString()}
+- Total Hours: ${ageData.basic.totalHours.toLocaleString()}
+- Total Minutes: ${ageData.basic.totalMinutes.toLocaleString()}
+- Total Seconds: ${ageData.basic.totalSeconds.toLocaleString()}
+
+Astrological Information:
+- Zodiac Sign: ${ageData.astrology.zodiac.name} ${ageData.astrology.zodiac.icon}
+- Element: ${ageData.astrology.zodiac.element}
+- Chinese Zodiac: ${ageData.astrology.chineseZodiac}
+
+Demographics:
+- Generation: ${ageData.demographics.generation.name} (${ageData.demographics.generation.range})
+
+Fun Facts:
+- Estimated Heartbeats: ${ageData.funFacts.heartBeats}
+- Estimated Breaths: ${ageData.funFacts.breathsTaken}
+- Hours Slept: ${ageData.funFacts.sleepHours}
+- Meals Eaten: ${ageData.funFacts.mealsEaten}
+- Life Progress: ${ageData.funFacts.lifeProgress}%
+
+Generated by omniwebkit.com - Age Calculator
+Report created on: ${format(new Date(), 'MMMM d, yyyy HH:mm:ss')}
+    `.trim();
+
+    const blob = new Blob([report], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `age-report-${format(new Date(), 'yyyy-MM-dd')}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast.success('Age report downloaded!');
+  };
+
+  const views = [
+    { id: 'detailed', name: 'Detailed View', icon: Calendar },
+    { id: 'funfacts', name: 'Fun Facts', icon: Sparkles },
+    { id: 'astrology', name: 'Astrology', icon: Star }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 py-8">
+      <div className="container mx-auto px-4 max-w-6xl">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-3xl mb-6 shadow-lg">
+            <Cake className="h-10 w-10 text-white animate-bounce-gentle" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+            Age Calculator
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6">
+            Discover your age in incredible detail! Calculate your exact age, explore fun facts, 
+            and uncover fascinating insights about your life journey.
+          </p>
+          
+          {/* Quick Stats Bar */}
+          {ageData && !ageData.error && (
+            <div className="inline-flex items-center space-x-6 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl px-8 py-4 border border-white/20 shadow-lg">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">{ageData.basic.years}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Years</div>
+              </div>
+              <div className="w-px h-8 bg-gray-300 dark:bg-gray-600"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">{formatNumber(ageData.basic.totalDays)}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Days</div>
+              </div>
+              <div className="w-px h-8 bg-gray-300 dark:bg-gray-600"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-indigo-600">{formatNumber(ageData.basic.totalHours)}</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Hours</div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Input Panel */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Date Input Card */}
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                  <Calendar className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Birth Date</h2>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Enter your birth date</p>
+                </div>
+              </div>
+              
+              <input
+                type="date"
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
+                max={format(new Date(), 'yyyy-MM-dd')}
+                className="w-full p-4 text-lg border-2 border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-purple-500 dark:focus:border-purple-400 transition-all duration-200"
+              />
+
+              {/* Live Age Toggle */}
+              <div className="flex items-center justify-between mt-6 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 rounded-xl">
+                <div className="flex items-center space-x-3">
+                  <Activity className="h-5 w-5 text-purple-600" />
+                  <div>
+                    <div className="font-medium text-gray-900 dark:text-white">Live Age</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Real-time updates</div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowLiveAge(!showLiveAge)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    showLiveAge ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      showLiveAge ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+
+            {/* View Selector */}
+            {ageData && !ageData.error && (
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">View Options</h3>
+                <div className="space-y-2">
+                  {views.map((view) => {
+                    const IconComponent = view.icon;
+                    const isSelected = selectedView === view.id;
+                    return (
+                      <button
+                        key={view.id}
+                        onClick={() => setSelectedView(view.id)}
+                        className={`w-full flex items-center space-x-3 p-3 rounded-xl transition-all ${
+                          isSelected
+                            ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg'
+                            : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                        }`}
+                      >
+                        <IconComponent className="h-5 w-5" />
+                        <span className="font-medium">{view.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            {ageData && !ageData.error && (
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Share & Export</h3>
+                <div className="space-y-3">
+                  <button
+                    onClick={shareAge}
+                    className="w-full btn-primary flex items-center justify-center space-x-2"
+                  >
+                    <Share2 className="h-4 w-4" />
+                    <span>Share Age</span>
+                  </button>
+                  <button
+                    onClick={downloadReport}
+                    className="w-full btn-secondary flex items-center justify-center space-x-2"
+                  >
+                    <Download className="h-4 w-4" />
+                    <span>Download Report</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Results Panel */}
+          <div className="lg:col-span-2">
+            {ageData?.error && (
+              <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-2xl p-8 text-center">
+                <div className="w-16 h-16 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Calendar className="h-8 w-8 text-red-600" />
+                </div>
+                <h3 className="text-xl font-bold text-red-800 dark:text-red-200 mb-2">
+                  Invalid Date
+                </h3>
+                <p className="text-red-600 dark:text-red-300">{ageData.error}</p>
+              </div>
+            )}
+
+            {!birthDate && (
+              <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-12 text-center border-2 border-dashed border-gray-300 dark:border-gray-600">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-indigo-100 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Gift className="h-10 w-10 text-purple-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                  Ready to Calculate Your Age?
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                  Enter your birth date to discover amazing insights about your life journey, 
+                  from basic age calculations to fascinating fun facts and astrological information.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center space-x-2">
+                    <Zap className="h-4 w-4 text-green-500" />
+                    <span>Instant Results</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Activity className="h-4 w-4 text-blue-500" />
+                    <span>Live Updates</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Sparkles className="h-4 w-4 text-purple-500" />
+                    <span>Fun Facts</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {ageData && !ageData.error && (
+              <div className="space-y-6 animate-fade-in">
+                {selectedView === 'detailed' && (
+                  <>
+                    {/* Main Age Display */}
+                    <div className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                      <div className="text-center mb-8">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                          Your Current Age
+                        </h2>
+                        <div className="text-6xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+                          {ageData.basic.years}
+                        </div>
+                        <p className="text-xl text-gray-600 dark:text-gray-300">
+                          {ageData.detailed.exactAge}
+                        </p>
+                        {showLiveAge && (
+                          <div className="flex items-center justify-center space-x-2 mt-4 text-sm text-purple-600">
+                            <div className="w-2 h-2 bg-purple-600 rounded-full animate-pulse"></div>
+                            <span>Live updating</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Age Breakdown Grid */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                          <div className="text-2xl font-bold text-blue-600">{ageData.detailed.totalMonths.toLocaleString()}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Months</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                          <div className="text-2xl font-bold text-green-600">{ageData.detailed.totalWeeks.toLocaleString()}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Weeks</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                          <div className="text-2xl font-bold text-orange-600">{formatNumber(ageData.basic.totalMinutes)}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Minutes</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                          <div className="text-2xl font-bold text-purple-600">{formatNumber(ageData.basic.totalSeconds)}</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-400">Total Seconds</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Next Birthday Card */}
+                    <div className="bg-gradient-to-br from-white to-orange-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                      <div className="flex items-center space-x-4 mb-6">
+                        <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl flex items-center justify-center">
+                          <Gift className="h-8 w-8 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Next Birthday</h3>
+                          <p className="text-gray-600 dark:text-gray-400">You'll be {ageData.birthday.nextAge} years old</p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <div className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                            {ageData.birthday.next}
+                          </div>
+                          <div className="text-gray-600 dark:text-gray-400 mb-4">
+                            {ageData.birthday.dayOfWeek}
+                          </div>
+                          
+                          <div className="flex items-center space-x-2 text-sm">
+                            <Timer className="h-4 w-4 text-orange-500" />
+                            <span className="text-gray-600 dark:text-gray-400">
+                              {ageData.birthday.daysUntil} days to go
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600 dark:text-gray-400">Progress to next birthday</span>
+                            <span className="text-sm font-medium text-gray-900 dark:text-white">
+                              {Math.round((365 - ageData.birthday.daysUntil) / 365 * 100)}%
+                            </span>
+                          </div>
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div 
+                              className="bg-gradient-to-r from-orange-400 to-pink-500 h-2 rounded-full transition-all duration-1000"
+                              style={{ width: `${Math.round((365 - ageData.birthday.daysUntil) / 365 * 100)}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Birth Information */}
+                    <div className="bg-gradient-to-br from-white to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
+                        <Calendar className="h-5 w-5 text-indigo-600" />
+                        <span>Birth Information</span>
+                      </h3>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Birth Date</div>
+                          <div className="font-semibold text-gray-900 dark:text-white">{ageData.birth.date}</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Day of Week</div>
+                          <div className="font-semibold text-gray-900 dark:text-white">{ageData.birth.dayOfWeek}</div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Birth Year</div>
+                          <div className="font-semibold text-gray-900 dark:text-white">
+                            {ageData.birth.wasLeapYear ? 'Leap Year' : 'Regular Year'}
+                          </div>
+                        </div>
+                        <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                          <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Generation</div>
+                          <div className="font-semibold text-gray-900 dark:text-white">{ageData.demographics.generation.name}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {selectedView === 'funfacts' && (
+                  <>
+                    {/* Life Progress */}
+                    <div className="bg-gradient-to-br from-white to-green-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                      <div className="flex items-center space-x-4 mb-6">
+                        <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center">
+                          <TrendingUp className="h-8 w-8 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Life Progress</h3>
+                          <p className="text-gray-600 dark:text-gray-400">Based on average lifespan of 80 years</p>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <span className="text-lg font-medium text-gray-900 dark:text-white">Life Progress</span>
+                          <span className="text-2xl font-bold text-green-600">{ageData.funFacts.lifeProgress}%</span>
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+                          <div 
+                            className="bg-gradient-to-r from-green-400 to-emerald-500 h-4 rounded-full transition-all duration-2000 flex items-center justify-end pr-2"
+                            style={{ width: `${Math.min(parseFloat(ageData.funFacts.lifeProgress), 100)}%` }}
+                          >
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          You've lived {ageData.funFacts.lifeProgress}% of an average human lifespan
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Fun Facts Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="bg-gradient-to-br from-white to-red-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-500 rounded-xl flex items-center justify-center">
+                            <Heart className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Heartbeats</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Estimated heartbeats</p>
+                          </div>
+                        </div>
+                        <div className="text-3xl font-bold text-red-500 mb-2">{ageData.funFacts.heartBeats}</div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Based on average 70 BPM
+                        </p>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-white to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl flex items-center justify-center">
+                            <Activity className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Breaths</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Breaths taken</p>
+                          </div>
+                        </div>
+                        <div className="text-3xl font-bold text-blue-500 mb-2">{ageData.funFacts.breathsTaken}</div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Based on 16 breaths per minute
+                        </p>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-white to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-xl flex items-center justify-center">
+                            <Moon className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Sleep</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Hours slept</p>
+                          </div>
+                        </div>
+                        <div className="text-3xl font-bold text-indigo-500 mb-2">{ageData.funFacts.sleepHours}</div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          About 8 hours per day
+                        </p>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-white to-orange-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-xl flex items-center justify-center">
+                            <Trophy className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Meals</h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Meals eaten</p>
+                          </div>
+                        </div>
+                        <div className="text-3xl font-bold text-orange-500 mb-2">{ageData.funFacts.mealsEaten}</div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Approximately 3 meals per day
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Milestones */}
+                    <div className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 shadow-xl border border-white/20">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center space-x-2">
+                        <Target className="h-5 w-5 text-purple-600" />
+                        <span>Life Milestones Achieved</span>
+                      </h3>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className={`p-4 rounded-xl ${ageData.basic.totalDays >= 1000 ? 'bg-green-100 dark:bg-green-900/20 border-2 border-green-300' : 'bg-gray-100 dark:bg-gray-700 opacity-50'}`}>
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">{ageData.basic.totalDays >= 1000 ? '🎉' : '⏳'}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">1,000 Days</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {ageData.basic.totalDays >= 1000 ? 'Achieved!' : `${1000 - ageData.basic.totalDays} to go`}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className={`p-4 rounded-xl ${ageData.basic.totalDays >= 10000 ? 'bg-green-100 dark:bg-green-900/20 border-2 border-green-300' : 'bg-gray-100 dark:bg-gray-700 opacity-50'}`}>
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">{ageData.basic.totalDays >= 10000 ? '🌟' : '⏳'}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">10,000 Days</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {ageData.basic.totalDays >= 10000 ? 'Achieved!' : `${(10000 - ageData.basic.totalDays).toLocaleString()} to go`}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className={`p-4 rounded-xl ${ageData.basic.totalHours >= 100000 ? 'bg-green-100 dark:bg-green-900/20 border-2 border-green-300' : 'bg-gray-100 dark:bg-gray-700 opacity-50'}`}>
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">{ageData.basic.totalHours >= 100000 ? '⚡' : '⏳'}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">100K Hours</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {ageData.basic.totalHours >= 100000 ? 'Achieved!' : `${(100000 - ageData.basic.totalHours).toLocaleString()} to go`}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className={`p-4 rounded-xl ${ageData.basic.totalMinutes >= 1000000 ? 'bg-green-100 dark:bg-green-900/20 border-2 border-green-300' : 'bg-gray-100 dark:bg-gray-700 opacity-50'}`}>
+                          <div className="text-center">
+                            <div className="text-2xl mb-2">{ageData.basic.totalMinutes >= 1000000 ? '💎' : '⏳'}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">1M Minutes</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              {ageData.basic.totalMinutes >= 1000000 ? 'Achieved!' : `${(1000000 - ageData.basic.totalMinutes).toLocaleString()} to go`}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {selectedView === 'astrology' && (
+                  <>
+                    {/* Zodiac Information */}
+                    <div className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                      <div className="text-center mb-8">
+                        <div className="text-8xl mb-4">{ageData.astrology.zodiac.icon}</div>
+                        <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                          {ageData.astrology.zodiac.name}
+                        </h3>
+                        <div className="inline-flex items-center space-x-2 bg-purple-100 dark:bg-purple-900/20 px-4 py-2 rounded-full">
+                          <Star className="h-4 w-4 text-purple-600" />
+                          <span className="text-purple-700 dark:text-purple-300 font-medium">
+                            {ageData.astrology.zodiac.element} Sign
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Western Zodiac</h4>
+                          <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-gray-900 dark:text-white">Sign</span>
+                              <span className="text-purple-600">{ageData.astrology.zodiac.name}</span>
+                            </div>
+                          </div>
+                          <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-gray-900 dark:text-white">Element</span>
+                              <span className="text-purple-600">{ageData.astrology.zodiac.element}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Chinese Zodiac</h4>
+                          <div className="bg-white/50 dark:bg-gray-700/50 p-4 rounded-xl text-center">
+                            <div className="text-4xl mb-2">
+                              {ageData.astrology.chineseZodiac === 'Rat' ? '🐭' :
+                               ageData.astrology.chineseZodiac === 'Ox' ? '🐂' :
+                               ageData.astrology.chineseZodiac === 'Tiger' ? '🐅' :
+                               ageData.astrology.chineseZodiac === 'Rabbit' ? '🐰' :
+                               ageData.astrology.chineseZodiac === 'Dragon' ? '🐉' :
+                               ageData.astrology.chineseZodiac === 'Snake' ? '🐍' :
+                               ageData.astrology.chineseZodiac === 'Horse' ? '🐎' :
+                               ageData.astrology.chineseZodiac === 'Goat' ? '🐐' :
+                               ageData.astrology.chineseZodiac === 'Monkey' ? '🐒' :
+                               ageData.astrology.chineseZodiac === 'Rooster' ? '🐓' :
+                               ageData.astrology.chineseZodiac === 'Dog' ? '🐕' : '🐷'}
+                            </div>
+                            <div className="font-semibold text-gray-900 dark:text-white">
+                              Year of the {ageData.astrology.chineseZodiac}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Generation Information */}
+                    <div className="bg-gradient-to-br from-white to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 shadow-xl border border-white/20">
+                      <div className="text-center mb-6">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                          You're a {ageData.demographics.generation.name}
+                        </h3>
+                        <div className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/20 px-4 py-2 rounded-full">
+                          <Globe className="h-4 w-4 text-blue-600" />
+                          <span className="text-blue-700 dark:text-blue-300 font-medium">
+                            Born {ageData.demographics.generation.range}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="bg-white/50 dark:bg-gray-700/50 p-6 rounded-xl">
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
+                          {ageData.demographics.generation.name} Characteristics:
+                        </h4>
+                        <div className="space-y-2 text-gray-600 dark:text-gray-400">
+                          {ageData.demographics.generation.name === 'Gen Z' && (
+                            <>
+                              <p>• Digital natives who grew up with smartphones and social media</p>
+                              <p>• Known for entrepreneurial spirit and social consciousness</p>
+                              <p>• Values authenticity, diversity, and mental health awareness</p>
+                            </>
+                          )}
+                          {ageData.demographics.generation.name === 'Millennial' && (
+                            <>
+                              <p>• Experienced the transition from analog to digital</p>
+                              <p>• Known for work-life balance and experiences over possessions</p>
+                              <p>• Highly educated but faced economic challenges</p>
+                            </>
+                          )}
+                          {ageData.demographics.generation.name === 'Gen X' && (
+                            <>
+                              <p>• Independent and self-reliant generation</p>
+                              <p>• Witnessed the rise of personal computers and internet</p>
+                              <p>• Values work-life balance and skeptical of authority</p>
+                            </>
+                          )}
+                          {ageData.demographics.generation.name === 'Baby Boomer' && (
+                            <>
+                              <p>• Post-war generation that experienced economic prosperity</p>
+                              <p>• Known for idealism and challenging traditional values</p>
+                              <p>• Values hard work and career achievement</p>
+                            </>
+                          )}
+                          {ageData.demographics.generation.name === 'Gen Alpha' && (
+                            <>
+                              <p>• First generation born entirely in the 21st century</p>
+                              <p>• Growing up with AI, VR, and advanced technology</p>
+                              <p>• Expected to be the most educated generation</p>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Fun Facts Banner */}
+        {ageData && !ageData.error && (
+          <div className="mt-12 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-2xl p-8 text-white text-center shadow-2xl">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <Sparkles className="h-6 w-6" />
+              <h3 className="text-2xl font-bold">Amazing Fact!</h3>
+            </div>
+            <p className="text-lg mb-4">
+              In the time you've been alive, your heart has beaten approximately{' '}
+              <span className="font-bold text-yellow-300">{ageData.funFacts.heartBeats}</span> times!
+            </p>
+            <p className="text-white/80">
+              That's roughly {Math.round(parseInt(ageData.funFacts.heartBeats.replace(/,/g, '')) / 1000000)} million heartbeats keeping you alive! 💓
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default AgeCalculator;
