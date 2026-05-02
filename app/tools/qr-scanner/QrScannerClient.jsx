@@ -9,6 +9,7 @@ import {
   ScanLine, ShieldCheck, Zap
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const MAX_CLIENT_SIZE_MB = 2;
 const MAX_CLIENT_SIZE_BYTES = MAX_CLIENT_SIZE_MB * 1024 * 1024;
@@ -182,7 +183,7 @@ export default function QrScannerClient() {
       formData.append("file", file);
 
       // Start Job
-      const res = await fetch("http://localhost:8000/api/v1/tools/qr-scanner", {
+      const res = await fetch(`${API_V1}/tools/qr-scanner`, {
         method: "POST",
         body: formData,
       });
@@ -202,7 +203,7 @@ export default function QrScannerClient() {
 
   const pollJobStatus = async (jobId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jobId}`);
+      const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Failed to fetch job status.");
       
       const job = await res.json();

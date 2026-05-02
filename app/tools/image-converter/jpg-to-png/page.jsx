@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
+import { API_V1 } from "@/lib/api-config";
 import {
   Upload, Download, ImageIcon, Settings, X, RotateCw,
   CheckCircle, Shield, Cpu, Info, ArrowRight
@@ -88,8 +89,7 @@ export default function JpgToPng() {
     formData.append('file', file);
     formData.append('target_format', 'png');
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
-    const res = await fetch(`${backendUrl}/api/v1/tools/image-convert`, {
+    const res = await fetch(`${API_V1}/tools/image-convert`, {
       method: 'POST',
       body: formData,
     });

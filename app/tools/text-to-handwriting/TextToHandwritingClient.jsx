@@ -3,6 +3,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { PenTool, Upload, Download, Loader2, Check, AlertTriangle, FileText, FileDown, Settings, X, ChevronLeft, ChevronRight, RefreshCw, Server, Monitor, Zap, Clock } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import { toast } from 'react-hot-toast';
+import { API_V1 } from "@/lib/api-config";
 
 const cardCls = 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl';
 
@@ -24,14 +25,13 @@ const PAPER_TYPES = [
 ];
 
 const SERVER_THRESHOLD_CHARS = 5000;
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 2000;
 
 async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_BASE}/text-to-handwriting/status/${jobId}`, { signal });
+    const res = await fetch(`${API_V1}/text-to-handwriting/status/${jobId}`, { signal });
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0, "Server is processing...");
@@ -212,7 +212,7 @@ export default function TextToHandwritingClient() {
                     paper_type: paperType
                 };
 
-                const uploadRes = await fetch(`${API_BASE}/text-to-handwriting`, { 
+                const uploadRes = await fetch(`${API_V1}/text-to-handwriting`, { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload), 
@@ -230,12 +230,12 @@ export default function TextToHandwritingClient() {
                 await pollJob(job_id, updatePhase, abort.signal);
                 
                 updatePhase(100, '✅ Document complete!');
-                setDownloadUrl(`${API_BASE}/text-to-handwriting/download/${job_id}`);
+                setDownloadUrl(`${API_V1}/text-to-handwriting/download/${job_id}`);
                 setDone(true);
                 toast.success('Server conversion complete!');
                 
                 // cleanup after 60s
-                setTimeout(() => fetch(`${API_BASE}/text-to-handwriting/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
+                setTimeout(() => fetch(`${API_V1}/text-to-handwriting/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
             }
         } catch (err) {
             if (err.name === 'AbortError' || err.message === 'Cancelled') {

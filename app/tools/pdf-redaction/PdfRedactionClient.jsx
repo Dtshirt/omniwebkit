@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import { Loader2, CheckCircle2, Download, ShieldCheck, FileText, Trash2, Plus, X, Search, ChevronDown, ChevronUp, AlertTriangle } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
 const POLL_MS = 2500;
@@ -65,7 +66,7 @@ export default function PdfRedactionClient() {
       fd.append("file", pdfFile);
       fd.append("words", JSON.stringify(words));
 
-      const res = await fetch("http://localhost:8000/api/v1/tools/pdf-redact", {
+      const res = await fetch(`${API_V1}/tools/pdf-redact`, {
         method: "POST",
         body: fd,
       });
@@ -80,7 +81,7 @@ export default function PdfRedactionClient() {
 
       for (;;) {
         await new Promise(r => setTimeout(r, POLL_MS));
-        const sr = await fetch(`http://localhost:8000/api/v1/jobs/${job_id}`);
+        const sr = await fetch(`${API_V1}/jobs/${job_id}`);
         const job = await sr.json();
         
         if (job.progress) setProgress(parseInt(job.progress));
@@ -88,7 +89,7 @@ export default function PdfRedactionClient() {
           throw new Error(job.error || "Processing failed.");
         }
         if (job.status === "done") {
-          const dl = await fetch(`http://localhost:8000/api/v1/download/${job_id}`);
+          const dl = await fetch(`${API_V1}/download/${job_id}`);
           setOutBlob(await dl.blob());
           toast.success("Redaction complete!");
           break;

@@ -4,6 +4,8 @@ import { saveAs } from "file-saver";
 import { UploadCloud, Loader2, CheckCircle2, AlertCircle, ChevronDown, ChevronUp, Download, Zap, Server, Music2, Trash2, GripVertical, Plus, Volume2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 
+import { API_V1 } from "@/lib/api-config";
+
 const CLIENT_THRESHOLD = 50 * 1024 * 1024;
 const POLLING_INTERVAL = 2500;
 const MAX_FILES = 20;
@@ -164,21 +166,21 @@ export default function AudioMergerClient() {
         fd.append("crossfade_ms", String(Math.round(crossfade * 1000)));
         fd.append("bitrate", bitrate);
 
-        const res = await fetch("http://localhost:8000/api/v1/tools/audio-merge", { method: "POST", body: fd });
+        const res = await fetch(`${API_V1}/tools/audio-merge`, { method: "POST", body: fd });
         if (!res.ok) { const e = await res.json(); throw new Error(e.detail || "Upload failed."); }
         const { job_id } = await res.json();
         setProgress(15); setStatusMsg("Server merging with crossfade…");
 
         for (;;) {
           await new Promise(r => setTimeout(r, POLLING_INTERVAL));
-          const sr = await fetch(`http://localhost:8000/api/v1/jobs/${job_id}`);
+          const sr = await fetch(`${API_V1}/jobs/${job_id}`);
           if (!sr.ok) throw new Error("Status check failed.");
           const job = await sr.json();
           if (job.progress) setProgress(parseInt(job.progress, 10));
           if (job.status === "failed") throw new Error(job.error || "Server failed.");
           if (job.status === "done") {
             setStatusMsg("Downloading merged audio…");
-            const dl = await fetch(`http://localhost:8000/api/v1/download/${job_id}`);
+            const dl = await fetch(`${API_V1}/download/${job_id}`);
             if (!dl.ok) throw new Error("Download failed.");
             const blob = await dl.blob();
             setOutputBlob(blob); setOutputUrl(URL.createObjectURL(blob));

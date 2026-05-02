@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import cronstrue from "cronstrue";
 import cronParser from "cron-parser";
 import { Clock, Calendar, CheckCircle2, XCircle, AlertCircle, ChevronDown, ChevronUp, FastForward, Server, Zap } from "lucide-react";
+import { API_V1 } from "@/lib/api-config";
 
-const API = "http://localhost:8000/api/v1";
 
 const COMMON_CRONS = [
   { expr: "* * * * *", label: "Every minute" },
@@ -56,7 +56,7 @@ export default function CronTesterClient() {
     setServerStatus("loading");
     setServerDates([]);
     try {
-      const res = await fetch(`${API}/cron-test`, {
+      const res = await fetch(`${API_V1}/cron-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ expression: cron, count: 10 }),

@@ -3,6 +3,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { FileSpreadsheet, Upload, Download, Loader2, Check, AlertTriangle, Table2, FileDown, Settings, X, ChevronLeft, ChevronRight, RefreshCw, Server, Monitor, Zap, Clock } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import { toast } from 'react-hot-toast';
+import { API_V1 } from "@/lib/api-config";
 
 const cardCls = 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl';
 
@@ -21,7 +22,6 @@ const ACCENT_COLORS = [
 ];
 
 const SERVER_THRESHOLD_MB = 2; // Files > 2 MB default to server
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 2000;
 
 function fmtSize(bytes) {
@@ -36,7 +36,7 @@ async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_BASE}/excel-to-pdf/status/${jobId}`, { signal });
+    const res = await fetch(`${API_V1}/tools/excel-to-pdf/status/${jobId}`, { signal });
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0, "Server is processing file...");
@@ -226,7 +226,7 @@ export default function ExcelToPdfClient() {
                 const form = new FormData();
                 form.append('file', file);
 
-                const uploadRes = await fetch(`${API_BASE}/excel-to-pdf`, { method: 'POST', body: form, signal: abort.signal });
+                const uploadRes = await fetch(`${API_V1}/tools/excel-to-pdf`, { method: 'POST', body: form, signal: abort.signal });
                 if (!uploadRes.ok) {
                     const err = await uploadRes.json().catch(() => ({}));
                     throw new Error(err.detail || 'Upload failed');
@@ -256,7 +256,7 @@ export default function ExcelToPdfClient() {
                     toast.success('Server conversion complete!');
                     
                     // cleanup after 60s
-                    setTimeout(() => fetch(`${API_BASE}/excel-to-pdf/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
+                    setTimeout(() => fetch(`${API_V1}/tools/excel-to-pdf/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
                 }
             }
         } catch (err) {

@@ -8,6 +8,7 @@ import {
   Search, FileText, Zap, Server, Shield, Database
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const MAX_CLIENT_SIZE_BYTES = 50 * 1024 * 1024; // 50MB
 const POLLING_INTERVAL = 2000;
@@ -56,7 +57,7 @@ export default function HttpHeadersClient() {
     setSearchQuery("");
     
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/tools/http-headers/single?url=${encodeURIComponent(targetUrl)}`);
+      const res = await fetch(`${API_V1}/tools/http-headers/single?url=${encodeURIComponent(targetUrl)}`);
       
       if (!res.ok) throw new Error("Failed to contact the server.");
       
@@ -144,7 +145,7 @@ export default function HttpHeadersClient() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch("http://localhost:8000/api/v1/tools/http-headers", {
+      const res = await fetch(`${API_V1}/tools/http-headers`, {
         method: "POST",
         body: formData,
       });
@@ -167,7 +168,7 @@ export default function HttpHeadersClient() {
 
   const pollJobStatus = async (jobId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jobId}`);
+      const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Failed to fetch job status.");
       
       const job = await res.json();
@@ -178,7 +179,7 @@ export default function HttpHeadersClient() {
 
       if (job.status === "done") {
         if (job.output_path) {
-          const downloadRes = await fetch(`http://localhost:8000/api/v1/download/${jobId}`);
+          const downloadRes = await fetch(`${API_V1}/download/${jobId}`);
           if (downloadRes.ok) {
             const blob = await downloadRes.blob();
             saveAs(blob, `http_headers_results.csv`);

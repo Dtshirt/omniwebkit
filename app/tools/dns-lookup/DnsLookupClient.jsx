@@ -8,6 +8,7 @@ import {
   Search, FileText, Zap, Server
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const MAX_CLIENT_SIZE_BYTES = 50 * 1024 * 1024; // 50MB for CSV
 const POLLING_INTERVAL = 2000;
@@ -129,7 +130,7 @@ export default function DnsLookupClient() {
       formData.append("file", file);
       formData.append("record_type", recordType);
 
-      const res = await fetch("http://localhost:8000/api/v1/tools/dns-lookup", {
+      const res = await fetch(`${API_V1}/tools/dns-lookup`, {
         method: "POST",
         body: formData,
       });
@@ -154,7 +155,7 @@ export default function DnsLookupClient() {
 
   const pollJobStatus = async (jobId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jobId}`);
+      const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Failed to fetch job status.");
       
       const job = await res.json();
@@ -166,7 +167,7 @@ export default function DnsLookupClient() {
       if (job.status === "done") {
         if (job.output_path) {
           // Download the file
-          const downloadRes = await fetch(`http://localhost:8000/api/v1/download/${jobId}`);
+          const downloadRes = await fetch(`${API_V1}/download/${jobId}`);
           if (downloadRes.ok) {
             const blob = await downloadRes.blob();
             saveAs(blob, `dns_results_${recordType}.csv`);

@@ -8,6 +8,7 @@ import {
   Activity, Wifi, WifiOff, Timer
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const MAX_CLIENT_SIZE_BYTES = 50 * 1024 * 1024;
 const POLLING_INTERVAL = 2500;
@@ -64,7 +65,7 @@ export default function PingToolClient() {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/tools/ping/single?host=${encodeURIComponent(h)}`);
+      const res = await fetch(`${API_V1}/tools/ping/single?host=${encodeURIComponent(h)}`);
       if (!res.ok) throw new Error("Server error.");
       const data = await res.json();
       if (data.error) toast.error(data.error);
@@ -91,7 +92,7 @@ export default function PingToolClient() {
     try {
       const fd = new FormData();
       fd.append("file", selectedFile);
-      const res = await fetch("http://localhost:8000/api/v1/tools/ping", { method: "POST", body: fd });
+      const res = await fetch(`${API_V1}/tools/ping`, { method: "POST", body: fd });
       if (!res.ok) { const e = await res.json(); throw new Error(e.detail || "Upload failed."); }
       const { job_id } = await res.json();
       setBulkStatus("Pinging all hosts in background...");
@@ -103,12 +104,12 @@ export default function PingToolClient() {
 
   const pollJob = async (jobId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jobId}`);
+      const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Failed to get job status.");
       const job = await res.json();
       if (job.status === "failed") throw new Error(job.error || "Worker failed.");
       if (job.status === "done") {
-        const dl = await fetch(`http://localhost:8000/api/v1/download/${jobId}`);
+        const dl = await fetch(`${API_V1}/download/${jobId}`);
         if (!dl.ok) throw new Error("Download failed.");
         saveAs(await dl.blob(), "ping_results.csv");
         setBulkSuccess(true); toast.success("Bulk ping complete!");

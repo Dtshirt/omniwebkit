@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import { UploadCloud, Loader2, CheckCircle2, Download, Zap, Server, FileText, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const CLIENT_MAX = 10 * 1024 * 1024; // 10MB
 const POLL_MS = 2500;
@@ -116,18 +117,18 @@ export default function PdfSplitterClient() {
         fd.append("file", file);
         fd.append("mode", mode);
         fd.append("param", mode === "chunks" ? String(chunkSize) : rangeStr);
-        const res = await fetch("http://localhost:8000/api/v1/tools/pdf-split", { method: "POST", body: fd });
+        const res = await fetch(`${API_V1}/tools/pdf-split`, { method: "POST", body: fd });
         if (!res.ok) { const e = await res.json(); throw new Error(e.detail || "Upload failed."); }
         const { job_id } = await res.json();
         setProgress(15);
         for (;;) {
           await new Promise(r => setTimeout(r, POLL_MS));
-          const sr = await fetch(`http://localhost:8000/api/v1/jobs/${job_id}`);
+          const sr = await fetch(`${API_V1}/jobs/${job_id}`);
           const job = await sr.json();
           if (job.progress) setProgress(parseInt(job.progress));
           if (job.status === "failed") throw new Error(job.error || "Processing failed.");
           if (job.status === "done") {
-            const dl = await fetch(`http://localhost:8000/api/v1/download/${job_id}`);
+            const dl = await fetch(`${API_V1}/download/${job_id}`);
             const blob = await dl.blob();
             const isZip = mode === "chunks";
             setResults([{

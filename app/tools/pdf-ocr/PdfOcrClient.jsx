@@ -4,10 +4,10 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FileText, UploadCloud, Download, RefreshCw, CheckCircle, AlertCircle, Server, Monitor, Clock, Layers, Zap, Type, AlignLeft } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { API_V1 } from "@/lib/api-config";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const SERVER_THRESHOLD_MB = 5;   // Files > 5 MB go to server (OCR is very CPU intensive)
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 2000;
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
@@ -86,7 +86,7 @@ async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_BASE}/pdf-ocr/status/${jobId}`, { signal });
+    const res = await fetch(`${API_V1}/pdf-ocr/status/${jobId}`, { signal });
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0, "Server is processing OCR...");
@@ -165,7 +165,7 @@ export default function PdfOcrClient() {
         const form = new FormData();
         form.append('file', file);
 
-        const uploadRes = await fetch(`${API_BASE}/pdf-ocr/convert`, { method: 'POST', body: form, signal: abort.signal });
+        const uploadRes = await fetch(`${API_V1}/pdf-ocr/convert`, { method: 'POST', body: form, signal: abort.signal });
         if (!uploadRes.ok) {
           const err = await uploadRes.json().catch(() => ({}));
           throw new Error(err.detail || 'Upload failed');
@@ -191,14 +191,14 @@ export default function PdfOcrClient() {
           setOutputSize(result.output_size ? Number(result.output_size) : null);
 
           updatePhase(95, '📥 Downloading text...');
-          const dlRes = await fetch(`${API_BASE}/pdf-ocr/download/${job_id}`, { signal: abort.signal });
+          const dlRes = await fetch(`${API_V1}/pdf-ocr/download/${job_id}`, { signal: abort.signal });
           if (!dlRes.ok) throw new Error('Download failed');
           const text = await dlRes.text();
           setExtractedText(text);
           toast.success('Server text extracted!');
 
           // cleanup after 60s
-          setTimeout(() => fetch(`${API_BASE}/pdf-ocr/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
+          setTimeout(() => fetch(`${API_V1}/pdf-ocr/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
         }
       }
     } catch (err) {

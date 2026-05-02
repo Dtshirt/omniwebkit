@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { CheckCircle2, XCircle, AlertTriangle, Info, Loader2, ChevronDown, ChevronUp, Shield, Globe, Zap, RefreshCw } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
-const API = "http://localhost:8000/api/v1";
 const COMMON_ORIGINS = [
   "https://example.com",
   "https://localhost:3000",
@@ -99,7 +99,7 @@ export default function CorsTesterClient() {
     if (!url.trim()) { toast.error("Enter a URL to test."); return; }
     setLoading(true); setResult(null); setError(null);
     try {
-      const res = await fetch(`${API}/cors-test`, {
+      const res = await fetch(`${API_V1}/cors-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url, origin, method, request_headers: reqHeaders }),

@@ -9,6 +9,7 @@ import {
   Scissors, Zap, ShieldCheck
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const MAX_CLIENT_SIZE_MB = 5;
 const MAX_CLIENT_SIZE_BYTES = MAX_CLIENT_SIZE_MB * 1024 * 1024;
@@ -118,7 +119,7 @@ export default function BgRemoverClient() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch("http://localhost:8000/api/v1/tools/bg-remover", {
+      const res = await fetch(`${API_V1}/tools/bg-remover`, {
         method: "POST",
         body: formData,
       });
@@ -141,7 +142,7 @@ export default function BgRemoverClient() {
 
   const pollJobStatus = async (jobId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jobId}`);
+      const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Failed to fetch job status.");
       
       const job = await res.json();
@@ -152,7 +153,7 @@ export default function BgRemoverClient() {
 
       if (job.status === "done") {
         if (job.output_path) {
-          const downloadRes = await fetch(`http://localhost:8000/api/v1/download/${jobId}`);
+          const downloadRes = await fetch(`${API_V1}/download/${jobId}`);
           if (downloadRes.ok) {
             const blob = await downloadRes.blob();
             const url = URL.createObjectURL(blob);

@@ -8,6 +8,7 @@ import {
   Music2, Trash2, Volume2
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const CLIENT_THRESHOLD = 50 * 1024 * 1024;  // 50MB
 const MAX_SIZE = 2 * 1024 * 1024 * 1024;    // 2GB
@@ -143,7 +144,7 @@ export default function VideoToAudioClient() {
         fd.append("output_format", format);
         fd.append("bitrate", bitrate);
 
-        const res = await fetch("http://localhost:8000/api/v1/tools/video-to-audio", {
+        const res = await fetch(`${API_V1}/tools/video-to-audio`, {
           method: "POST", body: fd,
         });
         if (!res.ok) { const e = await res.json(); throw new Error(e.detail || "Upload failed."); }
@@ -164,14 +165,14 @@ export default function VideoToAudioClient() {
   const pollJob = async (jobId) => {
     for (;;) {
       await new Promise(r => setTimeout(r, POLLING_INTERVAL));
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jobId}`);
+      const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Status check failed.");
       const job = await res.json();
       if (job.progress) setProgress(parseInt(job.progress, 10));
       if (job.status === "failed") throw new Error(job.error || "Server processing failed.");
       if (job.status === "done") {
         setStatusMsg("Downloading audio…");
-        const dl = await fetch(`http://localhost:8000/api/v1/download/${jobId}`);
+        const dl = await fetch(`${API_V1}/download/${jobId}`);
         if (!dl.ok) throw new Error("Download failed.");
         const blob = await dl.blob();
         setOutputBlob(blob);

@@ -4,10 +4,10 @@ import React, { useState, useRef, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Video, UploadCloud, Settings, Download, RefreshCw, Film, Image as ImageIcon, CheckCircle, AlertCircle, Server, Monitor, Clock, Layers, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { API_V1 } from "@/lib/api-config";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const SERVER_THRESHOLD_MB = 50;   // Files > 50 MB go to server
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 2000;
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_BASE}/gif/status/${jobId}`, { signal });
+    const res = await fetch(`${API_V1}/gif/status/${jobId}`, { signal });
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0);
@@ -148,7 +148,7 @@ export default function VideoToGifClient() {
         form.append('quality', cfgQuality);
         form.append('optimize', cfgOptimize);
 
-        const uploadRes = await fetch(`${API_BASE}/gif/convert`, { method: 'POST', body: form, signal: abort.signal });
+        const uploadRes = await fetch(`${API_V1}/gif/convert`, { method: 'POST', body: form, signal: abort.signal });
         if (!uploadRes.ok) {
           const err = await uploadRes.json().catch(() => ({}));
           throw new Error(err.detail || 'Upload failed');
@@ -176,7 +176,7 @@ export default function VideoToGifClient() {
           setOutputSize(result.output_size ? Number(result.output_size) : null);
 
           setPhase('📥 Downloading GIF...');
-          const dlRes = await fetch(`${API_BASE}/gif/download/${job_id}`, { signal: abort.signal });
+          const dlRes = await fetch(`${API_V1}/gif/download/${job_id}`, { signal: abort.signal });
           if (!dlRes.ok) throw new Error('Download failed');
           const blob = await dlRes.blob();
           setGifBlob(blob);
@@ -184,7 +184,7 @@ export default function VideoToGifClient() {
           toast.success('Server GIF ready!');
 
           // cleanup after 30s
-          setTimeout(() => fetch(`${API_BASE}/gif/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 30000);
+          setTimeout(() => fetch(`${API_V1}/gif/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 30000);
         }
       }
     } catch (err) {

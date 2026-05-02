@@ -2,8 +2,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Copy, RefreshCw, Trash2, ChevronDown, ChevronUp, Wifi, WifiOff, Plus, CheckCircle2, Globe, Clock, Hash, Terminal } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
-const API = "http://localhost:8000/api/v1";
+const API = API_V1;
 const POLL_MS = 2500;
 
 const METHOD_COLORS = {

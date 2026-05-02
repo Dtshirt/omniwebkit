@@ -12,6 +12,7 @@ import {
   Settings, Copy, FileText, Zap, ShieldCheck
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const MAX_CLIENT_SIZE_KB = 100;
 const MAX_CLIENT_SIZE_BYTES = MAX_CLIENT_SIZE_KB * 1024;
@@ -240,7 +241,7 @@ export default function BarcodeGeneratorClient() {
       formData.append("barcode_type", barcodeType);
       formData.append("output_format", outputFormat);
 
-      const res = await fetch("http://localhost:8000/api/v1/tools/barcode-gen", {
+      const res = await fetch(`${API_V1}/tools/barcode-gen`, {
         method: "POST",
         body: formData,
       });
@@ -263,7 +264,7 @@ export default function BarcodeGeneratorClient() {
 
   const pollJobStatus = async (jobId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jobId}`);
+      const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Failed to fetch job status.");
       
       const job = await res.json();
@@ -275,7 +276,7 @@ export default function BarcodeGeneratorClient() {
       if (job.status === "done") {
         if (job.output_path) {
           // Download the file
-          const downloadRes = await fetch(`http://localhost:8000/api/v1/download/${jobId}`);
+          const downloadRes = await fetch(`${API_V1}/download/${jobId}`);
           if (downloadRes.ok) {
             const blob = await downloadRes.blob();
             saveAs(blob, "bulk_barcodes.zip");

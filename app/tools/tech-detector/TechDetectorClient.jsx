@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { API_V1 } from "@/lib/api-config";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import {
   Globe, Search, Loader2, AlertCircle, CheckCircle2,
@@ -8,7 +9,6 @@ import {
   ChevronDown, ChevronUp, Copy, Check, ExternalLink,
 } from "lucide-react";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 // ─── Category metadata ───────────────────────────────────────────────────────
 const CAT_META = {
@@ -75,7 +75,7 @@ export default function TechDetectorClient() {
 
     try {
       const res = await fetch(
-        `${API_BASE}/api/v1/tools/tech-detector?url=${encodeURIComponent(raw)}`
+        `${API_V1}/tools/tech-detector?url=${encodeURIComponent(raw)}`
       );
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));

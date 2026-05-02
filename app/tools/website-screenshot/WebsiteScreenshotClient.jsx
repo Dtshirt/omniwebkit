@@ -3,9 +3,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, Download, RefreshCw, CheckCircle, Server, Clock, Image as ImageIcon, FileText, Globe, AlertCircle } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { API_V1 } from "@/lib/api-config";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 2000;
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_BASE}/jobs/${jobId}`, { signal }); // standard jobs status endpoint
+    const res = await fetch(`${API_V1}/jobs/${jobId}`, { signal }); // standard jobs status endpoint
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0, "Capturing screenshot...");
@@ -64,7 +64,7 @@ export default function WebsiteScreenshotClient() {
         form.append('url', url);
         form.append('format', format);
 
-        const uploadRes = await fetch(`${API_BASE}/tools/website-screenshot`, { method: 'POST', body: form, signal: abort.signal });
+        const uploadRes = await fetch(`${API_V1}/tools/website-screenshot`, { method: 'POST', body: form, signal: abort.signal });
         if (!uploadRes.ok) {
           const err = await uploadRes.json().catch(() => ({}));
           throw new Error(err.detail || 'Submission failed');
@@ -76,7 +76,7 @@ export default function WebsiteScreenshotClient() {
         const result = await pollJob(job_id, updatePhase, abort.signal);
 
         updatePhase(100, '✅ Capture complete!');
-        setDownloadUrl(`${API_BASE}/download/${job_id}`); // Using standard download route if it exists, otherwise we'll adjust
+        setDownloadUrl(`${API_V1}/download/${job_id}`); // Using standard download route if it exists, otherwise we'll adjust
         setDownloadName(result.download_name || `screenshot.${format}`);
         toast.success('Screenshot captured successfully!');
 

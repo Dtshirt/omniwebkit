@@ -4,8 +4,8 @@ import {
   Video, Upload, Download, RotateCcw, Loader2, Check,
   AlertCircle, Settings, Film, Zap, Server
 } from 'lucide-react';
+import { API_V1 } from "@/lib/api-config";
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 const card = 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm';
 const inp  = 'w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-violet-500/40 transition';
@@ -80,7 +80,7 @@ export default function VideoCompressor() {
   const startPoll = (jobId) => {
     pollRef.current = setInterval(async () => {
       try {
-        const res = await fetch(`${API}/status/${jobId}`);
+        const res = await fetch(`${API_V1}/status/${jobId}`);
         const data = await res.json();
         setProgress(data.progress);
         if (data.status === 'done') {
@@ -114,7 +114,7 @@ export default function VideoCompressor() {
       form.append('resolution', resolution);
       form.append('format', format);
 
-      const res = await fetch(`${API}/compress`, { method: 'POST', body: form });
+      const res = await fetch(`${API_V1}/compress`, { method: 'POST', body: form });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.detail || `Server error ${res.status}`);
@@ -134,7 +134,7 @@ export default function VideoCompressor() {
   const download = async () => {
     if (!result) return;
     try {
-      const resp = await fetch(`${API}/download/${result.jobId}`);
+      const resp = await fetch(`${API_V1}/download/${result.jobId}`);
       if (!resp.ok) throw new Error('Download failed');
       const blob = await resp.blob();
       const url = URL.createObjectURL(blob);
@@ -144,7 +144,7 @@ export default function VideoCompressor() {
       a.click();
       URL.revokeObjectURL(url);
       // cleanup after download
-      fetch(`${API}/cleanup/${result.jobId}`, { method: 'DELETE' }).catch(()=>{});
+      fetch(`${API_V1}/cleanup/${result.jobId}`, { method: 'DELETE' }).catch(()=>{});
     } catch { showToast('Download failed','err'); }
   };
 

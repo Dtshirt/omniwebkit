@@ -4,9 +4,9 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FileText, File, UploadCloud, Download, RefreshCw, CheckCircle, AlertCircle, Server, Clock, Layers, FileSignature } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { API_V1 } from "@/lib/api-config";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const POLL_INTERVAL = 2000;
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
@@ -23,7 +23,7 @@ async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_BASE}/word-to-pdf/status/${jobId}`, { signal });
+    const res = await fetch(`${API_V1}/word-to-pdf/status/${jobId}`, { signal });
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0, "Server is converting document...");
@@ -91,7 +91,7 @@ export default function WordToPdfClient() {
       const form = new FormData();
       form.append('file', file);
 
-      const uploadRes = await fetch(`${API_BASE}/word-to-pdf`, { method: 'POST', body: form, signal: abort.signal });
+      const uploadRes = await fetch(`${API_V1}/word-to-pdf`, { method: 'POST', body: form, signal: abort.signal });
       if (!uploadRes.ok) {
         const err = await uploadRes.json().catch(() => ({}));
         throw new Error(err.detail || 'Upload failed');
@@ -117,7 +117,7 @@ export default function WordToPdfClient() {
         setOutputSize(result.output_size ? Number(result.output_size) : null);
 
         updatePhase(95, '📥 Downloading PDF...');
-        const dlRes = await fetch(`${API_BASE}/word-to-pdf/download/${job_id}`, { signal: abort.signal });
+        const dlRes = await fetch(`${API_V1}/word-to-pdf/download/${job_id}`, { signal: abort.signal });
         if (!dlRes.ok) throw new Error('Download failed');
         const blob = await dlRes.blob();
         setOutBlob(blob);
@@ -125,7 +125,7 @@ export default function WordToPdfClient() {
         toast.success('Document faithfully converted!');
 
         // cleanup after 60s
-        setTimeout(() => fetch(`${API_BASE}/word-to-pdf/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
+        setTimeout(() => fetch(`${API_V1}/word-to-pdf/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
       }
     } catch (err) {
       if (err.name === 'AbortError' || err.message === 'Cancelled') {

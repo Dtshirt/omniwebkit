@@ -8,6 +8,7 @@ import {
   Play, Zap, Server, Film
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const CLIENT_MAX_BYTES = 50 * 1024 * 1024;        // 50 MB → use browser canvas
 const SERVER_MAX_BYTES = 2 * 1024 * 1024 * 1024;  // 2 GB  → hard limit
@@ -171,7 +172,7 @@ export default function VideoThumbnailClient() {
       fd.append("timestamps", tsValues.join(","));
       fd.append("output_format", outputFormat);
 
-      const res = await fetch("http://localhost:8000/api/v1/tools/video-thumbnail", {
+      const res = await fetch(`${API_V1}/tools/video-thumbnail`, {
         method: "POST",
         body: fd,
       });
@@ -193,14 +194,14 @@ export default function VideoThumbnailClient() {
 
   const pollJob = async (jId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jId}`);
+      const res = await fetch(`${API_V1}/jobs/${jId}`);
       if (!res.ok) throw new Error("Failed to poll job.");
       const job = await res.json();
 
       if (job.status === "failed") throw new Error(job.error || "Processing failed.");
 
       if (job.status === "done") {
-        const dl = await fetch(`http://localhost:8000/api/v1/download/${jId}`);
+        const dl = await fetch(`${API_V1}/download/${jId}`);
         if (!dl.ok) throw new Error("Download failed.");
         saveAs(await dl.blob(), "thumbnails.zip");
         setServerDone(true);

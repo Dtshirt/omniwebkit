@@ -8,6 +8,7 @@ import {
   Search, FileText, Zap, Server, BarChart3
 } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { API_V1 } from "@/lib/api-config";
 
 const MAX_CLIENT_SIZE_BYTES = 50 * 1024 * 1024; // 50MB for CSV
 const POLLING_INTERVAL = 2000;
@@ -159,7 +160,7 @@ export default function SeoAnalyzerClient() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch("http://localhost:8000/api/v1/tools/seo-analyze", {
+      const res = await fetch(`${API_V1}/tools/seo-analyze`, {
         method: "POST",
         body: formData,
       });
@@ -184,7 +185,7 @@ export default function SeoAnalyzerClient() {
 
   const pollJobStatus = async (jobId) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/jobs/${jobId}`);
+      const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Failed to fetch job status.");
       
       const job = await res.json();
@@ -195,7 +196,7 @@ export default function SeoAnalyzerClient() {
 
       if (job.status === "done") {
         if (job.output_path) {
-          const downloadRes = await fetch(`http://localhost:8000/api/v1/download/${jobId}`);
+          const downloadRes = await fetch(`${API_V1}/download/${jobId}`);
           if (downloadRes.ok) {
             const blob = await downloadRes.blob();
             saveAs(blob, `seo_audit_results.csv`);

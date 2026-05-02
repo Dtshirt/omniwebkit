@@ -6,6 +6,7 @@ import {
     Trash2, Code2, Shield, Zap, BookOpen, ChevronRight,
     AlertTriangle, CheckCircle2, Info,
 } from 'lucide-react';
+import { API_V1 } from '@/lib/api-config';
 
 // ─── Constants ───────────────────────────────────────
 const METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
@@ -121,7 +122,6 @@ export default function ApiTester() {
     };
 
     // ── Send request (via server-side proxy to bypass CORS) ──
-    const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
     const sendRequest = useCallback(async () => {
         if (!url) return;
@@ -135,7 +135,7 @@ export default function ApiTester() {
         headers.filter(h => h.enabled && h.key).forEach(h => { hdrs[h.key] = h.value; });
 
         try {
-            const proxyRes = await fetch(`${API}/proxy-request`, {
+            const proxyRes = await fetch(`${API_V1}/proxy-request`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
