@@ -84,7 +84,7 @@ export default function BgRemoverClient() {
     try {
       setStatus("Loading WebAssembly AI Models...");
       const config = {
-        publicPath: "/models/bg-removal/",
+        publicPath: `${window.location.origin}/models/bg-removal/`,
         progress: (key, current, total) => {
           if (key === "compute:inference") {
             setStatus("AI extracting subject...");

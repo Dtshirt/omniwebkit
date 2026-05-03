@@ -86,7 +86,7 @@ async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_V1}/pdf-ocr/status/${jobId}`, { signal });
+    const res = await fetch(`${API_V1}/tools/pdf-ocr/status/${jobId}`, { signal });
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0, "Server is processing OCR...");
@@ -165,7 +165,7 @@ export default function PdfOcrClient() {
         const form = new FormData();
         form.append('file', file);
 
-        const uploadRes = await fetch(`${API_V1}/pdf-ocr/convert`, { method: 'POST', body: form, signal: abort.signal });
+        const uploadRes = await fetch(`${API_V1}/tools/pdf-ocr/convert`, { method: 'POST', body: form, signal: abort.signal });
         if (!uploadRes.ok) {
           const err = await uploadRes.json().catch(() => ({}));
           throw new Error(err.detail || 'Upload failed');
@@ -191,14 +191,14 @@ export default function PdfOcrClient() {
           setOutputSize(result.output_size ? Number(result.output_size) : null);
 
           updatePhase(95, '📥 Downloading text...');
-          const dlRes = await fetch(`${API_V1}/pdf-ocr/download/${job_id}`, { signal: abort.signal });
+          const dlRes = await fetch(`${API_V1}/tools/pdf-ocr/download/${job_id}`, { signal: abort.signal });
           if (!dlRes.ok) throw new Error('Download failed');
           const text = await dlRes.text();
           setExtractedText(text);
           toast.success('Server text extracted!');
 
           // cleanup after 60s
-          setTimeout(() => fetch(`${API_V1}/pdf-ocr/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
+          setTimeout(() => fetch(`${API_V1}/tools/pdf-ocr/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
         }
       }
     } catch (err) {

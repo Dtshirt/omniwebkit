@@ -99,7 +99,7 @@ export default function CorsTesterClient() {
     if (!url.trim()) { toast.error("Enter a URL to test."); return; }
     setLoading(true); setResult(null); setError(null);
     try {
-      const res = await fetch(`${API_V1}/cors-test`, {
+      const res = await fetch(`${API_V1}/tools/cors-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url, origin, method, request_headers: reqHeaders }),

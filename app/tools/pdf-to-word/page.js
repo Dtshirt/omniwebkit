@@ -42,7 +42,7 @@ export default function PdfToWord() {
     const startPoll = (jobId) => {
         pollRef.current = setInterval(async () => {
             try {
-                const res = await fetch(`${API_V1}/pdf-to-word/status/${jobId}`);
+                const res = await fetch(`${API_V1}/tools/pdf-to-word/status/${jobId}`);
                 const data = await res.json();
                 setProgress(data.progress);
 
@@ -73,7 +73,7 @@ export default function PdfToWord() {
             const form = new FormData();
             form.append('file', file);
 
-            const res = await fetch(`${API_V1}/pdf-to-word`, { method: 'POST', body: form });
+            const res = await fetch(`${API_V1}/tools/pdf-to-word`, { method: 'POST', body: form });
             if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
                 throw new Error(err.detail || `Server error ${res.status}`);
@@ -94,7 +94,7 @@ export default function PdfToWord() {
     const download = async () => {
         if (!result) return;
         try {
-            const resp = await fetch(`${API_V1}/pdf-to-word/download/${result.jobId}`);
+            const resp = await fetch(`${API_V1}/tools/pdf-to-word/download/${result.jobId}`);
             if (!resp.ok) throw new Error('Download failed');
             const blob = await resp.blob();
             const url = URL.createObjectURL(blob);
@@ -103,7 +103,7 @@ export default function PdfToWord() {
             a.download = file?.name?.replace('.pdf', '.docx') || 'document.docx';
             a.click();
             URL.revokeObjectURL(url);
-            fetch(`${API_V1}/pdf-to-word/cleanup/${result.jobId}`, { method: 'DELETE' }).catch(() => {});
+            fetch(`${API_V1}/tools/pdf-to-word/cleanup/${result.jobId}`, { method: 'DELETE' }).catch(() => {});
         } catch { showToast('Download failed', 'err'); }
     };
 

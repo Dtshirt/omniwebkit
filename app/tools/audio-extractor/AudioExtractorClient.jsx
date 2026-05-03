@@ -249,7 +249,7 @@ export default function AudioExtractorClient() {
         form.append('output_format', cfgFormat);
         form.append('bitrate', cfgBitrate);
 
-        const uploadRes = await fetch(`${API_V1}/tools/audio-extract`, { method: 'POST', body: form, signal: abort.signal });
+        const uploadRes = await fetch(`${API_V1}/tools/audio-extract/convert`, { method: 'POST', body: form, signal: abort.signal });
         if (!uploadRes.ok) {
           const err = await uploadRes.json().catch(() => ({}));
           throw new Error(err.detail || 'Upload failed');

@@ -135,7 +135,7 @@ export default function ApiTester() {
         headers.filter(h => h.enabled && h.key).forEach(h => { hdrs[h.key] = h.value; });
 
         try {
-            const proxyRes = await fetch(`${API_V1}/proxy-request`, {
+            const proxyRes = await fetch(`${API_V1}/tools/proxy-request`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

@@ -441,7 +441,7 @@ export default function PhotoCollageClient() {
                     preventCollision={false}
                   >
                     {images.map(img => (
-                      <div key={img.id} className="relative group rounded-lg overflow-hidden border border-slate-300 shadow-sm bg-white">
+                      <div key={img.id} id={img.id} className="relative group rounded-lg overflow-hidden border border-slate-300 shadow-sm bg-white">
                         <img 
                           src={img.url} 
                           alt="Collage element" 

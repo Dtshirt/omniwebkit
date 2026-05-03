@@ -80,7 +80,7 @@ export default function VideoCompressor() {
   const startPoll = (jobId) => {
     pollRef.current = setInterval(async () => {
       try {
-        const res = await fetch(`${API_V1}/status/${jobId}`);
+        const res = await fetch(`${API_V1}/tools/status/${jobId}`);
         const data = await res.json();
         setProgress(data.progress);
         if (data.status === 'done') {
@@ -114,7 +114,7 @@ export default function VideoCompressor() {
       form.append('resolution', resolution);
       form.append('format', format);
 
-      const res = await fetch(`${API_V1}/compress`, { method: 'POST', body: form });
+      const res = await fetch(`${API_V1}/tools/compress`, { method: 'POST', body: form });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.detail || `Server error ${res.status}`);

@@ -31,7 +31,7 @@ async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_V1}/text-to-handwriting/status/${jobId}`, { signal });
+    const res = await fetch(`${API_V1}/tools/text-to-handwriting/status/${jobId}`, { signal });
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0, "Server is processing...");
@@ -212,7 +212,7 @@ export default function TextToHandwritingClient() {
                     paper_type: paperType
                 };
 
-                const uploadRes = await fetch(`${API_V1}/text-to-handwriting`, { 
+                const uploadRes = await fetch(`${API_V1}/tools/text-to-handwriting`, { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload), 
@@ -230,12 +230,12 @@ export default function TextToHandwritingClient() {
                 await pollJob(job_id, updatePhase, abort.signal);
                 
                 updatePhase(100, '✅ Document complete!');
-                setDownloadUrl(`${API_V1}/text-to-handwriting/download/${job_id}`);
+                setDownloadUrl(`${API_V1}/tools/text-to-handwriting/download/${job_id}`);
                 setDone(true);
                 toast.success('Server conversion complete!');
                 
                 // cleanup after 60s
-                setTimeout(() => fetch(`${API_V1}/text-to-handwriting/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
+                setTimeout(() => fetch(`${API_V1}/tools/text-to-handwriting/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
             }
         } catch (err) {
             if (err.name === 'AbortError' || err.message === 'Cancelled') {
