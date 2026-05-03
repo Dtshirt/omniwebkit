@@ -11,7 +11,7 @@ import {
 import { toast } from "react-hot-toast";
 import { API_V1 } from "@/lib/api-config";
 
-const MAX_CLIENT_SIZE_MB = 5;
+const MAX_CLIENT_SIZE_MB = 20;
 const MAX_CLIENT_SIZE_BYTES = MAX_CLIENT_SIZE_MB * 1024 * 1024;
 const POLLING_INTERVAL = 2000;
 
@@ -84,13 +84,13 @@ export default function BgRemoverClient() {
     try {
       setStatus("Loading WebAssembly AI Models...");
       const config = {
+        publicPath: "/models/bg-removal/",
         progress: (key, current, total) => {
           if (key === "compute:inference") {
             setStatus("AI extracting subject...");
             setProgress(Math.round((current / total) * 100));
           } else if (key.includes("fetch:")) {
-             setStatus("Downloading neural network...");
-             // Model downloading might take a moment on first run
+             setStatus("Loading local neural network...");
              setProgress(Math.round((current / total) * 40)); 
           }
         }
@@ -113,23 +113,37 @@ export default function BgRemoverClient() {
 
   const processServerSide = async (file) => {
     setStatus("Uploading high-res image to server...");
-    setProgress(10);
+    setProgress(0);
     
     try {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch(`${API_V1}/tools/bg-remover`, {
-        method: "POST",
-        body: formData,
+      const uploadPromise = new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `${API_V1}/tools/bg-remover`, true);
+        xhr.responseType = "json";
+
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            setProgress(Math.min(99, percent));
+            setStatus(`Uploading... ${percent}%`);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr.response);
+          } else {
+            reject(new Error(xhr.response?.detail || "Failed to upload file."));
+          }
+        };
+        xhr.onerror = () => reject(new Error("Network error during upload"));
+        xhr.send(formData);
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.detail || "Failed to upload file.");
-      }
-
-      const { job_id } = await res.json();
+      const { job_id } = await uploadPromise;
       setStatus("Server AI is processing massive image...");
       pollJobStatus(job_id);
     } catch (err) {
@@ -192,7 +206,7 @@ export default function BgRemoverClient() {
 
   const faqs = [
     { q: "How does the background removal work?", a: "We utilize advanced AI Vision models (U-Net architectures) that have been trained to distinguish between foreground subjects and background scenery with pixel-perfect accuracy." },
-    { q: "Are my photos kept private?", a: "Yes. For photos under 5MB, the AI runs entirely inside your web browser using WebAssembly. The image never touches the internet. For massive images over 5MB, our servers process them securely and delete the file immediately after." },
+    { q: "Are my photos kept private?", a: "Yes. For photos under 20MB, the AI runs entirely inside your web browser using WebAssembly. The image never touches the internet. For massive images over 20MB, our servers process them securely and delete the file immediately after." },
     { q: "What types of images work best?", a: "Images with clear contrast between the subject and the background yield the best results. Complex hair, fur, and transparent objects (like glasses) are supported but might vary in perfection based on lighting." },
     { q: "Is this really free?", a: "100% free with no watermarks and no hidden API costs." }
   ];

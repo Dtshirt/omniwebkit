@@ -243,7 +243,7 @@ export default function AudioConverterClient() {
       } else {
         // ── Server path ──────────────────────────────────────────────────
         setPhase('📤 Uploading to server...');
-        setProgress(5);
+        setProgress(0);
         const form = new FormData();
         form.append('file', file);
         form.append('output_format', cfgFormat);
@@ -251,26 +251,66 @@ export default function AudioConverterClient() {
         form.append('channels', cfgChannels);
         form.append('sample_rate', cfgSampleRate);
 
-        const uploadRes = await fetch(`${API_V1}/tools/audio/convert`, { method: 'POST', body: form, signal: abort.signal });
-        if (!uploadRes.ok) {
-          const err = await uploadRes.json().catch(() => ({}));
-          throw new Error(err.detail || 'Upload failed');
-        }
+        const uploadRes = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("POST", `${API_V1}/tools/audio/convert`, true);
+          xhr.responseType = "blob";
+
+          if (abort.signal) {
+            abort.signal.addEventListener("abort", () => {
+              xhr.abort();
+              reject(new Error("Cancelled"));
+            });
+          }
+
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+              const percent = Math.round((e.loaded / e.total) * 100);
+              setProgress(Math.min(99, percent));
+              setPhase(`📤 Uploading to server... ${percent}%`);
+            }
+          };
+
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              const contentType = xhr.getResponseHeader("Content-Type") || "";
+              if (contentType.includes("application/json")) {
+                const reader = new FileReader();
+                reader.onload = () => resolve({ isJson: true, data: JSON.parse(reader.result) });
+                reader.readAsText(xhr.response);
+              } else {
+                resolve({ isJson: false, data: xhr.response });
+              }
+            } else {
+              const reader = new FileReader();
+              reader.onload = () => {
+                try {
+                  const err = JSON.parse(reader.result);
+                  reject(new Error(err.detail || "Upload failed"));
+                } catch {
+                  reject(new Error(`Upload failed with status ${xhr.status}`));
+                }
+              };
+              reader.readAsText(xhr.response);
+            }
+          };
+          xhr.onerror = () => reject(new Error("Network error during upload"));
+          xhr.send(form);
+        });
 
         // ── Dual-mode: server returns audio directly (inline) OR a job_id (queued) ──
-        const contentType = uploadRes.headers.get('content-type') || '';
-        if (contentType.includes('audio/')) {
+        if (!uploadRes.isJson) {
           // Inline mode (Redis unavailable)
           setProgress(100);
           setPhase('✅ Done!');
-          const blob = await uploadRes.blob();
+          const blob = uploadRes.data;
           setOutputSize(blob.size);
           setOutBlob(blob);
           setOutUrl(URL.createObjectURL(blob));
           toast.success('Audio ready (server inline)!');
         } else {
           // Queued mode (Redis available)
-          const { job_id } = await uploadRes.json();
+          const { job_id } = uploadRes.data;
           setServerJobId(job_id);
           setProgress(10);
           setPhase('⚙️ Server converting (FFmpeg)...');

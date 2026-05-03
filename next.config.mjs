@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const PYTHON_API = process.env.PYTHON_API_URL || 'http://localhost:8000';
+const PYTHON_API = process.env.PYTHON_API_URL || 'http://localhost:8001';
 const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
@@ -89,7 +89,7 @@ const nextConfig = {
 
   // Expose Python API URL to client
   publicRuntimeConfig: {
-    PYTHON_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+    PYTHON_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001',
   },
 }
 
