@@ -66,6 +66,11 @@ export default function CurrencyConverter() {
   const [compareMode, setCompareMode] = useState(false);
   const [compareList] = useState(['EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'INR', 'CHF', 'CNY']);
 
+  /* ── Historical Data State ── */
+  const [historicalData, setHistoricalData] = useState(null);
+  const [historicalRange, setHistoricalRange] = useState('30'); // '30', '180', '365'
+  const [historicalLoading, setHistoricalLoading] = useState(false);
+
   /* ── Fetch rates ── */
   const fetchRates = useCallback(async (silent = false) => {
     if (!silent) setRefreshing(true);
@@ -85,7 +90,46 @@ export default function CurrencyConverter() {
     }
   }, []);
 
-  useEffect(() => { fetchRates(); }, []);
+  useEffect(() => { fetchRates(); }, [fetchRates]);
+
+  /* ── Fetch Historical Data ── */
+  const fetchHistoricalData = useCallback(async () => {
+    if (fromCurrency === toCurrency) {
+      setHistoricalData(null);
+      return;
+    }
+    setHistoricalLoading(true);
+    try {
+      const days = parseInt(historicalRange);
+      const end = new Date();
+      const start = new Date();
+      start.setDate(end.getDate() - days);
+      
+      const endStr = end.toISOString().split('T')[0];
+      const startStr = start.toISOString().split('T')[0];
+      
+      const res = await fetch(`https://api.frankfurter.app/${startStr}..${endStr}?from=${fromCurrency}&to=${toCurrency}`);
+      if (!res.ok) throw new Error("Historical API unavailable");
+      
+      const data = await res.json();
+      
+      const chartPoints = Object.keys(data.rates).map(date => ({
+        date,
+        rate: data.rates[date][toCurrency]
+      }));
+      
+      setHistoricalData(chartPoints);
+    } catch (err) {
+      console.log('Historical data fetch failed or unsupported currency pair.');
+      setHistoricalData(null);
+    } finally {
+      setHistoricalLoading(false);
+    }
+  }, [fromCurrency, toCurrency, historicalRange]);
+
+  useEffect(() => {
+    fetchHistoricalData();
+  }, [fetchHistoricalData]);
 
   /* ── Derived values ── */
   const convert = (amt, from, to) => {
@@ -270,6 +314,88 @@ export default function CurrencyConverter() {
             })}
           </div>
         </div>
+
+        {/* Historical Charts */}
+        {(historicalData || historicalLoading) && (
+          <div className={`${cardCls} p-5 sm:p-8 mb-6`}>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <h2 className="font-bold text-slate-900 dark:text-white text-lg flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-indigo-500" /> 
+                  Historical Exchange Rate
+                </h2>
+                <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">{fromCurrency} to {toCurrency} over time</p>
+              </div>
+              
+              <div className="flex bg-slate-100 dark:bg-slate-700/50 p-1 rounded-xl w-max">
+                {[{ label: '1M', val: '30' }, { label: '6M', val: '180' }, { label: '1Y', val: '365' }].map(t => (
+                  <button 
+                    key={t.val} 
+                    onClick={() => setHistoricalRange(t.val)}
+                    className={`px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${historicalRange === t.val ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {historicalLoading ? (
+              <div className="h-64 w-full flex items-center justify-center">
+                <RefreshCw className="w-6 h-6 text-indigo-500 animate-spin" />
+              </div>
+            ) : historicalData && historicalData.length > 0 ? (
+              <div className="h-64 w-full relative mt-4">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full overflow-visible">
+                  {/* Grid */}
+                  {[0, 25, 50, 75, 100].map(p => (
+                    <line key={p} x1="0" y1={p} x2="100" y2={p} stroke="currentColor" className="text-slate-100 dark:text-slate-700" strokeWidth="0.5" />
+                  ))}
+                  
+                  {/* Min/Max Rates logic for SVG scaling */}
+                  {(() => {
+                    const minRate = Math.min(...historicalData.map(d => d.rate));
+                    const maxRate = Math.max(...historicalData.map(d => d.rate));
+                    const range = maxRate - minRate || 1;
+                    const padding = range * 0.1;
+                    const yMin = minRate - padding;
+                    const yMax = maxRate + padding;
+                    const yRange = yMax - yMin;
+
+                    const dPathArea = `M 0 100 ${historicalData.map((pt, i) => {
+                      const x = (i / (historicalData.length - 1)) * 100;
+                      const y = 100 - (((pt.rate - yMin) / yRange) * 100);
+                      return "L " + x + " " + y;
+                    }).join(' ')} L 100 100 Z`;
+
+                    const dPathLine = `M ${historicalData.map((pt, i) => {
+                      const x = (i / (historicalData.length - 1)) * 100;
+                      const y = 100 - (((pt.rate - yMin) / yRange) * 100);
+                      return x + " " + y;
+                    }).join(' L ')}`;
+
+                    return (
+                      <>
+                        <path d={dPathArea} fill="currentColor" className="text-indigo-500/20 dark:text-indigo-500/30" />
+                        <path d={dPathLine} fill="none" stroke="currentColor" className="text-indigo-600 dark:text-indigo-400" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </>
+                    );
+                  })()}
+                </svg>
+                
+                {/* X-Axis labels */}
+                <div className="absolute left-0 right-0 -bottom-6 flex justify-between text-xs text-slate-500 font-medium">
+                  <span>{historicalData[0]?.date}</span>
+                  <span>{historicalData[historicalData.length - 1]?.date}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="h-64 w-full flex items-center justify-center text-sm text-slate-500">
+                Historical data unavailable for this specific pair.
+              </div>
+            )}
+          </div>
+        )}
 
         {/* History */}
         {history.length > 0 && (

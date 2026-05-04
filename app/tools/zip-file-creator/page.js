@@ -9,6 +9,8 @@ import {
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
+import { API_V1 } from '@/lib/api-config';
+import { toast } from 'react-hot-toast';
 
 // Helper for formatting bytes
 const formatBytes = (bytes, decimals = 2) => {
@@ -44,8 +46,27 @@ export default function ZipFileCreator() {
     setErrorMessage('');
     setProgress(0);
     
+    const MAX_SIZE = 500 * 1024 * 1024; // 500MB limit
+    let currentTotalSize = files.reduce((acc, f) => acc + f.size, 0);
+    const allowedFiles = [];
+    let skippedCount = 0;
+
+    Array.from(newFiles).forEach(file => {
+      if (currentTotalSize + file.size <= MAX_SIZE) {
+        allowedFiles.push(file);
+        currentTotalSize += file.size;
+      } else {
+        skippedCount++;
+      }
+    });
+
+    if (skippedCount > 0) {
+      toast.error(`${skippedCount} file(s) skipped. Maximum total size is 500MB.`);
+      setErrorMessage(`${skippedCount} file(s) were excluded because they exceed the 500MB limit.`);
+    }
+    
     // Create detailed file objects
-    const filesArray = Array.from(newFiles).map(file => {
+    const filesArray = allowedFiles.map(file => {
       const parts = file.name.split('.');
       const extension = parts.length > 1 ? parts.pop().toLowerCase() : '';
       return {
@@ -115,7 +136,7 @@ export default function ZipFileCreator() {
         formData.append('archive_name', finalName);
         files.forEach(f => formData.append('files', f.originalFile));
 
-        const response = await fetch('/api/zip-create/', {
+        const response = await fetch(`${API_V1}/tools/zip-create/`, {
           method: 'POST',
           body: formData,
         });

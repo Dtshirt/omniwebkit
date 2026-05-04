@@ -7,6 +7,8 @@ import { Toaster } from 'react-hot-toast';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import GlobalFileValidator from '@/components/GlobalFileValidator';
+import GlobalDropOverlay from '@/components/GlobalDropOverlay';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
 import AdBanner from '@/components/ads/AdBanner';
@@ -123,6 +125,8 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <AnalyticsProvider>
             <ServiceWorkerRegister />
+            <GlobalFileValidator />
+            <GlobalDropOverlay />
             <CommandPalette />
             <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors flex flex-col">
               <Header />
