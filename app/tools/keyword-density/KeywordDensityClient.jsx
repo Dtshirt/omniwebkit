@@ -109,12 +109,21 @@ export default function KeywordDensityClient() {
           setInputValue(targetUrl);
         }
         
-        const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
-        const res = await fetch(proxyUrl);
+        // Use our robust backend proxy to bypass browser CORS restrictions securely
+        const res = await fetch(`${API_V1}/tools/proxy-request`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: targetUrl, method: "GET" })
+        });
         
-        if (!res.ok) throw new Error("Failed to reach the website. Ensure it is accessible.");
+        if (!res.ok) throw new Error("Failed to communicate with proxy server.");
         
-        const htmlText = await res.text();
+        const proxyData = await res.json();
+        if (proxyData.error || !proxyData.body) {
+           throw new Error(proxyData.body || "Failed to reach the website. Ensure it is accessible.");
+        }
+        
+        const htmlText = proxyData.body;
         textToAnalyze = extractTextFromHtml(htmlText);
       }
       

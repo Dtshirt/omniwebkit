@@ -116,16 +116,16 @@ export default function RootLayout({ children }) {
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Sidebar Ad */}
-          <aside className="hidden lg:block lg:w-48 xl:w-56 flex-shrink-0">
+          {/* <aside className="hidden lg:block lg:w-48 xl:w-56 flex-shrink-0">
             <div className="sticky top-32 space-y-6">
               <AdBanner
                 slot="sidebar-left"
                 size="skyscraper"
                 title="Sponsored"
-              />
+              /> */}
 
               {/* Popular Tools Widget */}
-              <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-100 dark:border-slate-700/50 shadow-soft">
+              {/* <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-100 dark:border-slate-700/50 shadow-soft">
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-3 text-sm">
                   🔥 Trending Tools
                 </h3>
@@ -145,7 +145,7 @@ export default function RootLayout({ children }) {
                 </div>
               </div>
             </div>
-          </aside>
+          </aside> */}
 
           {/* Main Content Area */}
           <div className="flex-1 min-w-0">
@@ -153,16 +153,16 @@ export default function RootLayout({ children }) {
           </div>
 
           {/* Right Sidebar Ad */}
-          <aside className="hidden xl:block xl:w-56 flex-shrink-0">
+          {/* <aside className="hidden xl:block xl:w-56 flex-shrink-0">
             <div className="sticky top-32 space-y-6">
               <AdBanner
                 slot="sidebar-right"
                 size="skyscraper"
                 title="Sponsored"
-              />
+              /> */}
 
               {/* Newsletter Signup Widget */}
-              <div className="bg-gradient-to-br from-primary-50 to-violet-50 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-4 border border-slate-100 dark:border-slate-700/50 shadow-soft">
+              {/* <div className="bg-gradient-to-br from-primary-50 to-violet-50 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-4 border border-slate-100 dark:border-slate-700/50 shadow-soft">
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2 text-sm">
                   📧 Stay Updated
                 </h3>
@@ -181,7 +181,7 @@ export default function RootLayout({ children }) {
                 </div>
               </div>
             </div>
-          </aside>
+          </aside> */}
         </div>
       </div>
 

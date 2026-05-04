@@ -14,7 +14,7 @@ import { API_V1 } from "@/lib/api-config";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-const MAX_CLIENT_SIZE_MB = 5;
+const MAX_CLIENT_SIZE_MB = 200;
 const MAX_CLIENT_SIZE_BYTES = MAX_CLIENT_SIZE_MB * 1024 * 1024;
 const POLLING_INTERVAL = 2000;
 
@@ -167,23 +167,23 @@ export default function PhotoCollageClient() {
       
       setProgress(50);
 
-      // We must load all images sequentially or via Promise.all before drawing
-      const drawPromises = blueprint.items.map(item => {
-        return new Promise((resolve, reject) => {
+      // Load images sequentially to save memory on low-end devices
+      for (const item of blueprint.items) {
+        await new Promise((resolve, reject) => {
           const imgObj = new Image();
           imgObj.onload = () => {
             // Draw stretched to match grid exactly
             ctx.drawImage(imgObj, item.x, item.y, item.w, item.h);
             loadedImagesCount++;
             setProgress(50 + Math.round((loadedImagesCount / blueprint.items.length) * 40));
+            // Force garbage collection to prevent memory spikes
+            imgObj.src = '';
             resolve();
           };
           imgObj.onerror = reject;
           imgObj.src = item.url;
         });
-      });
-
-      await Promise.all(drawPromises);
+      }
       
       setProgress(100);
       setStatus("Downloading...");

@@ -49,13 +49,28 @@ export default function PageSpeedClient() {
     setSingleResults(null);
     
     try {
-      // Use the public Google PageSpeed Insights API
+      // Use our backend proxy to fetch Google PageSpeed API to bypass strict client-side IP rate limits
       const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(targetUrl)}&strategy=desktop`;
-      const res = await fetch(apiUrl);
       
-      if (!res.ok) throw new Error("Failed to analyze the website. It might be unreachable.");
+      const res = await fetch(`${API_V1}/tools/proxy-request`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: apiUrl, method: "GET" })
+      });
       
-      const data = await res.json();
+      if (!res.ok) throw new Error("Failed to communicate with proxy server.");
+      
+      const proxyData = await res.json();
+      if (proxyData.error || !proxyData.body) {
+         throw new Error(proxyData.body || "Failed to analyze the website. It might be unreachable or rate-limited.");
+      }
+      
+      let data;
+      try {
+        data = JSON.parse(proxyData.body);
+      } catch (e) {
+        throw new Error("Invalid response from PageSpeed API.");
+      }
       
       const lighthouse = data.lighthouseResult;
       const audits = lighthouse.audits;

@@ -49,13 +49,21 @@ export default function SeoAnalyzerClient() {
     setSingleResults(null);
     
     try {
-      // Use corsproxy.io to bypass browser CORS restrictions and fetch raw HTML
-      const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
-      const res = await fetch(proxyUrl);
+      // Use our robust backend proxy to bypass browser CORS restrictions securely
+      const res = await fetch(`${API_V1}/tools/proxy-request`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: targetUrl, method: "GET" })
+      });
       
-      if (!res.ok) throw new Error("Failed to reach the website. It might be blocking proxies or down.");
+      if (!res.ok) throw new Error("Failed to communicate with proxy server.");
       
-      const htmlText = await res.text();
+      const proxyData = await res.json();
+      if (proxyData.error || !proxyData.body) {
+         throw new Error(proxyData.body || "Failed to reach the website. It might be blocking automated requests or down.");
+      }
+      
+      const htmlText = proxyData.body;
       
       // Parse HTML locally using browser's native DOMParser
       const parser = new DOMParser();

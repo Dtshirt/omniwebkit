@@ -11,6 +11,16 @@ const FONTS = [
     { id: 'Caveat', label: 'Caveat (Natural)' },
     { id: 'Pacifico', label: 'Pacifico (Cursive)' },
     { id: 'Shadows Into Light', label: 'Shadows (Neat)' },
+    { id: 'Dancing Script', label: 'Dancing Script (Elegant)' },
+    { id: 'Satisfy', label: 'Satisfy (Flowing)' },
+    { id: 'Great Vibes', label: 'Great Vibes (Calligraphy)' },
+    { id: 'Indie Flower', label: 'Indie Flower (Playful)' },
+    { id: 'Patrick Hand', label: 'Patrick Hand (Marker)' },
+    { id: 'Homemade Apple', label: 'Homemade Apple (Scribble)' },
+    { id: 'Permanent Marker', label: 'Permanent Marker (Bold)' },
+    { id: 'Gloria Hallelujah', label: 'Gloria Hallelujah (Quirky)' },
+    { id: 'Covered By Your Grace', label: 'Covered By Your Grace (Tall)' },
+    { id: 'Kalam', label: 'Kalam (Casual)' }
 ];
 
 const INK_COLORS = [
@@ -81,7 +91,8 @@ export default function TextToHandwritingClient() {
     // Load fonts into browser
     useEffect(() => {
         const link = document.createElement('link');
-        link.href = 'https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Pacifico&family=Shadows+Into+Light&display=swap';
+        const families = FONTS.map(f => `family=${f.id.replace(/ /g, '+')}`).join('&');
+        link.href = `https://fonts.googleapis.com/css2?${families}&display=swap`;
         link.rel = 'stylesheet';
         document.head.appendChild(link);
         return () => document.head.removeChild(link);
@@ -449,12 +460,12 @@ export default function TextToHandwritingClient() {
                                 ) : (
                                     <div className="w-full max-w-[600px] aspect-[1/1.4] bg-white rounded-md shadow-md border border-slate-200 p-12 flex flex-col items-center justify-center text-center">
                                         <Server className="w-16 h-16 text-indigo-200 mb-4" />
-                                        <h3 className="text-lg font-bold text-slate-700 mb-2">Engine Activation Required</h3>
+                                        <h3 className="text-lg font-bold text-slate-700 mb-2">Server Processing Ready</h3>
                                         <p className="text-slate-500 text-sm max-w-sm">
-                                            This text is long enough that it will be securely paginated and rendered by our advanced backend engine with realistic micro-jitter algorithms.
+                                            Your text will be paginated and rendered securely by our backend engine, applying advanced micro-jitter algorithms for maximum realism.
                                         </p>
                                         <p className="text-slate-400 text-xs mt-6">
-                                            Click Generate Document to begin.
+                                            Click Generate Document to begin processing.
                                         </p>
                                     </div>
                                 )}
