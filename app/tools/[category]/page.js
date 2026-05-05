@@ -277,6 +277,18 @@ export default function CategoryPage({ params }) {
           </div>
         </div>
 
+        {/* Category SEO Content */}
+        {categoryInfo.seoContent && (
+          <div className="mt-16 bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm text-center">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              About {categoryInfo.name}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              {categoryInfo.seoContent}
+            </p>
+          </div>
+        )}
+
         {/* Related Categories */}
         <div className="mt-16">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">

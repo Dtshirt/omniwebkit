@@ -10,7 +10,7 @@ export async function generateMetadata({ params }) {
   if (!post) return { title: 'Post Not Found | OmniWebKit' };
 
   return {
-    title: `${post.title} | OmniWebKit Blog`,
+    title: `${post.title}`,
     description: post.description,
     alternates: {
       canonical: `https://omniwebkit.com/blog/${post.slug}`,

@@ -7,7 +7,61 @@ import {
     Bold, Italic, Layers, Check, X, Edit3, Move, Palette
 } from 'lucide-react';
 
-const FONTS = ['Helvetica', 'Times-Roman', 'Courier'];
+const FONTS = [
+    'Inter', 'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Poppins',
+    'Arial', 'Helvetica', 'Times New Roman', 'Georgia', 'Courier New',
+    'Verdana', 'Trebuchet MS', 'Garamond', 'Palatino', 'Calibri',
+];
+
+// Smart PDF font → Web font mapper
+const FONT_MAP = {
+    'helvetica': 'Helvetica, Arial, sans-serif',
+    'arial': 'Arial, Helvetica, sans-serif',
+    'times': 'Times New Roman, Times, serif',
+    'timesnewroman': 'Times New Roman, Times, serif',
+    'courier': 'Courier New, Courier, monospace',
+    'calibri': 'Calibri, Candara, sans-serif',
+    'cambria': 'Cambria, Georgia, serif',
+    'georgia': 'Georgia, Cambria, serif',
+    'verdana': 'Verdana, Geneva, sans-serif',
+    'trebuchet': 'Trebuchet MS, sans-serif',
+    'garamond': 'Garamond, Georgia, serif',
+    'palatino': 'Palatino Linotype, Palatino, serif',
+    'roboto': 'Roboto, Arial, sans-serif',
+    'opensans': 'Open Sans, Arial, sans-serif',
+    'lato': 'Lato, Arial, sans-serif',
+    'montserrat': 'Montserrat, Arial, sans-serif',
+    'poppins': 'Poppins, sans-serif',
+    'inter': 'Inter, sans-serif',
+    'segoeui': 'Segoe UI, Tahoma, sans-serif',
+    'tahoma': 'Tahoma, Verdana, sans-serif',
+    'impact': 'Impact, sans-serif',
+    'comicsansms': 'Comic Sans MS, cursive',
+    'lucidaconsole': 'Lucida Console, Monaco, monospace',
+    'consolas': 'Consolas, Courier New, monospace',
+    'myriadpro': 'Myriad Pro, Arial, sans-serif',
+    'futura': 'Futura, Trebuchet MS, sans-serif',
+    'avenir': 'Avenir, Montserrat, sans-serif',
+    'franklin': 'Franklin Gothic, Arial, sans-serif',
+};
+
+function mapPdfFont(pdfFontName, cssFontFamily) {
+    // 1. If pdf.js already gave us a good CSS family, prefer it
+    if (cssFontFamily && cssFontFamily !== 'sans-serif' && cssFontFamily !== 'serif' && cssFontFamily !== 'monospace') {
+        return cssFontFamily;
+    }
+    // 2. Strip subset prefix (e.g. "ABCDE+TimesNewRoman-Bold" → "timesnewroman")
+    const clean = (pdfFontName || '').replace(/^[A-Z]{6}\+/, '').replace(/[-_,\s]/g, '').toLowerCase()
+        .replace(/bold|italic|oblique|regular|light|medium|semibold|condensed/gi, '').trim();
+    // 3. Search in our map
+    for (const [key, val] of Object.entries(FONT_MAP)) {
+        if (clean.includes(key) || key.includes(clean)) return val;
+    }
+    // 4. Classify by generic name hints
+    if (clean.includes('mono') || clean.includes('courier') || clean.includes('consol')) return 'Courier New, monospace';
+    if (clean.includes('serif') && !clean.includes('sans')) return 'Times New Roman, serif';
+    return 'Arial, Helvetica, sans-serif';
+}
 const COLORS = [
     '#000000', '#333333', '#666666', '#999999',
     '#FF0000', '#FF6600', '#FFAA00', '#FFFF00',
@@ -81,9 +135,19 @@ export default function PdfEditor() {
     useEffect(() => {
         (async () => {
             const pdfjs = await import('pdfjs-dist');
-            pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+            pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
             pdfjsRef.current = pdfjs;
         })();
+    }, []);
+
+    // Preload common Google Fonts for accurate text rendering
+    useEffect(() => {
+        const families = ['Inter', 'Roboto', 'Open+Sans', 'Lato', 'Montserrat', 'Poppins', 'Noto+Sans'];
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `https://fonts.googleapis.com/css2?${families.map(f => `family=${f}:ital,wght@0,400;0,700;1,400;1,700`).join('&')}&display=swap`;
+        document.head.appendChild(link);
+        return () => { try { document.head.removeChild(link); } catch (_) {} };
     }, []);
 
     // History
@@ -160,7 +224,7 @@ export default function PdfEditor() {
                 width: item.width * 1.5,
                 height: item.height * 1.5 || fSize * 1.5,
                 fontName: item.fontName || 'sans-serif',
-                fontFamily: cssFontFamily, // actual CSS font family from pdf.js styles
+                fontFamily: mapPdfFont(item.fontName, cssFontFamily), // smart-mapped font family
                 isBold,
                 isItalic,
                 // Store original transform for saving
@@ -459,7 +523,7 @@ export default function PdfEditor() {
             const { PDFDocument } = await import('pdf-lib');
             const newDoc = await PDFDocument.create();
 
-            const saveScale = 2; // high-res rendering
+            const saveScale = 3; // high-res rendering for crisp text
 
             for (let pageIdx = 0; pageIdx < pages.length; pageIdx++) {
                 // 1. Render the original PDF page to an offscreen canvas
@@ -471,25 +535,33 @@ export default function PdfEditor() {
                 const ctx = offCanvas.getContext('2d');
                 await pdfPage.render({ canvasContext: ctx, viewport }).promise;
 
-                // 2. Draw edited text overlays (white rectangle + new text)
+                // 2. Draw edited text overlays (background-matched rectangle + new text)
                 const pageTextItems = textItems[pageIdx] || [];
                 for (const item of pageTextItems) {
                     const key = `${pageIdx}_${item.id}`;
                     const editData = editedTexts[key];
                     if (!editData) continue;
-                    if (editData.text === item.str && (editData.offsetX || 0) === 0 && (editData.offsetY || 0) === 0) continue;
+                    if (editData.text === item.str && (editData.offsetX || 0) === 0 && (editData.offsetY || 0) === 0 && !editData.color) continue;
                     const sx = saveScale / 1.5;
                     const origX = item.x * sx;
                     const origY = (item.y - item.fontSize + 2) * sx;
-                    // Use actual font family from pdf.js styles
+                    // Use smart-mapped font family for accurate rendering
                     let fontStyle = '';
                     if (item.isBold) fontStyle += 'bold ';
                     if (item.isItalic) fontStyle += 'italic ';
-                    ctx.font = `${fontStyle}${item.fontSize * sx}px ${item.fontFamily || 'sans-serif'}`;
+                    ctx.font = `${fontStyle}${item.fontSize * sx}px ${item.fontFamily || 'Arial, sans-serif'}`;
                     const w = Math.max(item.width * sx, ctx.measureText(item.str).width + 10);
                     const h = item.fontSize * sx + 4;
-                    // White-out original text position
-                    ctx.fillStyle = '#ffffff';
+                    // Sample actual background color (instead of hardcoded white)
+                    const sampleX = Math.max(0, Math.floor(origX - 4));
+                    const sampleY = Math.max(0, Math.floor(origY + h / 2));
+                    let bgColor = '#ffffff';
+                    try {
+                        const pixel = ctx.getImageData(sampleX, sampleY, 1, 1).data;
+                        bgColor = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+                    } catch (_) {}
+                    // Cover original text with background-matched rectangle
+                    ctx.fillStyle = bgColor;
                     ctx.fillRect(origX - 2, origY - 2, w + 4, h + 4);
                     // Draw new text at offset position
                     const newX = origX + (editData.offsetX || 0) * sx;
@@ -561,15 +633,15 @@ export default function PdfEditor() {
                     }
                 }
 
-                // 4. Convert canvas to JPEG and embed in new PDF
-                const jpegDataUrl = offCanvas.toDataURL('image/jpeg', 0.92);
-                const jpegBytes = Uint8Array.from(atob(jpegDataUrl.split(',')[1]), c => c.charCodeAt(0));
-                const jpegImage = await newDoc.embedJpg(jpegBytes);
+                // 4. Convert canvas to PNG (lossless — no text artifacts) and embed in new PDF
+                const pngDataUrl = offCanvas.toDataURL('image/png');
+                const pngBytes = Uint8Array.from(atob(pngDataUrl.split(',')[1]), c => c.charCodeAt(0));
+                const pngImage = await newDoc.embedPng(pngBytes);
 
                 // Create page with same aspect ratio
                 const origViewport = pdfPage.getViewport({ scale: 1 });
                 const newPage = newDoc.addPage([origViewport.width, origViewport.height]);
-                newPage.drawImage(jpegImage, {
+                newPage.drawImage(pngImage, {
                     x: 0, y: 0,
                     width: origViewport.width,
                     height: origViewport.height,

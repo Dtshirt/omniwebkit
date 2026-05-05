@@ -1,7 +1,7 @@
 export const metadata = {
-  title: 'Free Online Image Converter — Convert JPG, PNG, WebP, AVIF, HEIC, TIFF, GIF, BMP, ICO',
+  title: 'Free Image Converter — Convert Any Image Format Online',
   description:
-    'Free online image converter supporting 11 formats: JPG, PNG, WebP, AVIF, HEIC, HEIF, TIFF, GIF, BMP, ICO, SVG. Convert in your browser — no upload to server. Batch convert, quality control, download instantly. 100% free and private.',
+    'Online Image Converter. Quickly convert any image to JPG, PNG, PDF, WebP, BMP, and more. 100% free, secure, and works on any web browser.',
   keywords: [
     'image converter online free',
     'convert JPG to PNG online',

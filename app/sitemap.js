@@ -1,4 +1,5 @@
 import { tools } from '@/lib/tools-data';
+import { blogData } from '@/lib/blogData';
 
 const DOMAIN = 'https://omniwebkit.com';
 
@@ -133,12 +134,25 @@ export default function sitemap() {
         priority: 0.6,
     }));
 
+    const blogRoutes = blogData.map((post) => ({
+        url: `${DOMAIN}/blog/${post.slug}`,
+        lastModified: new Date(post.date || '2026-04-20'),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+    }));
+
     const staticRoutes = [
         {
             url: DOMAIN,
             lastModified: new Date('2026-04-25'),
             changeFrequency: 'weekly',
             priority: 1.0,
+        },
+        {
+            url: `${DOMAIN}/blog`,
+            lastModified: new Date('2026-04-20'),
+            changeFrequency: 'weekly',
+            priority: 0.8,
         },
         {
             url: `${DOMAIN}/tools`,
@@ -185,5 +199,5 @@ export default function sitemap() {
         { url: `${DOMAIN}/compress-video-whatsapp`, lastModified: new Date('2026-04-27'), changeFrequency: 'monthly', priority: 0.85 },
     ];
 
-    return [...staticRoutes, ...categoryRoutes, ...toolRoutes, ...pseoVideoRoutes];
+    return [...staticRoutes, ...categoryRoutes, ...toolRoutes, ...blogRoutes, ...pseoVideoRoutes];
 }
