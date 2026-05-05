@@ -51,10 +51,8 @@ export class AdManager {
   }
 
   static shouldShowAds() {
-    // Check if ads are enabled and user has consented
-    const adsEnabled = process.env.NEXT_PUBLIC_ENABLE_ADS === 'true';
-    const consent = this.getConsentStatus();
-    return adsEnabled && consent.advertising;
+    // Disable ads completely for now as requested
+    return false;
   }
 
   static getConsentStatus() {

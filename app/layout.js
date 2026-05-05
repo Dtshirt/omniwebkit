@@ -111,14 +111,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Google AdSense */}
-        <Script
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4969619104257736`}
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-        />
-        <meta name="google-adsense-account" content="ca-pub-4969619104257736" />
-        
       </head>
 
       <body className={`${inter.className} antialiased`}>
