@@ -25,10 +25,11 @@ import {
   Code,
   Settings
 } from 'lucide-react';
-import SearchBar from '@/components/tools/SearchBar';
-import DonateModal from '@/components/ui/DonateModal';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useCommandStore } from '@/hooks/useCommandStore';
+
+const DonateModal = dynamic(() => import('@/components/ui/DonateModal'), { ssr: false });
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

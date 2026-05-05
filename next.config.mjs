@@ -2,9 +2,10 @@
 const PYTHON_API = process.env.PYTHON_API_URL || 'http://localhost:8001';
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ['lucide-react', 'react-hot-toast'],
     optimizeCss: true,
   },
+  compress: true,
   images: {
     domains: ['localhost'],
     formats: ['image/webp', 'image/avif']

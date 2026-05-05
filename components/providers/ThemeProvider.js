@@ -62,14 +62,9 @@ export const ThemeProvider = ({ children, ...props }) => {
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
 
-  // Prevent hydration mismatch by not rendering until mounted
-  if (!mounted) {
-    return (
-      <div style={{ visibility: 'hidden' }}>
-        {children}
-      </div>
-    );
-  }
+  // No longer hiding content - instead we use suppressHydrationWarning and let CSS
+  // handle the theme via class on html element. The initial render is always correct.
+  // This prevents LCP delay from hiding the page.
 
   const value = {
     theme,

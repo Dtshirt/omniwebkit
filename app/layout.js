@@ -1,20 +1,12 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { Suspense } from 'react';
 import Script from 'next/script';
-import { Toaster } from 'react-hot-toast';
 
-import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import GlobalFileValidator from '@/components/GlobalFileValidator';
-import GlobalDropOverlay from '@/components/GlobalDropOverlay';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { AnalyticsProvider } from '@/components/providers/AnalyticsProvider';
-import AdBanner from '@/components/ads/AdBanner';
-import ConsentBanner from '@/components/ads/ConsentBanner';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
-import CommandPalette from '@/components/ui/CommandPalette';
+import LazyProviders from '@/components/providers/LazyProviders';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -111,15 +103,27 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Inline theme script: runs before any paint to prevent flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (!theme) {
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  document.documentElement.classList.add(theme);
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
       </head>
 
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider>
           <AnalyticsProvider>
-            <ServiceWorkerRegister />
-            <GlobalFileValidator />
-            <GlobalDropOverlay />
-            <CommandPalette />
             <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors flex flex-col">
               <Header />
               <div className="flex-1 min-w-0">
@@ -128,18 +132,8 @@ export default function RootLayout({ children }) {
               <Footer />
             </div>
 
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                duration: 3000,
-                style: {
-                  background: 'var(--toast-bg)',
-                  color: 'var(--toast-color)',
-                },
-              }}
-            />
-
-            <ConsentBanner />
+            {/* All heavy client-only components: lazy loaded after page renders */}
+            <LazyProviders />
           </AnalyticsProvider>
         </ThemeProvider>
 

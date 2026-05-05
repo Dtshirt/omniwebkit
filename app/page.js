@@ -13,6 +13,9 @@ import {
 import { CategoryGrid, PopularToolsGrid } from '@/components/tools/HomePageSections';
 import HeroSearch from '@/components/tools/HeroSearch';
 
+export const dynamic = 'force-static';
+export const revalidate = 86400;
+
 export const metadata = {
   title: 'OmniWebKit — 100+ Free Online Tools for Image, PDF, Text, Code & More',
   description: 'Free online tools for image conversion, PDF editing, text formatting, code utilities, calculators and more. 100% browser-based, no signup required. Fast, secure, private.',
