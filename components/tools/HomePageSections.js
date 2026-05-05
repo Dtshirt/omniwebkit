@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { ArrowRight, TrendingUp, Star } from 'lucide-react';
 import { categories, getPopularTools } from '@/lib/tools-data';
