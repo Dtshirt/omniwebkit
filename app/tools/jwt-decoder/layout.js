@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 ﻿export const metadata = {
-  title: 'Free JWT Decoder Online — Decode, Inspect & Debug JSON Web Tokens',
+  title: 'JWT Decoder Online Free — Decode & Verify JSON Web Tokens',
   description:
-    'Free online JWT decoder. Paste any JSON Web Token and instantly see the decoded header, payload claims, and signature. Includes expiry status, human-readable timestamps, and colour-coded token parts. Browser-based — no server upload.',
+    'Decode and debug JWT tokens instantly online. View JWT header, payload & signature. Verify JWT expiry and claims. Free JSON Web Token decoder — no data sent to server.',
   keywords: [
     'JWT decoder online free',
     'JSON Web Token decoder',

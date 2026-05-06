@@ -5,8 +5,8 @@ import { seoData } from '@/lib/seoData';
 const toolSeo = seoData['bmi-calculator'];
 
 export const metadata = toolSeo ? {
-    title: toolSeo.title,
-    description: toolSeo.description,
+    title: 'BMI Calculator Online Free — Calculate Body Mass Index Instantly',
+    description: 'Calculate your Body Mass Index (BMI) online for free. Understand your weight category — Underweight, Normal, Overweight or Obese. Metric & imperial units supported.',
     keywords: toolSeo.keywords?.join(', '),
     robots: { index: true, follow: true },
     alternates: {

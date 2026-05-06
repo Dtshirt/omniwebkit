@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Audio Converter | OmniWebKit',
-  description: 'Fast, secure, hybrid audio converter. Convert MP3, WAV, AAC, FLAC, OGG, and M4A. Processes small files locally in your browser for privacy, and large files securely on our servers.',
+  title: 'Audio Converter Online Free — Convert MP3, WAV, FLAC, OGG',
+  description: 'Convert audio files between formats online for free. Convert MP3 to WAV, FLAC to MP3, OGG to M4A & more. Free audio format converter — fast, secure, no limits.',
   keywords: [
     'audio converter', 'mp3 converter', 'wav converter', 'flac converter',
     'audio format converter', 'free audio converter', 'online audio converter',

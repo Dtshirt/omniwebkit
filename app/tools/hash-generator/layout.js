@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-    title: 'Free Hash Generator Online — MD5, SHA-1, SHA-256, SHA-384, SHA-512 & HMAC',
+    title: 'Hash Generator Online Free — MD5, SHA-1, SHA-256 Hash Tool',
     description:
-        'Free online hash generator. Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes for text and files. Live mode, HMAC support, Base64 output, hash verification, and file checksum. No upload — 100% browser-based.',
+        'Generate MD5, SHA-1, SHA-256, SHA-512 hash values online for free. Hash text or files instantly. Free cryptographic hash generator — secure, client-side processing.',
     keywords: [
         'hash generator online free',
         'SHA-256 hash generator',

@@ -1,9 +1,9 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 
 export const metadata = {
-  title: 'Bulk UUID & ULID Generator — Generate up to 10,000 IDs Free',
+  title: 'UUID Generator Online Free — Generate UUID v1, v4, ULID Instantly',
   description:
-    'Free online bulk UUID and ULID generator. Generate up to 10,000 v1, v4, v5 UUIDs or ULIDs instantly. Download results as a CSV file for databases and testing.',
+    'Generate unique UUIDs (v1, v4) and ULIDs online for free. Bulk UUID generation, copy to clipboard. Free unique identifier generator — instant, no registration.',
   keywords: [
     'uuid generator',
     'ulid generator',

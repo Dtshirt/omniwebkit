@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-    title: 'Free Image to PDF Converter — Combine Multiple Photos into One PDF Online',
+    title: 'Image to PDF Converter Online Free — Convert JPG, PNG to PDF',
     description:
-        'Free online image to PDF converter. Combine multiple JPG, PNG, WebP, GIF images into a single PDF document. Choose page size (A4, Letter, A3, A5, Legal), orientation, margin, quality, image fit mode. Browser-based — no server upload.',
+        'Convert images (JPG, PNG, WebP) to PDF online for free. Combine multiple images into one PDF document. Free online image to PDF converter — instant, secure.',
     keywords: [
         'image to PDF converter online free',
         'convert JPG to PDF online',

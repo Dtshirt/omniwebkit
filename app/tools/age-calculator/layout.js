@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Age Calculator — Find Your Exact Age in Years, Months, Days & Seconds',
+  title: 'Age Calculator Online — Calculate Exact Age from Date of Birth Free',
   description:
-    'Free online age calculator. Enter your date of birth and instantly see your exact age in years, months, days, and live seconds. Includes birthday countdown, zodiac sign, life stats, and birth year explorer.',
+    'Calculate your exact age in years, months, days, hours & minutes online. Find age difference between dates. Free age calculator from date of birth — instant results.',
   keywords: [
     'age calculator',
     'how old am I',

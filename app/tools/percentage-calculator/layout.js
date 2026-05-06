@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Percentage Calculator Online — Six Calculators in One',
+  title: 'Percentage Calculator Online Free — Calculate % Instantly',
   description:
-    'Free online percentage calculator. Six modes: X% of Y, increase, decrease, difference, change, and reverse. Formula display, calculation history, one-click copy. No signup.',
+    'Calculate percentages online — find what percent of a number, percentage increase/decrease, and more. Free percentage calculator with instant results. Multiple calculation types.',
   keywords: [
     'percentage calculator online free',
     'calculate percentage of number',

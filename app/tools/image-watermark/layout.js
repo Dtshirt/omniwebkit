@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Image Watermark Tool — Add Text, Logo & Tiled Watermarks Online',
+  title: 'Add Watermark to Image Online Free — Text & Logo Watermark',
   description:
-    'Free online image watermark tool. Add custom text watermarks, logo/image watermarks, or full-coverage tiled pattern watermarks to any photo. Control opacity, position, rotation, and size. Browser-based — no server upload.',
+    'Add text or image watermarks to photos online. Protect your photos with custom watermarks. Batch watermark multiple images free — no software download.',
   keywords: [
     'image watermark tool online free',
     'add watermark to photo online',

@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Unit Converter Online — Data Transfer, Astronomy, Typography, Pressure',
+  title: 'Unit Converter Online Free — Convert Length, Weight, Temperature',
   description:
-    'Free online unit converter for niche and technical units. 8 categories: data transfer, fuel efficiency, astronomy, typography, pressure, digital storage, angles, frequency. Instant conversions.',
+    'Convert units online for free — length, weight, temperature, area, volume, speed & more. Fast, accurate unit conversion calculator. Free online unit converter tool.',
   keywords: [
     'unit converter online free',
     'data transfer rate converter',

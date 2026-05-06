@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-    title: 'Free PDF Password Protector Online — Password Protect PDF Files Instantly',
+    title: 'PDF Password Protector Online Free — Encrypt & Lock PDF Files',
     description:
-        'Free online PDF password protector. Add password protection and set permissions (print, copy, edit, annotate) on your PDF files. Browser-based, no upload, no signup.',
+        'Add password protection to PDF files online for free. Encrypt PDFs with 256-bit AES security. Protect sensitive PDFs from unauthorized access. No signup needed.',
     keywords: [
         'pdf password protector online free',
         'protect pdf with password online',

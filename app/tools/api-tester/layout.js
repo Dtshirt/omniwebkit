@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-    title: 'API Tester — Free Online HTTP Client to Test REST APIs in Your Browser',
+    title: 'API Tester Online Free — Test REST APIs Without Postman',
     description:
-        'Test REST APIs free online — no installation needed. Send GET, POST, PUT, PATCH, DELETE requests with custom headers, query parameters, and JSON body. Inspect status codes, response headers, and JSON with syntax highlighting.',
+        'Test REST APIs directly in your browser for free. Send GET, POST, PUT, DELETE requests. Inspect responses with headers & body. Free online API client — no download.',
     keywords: [
         'API tester online',
         'free API testing tool',

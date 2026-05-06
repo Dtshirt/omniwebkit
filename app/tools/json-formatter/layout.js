@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free JSON Formatter & Validator Online — Beautify, Minify & Validate JSON',
+  title: 'JSON Formatter & Validator Online Free — Beautify JSON Code',
   description:
-    'Free online JSON formatter and validator. Beautify minified JSON with syntax highlighting, validate JSON instantly, minify JSON for production, sort keys, strip comments, and download the result. Browser-based — no server upload.',
+    'Format, validate & beautify JSON code online. Minify JSON for production or prettify for readability. Free JSON formatter with syntax highlighting & error detection.',
   keywords: [
     'JSON formatter online free',
     'JSON validator online free',

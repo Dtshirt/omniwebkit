@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { Cookie, X, Settings } from 'lucide-react';
 
 const ConsentBanner = () => {
-  const [showBanner, setShowBanner] = useState(false);
+  // Use null = unknown (SSR), true = show, false = hide
+  // This avoids the delayed setState that causes a late LCP paint
+  const [showBanner, setShowBanner] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [preferences, setPreferences] = useState({
     necessary: true,
@@ -13,13 +15,19 @@ const ConsentBanner = () => {
     functional: false
   });
 
-  useEffect(() => {
+  // useLayoutEffect fires synchronously before browser paints.
+  // This means the banner either renders immediately or not at all —
+  // no late "pop-in" that Chrome records as a new LCP candidate.
+  useLayoutEffect(() => {
     const consent = localStorage.getItem('cookie-consent');
     if (!consent) {
       setShowBanner(true);
     } else {
-      const savedPreferences = JSON.parse(consent);
-      setPreferences(savedPreferences);
+      try {
+        const savedPreferences = JSON.parse(consent);
+        setPreferences(savedPreferences);
+      } catch (_) {}
+      setShowBanner(false);
     }
   }, []);
 
@@ -76,10 +84,17 @@ const ConsentBanner = () => {
     }
   };
 
-  if (!showBanner) return null;
+  // null = SSR/unknown, don't paint anything (avoids LCP element from SSR HTML)
+  // false = consent already given, skip rendering entirely
+  if (showBanner !== true) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 shadow-soft-lg">
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 shadow-soft-lg"
+      // Exclude from LCP: fixed overlays shouldn't be LCP candidates,
+      // but explicitly marking content-visibility helps some browsers.
+      style={{ contentVisibility: 'auto' }}
+    >
       <div className="container mx-auto">
         {!showSettings ? (
           /* Main Consent Banner */
@@ -139,29 +154,16 @@ const ConsentBanner = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded-xl">
                 <div>
-                  <div className="font-medium text-sm text-slate-900 dark:text-white">
-                    Necessary
-                  </div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400">
-                    Required for basic site functionality
-                  </div>
+                  <div className="font-medium text-sm text-slate-900 dark:text-white">Necessary</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Required for basic site functionality</div>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={preferences.necessary}
-                  disabled
-                  className="w-4 h-4 text-primary-600 rounded"
-                />
+                <input type="checkbox" checked={preferences.necessary} disabled className="w-4 h-4 text-primary-600 rounded" />
               </div>
 
               <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded-xl">
                 <div>
-                  <div className="font-medium text-sm text-slate-900 dark:text-white">
-                    Analytics
-                  </div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400">
-                    Help us improve our services
-                  </div>
+                  <div className="font-medium text-sm text-slate-900 dark:text-white">Analytics</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Help us improve our services</div>
                 </div>
                 <input
                   type="checkbox"
@@ -173,12 +175,8 @@ const ConsentBanner = () => {
 
               <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded-xl">
                 <div>
-                  <div className="font-medium text-sm text-slate-900 dark:text-white">
-                    Advertising
-                  </div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400">
-                    Personalized ads and content
-                  </div>
+                  <div className="font-medium text-sm text-slate-900 dark:text-white">Advertising</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Personalized ads and content</div>
                 </div>
                 <input
                   type="checkbox"
@@ -190,12 +188,8 @@ const ConsentBanner = () => {
 
               <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded-xl">
                 <div>
-                  <div className="font-medium text-sm text-slate-900 dark:text-white">
-                    Functional
-                  </div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400">
-                    Enhanced features and preferences
-                  </div>
+                  <div className="font-medium text-sm text-slate-900 dark:text-white">Functional</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Enhanced features and preferences</div>
                 </div>
                 <input
                   type="checkbox"

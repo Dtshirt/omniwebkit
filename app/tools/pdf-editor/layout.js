@@ -5,8 +5,8 @@ import { seoData } from '@/lib/seoData';
 const toolSeo = seoData['pdf-editor'];
 
 export const metadata = toolSeo ? {
-    title: toolSeo.title,
-    description: toolSeo.description,
+    title: 'Free PDF Editor Online — Edit PDF Text, Images & Pages in Browser',
+    description: 'Edit PDF files online for free. Add text, images, shapes, annotations to PDFs. Free browser-based PDF editor — no download, no signup, works on all devices.',
     keywords: toolSeo.keywords?.join(', '),
     robots: { index: true, follow: true },
     alternates: {
@@ -26,8 +26,8 @@ export const metadata = toolSeo ? {
         description: toolSeo.description,
     },
 } : {
-    title: 'PDF Editor - OmniWebKit',
-    description: 'Edit PDF files online for free. Add text, draw, highlight, insert images, and more.',
+    title: 'Free PDF Editor Online — Edit PDF Text, Images & Pages in Browser',
+    description: 'Edit PDF files online for free. Add text, images, shapes, annotations to PDFs. Free browser-based PDF editor — no download, no signup, works on all devices.',
     robots: { index: true, follow: true },
 };
 

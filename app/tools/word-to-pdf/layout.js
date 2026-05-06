@@ -1,9 +1,9 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 
 export const metadata = {
-  title: 'Free Word to PDF Converter Online — Documents DOC to PDF',
+  title: 'Word to PDF Converter Online Free — Convert DOCX to PDF',
   description:
-    'Convert documents Word to PDF exactly as the original PDF file. Convert Word to PDF online, easily and free.',
+    'Convert Word documents (DOC, DOCX) to PDF online free. Preserve formatting perfectly. Fast Word to PDF converter — no email needed, instant download.',
   keywords: [
     'word to pdf converter free online',
     'docx to pdf online free', 
@@ -17,9 +17,9 @@ export const metadata = {
     'word to pdf converter no signup',
   ],
   openGraph: {
-    title: 'Free Word to PDF Converter — Real LibreOffice Conversion',
+    title: 'Word to PDF Converter Online Free — Convert DOCX to PDF',
     description:
-      'Real server-side Word to PDF. LibreOffice renders vector PDFs with full formatting. Free.',
+      'Convert Word documents (DOC, DOCX) to PDF online free. Preserve formatting perfectly. Fast Word to PDF converter — no email needed, instant download.',
     type: 'website',
     url: 'https://omniwebkit.com/tools/word-to-pdf',
     siteName: 'OmniWebKit',

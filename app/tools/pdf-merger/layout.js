@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Online PDF Merger — Combine Multiple PDF Files into One',
+  title: 'PDF Merger Online Free — Combine PDF Files into One Document',
   description:
-    'Free online PDF merger. Combine multiple PDF files into a single document with real page-by-page merging. Reorder, preview, and download. Browser-based, no upload, no signup.',
+    'Merge multiple PDF files into one online for free. Combine PDFs in any order with drag & drop. Free PDF merger — no watermark, no registration, instant download.',
   keywords: [
     'pdf merger online free',
     'combine pdf files online free',

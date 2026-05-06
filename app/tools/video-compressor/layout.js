@@ -1,9 +1,9 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 
 export const metadata = {
-  title: 'Free Video Compressor Online — Real FFmpeg Compression, Any Format',
+  title: 'Video Compressor Online Free — Reduce Video File Size Without Quality Loss',
   description:
-    'Compress video files online using real FFmpeg server-side encoding. Reduce MP4, MOV, AVI size by up to 80%. WhatsApp preset, H.264/VP9 output. No watermark, free.',
+    'Compress videos online for free without losing quality. Reduce MP4, MOV, AVI file size for WhatsApp, email & social media. Free video compressor — no watermark.',
   keywords: [
     'video compressor free online',
     'compress video ffmpeg online',

@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Online Image Cropper — Crop Images to Any Size or Aspect Ratio',
+  title: 'Crop Image Online Free — Crop Photos to Any Size or Ratio',
   description:
-    'Free online image cropper. Crop images to any size or aspect ratio with a drag-and-drop canvas editor. Supports 1:1, 16:9, 4:3, 9:16, 3:2, free crop. Download as PNG, JPEG, or WebP. No upload to server.',
+    'Crop images to exact dimensions, custom aspect ratios, or preset social media sizes. Free online image cropper — no download needed, works in browser.',
   keywords: [
     'image cropper online free',
     'crop image online',
@@ -16,9 +16,9 @@ export const metadata = {
     'crop image exact pixels online',
   ],
   openGraph: {
-    title: 'Free Online Image Cropper — Crop to Any Size, Aspect Ratio, PNG, JPEG, WebP',
+    title: 'Crop Image Online Free — Crop Photos to Any Size or Ratio',
     description:
-      'Interactive drag-and-drop image cropper. Crop JPG, PNG, WebP, GIF images to any aspect ratio. Rule-of-thirds grid, live preview, output as PNG/JPEG/WebP. Free, browser-based, no server upload.',
+      'Crop images to exact dimensions, custom aspect ratios, or preset social media sizes. Free online image cropper — no download needed, works in browser.',
     type: 'website',
     url: 'https://omniwebkit.com/tools/image-cropper',
     siteName: 'OmniWebKit',

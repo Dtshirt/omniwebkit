@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 ﻿export const metadata = {
-  title: 'Free PDF to Image Converter Online — Convert PDF to PNG, JPG, WebP',
+  title: 'PDF to Image Converter Free Online — Convert PDF Pages to JPG/PNG',
   description:
-    'Free online PDF to image converter. Convert PDF pages to high-quality PNG, JPG, or WebP images. Choose resolution (1×–4×), quality, and format. Browser-based, no upload, no signup.',
+    'Convert PDF pages to high-quality images (JPG, PNG) online for free. Batch convert all PDF pages to images. Fast PDF to image converter — no registration needed.',
   keywords: [
     'pdf to image converter online free',
     'convert pdf to png online free',

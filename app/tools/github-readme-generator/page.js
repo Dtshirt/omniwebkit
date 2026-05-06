@@ -1,9 +1,9 @@
 import ReadmeGeneratorClient from './ReadmeGeneratorClient';
 
 export const metadata = {
-  title: 'GitHub README Generator — Build a Perfect README.md | OmniWebKit',
+  title: 'GitHub README Generator Online Free — Create Stunning README Files',
   description:
-    'Create a professional GitHub README.md in seconds. Visual form with live Markdown preview, badges, sections for About, Tech Stack, Installation, Screenshots, Contributing, License, and more.',
+    'Create beautiful GitHub README.md files online for free. Add badges, shields, stats & sections with a visual editor. Generate professional README for your repo instantly.',
   keywords: [
     'github readme generator',
     'readme.md generator',

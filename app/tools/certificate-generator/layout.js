@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Certificate Generator — Create & Download Professional Certificates Online',
+  title: 'Free Certificate Generator Online — Create Printable Certificates',
   description:
-    'Create professional certificates online for free. Choose from 6 templates — Classic, Modern, Elegant, Corporate, Academic, Achievement. Add logos, stamps, signatures. Download as PNG, JPG, or PDF. No login required.',
+    'Create professional certificates online free. Design completion, achievement & appreciation certificates with custom templates. Download as PDF or image instantly.',
   keywords: [
     'certificate generator online free',
     'free certificate maker',

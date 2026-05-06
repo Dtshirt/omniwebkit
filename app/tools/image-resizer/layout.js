@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Online Image Resizer — Resize Images to Exact Pixel Dimensions',
+  title: 'Image Resizer Online Free — Resize JPG, PNG to Any Dimension',
   description:
-    'Free online image resizer. Resize JPG, PNG, WebP, GIF and BMP images to exact pixel dimensions in your browser — no upload to server. Batch resize, aspect ratio lock, quality control, instant download.',
+    'Resize images online to exact pixels, percentage, or preset dimensions. Resize JPG, PNG, WebP, GIF for social media, email, or print. Free & instant.',
   keywords: [
     'image resizer online free',
     'resize image online free',
@@ -16,9 +16,9 @@ export const metadata = {
     'resize image pixels free tool',
   ],
   openGraph: {
-    title: 'Free Image Resizer — Resize Images to Exact Pixel Dimensions Online',
+    title: 'Image Resizer Online Free — Resize JPG, PNG to Any Dimension',
     description:
-      'Resize JPG, PNG, WebP, GIF images to any pixel size — free, browser-based, no server upload. Batch resize, presets, aspect ratio lock, instant download.',
+      'Resize images online to exact pixels, percentage, or preset dimensions. Resize JPG, PNG, WebP, GIF for social media, email, or print. Free & instant.',
     type: 'website',
     url: 'https://omniwebkit.com/tools/image-resizer',
     siteName: 'OmniWebKit',

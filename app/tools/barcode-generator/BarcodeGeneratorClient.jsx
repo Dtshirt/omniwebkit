@@ -263,11 +263,11 @@ export default function BarcodeGeneratorClient() {
   };
 
   const pollJobStatus = async (jobId) => {
-    try {
+    try { 
       const res = await fetch(`${API_V1}/jobs/${jobId}`);
       if (!res.ok) throw new Error("Failed to fetch job status.");
       
-      const job = await res.json();
+      const job = await res.json(); 
 
       if (job.status === "failed") {
         throw new Error(job.error || "Server failed to generate batch.");

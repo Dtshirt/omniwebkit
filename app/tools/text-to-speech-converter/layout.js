@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Text to Speech & Speech to Text Converter Online',
+  title: 'Text to Speech Online Free — Convert Text to Natural Voice Audio',
   description:
-    'Free online text to speech and speech to text converter. Multiple voices, speed/pitch/volume controls, real-time transcription in 14 languages. No signup.',
+    'Convert text to natural-sounding speech online for free. Multiple voices, languages & accents. Download as MP3. Free TTS converter — no login required, instant results.',
   keywords: [
     'text to speech online free',
     'speech to text online free',

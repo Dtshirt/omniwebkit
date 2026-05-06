@@ -1,9 +1,9 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 
 export const metadata = {
-    title: 'Free PDF to Word Converter Online — Real DOCX Output with LibreOffice',
+    title: 'PDF to Word Converter Free Online — Convert PDF to Editable DOCX',
     description:
-        'Convert PDF to real Word (.docx) files online free. Server-side LibreOffice conversion preserves formatting, tables, images. Not raw text extraction. No watermark, no signup.',
+        'Convert PDF files to editable Word documents online free. Accurate PDF to DOCX conversion preserving layout, fonts & tables. No signup, instant download.',
     keywords: [
         'pdf to word converter online free',
         'convert pdf to word free',

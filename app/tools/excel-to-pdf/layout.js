@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-    title: 'Free Excel to PDF Converter — Convert .xlsx, .xls & CSV to PDF Online',
+    title: 'Excel to PDF Converter Free Online — Convert XLSX to PDF Instantly',
     description:
-        'Free online Excel to PDF converter. Upload .xlsx, .xls, or CSV files and download a professionally formatted PDF. Multi-sheet support, custom title, table styles, and page orientation. No upload — 100% browser-based.',
+        'Convert Excel spreadsheets (XLS, XLSX) to PDF online for free. Preserve formulas, charts & formatting. Free Excel to PDF converter — no email, instant download.',
     keywords: [
         'excel to pdf converter online free',
         'convert xlsx to pdf',

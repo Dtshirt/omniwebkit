@@ -2,7 +2,7 @@ import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
   title: 'Free Invoice Generator Online — Create Professional Invoices Instantly',
   description:
-    'Free online invoice generator. Create professional invoices with custom line items, tax, discount, and 12 currency options. Print or save as PDF. Browser-based — no signup, no watermark, no server upload.',
+    'Create and download professional invoices online for free. Customize with your logo, business details & tax calculations. Download as PDF. No account needed.',
   keywords: [
     'free invoice generator online',
     'create invoice online free',

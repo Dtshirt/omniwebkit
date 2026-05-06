@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-    title: 'Free Online SQL Formatter — Beautify & Minify SQL Queries',
+    title: 'SQL Formatter Online Free — Beautify & Format SQL Queries',
     description:
-        'Free online SQL formatter and beautifier. Format, indent, and minify SQL with syntax highlighting. Supports MySQL, PostgreSQL, SQLite. Copy or download. No signup.',
+        'Format and beautify SQL queries online for free. Supports MySQL, PostgreSQL, SQL Server & Oracle. Clean up messy SQL code with proper indentation & capitalization.',
     keywords: [
         'sql formatter online free',
         'sql beautifier online',

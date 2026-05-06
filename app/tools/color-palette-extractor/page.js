@@ -4,8 +4,8 @@ import { Palette, Lock, Zap, Code, ShieldCheck, Image as ImageIcon, CheckCircle,
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 
 export const metadata = {
-  title: 'Image Color Palette Extractor - Get HEX & Tailwind Configs Online',
-  description: 'Upload any image to instantly extract its dominant HEX colors mathematically. Automatically generates a 10-swatch UI palette and exportable Tailwind CSS theme configurations entirely offline.',
+  title: 'Color Palette Extractor from Image — Get Hex Codes Free Online',
+  description: 'Extract dominant colors and full color palettes from any image. Get hex codes, RGB & HSL values instantly. Free image color picker and palette generator tool.',
   alternates: {
     canonical: 'https://omniwebkit.com/tools/color-palette-extractor',
   },
@@ -15,7 +15,7 @@ export default function ColorPalettePage() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Image Color Palette Extractor",
+    "name": "Color Palette Extractor from Image",
     "description": "Upload any image to instantly extract its dominant HEX colors mathematically. Automatically generates a 10-swatch UI palette and exportable Tailwind CSS theme configurations entirely offline.",
     "url": "https://omniwebkit.com/tools/color-palette-extractor",
     "applicationCategory": "DesignApplication",

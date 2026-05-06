@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Word Counter Online — Count Words, Characters & Check Readability',
+  title: 'Word Counter Online Free — Count Words, Characters & Reading Time',
   description:
-    'Free online word counter. Count words, characters, sentences, paragraphs, and unique words. Get reading time, Flesch-Kincaid readability grade, and keyword density. No signup.',
+    'Count words, characters, sentences & paragraphs in your text online for free. Check keyword density & reading time. Free word count tool — instant, accurate results.',
   keywords: [
     'word counter free online',
     'character counter online free',

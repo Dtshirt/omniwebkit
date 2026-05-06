@@ -1,8 +1,8 @@
 import VideoToAudioClient from "./VideoToAudioClient";
 
 export const metadata = {
-  title: "Free Video to Audio Converter - Extract MP3, WAV, AAC, FLAC",
-  description: "Convert any video to audio instantly. Extract MP3, WAV, AAC, or FLAC from MP4, MOV, AVI, MKV and more. Small files processed in-browser, large files via secure server conversion.",
+  title: "Video to Audio Converter Free Online — Extract MP3 from Video",
+  description: "Convert video files to MP3, AAC, WAV audio online for free. Extract audio track from MP4, MKV, AVI videos. Free video to audio converter — instant, no signup.",
   keywords: ["video to audio converter", "mp4 to mp3", "video to mp3", "extract audio from video", "mp4 to flac", "video to aac", "video to wav", "free audio extractor"],
   openGraph: {
     title: "Free Video to Audio Converter - Extract MP3, WAV, AAC, FLAC",

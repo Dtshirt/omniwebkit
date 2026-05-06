@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free CSS Grid Generator Online — Responsive Layouts with Flexbox Support',
+  title: 'CSS Grid Generator Online Free — Visual CSS Grid Layout Builder',
   description:
-    'Free visual CSS Grid generator and Flexbox generator. Create responsive layouts with live preview, desktop/tablet/mobile breakpoints, grid item positioning, and copy-ready CSS code. No login required.',
+    'Create CSS grid layouts visually and copy the generated code. Build complex grid layouts without writing code manually. Free CSS Grid generator with live preview.',
   keywords: [
     'CSS grid generator online free',
     'CSS grid layout generator',

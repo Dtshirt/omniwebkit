@@ -4,8 +4,8 @@ import { Image as ImageIcon, Zap, Lock, Scaling, MoveDiagonal, CheckCircle, Smar
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 
 export const metadata = {
-  title: 'SVG to PNG Converter Online - High-Res Vector Rasterization',
-  description: 'Convert SVG mathematical vector graphics seamlessly into perfectly scaled high-resolution PNG or JPG raster images natively within your browser entirely offline.',
+  title: 'SVG to PNG Converter Online Free — Convert SVG Files Instantly',
+  description: 'Convert SVG files to PNG images at any resolution online. High-quality SVG to PNG conversion with custom dimensions. Free, fast, no signup required.',
   alternates: {
     canonical: 'https://omniwebkit.com/tools/svg-to-png',
   },

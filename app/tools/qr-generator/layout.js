@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free QR Code Generator Online — Create Custom QR Codes Instantly',
+  title: 'QR Code Generator Free Online — Create Custom QR Codes Instantly',
   description:
-    'Free online QR code generator. Create QR codes for text, URLs, WiFi, email, phone, SMS, contacts, and location. Custom colours, SVG download, error correction. Browser-based, no signup.',
+    'Generate QR codes for URLs, text, WiFi, contacts & more online for free. Customize colors, logo & size. Download as PNG or SVG. Free QR code creator — no signup.',
   keywords: [
     'qr code generator free online',
     'create qr code free',

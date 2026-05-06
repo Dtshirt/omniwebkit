@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Online Image Compressor — Reduce Image File Size Without Quality Loss',
+  title: 'Compress Images Online Free — Reduce Size Without Losing Quality',
   description:
-    'Free online image compressor. Reduce JPG, PNG, WebP, GIF, and BMP file sizes by up to 80% without visible quality loss. Batch compress multiple images, set max dimensions, download individually. Browser-based — no upload to server.',
+    'Compress JPG, PNG, WebP images online for free. Reduce image file size by up to 90% while preserving visual quality. No signup required, works instantly.',
   keywords: [
     'image compressor online free',
     'compress image online without quality loss',
@@ -16,9 +16,9 @@ export const metadata = {
     'free image optimize tool no upload',
   ],
   openGraph: {
-    title: 'Free Image Compressor — Reduce JPG, PNG, WebP File Size Online',
+    title: 'Compress Images Online Free — Reduce Size Without Losing Quality',
     description:
-      'Compress JPEG, PNG, WebP, GIF, and BMP images by up to 80%. Batch compression, before/after preview, max dimensions resize, quality slider. Free, browser-based, no server upload.',
+      'Compress JPG, PNG, WebP images online for free. Reduce image file size by up to 90% while preserving visual quality. No signup required, works instantly.',
     type: 'website',
     url: 'https://omniwebkit.com/tools/image-compressor',
     siteName: 'OmniWebKit',

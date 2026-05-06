@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'AI Background Remover — Free Online Image Background Removal Tool',
+  title: 'Remove Background from Image Free — AI Background Eraser Online',
   description:
-    'Remove image backgrounds free online — no account, no upload, instant results. Supports JPG, PNG, WebP. Outputs transparent PNG. Perfect for product photos, portraits, and logos. All processing stays in your browser.',
+    'Remove image background in seconds with AI. Get transparent PNG backgrounds for product photos, profile pictures & thumbnails. Free, no software needed.',
   keywords: [
     'background remover free online',
     'remove image background online',
@@ -16,9 +16,9 @@ export const metadata = {
     'background removal without software',
   ],
   openGraph: {
-    title: 'Free AI Background Remover — Remove Image Backgrounds Online',
+    title: 'Remove Background from Image Free — AI Background Eraser Online',
     description:
-      'Remove backgrounds from photos instantly. No upload, no account, no cost. Outputs transparent PNG. Supports product photos, portraits, logos, and more.',
+      'Remove image background in seconds with AI. Get transparent PNG backgrounds for product photos, profile pictures & thumbnails. Free, no software needed.',
     type: 'website',
     url: 'https://omniwebkit.com/tools/background-remover',
     siteName: 'OmniWebKit',

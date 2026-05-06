@@ -77,7 +77,7 @@ async function convertBrowserWav(file, targetSampleRate, numChannels, onProgress
         onProgress(20);
         const audioBuffer = await audioContext.decodeAudioData(e.target.result);
         onProgress(50);
-        
+
         let samples;
         if (numChannels === 2 && audioBuffer.numberOfChannels === 2) {
           const left = audioBuffer.getChannelData(0);
@@ -92,7 +92,7 @@ async function convertBrowserWav(file, targetSampleRate, numChannels, onProgress
             samples = channel; // mono
           }
         }
-        
+
         onProgress(80);
         const wavBuffer = encodeWAV(samples, targetSampleRate, numChannels);
         const blob = new Blob([new DataView(wavBuffer)], { type: 'audio/wav' });
@@ -123,32 +123,32 @@ async function pollJob(jobId, onProgress, signal) {
 
 // ─── Main Component ───────────────────────────────────────────────────────
 export default function AudioConverterClient() {
-  const [file, setFile]                 = useState(null);
-  const [audioUrl, setAudioUrl]         = useState('');
-  const [outUrl, setOutUrl]             = useState('');
-  const [outBlob, setOutBlob]           = useState(null);
-  const [audioMeta, setAudioMeta]       = useState({ duration: 0 });
-  const [mode, setMode]                 = useState('auto'); // 'auto' | 'browser' | 'server'
+  const [file, setFile] = useState(null);
+  const [audioUrl, setAudioUrl] = useState('');
+  const [outUrl, setOutUrl] = useState('');
+  const [outBlob, setOutBlob] = useState(null);
+  const [audioMeta, setAudioMeta] = useState({ duration: 0 });
+  const [mode, setMode] = useState('auto'); // 'auto' | 'browser' | 'server'
 
   // Audio settings
-  const [cfgFormat, setCfgFormat]       = useState('mp3');
-  const [cfgBitrate, setCfgBitrate]     = useState(192);
-  const [cfgChannels, setCfgChannels]   = useState(2);
-  const [cfgSampleRate, setCfgSampleRate]= useState(44100);
+  const [cfgFormat, setCfgFormat] = useState('mp3');
+  const [cfgBitrate, setCfgBitrate] = useState(192);
+  const [cfgChannels, setCfgChannels] = useState(2);
+  const [cfgSampleRate, setCfgSampleRate] = useState(44100);
 
   // State
-  const [converting, setConverting]     = useState(false);
-  const [progress, setProgress]         = useState(0);
-  const [phase, setPhase]               = useState('');
-  const [serverJobId, setServerJobId]   = useState(null);
-  const [outputSize, setOutputSize]     = useState(null);
+  const [converting, setConverting] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState('');
+  const [serverJobId, setServerJobId] = useState(null);
+  const [outputSize, setOutputSize] = useState(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  
+
   // WaveSurfer refs
   const waveformRef = useRef(null);
   const wavesurfer = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  
+
   const abortRef = useRef(null);
 
   // ── Dropzone ────────────────────────────────────────────────────────────
@@ -156,12 +156,12 @@ export default function AudioConverterClient() {
     const f = accepted[0];
     if (!f) return;
     if (f.size > 500 * 1024 * 1024) { toast.error('Max file size is 500 MB'); return; }
-    
+
     const url = URL.createObjectURL(f);
     setFile(f);
     setAudioUrl(url);
     setOutUrl(''); setOutBlob(null); setProgress(0); setOutputSize(null); setServerJobId(null);
-    
+
     // Setup audio duration
     const audioObj = new Audio(url);
     audioObj.onloadedmetadata = () => {
@@ -181,7 +181,7 @@ export default function AudioConverterClient() {
       if (wavesurfer.current) {
         wavesurfer.current.destroy();
       }
-      
+
       wavesurfer.current = WaveSurfer.create({
         container: waveformRef.current,
         waveColor: '#a78bfa',
@@ -194,11 +194,11 @@ export default function AudioConverterClient() {
         normalize: true,
         url: audioUrl
       });
-      
+
       wavesurfer.current.on('play', () => setIsPlaying(true));
       wavesurfer.current.on('pause', () => setIsPlaying(false));
       wavesurfer.current.on('finish', () => setIsPlaying(false));
-      
+
       return () => {
         wavesurfer.current?.destroy();
       };
@@ -213,15 +213,15 @@ export default function AudioConverterClient() {
 
   // ── Compute effective mode ──────────────────────────────────────────────
   const fileMB = file ? file.size / (1024 * 1024) : 0;
-  
+
   // If browser mode is forced but target format is not WAV, it will fail unless we force server
   let effectiveMode = mode === 'auto'
     ? (fileMB > SERVER_THRESHOLD_MB ? 'server' : 'browser')
     : mode;
-    
+
   const isBrowserIncapable = effectiveMode === 'browser' && cfgFormat !== 'wav';
   if (isBrowserIncapable) {
-      effectiveMode = 'server';
+    effectiveMode = 'server';
   }
 
   // ── Convert ─────────────────────────────────────────────────────────────
@@ -327,7 +327,7 @@ export default function AudioConverterClient() {
           toast.success('Server audio ready!');
 
           // cleanup after 60s
-          setTimeout(() => fetch(`${API_V1}/tools/audio/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => {}), 60000);
+          setTimeout(() => fetch(`${API_V1}/tools/audio/cleanup/${job_id}`, { method: 'DELETE' }).catch(() => { }), 60000);
         }
       }
     } catch (err) {
@@ -358,8 +358,8 @@ export default function AudioConverterClient() {
     setFile(null); setAudioUrl(''); setOutUrl(''); setOutBlob(null);
     setProgress(0); setOutputSize(null); setServerJobId(null); setConverting(false);
     if (wavesurfer.current) {
-        wavesurfer.current.destroy();
-        wavesurfer.current = null;
+      wavesurfer.current.destroy();
+      wavesurfer.current = null;
     }
   };
 
@@ -367,10 +367,9 @@ export default function AudioConverterClient() {
   const ModeBadge = ({ m }) => {
     const isServer = m === 'server';
     return (
-      <span className={`inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full ${
-        isServer ? 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300'
-                 : 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300'
-      }`}>
+      <span className={`inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full ${isServer ? 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300'
+        : 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300'
+        }`}>
         {isServer ? <Server className="w-3 h-3" /> : <Monitor className="w-3 h-3" />}
         {isServer ? 'Server' : 'Browser'}
       </span>
@@ -399,11 +398,10 @@ export default function AudioConverterClient() {
               <button
                 key={m}
                 onClick={() => setMode(m)}
-                className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold border transition-all ${
-                  mode === m
-                    ? 'bg-violet-600 text-white border-violet-600 shadow-md'
-                    : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-violet-400'
-                }`}
+                className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold border transition-all ${mode === m
+                  ? 'bg-violet-600 text-white border-violet-600 shadow-md'
+                  : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-violet-400'
+                  }`}
               >
                 {m === 'auto' && <Zap className="w-3.5 h-3.5" />}
                 {m === 'browser' && <Monitor className="w-3.5 h-3.5" />}
@@ -430,11 +428,10 @@ export default function AudioConverterClient() {
               <div
                 {...getRootProps()}
                 id="audio-dropzone"
-                className={`flex flex-col items-center justify-center w-full h-72 border-2 border-dashed rounded-3xl cursor-pointer transition-all duration-300 ${
-                  isDragActive
-                    ? 'border-violet-500 bg-violet-50 dark:bg-violet-900/20'
-                    : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-violet-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm'
-                }`}
+                className={`flex flex-col items-center justify-center w-full h-72 border-2 border-dashed rounded-3xl cursor-pointer transition-all duration-300 ${isDragActive
+                  ? 'border-violet-500 bg-violet-50 dark:bg-violet-900/20'
+                  : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-violet-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm'
+                  }`}
               >
                 <input {...getInputProps()} />
                 <div className="p-4 bg-violet-100 dark:bg-violet-900/40 rounded-full mb-4">
@@ -482,11 +479,10 @@ export default function AudioConverterClient() {
                       <button
                         key={fmt}
                         onClick={() => setCfgFormat(fmt)}
-                        className={`py-2 px-3 rounded-lg text-sm font-bold transition-colors ${
-                          cfgFormat === fmt 
-                            ? 'bg-violet-100 text-violet-700 border-2 border-violet-500 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-400' 
-                            : 'bg-slate-100 text-slate-600 border-2 border-transparent hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700'
-                        }`}
+                        className={`py-2 px-3 rounded-lg text-sm font-bold transition-colors ${cfgFormat === fmt
+                          ? 'bg-violet-100 text-violet-700 border-2 border-violet-500 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-400'
+                          : 'bg-slate-100 text-slate-600 border-2 border-transparent hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700'
+                          }`}
                       >
                         {fmt.toUpperCase()}
                       </button>
@@ -495,10 +491,10 @@ export default function AudioConverterClient() {
                 </div>
 
                 {isBrowserIncapable && (
-                    <div className="flex items-start gap-2 text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400 rounded-xl p-3 border border-amber-200 dark:border-amber-800/50">
-                        <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                        <span>Browser native conversion only supports WAV. Your conversion will automatically be routed to our secure server.</span>
-                    </div>
+                  <div className="flex items-start gap-2 text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-400 rounded-xl p-3 border border-amber-200 dark:border-amber-800/50">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span>Browser native conversion only supports WAV. Your conversion will automatically be routed to our secure server.</span>
+                  </div>
                 )}
 
                 {/* Advanced toggle */}
@@ -517,7 +513,7 @@ export default function AudioConverterClient() {
                       <Slider label="Bitrate (kbps)" value={cfgBitrate} min={64} max={320} step={32}
                         display={`${cfgBitrate} kbps`} onChange={setCfgBitrate} />
                     </div>
-                    
+
                     {/* Channels */}
                     <div>
                       <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 block mb-2">Channels</label>
@@ -526,23 +522,22 @@ export default function AudioConverterClient() {
                           <button
                             key={c}
                             onClick={() => setCfgChannels(c)}
-                            className={`flex-1 py-1.5 rounded-lg text-sm font-semibold transition-colors ${
-                              cfgChannels === c
-                                ? 'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900'
-                                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700'
-                            }`}
+                            className={`flex-1 py-1.5 rounded-lg text-sm font-semibold transition-colors ${cfgChannels === c
+                              ? 'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900'
+                              : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700'
+                              }`}
                           >
                             {c === 1 ? 'Mono' : 'Stereo'}
                           </button>
                         ))}
                       </div>
                     </div>
-                    
+
                     {/* Sample Rate */}
                     <div>
                       <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 block mb-2">Sample Rate (Hz)</label>
-                      <select 
-                        value={cfgSampleRate} 
+                      <select
+                        value={cfgSampleRate}
                         onChange={(e) => setCfgSampleRate(Number(e.target.value))}
                         className="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block p-2.5 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500"
                       >
@@ -606,12 +601,12 @@ export default function AudioConverterClient() {
                       {Math.round(audioMeta.duration)}s
                     </span>
                   </div>
-                  
+
                   {/* WaveSurfer Container */}
                   <div ref={waveformRef} className="w-full bg-slate-50 dark:bg-slate-900 rounded-xl p-2 mb-4 border border-slate-100 dark:border-slate-800"></div>
-                  
+
                   <div className="flex justify-center">
-                    <button 
+                    <button
                       onClick={togglePlay}
                       className="bg-violet-100 text-violet-700 hover:bg-violet-200 dark:bg-violet-900/50 dark:text-violet-300 dark:hover:bg-violet-800/50 px-6 py-2 rounded-full font-bold text-sm transition-colors"
                     >

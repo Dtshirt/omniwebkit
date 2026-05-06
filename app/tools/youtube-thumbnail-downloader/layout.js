@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free YouTube Thumbnail Downloader — Download HD Thumbnails in All Resolutions',
+  title: 'YouTube Thumbnail Downloader — Download HD Thumbnails Free',
   description:
-    'Download any YouTube video thumbnail for free in all available resolutions — Max HD (1280×720), 720p, 480p, 360p, and more. Paste the URL, pick your quality, and download instantly. No login.',
+    'Download YouTube video thumbnails in HD, Full HD, and 4K quality. Simply paste the YouTube URL and get the thumbnail image in all resolutions. Free tool.',
   keywords: [
     'youtube thumbnail downloader free',
     'download youtube thumbnail',
@@ -16,9 +16,9 @@ export const metadata = {
     'youtube thumbnail downloader no watermark',
   ],
   openGraph: {
-    title: 'Free YouTube Thumbnail Downloader — HD Thumbnails in All Resolutions',
+    title: 'YouTube Thumbnail Downloader — Download HD Thumbnails Free',
     description:
-      'Download YouTube video thumbnails in Max HD, 720p, 480p and more. Free, instant, no login.',
+      'Download YouTube video thumbnails in HD, Full HD, and 4K quality. Simply paste the YouTube URL and get the thumbnail image in all resolutions. Free tool.',
     type: 'website',
     url: 'https://omniwebkit.com/tools/youtube-thumbnail-downloader',
     siteName: 'OmniWebKit',

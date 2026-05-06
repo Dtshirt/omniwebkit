@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Online PDF Compressor — Reduce PDF File Size Instantly',
+  title: 'PDF Compressor Online Free — Reduce PDF Size Without Losing Quality',
   description:
-    'Free online PDF compressor. Reduce PDF file size with three compression levels. Batch compress multiple PDFs. Browser-based, no upload, no signup.',
+    'Compress PDF files online for free. Reduce PDF size from MB to KB without losing quality. Best free online PDF compressor — no signup, instant download.',
   keywords: [
     'pdf compressor online free',
     'compress pdf file size online free',
@@ -16,7 +16,7 @@ export const metadata = {
     'compress pdf without losing quality',
   ],
   openGraph: {
-    title: 'Free Online PDF Compressor — Reduce PDF File Size Instantly',
+    title: 'PDF Compressor Online Free — Reduce PDF Size Without Losing Quality',
     description:
       'Reduce PDF file size with 3 compression levels. Batch compress multiple PDFs. Browser-based, no upload, no signup, no watermark.',
     type: 'website',

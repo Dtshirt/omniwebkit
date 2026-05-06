@@ -134,7 +134,7 @@ export default function VideoCompressor() {
   const download = async () => {
     if (!result) return;
     try {
-      const resp = await fetch(`${API_V1}/download/${result.jobId}`);
+      const resp = await fetch(`${API_V1}/tools/download/${result.jobId}`);
       if (!resp.ok) throw new Error('Download failed');
       const blob = await resp.blob();
       const url = URL.createObjectURL(blob);

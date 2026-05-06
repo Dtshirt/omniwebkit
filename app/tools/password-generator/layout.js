@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Strong Password Generator Online — Secure Random Passwords Instantly',
+  title: 'Password Generator Online Free — Create Strong Secure Passwords',
   description:
-    'Free online password generator. Create strong, random, secure passwords with custom length, uppercase, lowercase, numbers, and symbols. Includes strength meter, entropy display, bulk generate, and password history. No signup required.',
+    'Generate strong, random passwords instantly online for free. Customize length, symbols, numbers & letters. Free secure password generator — your passwords are never stored or sent.',
   keywords: [
     'password generator online free',
     'strong password generator',

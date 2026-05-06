@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Currency Converter — Live Exchange Rates for 30+ Currencies',
+  title: 'Currency Converter Online Free — Live Exchange Rates Today',
   description:
-    'Free online currency converter with live exchange rates for 30+ world currencies. Convert USD to EUR, GBP, INR, JPY and more. Compare multiple currencies at once. No login required.',
+    'Convert currencies with live exchange rates online for free. USD to INR, EUR to USD & 150+ currency pairs updated in real-time. Free currency exchange rate calculator.',
   keywords: [
     'currency converter online free',
     'live exchange rate converter',

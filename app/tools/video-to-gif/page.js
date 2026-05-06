@@ -4,8 +4,8 @@ import { Video, Lock, Zap, FileImage, ShieldCheck, Film, DownloadCloud, Image as
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 
 export const metadata = {
-  title: 'Video to GIF Converter Online - Free MP4 & WebM to GIF',
-  description: 'Convert MP4, WebM, and MOV videos instantly into high-quality animated GIFs directly in your browser. 100% private, no server uploads, free tool.',
+  title: 'Video to GIF Converter Online Free — Convert MP4 to GIF Instantly',
+  description: 'Convert videos to animated GIFs online for free. Make GIFs from MP4, WebM & MOV. Customize size, speed & quality. Free video to GIF maker — no registration needed.',
   alternates: {
     canonical: 'https://omniwebkit.com/tools/video-to-gif',
   },

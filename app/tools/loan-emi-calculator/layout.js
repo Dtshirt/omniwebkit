@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-    title: 'Free Loan EMI Calculator Online — Home, Car & Personal Loan EMI with Amortization',
+    title: 'EMI Calculator Online Free — Calculate Loan EMI & Interest Easily',
     description:
-        'Free online loan EMI calculator. Calculate monthly EMI, total interest, and full amortization schedule for home loans, car loans, personal loans, and education loans. Includes prepayment savings calculator. Supports ₹, $, €, £.',
+        'Calculate your loan EMI, total interest & payment schedule instantly. Home loan, car loan & personal loan EMI calculator online free. Fast, accurate results.',
     keywords: [
         'loan EMI calculator online free',
         'home loan EMI calculator',

@@ -1,12 +1,12 @@
 import FaviconGeneratorClient from "./FaviconGeneratorClient";
 
 export const metadata = {
-  title: "Free Online Favicon Generator - Create Icons from PNG, JPG, SVG",
-  description: "Instantly create high-quality, professional favicon packages for your website. Upload any image (PNG, JPG, SVG) and generate perfectly sized icons for all modern browsers and devices.",
+  title: "Free Favicon Generator — Create Favicon from Image or Text",
+  description: "Create favicons for your website in all sizes (16x16, 32x32, 64x64, 180x180). Convert any image to favicon ICO, PNG & Apple touch icon format. Free online.",
   keywords: ["favicon generator", "create favicon", "ico generator", "apple touch icon generator", "android chrome icon maker", "svg to ico", "png to ico", "website icon creator", "favicon maker"],
   openGraph: {
-    title: "Free Online Favicon Generator - Create Icons from PNG, JPG, SVG",
-    description: "Instantly create high-quality, professional favicon packages for your website. Upload any image and generate perfectly sized icons for all modern browsers and devices.",
+    title: "Free Favicon Generator — Create Favicon from Image or Text",
+    description: "Create favicons for your website in all sizes (16x16, 32x32, 64x64, 180x180). Convert any image to favicon ICO, PNG & Apple touch icon format. Free online.",
     type: "website",
   },
 };

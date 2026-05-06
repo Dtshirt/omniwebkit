@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'PDF OCR | Convert Scanned PDF to Text | OmniWebKit',
-  description: 'Fast, secure, hybrid PDF OCR. Extract text from scanned PDFs and images. Process small documents privately in your browser, or route large files to our secure servers.',
+  title: 'PDF OCR Online Free — Convert Scanned PDF to Searchable Text',
+  description: 'Make scanned PDFs searchable and editable using free online OCR. Extract text from scanned documents accurately. Supports multiple languages. No signup needed.',
   keywords: [
     'pdf ocr', 'scanned pdf to text', 'pdf to text', 'ocr online',
     'extract text from pdf', 'free pdf ocr', 'convert scanned pdf',

@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Case Converter — Convert Text Online to Any Case Format',
+  title: 'Case Converter Online Free — UPPERCASE, lowercase, Title Case',
   description:
-    'Convert text to UPPERCASE, lowercase, Title Case, camelCase, snake_case, kebab-case, PascalCase, and 5 more formats — free, instant, live results as you type. No login required.',
+    'Convert text case online for free. Change to UPPERCASE, lowercase, Title Case, camelCase, snake_case & more. Free online text case converter — instant results.',
   keywords: [
     'case converter online free',
     'text case converter tool',

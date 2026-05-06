@@ -1,8 +1,8 @@
 import RelatedTools from '@/components/seo/RelatedTools';
 export const metadata = {
-  title: 'Free Online Regex Tester — Test Regular Expressions with Live Highlighting',
+  title: 'Regex Tester Online Free — Test & Debug Regular Expressions',
   description:
-    'Free online regex tester with instant visual feedback. Test JavaScript regular expressions with 6 flags, capture groups, find-and-replace, colour-coded matches. Browser-based, no signup.',
+    'Test and debug regular expressions online with real-time matching. Supports JavaScript, Python, PHP regex. Free regex tester with match highlighting & explanation.',
   keywords: [
     'regex tester online free',
     'regular expression tester',
