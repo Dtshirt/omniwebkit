@@ -7,6 +7,7 @@ import { API_V1 } from "@/lib/api-config";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
 const POLL_MS = 2500;
+const MAX_POLL_ATTEMPTS = 120; // 120 × 2.5s = 5 minutes max wait
 
 export default function PdfRedactionClient() {
   const [pdfFile, setPdfFile] = useState(null);
@@ -66,30 +67,62 @@ export default function PdfRedactionClient() {
       fd.append("file", pdfFile);
       fd.append("words", JSON.stringify(words));
 
-      const res = await fetch(`${API_V1}/tools/pdf-redact`, {
-        method: "POST",
-        body: fd,
-      });
+      const url = `${API_V1}/tools/pdf-redact`;
+      console.log("[PDF-REDACT] Sending POST to:", url);
+      console.log("[PDF-REDACT] File:", pdfFile.name, pdfFile.size, "bytes");
+      console.log("[PDF-REDACT] Words:", words);
+
+      let res;
+      try {
+        res = await fetch(url, { method: "POST", body: fd });
+      } catch (fetchErr) {
+        console.error("[PDF-REDACT] Fetch failed (network error):", fetchErr);
+        throw new Error(`Network error: ${fetchErr.message}. Check browser console and CORS settings.`);
+      }
+
+      console.log("[PDF-REDACT] Response status:", res.status, res.statusText);
 
       if (!res.ok) {
-        const e = await res.json();
-        throw new Error(e.detail || "Upload failed.");
+        let detail = "Upload failed.";
+        try { detail = (await res.json()).detail || detail; } catch {}
+        throw new Error(`Server error ${res.status}: ${detail}`);
       }
 
       const { job_id } = await res.json();
       setProgress(15);
 
+      let attempts = 0;
       for (;;) {
         await new Promise(r => setTimeout(r, POLL_MS));
-        const sr = await fetch(`${API_V1}/jobs/${job_id}`);
+        attempts++;
+
+        if (attempts > MAX_POLL_ATTEMPTS) {
+          throw new Error(
+            "Processing timed out after 5 minutes. The server worker may be unavailable. " +
+            "Please try again later or contact support."
+          );
+        }
+
+        let sr;
+        try {
+          sr = await fetch(`${API_V1}/jobs/${job_id}`);
+        } catch (fetchErr) {
+          throw new Error("Lost connection to the server. Please check your internet and try again.");
+        }
+
+        if (!sr.ok) {
+          throw new Error(`Server error while checking job status (HTTP ${sr.status}).`);
+        }
+
         const job = await sr.json();
         
         if (job.progress) setProgress(parseInt(job.progress));
         if (job.status === "error" || job.status === "failed") {
-          throw new Error(job.error || "Processing failed.");
+          throw new Error(job.error || "Processing failed on the server.");
         }
         if (job.status === "done") {
           const dl = await fetch(`${API_V1}/download/${job_id}`);
+          if (!dl.ok) throw new Error("Failed to download the redacted file.");
           setOutBlob(await dl.blob());
           toast.success("Redaction complete!");
           break;

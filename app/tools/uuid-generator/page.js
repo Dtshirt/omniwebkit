@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import { v1 as uuidv1, v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import { ulid } from 'ulid';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
+import { API_V1 } from '@/lib/api-config';
 
 const inputCls = 'w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:ring-2 focus:ring-violet-500 focus:border-transparent outline-none transition';
 
@@ -91,7 +92,7 @@ export default function UuidGenerator() {
         saveAs(blob, `${type.toUpperCase()}_Bulk_Generate.csv`);
         toast.success(`Successfully generated in browser!`, { id: toastId });
       } else {
-        let url = `/api/py/uuid-generator?type=${type}&count=${count}`;
+        let url = `${API_V1}/tools/uuid-generator?type=${type}&count=${count}`;
         if (type === 'v5') {
           url += `&namespace=${encodeURIComponent(namespace)}&name=${encodeURIComponent(name)}`;
         }

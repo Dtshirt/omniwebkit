@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import cronstrue from "cronstrue";
-import cronParser from "cron-parser";
+import { CronExpressionParser } from "cron-parser";
 import { Clock, Calendar, CheckCircle2, XCircle, AlertCircle, ChevronDown, ChevronUp, FastForward, Server, Zap } from "lucide-react";
 import { API_V1 } from "@/lib/api-config";
 
@@ -36,7 +36,7 @@ export default function CronTesterClient() {
       setDesc(human);
 
       // 2. Next dates
-      const interval = cronParser.parseExpression(cron);
+      const interval = CronExpressionParser.parse(cron);
       const next10 = [];
       for (let i = 0; i < 10; i++) {
         next10.push(interval.next().toDate());

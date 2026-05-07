@@ -39,58 +39,40 @@ export default function PageSpeedClient() {
       toast.error("Please enter a URL.");
       return;
     }
-    
     if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
       targetUrl = 'https://' + targetUrl;
       setUrl(targetUrl);
     }
-    
+
     setSingleLoading(true);
     setSingleResults(null);
-    
+
     try {
-      // Use our backend proxy to fetch Google PageSpeed API to bypass strict client-side IP rate limits
-      const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(targetUrl)}&strategy=desktop`;
-      
-      const res = await fetch(`${API_V1}/tools/proxy-request`, {
+      // Use our own Playwright backend — no API key, no quota limits
+      const res = await fetch(`${API_V1}/tools/page-speed/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: apiUrl, method: "GET" })
+        body: JSON.stringify({ url: targetUrl, strategy: "desktop" }),
       });
-      
-      if (!res.ok) throw new Error("Failed to communicate with proxy server.");
-      
-      const proxyData = await res.json();
-      if (proxyData.error || !proxyData.body) {
-         throw new Error(proxyData.body || "Failed to analyze the website. It might be unreachable or rate-limited.");
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `Server error ${res.status}`);
       }
-      
-      let data;
-      try {
-        data = JSON.parse(proxyData.body);
-      } catch (e) {
-        throw new Error("Invalid response from PageSpeed API.");
-      }
-      
-      const lighthouse = data.lighthouseResult;
-      const audits = lighthouse.audits;
-      
-      // Extract Metrics
-      const ttfb = audits['server-response-time']?.numericValue || 0;
-      const fcp = audits['first-contentful-paint']?.numericValue || 0;
-      const totalByteWeight = audits['total-byte-weight']?.numericValue || 0;
-      const renderBlocking = audits['render-blocking-resources']?.details?.items?.length || 0;
-      const score = Math.round(lighthouse.categories.performance.score * 100);
+
+      const data = await res.json();
 
       setSingleResults({
-        url: targetUrl,
-        score,
-        ttfb: Math.round(ttfb),
-        fcp: (fcp / 1000).toFixed(2), // Convert to seconds
-        totalMb: (totalByteWeight / 1024 / 1024).toFixed(2), // Convert to MB
-        renderBlocking
+        url:           data.url,
+        title:         data.title || "",
+        score:         data.score,
+        ttfb:          data.ttfb,
+        fcp:           data.fcp,           // already in seconds
+        totalMb:       data.total_mb,
+        requestCount:  data.request_count,
+        loadTimeMs:    data.load_time_ms,
       });
-      
+
     } catch (err) {
       console.error(err);
       toast.error(err.message || "Failed to analyze website performance.");
@@ -98,6 +80,7 @@ export default function PageSpeedClient() {
       setSingleLoading(false);
     }
   };
+
 
   // ─── BULK MODE LOGIC (FastAPI + Playwright) ────────────────────────────
   
@@ -353,9 +336,9 @@ export default function PageSpeedClient() {
                          <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
                            <Zap className="w-5 h-5" />
                          </div>
-                         <p className="text-slate-500 text-xs font-bold uppercase mb-1">Render Blocking</p>
-                         <p className={`text-2xl font-bold ${singleResults.renderBlocking === 0 ? 'text-emerald-500' : 'text-red-500'}`}>
-                           {singleResults.renderBlocking} <span className="text-sm">files</span>
+                         <p className="text-slate-500 text-xs font-bold uppercase mb-1">HTTP Requests</p>
+                         <p className={`text-2xl font-bold ${(singleResults.requestCount||0) <= 50 ? 'text-emerald-500' : (singleResults.requestCount||0) <= 100 ? 'text-amber-500' : 'text-red-500'}`}>
+                           {singleResults.requestCount ?? 0} <span className="text-sm">reqs</span>
                          </p>
                       </div>
 

@@ -112,7 +112,7 @@ async function pollJob(jobId, onProgress, signal) {
   while (true) {
     if (signal?.aborted) throw new Error('Cancelled');
     await new Promise(r => setTimeout(r, POLL_INTERVAL));
-    const res = await fetch(`${API_BASE}/audio/status/${jobId}`, { signal });
+    const res = await fetch(`${API_V1}/tools/audio/status/${jobId}`, { signal });
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0);

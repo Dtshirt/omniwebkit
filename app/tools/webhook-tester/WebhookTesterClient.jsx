@@ -159,7 +159,7 @@ export default function WebhookTesterClient() {
   const createSession = async () => {
     setCreating(true);
     try {
-      const res = await fetch(`${API}/webhook/create`, { method: "POST" });
+      const res = await fetch(`${API}/tools/webhook/create`, { method: "POST" });
       if (!res.ok) throw new Error("Failed to create session.");
       const data = await res.json();
       setSessionId(data.session_id);
@@ -179,7 +179,7 @@ export default function WebhookTesterClient() {
   const clearRequests = async () => {
     if (!sessionId) return;
     try {
-      await fetch(`${API}/webhook/requests/${sessionId}`, { method: "DELETE" });
+      await fetch(`${API}/tools/webhook/requests/${sessionId}`, { method: "DELETE" });
       setRequests([]);
       setNewIds(new Set());
       latestMsRef.current = 0;
@@ -191,7 +191,7 @@ export default function WebhookTesterClient() {
   const poll = useCallback(async () => {
     if (!sessionId) return;
     try {
-      const res = await fetch(`${API}/webhook/requests/${sessionId}?after_ms=${latestMsRef.current}`);
+      const res = await fetch(`${API}/tools/webhook/requests/${sessionId}?after_ms=${latestMsRef.current}`);
       if (!res.ok) { setIsLive(false); return; }
       const data = await res.json();
       setIsLive(true);
