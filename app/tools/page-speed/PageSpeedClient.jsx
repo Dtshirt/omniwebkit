@@ -52,38 +52,28 @@ export default function PageSpeedClient() {
 
     try {
       const fetchStrategy = async (strategy) => {
-        const res = await fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(targetUrl)}&strategy=${strategy}&category=performance`);
+        const res = await fetch(`${API_V1}/tools/page-speed/analyze`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: targetUrl, strategy })
+        });
+        
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
-          throw new Error(err.error?.message || `Google API error ${res.status}`);
+          throw new Error(err.detail || `Server error ${res.status}`);
         }
-        const data = await res.json();
-        const lh = data.lighthouseResult;
         
-        // Extract opportunities
-        const opportunities = [];
-        if (lh && lh.audits) {
-          Object.values(lh.audits).forEach(audit => {
-            if (audit.details && audit.details.type === 'opportunity' && (audit.details.overallSavingsMs > 0 || audit.details.overallSavingsBytes > 0)) {
-              opportunities.push({
-                title: audit.title,
-                description: audit.description,
-                savingsMs: audit.details.overallSavingsMs || 0,
-                savingsBytes: audit.details.overallSavingsBytes || 0,
-              });
-            }
-          });
-        }
+        const data = await res.json();
         
         return {
-          url: targetUrl,
+          url: data.url,
           title: data.title || targetUrl,
-          score: lh ? Math.round(lh.categories.performance.score * 100) : 0,
-          ttfb: lh ? Math.round(lh.audits['server-response-time']?.numericValue || 0) : 0,
-          fcp: lh ? parseFloat(((lh.audits['first-contentful-paint']?.numericValue || 0) / 1000).toFixed(2)) : 0,
-          totalMb: lh ? parseFloat(((lh.audits['total-byte-weight']?.numericValue || 0) / 1024 / 1024).toFixed(2)) : 0,
-          requestCount: lh ? (lh.audits['network-requests']?.numericValue || 0) : 0,
-          opportunities: opportunities.sort((a,b) => b.savingsMs - a.savingsMs)
+          score: data.score,
+          ttfb: data.ttfb,
+          fcp: data.fcp,
+          totalMb: data.total_mb,
+          requestCount: data.request_count,
+          opportunities: data.opportunities || []
         };
       };
 
@@ -231,9 +221,9 @@ export default function PageSpeedClient() {
 
   const faqs = [
     { q: "What is TTFB?", a: "TTFB stands for Time to First Byte. It measures the milliseconds it takes for a user's browser to receive the very first byte of data from your server after requesting the page. A high TTFB usually means a slow server or missing caching layer." },
-    { q: "How does the single URL analyzer work?", a: "To guarantee zero impact on your local network, your browser dispatches a secure request directly to Google's public Lighthouse APIs. This simulates a real desktop environment loading your page and returns highly accurate, standardized metrics instantly." },
+    { q: "How does the single URL analyzer work?", a: "To guarantee zero impact on your local network, our platform dispatches a secure request to our high-performance server engines. This simulates a real desktop environment loading your page using headless Chromium, returning highly accurate metrics without external API rate-limits." },
     { q: "How does the Bulk CSV feature work?", a: "To prevent rate-limits, uploading a massive CSV will transfer the workload to our backend servers. We dynamically spin up headless Chromium browser instances using Playwright to physically load every URL, record the network traffic, and generate your exportable CSV." },
-    { q: "Is this free?", a: "Yes, both single page audits and massive bulk tracking are 100% free." }
+    { q: "Is this free?", a: "Yes, both single page audits and massive bulk tracking are 100% free and quota-unlimited." }
   ];
 
   const renderDescription = (desc) => {

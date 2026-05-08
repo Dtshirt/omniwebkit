@@ -25,7 +25,7 @@ async function pollJob(jobId, onProgress, signal) {
     if (!res.ok) throw new Error('Status check failed');
     const data = await res.json();
     onProgress(Number(data.progress) || 0, "Capturing screenshot...");
-    if (data.status === 'completed') return data;
+    if (data.status === 'done' || data.status === 'completed') return data;
     if (data.status === 'error') throw new Error(data.error || 'Capture failed');
   }
 }
@@ -77,7 +77,7 @@ export default function WebsiteScreenshotClient() {
 
         updatePhase(100, '✅ Capture complete!');
         setDownloadUrl(`${API_V1}/download/${job_id}`); // Using standard download route if it exists, otherwise we'll adjust
-        setDownloadName(result.download_name || `screenshot.${format}`);
+        setDownloadName(result.original_filename || result.download_name || `screenshot.${format}`);
         toast.success('Screenshot captured successfully!');
 
     } catch (err) {

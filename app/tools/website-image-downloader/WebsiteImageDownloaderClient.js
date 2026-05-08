@@ -42,6 +42,25 @@ export default function WebsiteImageDownloaderClient() {
         const foundImages = [];
         let imageIndex = 0;
 
+        // ─── Clean Image URL (un-optimize) ─────────────────────
+        const cleanImageUrl = (src, baseUrl) => {
+            try {
+                const urlObj = new URL(src, baseUrl);
+                // Handle Next.js images
+                if (urlObj.pathname === '/_next/image' || urlObj.pathname.includes('/_next/static/image')) {
+                    const originalUrl = urlObj.searchParams.get('url');
+                    if (originalUrl) {
+                        return originalUrl.startsWith('http') 
+                            ? originalUrl 
+                            : new URL(originalUrl, urlObj.origin).href;
+                    }
+                }
+                return urlObj.href;
+            } catch {
+                return src;
+            }
+        };
+
         const addImage = (imgSrc, alt = '', title = '', width = 'auto', height = 'auto') => {
             if (!imgSrc || imgSrc.startsWith('data:')) return;
 
@@ -52,6 +71,9 @@ export default function WebsiteImageDownloaderClient() {
                 return;
             }
 
+            // Clean the URL (un-optimize Next.js images etc)
+            const cleanedUrl = cleanImageUrl(fullUrl, baseUrl);
+
             // Filter out tiny tracker pixels and placeholders
             if (
                 fullUrl.includes('1x1') ||
@@ -61,11 +83,12 @@ export default function WebsiteImageDownloaderClient() {
             ) return;
 
             // Deduplicate
-            if (foundImages.some((img) => img.src === fullUrl)) return;
+            if (foundImages.some((img) => img.src === fullUrl || img.src === cleanedUrl)) return;
 
             foundImages.push({
                 id: imageIndex++,
-                src: fullUrl,
+                src: cleanedUrl, // Use cleaned URL as primary
+                originalSrc: fullUrl, // Keep original optimized URL as fallback
                 alt: alt || `Image ${imageIndex}`,
                 title,
                 width,
@@ -202,10 +225,12 @@ export default function WebsiteImageDownloaderClient() {
 
         const proxies = [
             imageUrl,
+            // Try cleaned URL if current is optimized
+            imageUrl.includes('/_next/image') ? cleanImageUrl(imageUrl, imageUrl) : null,
             `/api/proxy-image?url=${encodeURIComponent(imageUrl)}`,
             `https://api.allorigins.win/raw?url=${encodeURIComponent(imageUrl)}`,
             `https://corsproxy.io/?${encodeURIComponent(imageUrl)}`
-        ];
+        ].filter(Boolean);
 
         let downloaded = false;
 
@@ -277,10 +302,12 @@ export default function WebsiteImageDownloaderClient() {
             selected.map(async (img, i) => {
                 const proxies = [
                     img.src,
+                    // Fallback to original if src is cleaned
+                    img.originalSrc !== img.src ? img.originalSrc : null,
                     `/api/proxy-image?url=${encodeURIComponent(img.src)}`,
                     `https://api.allorigins.win/raw?url=${encodeURIComponent(img.src)}`,
                     `https://corsproxy.io/?${encodeURIComponent(img.src)}`
-                ];
+                ].filter(Boolean);
 
                 for (const proxyUrl of proxies) {
                     try {
@@ -510,9 +537,13 @@ export default function WebsiteImageDownloaderClient() {
                                                     src={
                                                         previewUrls[image.id] === 'proxy'
                                                             ? `/api/proxy-image?url=${encodeURIComponent(image.src)}`
-                                                            : previewUrls[image.id] === 'proxy2'
-                                                                ? `https://api.allorigins.win/raw?url=${encodeURIComponent(image.src)}`
-                                                                : image.src
+                                                            : previewUrls[image.id] === 'original'
+                                                                ? image.originalSrc
+                                                                : previewUrls[image.id] === 'proxy2'
+                                                                    ? `https://api.allorigins.win/raw?url=${encodeURIComponent(image.src)}`
+                                                                    : previewUrls[image.id] === 'proxy3'
+                                                                        ? `https://corsproxy.io/?${encodeURIComponent(image.src)}`
+                                                                        : image.src
                                                     }
                                                     alt={image.alt}
                                                     className={`w-full h-full object-cover transition-opacity duration-300 ${loadedImages.has(image.id) ? 'opacity-100' : 'opacity-0'
@@ -524,8 +555,23 @@ export default function WebsiteImageDownloaderClient() {
                                                     onError={() => {
                                                         setPreviewUrls((prev) => {
                                                             const current = prev[image.id];
-                                                            if (!current) return { ...prev, [image.id]: 'proxy' };
-                                                            if (current === 'proxy') return { ...prev, [image.id]: 'proxy2' };
+                                                            if (!current) {
+                                                                // First failure: try our proxy
+                                                                return { ...prev, [image.id]: 'proxy' };
+                                                            }
+                                                            if (current === 'proxy') {
+                                                                // Second failure: try original optimized URL if we had one
+                                                                if (image.originalSrc && image.originalSrc !== image.src) {
+                                                                    return { ...prev, [image.id]: 'original' };
+                                                                }
+                                                                return { ...prev, [image.id]: 'proxy2' };
+                                                            }
+                                                            if (current === 'original') {
+                                                                return { ...prev, [image.id]: 'proxy2' };
+                                                            }
+                                                            if (current === 'proxy2') {
+                                                                return { ...prev, [image.id]: 'proxy3' };
+                                                            }
                                                             return { ...prev, [image.id]: 'failed' };
                                                         });
                                                     }}
