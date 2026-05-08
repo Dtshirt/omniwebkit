@@ -7,7 +7,7 @@ import {
   Image as ImageIcon, Type, FileText, Code, Activity, SearchCheck, Globe
 } from 'lucide-react';
 import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
-import { API_V1 } from '@/lib/config';
+import { API_V1 } from '@/lib/api-config';
 
 const queryClient = new QueryClient();
 
