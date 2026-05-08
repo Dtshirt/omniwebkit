@@ -5,7 +5,6 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import { API_V1 } from '@/lib/api-config';
 
 const card = 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm';
-const SERVER_THRESHOLD = 5 * 1024 * 1024;
 const POLL_MS = 2000;
 
 function fmtSize(b) {
@@ -37,13 +36,10 @@ export default function UnlockPdf() {
     const [error, setError] = useState('');
     const [result, setResult] = useState(null);
     const [dragOver, setDragOver] = useState(false);
-    const [mode, setMode] = useState('auto');
     const [processTime, setProcessTime] = useState(0);
     const fileRef = useRef(null);
     const abortRef = useRef(null);
     const timerRef = useRef(null);
-
-    const actualMode = mode === 'auto' ? (file && file.size > SERVER_THRESHOLD ? 'server' : 'browser') : mode;
 
     const handleFile = (f) => {
         if (!f) return;
@@ -64,40 +60,6 @@ export default function UnlockPdf() {
         timerRef.current = setInterval(() => setProcessTime(((Date.now() - start) / 1000).toFixed(1)), 200);
     };
     const stopTimer = () => { if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; } };
-
-    const unlockBrowser = useCallback(async () => {
-        setStatus('processing'); setProgress(10); startTimer();
-        try {
-            const { PDFDocument } = await import('pdf-lib');
-            setProgress(30);
-            const bytes = await file.arrayBuffer();
-            setProgress(50);
-            let doc;
-            try {
-                doc = await PDFDocument.load(bytes, { password: password || undefined, ignoreEncryption: true });
-            } catch (e) {
-                if (e.message?.includes('password') || e.message?.includes('encrypt')) {
-                    throw new Error('Incorrect password or unsupported encryption. Try server-side processing for stronger encryption.');
-                }
-                throw e;
-            }
-            setProgress(70);
-            const newDoc = await PDFDocument.create();
-            const pages = await newDoc.copyPages(doc, doc.getPageIndices());
-            pages.forEach(p => newDoc.addPage(p));
-            setProgress(85);
-            const saved = await newDoc.save();
-            setProgress(100);
-            const blob = new Blob([saved], { type: 'application/pdf' });
-            const url = URL.createObjectURL(blob);
-            const stem = file.name.replace(/\.pdf$/i, '');
-            setResult({ url, name: `${stem}_unlocked.pdf`, size: saved.byteLength });
-            setStatus('done');
-        } catch (e) {
-            setError(e.message || 'Failed to unlock PDF');
-            setStatus('error');
-        } finally { stopTimer(); }
-    }, [file, password]);
 
     const unlockServer = useCallback(async () => {
         setStatus('uploading'); setProgress(0); startTimer();
@@ -139,8 +101,7 @@ export default function UnlockPdf() {
 
     const startUnlock = () => {
         setError('');
-        if (actualMode === 'server') unlockServer();
-        else unlockBrowser();
+        unlockServer();
     };
 
     const downloadResult = () => {
@@ -163,19 +124,7 @@ export default function UnlockPdf() {
                     <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Remove PDF password security, giving you the freedom to use your PDFs as you want.</p>
                 </div>
 
-                {/* Mode Selector */}
-                <div className={`${card} p-4 mb-6`}>
-                    <div className="flex items-center gap-3 flex-wrap">
-                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Processing:</span>
-                        {[{ id: 'auto', label: 'Auto', icon: RefreshCw }, { id: 'browser', label: 'Browser', icon: Monitor }, { id: 'server', label: 'Server', icon: Server }].map(m => (
-                            <button key={m.id} onClick={() => setMode(m.id)}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${mode === m.id ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 ring-2 ring-emerald-300 dark:ring-emerald-700' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'}`}>
-                                <m.icon className="w-3.5 h-3.5" />{m.label}
-                            </button>
-                        ))}
-                        {file && <span className="ml-auto text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">Using: {actualMode === 'browser' ? '🖥️ Browser' : '☁️ Server'}</span>}
-                    </div>
-                </div>
+
 
                 {/* Upload */}
                 {!file && status === 'idle' && (
@@ -190,7 +139,7 @@ export default function UnlockPdf() {
                         <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-medium transition-colors">
                             <Lock className="w-4 h-4" /> Select PDF
                         </div>
-                        <p className="text-xs text-slate-400 dark:text-slate-500 mt-4">Small files are unlocked in your browser. Large files use our secure server queue.</p>
+                        <p className="text-xs text-slate-400 dark:text-slate-500 mt-4">All files are processed securely using our high-performance server queue.</p>
                     </div>
                 )}
 
@@ -276,8 +225,8 @@ export default function UnlockPdf() {
                 {/* Info Cards */}
                 <div className="grid sm:grid-cols-3 gap-4 mt-10">
                     {[
-                        { icon: Shield, title: 'Private & Secure', desc: 'Small files are processed entirely in your browser. Your documents never leave your device.' },
-                        { icon: Server, title: 'Handles Any Size', desc: 'Large or heavily encrypted files are processed via our secure server queue for reliable results.' },
+                        { icon: Shield, title: 'Private & Secure', desc: 'Files are processed in our secure server queue and are automatically deleted after you download the result.' },
+                        { icon: Server, title: 'Handles Any Size', desc: 'Our robust server infrastructure reliably handles large or heavily encrypted files without crashing.' },
                         { icon: Unlock, title: 'Full Freedom', desc: 'Removes all restrictions — print, copy, edit, and use your PDF without limitations.' },
                     ].map((c, i) => (
                         <div key={i} className={`${card} p-5`}>
@@ -299,7 +248,7 @@ export default function UnlockPdf() {
                             <li><strong className="text-slate-800 dark:text-slate-200">Click Unlock</strong> — the tool removes all security restrictions.</li>
                             <li><strong className="text-slate-800 dark:text-slate-200">Download</strong> — your unrestricted PDF is ready to use freely.</li>
                         </ol>
-                        <p>Small files (under 5 MB) are unlocked instantly in your browser using advanced document processing — no upload needed. Larger files are sent to our secure processing queue, which handles millions of requests without downtime. Files are automatically deleted after processing.</p>
+                        <p>All files are sent to our secure processing queue, which handles millions of requests without downtime and accurately removes both user and owner passwords. Files are automatically deleted after processing.</p>
                     </div>
                 </div>
 
@@ -309,7 +258,7 @@ export default function UnlockPdf() {
                     <div className="divide-y divide-slate-200 dark:divide-slate-700">
                         {[
                             { q: 'Can this tool unlock any PDF?', a: 'Yes — it removes both user passwords (open password) and owner passwords (restriction password). You must know the open password if one is set; we cannot bypass encryption without it.' },
-                            { q: 'Is my PDF safe?', a: 'Absolutely. Small files are processed entirely in your browser and never leave your device. Server-processed files are automatically deleted after you download the result.' },
+                            { q: 'Is my PDF safe?', a: 'Absolutely. Server-processed files are automatically deleted after you download the result or after a short expiration period.' },
                             { q: 'What restrictions does it remove?', a: 'All of them — printing, copying text, editing, form filling, and annotation restrictions are fully removed from the unlocked PDF.' },
                             { q: 'Do I need to know the password?', a: 'Only if the PDF has an "open" password (required to view the file). If the PDF opens normally but restricts printing or copying, you can unlock it without entering any password.' },
                         ].map((f, i) => (

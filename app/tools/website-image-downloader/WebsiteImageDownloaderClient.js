@@ -75,21 +75,35 @@ export default function WebsiteImageDownloaderClient() {
 
         // img[src] and img[srcset]
         imgElements.forEach((img) => {
-            const src = img.getAttribute('src');
+            let bestSrc = img.getAttribute('src');
             const srcset = img.getAttribute('srcset');
             const alt = img.getAttribute('alt') || '';
             const title = img.getAttribute('title') || '';
             const width = img.getAttribute('width') || 'auto';
             const height = img.getAttribute('height') || 'auto';
 
-            if (src) addImage(src, alt, title, width, height);
-
             if (srcset) {
-                srcset.split(',').forEach((part) => {
-                    const [srcUrl] = part.trim().split(' ');
-                    if (srcUrl) addImage(srcUrl, alt, title, width, height);
+                const parts = srcset.split(',').map(p => p.trim());
+                let maxVal = -1;
+                parts.forEach(part => {
+                    const match = part.match(/^(\S+)(?:\s+([\d.]+[wx]))?$/);
+                    if (match) {
+                        const url = match[1];
+                        const descriptor = match[2];
+                        let val = 0;
+                        if (descriptor) {
+                            if (descriptor.endsWith('w')) val = parseFloat(descriptor);
+                            else if (descriptor.endsWith('x')) val = parseFloat(descriptor) * 1000;
+                        }
+                        if (val > maxVal) {
+                            maxVal = val;
+                            bestSrc = url;
+                        }
+                    }
                 });
             }
+
+            if (bestSrc) addImage(bestSrc, alt, title, width, height);
         });
 
         // Background images in inline styles

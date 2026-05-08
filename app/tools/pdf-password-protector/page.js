@@ -98,7 +98,7 @@ export default function PdfPasswordProtector() {
 
   /* share URL built from current host (proxied through site) or direct API */
   const shareUrl = result
-    ? `${API}/api/v1/tools/pdf-protect/share/${result.share_token}`
+    ? `${typeof window !== 'undefined' ? window.location.origin : ''}/tools/pdf-password-protector/share/${result.share_token}`
     : '';
 
   const handleFile = (f) => {

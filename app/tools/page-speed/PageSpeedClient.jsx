@@ -18,7 +18,9 @@ export default function PageSpeedClient() {
   
   // Single Mode State
   const [url, setUrl] = useState("");
-  const [singleResults, setSingleResults] = useState(null);
+  const [deviceView, setDeviceView] = useState("mobile");
+  const [mobileResults, setMobileResults] = useState(null);
+  const [desktopResults, setDesktopResults] = useState(null);
   const [singleLoading, setSingleLoading] = useState(false);
   
   // Bulk Mode State
@@ -45,34 +47,53 @@ export default function PageSpeedClient() {
     }
 
     setSingleLoading(true);
-    setSingleResults(null);
+    setMobileResults(null);
+    setDesktopResults(null);
 
     try {
-      // Use our own Playwright backend — no API key, no quota limits
-      const res = await fetch(`${API_V1}/tools/page-speed/analyze`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: targetUrl, strategy: "desktop" }),
-      });
+      const fetchStrategy = async (strategy) => {
+        const res = await fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(targetUrl)}&strategy=${strategy}&category=performance`);
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error?.message || `Google API error ${res.status}`);
+        }
+        const data = await res.json();
+        const lh = data.lighthouseResult;
+        
+        // Extract opportunities
+        const opportunities = [];
+        if (lh && lh.audits) {
+          Object.values(lh.audits).forEach(audit => {
+            if (audit.details && audit.details.type === 'opportunity' && (audit.details.overallSavingsMs > 0 || audit.details.overallSavingsBytes > 0)) {
+              opportunities.push({
+                title: audit.title,
+                description: audit.description,
+                savingsMs: audit.details.overallSavingsMs || 0,
+                savingsBytes: audit.details.overallSavingsBytes || 0,
+              });
+            }
+          });
+        }
+        
+        return {
+          url: targetUrl,
+          title: data.title || targetUrl,
+          score: lh ? Math.round(lh.categories.performance.score * 100) : 0,
+          ttfb: lh ? Math.round(lh.audits['server-response-time']?.numericValue || 0) : 0,
+          fcp: lh ? parseFloat(((lh.audits['first-contentful-paint']?.numericValue || 0) / 1000).toFixed(2)) : 0,
+          totalMb: lh ? parseFloat(((lh.audits['total-byte-weight']?.numericValue || 0) / 1024 / 1024).toFixed(2)) : 0,
+          requestCount: lh ? (lh.audits['network-requests']?.numericValue || 0) : 0,
+          opportunities: opportunities.sort((a,b) => b.savingsMs - a.savingsMs)
+        };
+      };
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.detail || `Server error ${res.status}`);
-      }
+      const [mobile, desktop] = await Promise.all([
+        fetchStrategy("mobile"),
+        fetchStrategy("desktop")
+      ]);
 
-      const data = await res.json();
-
-      setSingleResults({
-        url:           data.url,
-        title:         data.title || "",
-        score:         data.score,
-        ttfb:          data.ttfb,
-        fcp:           data.fcp,           // already in seconds
-        totalMb:       data.total_mb,
-        requestCount:  data.request_count,
-        loadTimeMs:    data.load_time_ms,
-      });
-
+      setMobileResults(mobile);
+      setDesktopResults(desktop);
     } catch (err) {
       console.error(err);
       toast.error(err.message || "Failed to analyze website performance.");
@@ -215,6 +236,13 @@ export default function PageSpeedClient() {
     { q: "Is this free?", a: "Yes, both single page audits and massive bulk tracking are 100% free." }
   ];
 
+  const renderDescription = (desc) => {
+    if (!desc) return "";
+    let html = desc.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-rose-500 hover:underline">$1</a>');
+    html = html.replace(/`([^`]+)`/g, '<code class="bg-slate-100 px-1 py-0.5 rounded text-xs text-rose-600">$1</code>');
+    return { __html: html };
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
       
@@ -282,67 +310,126 @@ export default function PageSpeedClient() {
                 </div>
                 
                 {/* Results Area */}
-                {singleResults !== null && (
+                {(mobileResults || desktopResults) !== null && (
                   <div className="animate-fade-in">
                     
-                    {/* Score Header */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-6 flex items-center justify-between shadow-sm">
-                      <div>
-                         <h2 className="text-xl font-bold text-slate-800 mb-1 truncate max-w-md">{singleResults.url}</h2>
-                         <p className="text-sm text-slate-500">Live Desktop Performance Metrics</p>
-                      </div>
-                      <div className="text-center">
-                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Performance</p>
-                         <div className={`text-4xl font-extrabold ${getScoreColor(singleResults.score)}`}>
-                            {singleResults.score}
-                         </div>
+                    {/* Device Toggle */}
+                    <div className="flex justify-center mb-8 mt-6">
+                      <div className="bg-slate-100 p-1 rounded-xl flex gap-1 shadow-inner">
+                        <button
+                          onClick={() => setDeviceView("mobile")}
+                          className={`px-6 py-2 rounded-lg font-bold text-sm transition-colors ${deviceView === "mobile" ? "bg-white text-rose-600 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
+                        >
+                          Mobile
+                        </button>
+                        <button
+                          onClick={() => setDeviceView("desktop")}
+                          className={`px-6 py-2 rounded-lg font-bold text-sm transition-colors ${deviceView === "desktop" ? "bg-white text-rose-600 shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
+                        >
+                          Desktop
+                        </button>
                       </div>
                     </div>
 
-                    <div className="grid md:grid-cols-4 gap-4">
-                      
-                      {/* Metric Cards */}
-                      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-center">
-                         <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                           <Activity className="w-5 h-5" />
-                         </div>
-                         <p className="text-slate-500 text-xs font-bold uppercase mb-1">Time to First Byte</p>
-                         <p className={`text-2xl font-bold ${singleResults.ttfb < 600 ? 'text-emerald-500' : 'text-red-500'}`}>
-                           {singleResults.ttfb} <span className="text-sm">ms</span>
-                         </p>
-                      </div>
+                    {(() => {
+                      const activeResults = deviceView === "mobile" ? mobileResults : desktopResults;
+                      if (!activeResults) return null;
 
-                      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-center">
-                         <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                           <Gauge className="w-5 h-5" />
-                         </div>
-                         <p className="text-slate-500 text-xs font-bold uppercase mb-1">First Contentful</p>
-                         <p className={`text-2xl font-bold ${singleResults.fcp < 1.8 ? 'text-emerald-500' : 'text-amber-500'}`}>
-                           {singleResults.fcp} <span className="text-sm">s</span>
-                         </p>
-                      </div>
+                      return (
+                        <>
+                          {/* Score Header */}
+                          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-6 flex items-center justify-between shadow-sm">
+                            <div>
+                               <h2 className="text-xl font-bold text-slate-800 mb-1 truncate max-w-md">{activeResults.url}</h2>
+                               <p className="text-sm text-slate-500">Live {deviceView === "mobile" ? "Mobile" : "Desktop"} Performance Metrics</p>
+                            </div>
+                            <div className="text-center">
+                               <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Performance</p>
+                               <div className={`text-4xl font-extrabold ${getScoreColor(activeResults.score)}`}>
+                                  {activeResults.score}
+                               </div>
+                            </div>
+                          </div>
 
-                      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-center">
-                         <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                           <FileText className="w-5 h-5" />
-                         </div>
-                         <p className="text-slate-500 text-xs font-bold uppercase mb-1">Total Payload</p>
-                         <p className={`text-2xl font-bold ${singleResults.totalMb < 3 ? 'text-slate-700' : 'text-red-500'}`}>
-                           {singleResults.totalMb} <span className="text-sm">MB</span>
-                         </p>
-                      </div>
+                          <div className="grid md:grid-cols-4 gap-4 mb-8">
+                            
+                            {/* Metric Cards */}
+                            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-center">
+                               <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                 <Activity className="w-5 h-5" />
+                               </div>
+                               <p className="text-slate-500 text-xs font-bold uppercase mb-1">Time to First Byte</p>
+                               <p className={`text-2xl font-bold ${activeResults.ttfb < 600 ? 'text-emerald-500' : 'text-red-500'}`}>
+                                 {activeResults.ttfb} <span className="text-sm">ms</span>
+                               </p>
+                            </div>
 
-                      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-center">
-                         <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                           <Zap className="w-5 h-5" />
-                         </div>
-                         <p className="text-slate-500 text-xs font-bold uppercase mb-1">HTTP Requests</p>
-                         <p className={`text-2xl font-bold ${(singleResults.requestCount||0) <= 50 ? 'text-emerald-500' : (singleResults.requestCount||0) <= 100 ? 'text-amber-500' : 'text-red-500'}`}>
-                           {singleResults.requestCount ?? 0} <span className="text-sm">reqs</span>
-                         </p>
-                      </div>
+                            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-center">
+                               <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                 <Gauge className="w-5 h-5" />
+                               </div>
+                               <p className="text-slate-500 text-xs font-bold uppercase mb-1">First Contentful</p>
+                               <p className={`text-2xl font-bold ${activeResults.fcp < 1.8 ? 'text-emerald-500' : 'text-amber-500'}`}>
+                                 {activeResults.fcp} <span className="text-sm">s</span>
+                               </p>
+                            </div>
 
-                    </div>
+                            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-center">
+                               <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                 <FileText className="w-5 h-5" />
+                               </div>
+                               <p className="text-slate-500 text-xs font-bold uppercase mb-1">Total Payload</p>
+                               <p className={`text-2xl font-bold ${activeResults.totalMb < 3 ? 'text-slate-700' : 'text-red-500'}`}>
+                                 {activeResults.totalMb} <span className="text-sm">MB</span>
+                               </p>
+                            </div>
+
+                            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-center">
+                               <div className="w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                                 <Zap className="w-5 h-5" />
+                               </div>
+                               <p className="text-slate-500 text-xs font-bold uppercase mb-1">HTTP Requests</p>
+                               <p className={`text-2xl font-bold ${(activeResults.requestCount||0) <= 50 ? 'text-emerald-500' : (activeResults.requestCount||0) <= 100 ? 'text-amber-500' : 'text-red-500'}`}>
+                                 {activeResults.requestCount ?? 0} <span className="text-sm">reqs</span>
+                               </p>
+                            </div>
+
+                          </div>
+
+                          {/* Opportunities Section */}
+                          {activeResults.opportunities && activeResults.opportunities.length > 0 && (
+                            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm mb-6">
+                              <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800">
+                                <Zap className="w-5 h-5 text-amber-500" />
+                                Opportunities for Improvement
+                              </h3>
+                              <div className="space-y-4">
+                                {activeResults.opportunities.map((opp, idx) => (
+                                  <div key={idx} className="border-b border-slate-100 last:border-0 pb-4 last:pb-0">
+                                    <div className="flex justify-between items-start mb-1">
+                                      <h4 className="font-bold text-slate-700">{opp.title}</h4>
+                                      <div className="flex gap-2 text-xs font-bold shrink-0 ml-4">
+                                        {opp.savingsMs > 0 && (
+                                          <span className="bg-amber-100 text-amber-700 px-2 py-1 rounded-md whitespace-nowrap">
+                                            Save {(opp.savingsMs / 1000).toFixed(2)}s
+                                          </span>
+                                        )}
+                                        {opp.savingsBytes > 0 && (
+                                          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md whitespace-nowrap">
+                                            Save {(opp.savingsBytes / 1024).toFixed(0)} KB
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
+                                    <div className="text-sm text-slate-500 leading-relaxed" dangerouslySetInnerHTML={renderDescription(opp.description)} />
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()}
                   </div>
                 )}
               </div>

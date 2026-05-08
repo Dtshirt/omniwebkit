@@ -44,7 +44,7 @@ export default function PdfToExcelClient() {
     
     try {
       const fd = new FormData();
-      fd.append('document', file);
+      fd.append('file', file);
 
       const res = await fetch(`${API_V1}/tools/pdf-to-excel`, {
         method: 'POST',

@@ -79,6 +79,10 @@ const nextConfig = {
         source: '/api/pdf-merge/:path*',
         destination: `${PYTHON_API}/pdf-merge/:path*`,
       },
+      {
+        source: '/tools/pdf-password-protector/share/:path*',
+        destination: `${PYTHON_API}/api/v1/tools/pdf-protect/share/:path*`,
+      },
     ];
   },
 

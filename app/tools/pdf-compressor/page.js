@@ -60,17 +60,18 @@ export default function PDFCompressor() {
   /* ── Compress (real server-side) ── */
   const compress = async () => {
     setProc(true);
-    const updated = [...files];
+    // Get the current list of files that need processing
+    const toProcess = files.filter(f => f.status !== 'completed');
 
-    for (let i = 0; i < updated.length; i++) {
-      if (updated[i].status === 'completed') continue;
+    for (let i = 0; i < toProcess.length; i++) {
+      const fileItem = toProcess[i];
 
-      updated[i] = { ...updated[i], status: 'processing', error: null };
-      setFiles([...updated]);
+      // Mark as processing
+      setFiles(prev => prev.map(f => f.id === fileItem.id ? { ...f, status: 'processing', error: null } : f));
 
       try {
         const fd = new FormData();
-        fd.append('file', updated[i].file);
+        fd.append('file', fileItem.file);
         fd.append('level', level);
 
         const res = await fetch(ENDPOINT, { method: 'POST', body: fd });
@@ -82,24 +83,22 @@ export default function PDFCompressor() {
 
         // Read real compressed size from response headers
         const compressedSize = parseInt(res.headers.get('X-Compressed-Size') || '0', 10);
-        const downloadName   = updated[i].file.name.replace(/\.pdf$/i, '') + '_compressed.pdf';
+        const downloadName   = fileItem.file.name.replace(/\.pdf$/i, '') + '_compressed.pdf';
 
         // Turn the response body into a blob URL for download
         const blob        = await res.blob();
         const downloadUrl = URL.createObjectURL(blob);
 
-        updated[i] = {
-          ...updated[i],
+        setFiles(prev => prev.map(f => f.id === fileItem.id ? {
+          ...f,
           status: 'completed',
           compressedSize: compressedSize || blob.size,
           downloadUrl,
           downloadName,
-        };
+        } : f));
       } catch (err) {
-        updated[i] = { ...updated[i], status: 'error', error: err.message };
+        setFiles(prev => prev.map(f => f.id === fileItem.id ? { ...f, status: 'error', error: err.message } : f));
       }
-
-      setFiles([...updated]);
     }
     setProc(false);
   };
