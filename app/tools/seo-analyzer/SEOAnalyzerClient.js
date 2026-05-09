@@ -4,9 +4,12 @@ import React, { useState } from 'react';
 import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query';
 import { 
   Search, AlertCircle, CheckCircle2, XCircle, Info, Link as LinkIcon, 
-  Image as ImageIcon, Type, FileText, Code, Activity, SearchCheck, Globe
+  Image as ImageIcon, Type, FileText, Code, Activity, SearchCheck, Globe,
+  Download, RefreshCw, FileCode2, Bot, Key
 } from 'lucide-react';
 import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { API_V1 } from '@/lib/api-config';
 
 const queryClient = new QueryClient();
@@ -16,13 +19,15 @@ function SEOAnalyzerApp() {
   const [url, setUrl] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
   const [focusKeyword, setFocusKeyword] = useState('');
+  const [previousData, setPreviousData] = useState(null);
+  const [isExporting, setIsExporting] = useState(false);
 
   const mutation = useMutation({
     mutationFn: async (targetUrl) => {
       const response = await fetch(`${API_V1}/tools/seo-analyzer/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: targetUrl })
+        body: JSON.stringify({ url: targetUrl, focus_keyword: focusKeyword || undefined })
       });
       if (!response.ok) {
         const err = await response.json();
@@ -38,8 +43,38 @@ function SEOAnalyzerApp() {
       alert("URL must start with http:// or https://");
       return;
     }
+    setPreviousData(null);
     mutation.mutate(url);
     setActiveTab('overview');
+  };
+
+  const handleReanalyze = () => {
+    if (mutation.data) {
+      setPreviousData(mutation.data);
+    }
+    mutation.mutate(url);
+    setActiveTab('overview');
+  };
+
+  const exportPDF = async () => {
+    const el = document.getElementById('seo-results-container');
+    if (!el) return;
+    setIsExporting(true);
+    try {
+      const canvas = await html2canvas(el, { scale: 1.5, useCORS: true });
+      const imgData = canvas.toDataURL('image/jpeg', 0.9);
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`SEO_Report_${new URL(url).hostname}.pdf`);
+    } catch (err) {
+      console.error("PDF Export failed:", err);
+      alert("Failed to export PDF.");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const data = mutation.data;
@@ -78,22 +113,59 @@ function SEOAnalyzerApp() {
       {/* Input Section */}
       <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
         <form onSubmit={handleAnalyze} className="flex gap-4 max-w-3xl mx-auto">
-          <div className="relative flex-1">
-            <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-            <input 
-              type="url"
-              placeholder="https://example.com"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white"
-              required
-            />
+          <div className="flex-1 space-y-4">
+            <div className="relative">
+              <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <input 
+                type="url"
+                placeholder="https://example.com"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white"
+                required
+              />
+            </div>
+            <div className="relative">
+              <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+              <input 
+                type="text"
+                placeholder="Focus Keyword (Optional)"
+                value={focusKeyword}
+                onChange={(e) => setFocusKeyword(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white"
+              />
+            </div>
           </div>
-          <button 
-            type="submit"
-            disabled={mutation.isPending}
-            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-xl transition-colors flex items-center gap-2"
-          >
+          <div className="flex flex-col gap-3 justify-start">
+            <button 
+              type="submit"
+              disabled={mutation.isPending}
+              className="px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 h-[50px]"
+            >
+              {mutation.isPending ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Analyzing...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Search size={20} />
+                  Analyze
+                </span>
+              )}
+            </button>
+            {data && (
+              <button 
+                type="button"
+                onClick={handleReanalyze}
+                disabled={mutation.isPending}
+                className="px-8 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 disabled:opacity-50 text-slate-700 dark:text-slate-300 font-medium rounded-xl transition-colors flex items-center justify-center gap-2 h-[50px] border border-slate-200 dark:border-slate-700"
+              >
+                <RefreshCw size={20} className={mutation.isPending ? "animate-spin" : ""} />
+                Re-Analyze
+              </button>
+            )}
+          </div>
             {mutation.isPending ? (
               <span className="flex items-center gap-2">
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -104,8 +176,7 @@ function SEOAnalyzerApp() {
                 <Search size={20} />
                 Analyze
               </span>
-            )}
-          </button>
+            )} 
         </form>
         {mutation.isError && (
           <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg flex items-start gap-3 max-w-3xl mx-auto">
@@ -122,12 +193,14 @@ function SEOAnalyzerApp() {
           <div className="flex overflow-x-auto border-b border-slate-200 dark:border-slate-800 hide-scrollbar">
             {[
               { id: 'overview', icon: Activity, label: 'Overview' },
+              { id: 'keyword', icon: Key, label: 'Keyword' },
               { id: 'meta', icon: FileText, label: 'Meta Tags' },
               { id: 'headings', icon: Type, label: 'Headings' },
               { id: 'bold', icon: SearchCheck, label: 'Bold Text' },
               { id: 'links', icon: LinkIcon, label: 'Links' },
               { id: 'images', icon: ImageIcon, label: 'Images' },
               { id: 'schema', icon: Code, label: 'Schema' },
+              { id: 'robots', icon: Bot, label: 'Robots/Sitemap' },
               { id: 'signals', icon: Info, label: 'Page Signals' }
             ].map(t => (
               <button
@@ -145,7 +218,19 @@ function SEOAnalyzerApp() {
             ))}
           </div>
 
-          <div className="p-6">
+          <div className="p-6" id="seo-results-container">
+            {/* Export Header (Active Tab) */}
+            <div className="flex justify-end mb-4">
+              <button 
+                onClick={exportPDF} 
+                disabled={isExporting}
+                className="flex items-center gap-2 text-sm px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors font-medium"
+              >
+                {isExporting ? <RefreshCw size={16} className="animate-spin" /> : <Download size={16} />}
+                Export Tab to PDF
+              </button>
+            </div>
+
             {/* OVERVIEW TAB */}
             {activeTab === 'overview' && (
               <div className="space-y-8">
@@ -173,52 +258,50 @@ function SEOAnalyzerApp() {
                       <div className="absolute inset-0 flex items-center justify-center flex-col">
                         <span className="text-4xl font-bold text-slate-900 dark:text-white">{score}</span>
                         <span className="text-sm text-slate-500">/ 100</span>
+                        {previousData && (
+                          <div className={`mt-1 text-xs font-bold px-2 py-0.5 rounded-full flex items-center ${
+                            score > calculateScore(previousData) ? 'bg-green-100 text-green-700' : 
+                            score < calculateScore(previousData) ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-600'
+                          }`}>
+                            {score > calculateScore(previousData) ? '+' : ''}{score - calculateScore(previousData)}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
 
                   {/* Summary Cards */}
                   <div className="col-span-2 grid grid-cols-2 gap-4">
-                    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl flex items-center gap-4">
-                      <div className={`p-3 rounded-lg ${data.broken_links.length > 0 ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'}`}>
-                        {data.broken_links.length > 0 ? <AlertCircle size={24} /> : <CheckCircle2 size={24} />}
-                      </div>
-                      <div>
-                        <p className="text-sm text-slate-500">Broken Links</p>
-                        <p className="text-2xl font-bold text-slate-900 dark:text-white">{data.broken_links.length}</p>
-                      </div>
-                    </div>
-                    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl flex items-center gap-4">
-                      <div className="p-3 rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-                        <LinkIcon size={24} />
-                      </div>
-                      <div>
-                        <p className="text-sm text-slate-500">Total Links</p>
-                        <p className="text-2xl font-bold text-slate-900 dark:text-white">
-                          {data.internal_links.length + data.external_links.length + data.broken_links.length + data.other_links.length}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl flex items-center gap-4">
-                      <div className="p-3 rounded-lg bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400">
-                        <ImageIcon size={24} />
-                      </div>
-                      <div>
-                        <p className="text-sm text-slate-500">Images Missing Alt</p>
-                        <p className="text-2xl font-bold text-slate-900 dark:text-white">
-                          {data.images.filter(img => !img.has_alt && !img.is_decorative).length}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl flex items-center gap-4">
-                      <div className="p-3 rounded-lg bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
-                        <Type size={24} />
-                      </div>
-                      <div>
-                        <p className="text-sm text-slate-500">Word Count</p>
-                        <p className="text-2xl font-bold text-slate-900 dark:text-white">{data.signals.word_count}</p>
-                      </div>
-                    </div>
+                    <DiffCard 
+                      icon={data.broken_links.length > 0 ? AlertCircle : CheckCircle2}
+                      label="Broken Links" 
+                      value={data.broken_links.length} 
+                      prevValue={previousData?.broken_links?.length}
+                      inverseLogic
+                      colorClass={data.broken_links.length > 0 ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'}
+                    />
+                    <DiffCard 
+                      icon={LinkIcon}
+                      label="Total Links" 
+                      value={data.internal_links.length + data.external_links.length + data.broken_links.length + data.other_links.length} 
+                      prevValue={previousData ? previousData.internal_links.length + previousData.external_links.length + previousData.broken_links.length + previousData.other_links.length : undefined}
+                      colorClass="bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                    />
+                    <DiffCard 
+                      icon={ImageIcon}
+                      label="Images Missing Alt" 
+                      value={data.images.filter(img => !img.has_alt && !img.is_decorative).length} 
+                      prevValue={previousData?.images.filter(img => !img.has_alt && !img.is_decorative).length}
+                      inverseLogic
+                      colorClass="bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400"
+                    />
+                    <DiffCard 
+                      icon={Type}
+                      label="Word Count" 
+                      value={data.signals.word_count} 
+                      prevValue={previousData?.signals?.word_count}
+                      colorClass="bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400"
+                    />
                   </div>
                 </div>
 
@@ -242,6 +325,44 @@ function SEOAnalyzerApp() {
                     </p>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* KEYWORD TAB */}
+            {activeTab === 'keyword' && (
+              <div className="space-y-6">
+                {!data.keyword_analysis ? (
+                  <div className="p-8 text-center text-slate-500 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+                    No focus keyword was provided for this analysis. <br/>Enter a keyword and click Re-Analyze.
+                  </div>
+                ) : (
+                  <>
+                    <div className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-xl flex flex-col md:flex-row items-center gap-6 justify-between">
+                      <div>
+                        <p className="text-sm text-slate-500 mb-1">Focus Keyword</p>
+                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white">&quot;{data.keyword_analysis.keyword}&quot;</h3>
+                      </div>
+                      <div className="flex gap-4">
+                        <div className="text-center p-4 bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800">
+                          <p className="text-sm text-slate-500 mb-1">Density</p>
+                          <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{data.keyword_analysis.density_percentage}%</p>
+                        </div>
+                        <div className="text-center p-4 bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800">
+                          <p className="text-sm text-slate-500 mb-1">Total Found (Body)</p>
+                          <p className="text-xl font-bold text-slate-900 dark:text-white">{data.keyword_analysis.body_count}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <SignalCard label="In Meta Title" value={data.keyword_analysis.in_title ? "Yes" : "No"} good={data.keyword_analysis.in_title} neutral={!data.keyword_analysis.in_title} />
+                      <SignalCard label="In Meta Description" value={data.keyword_analysis.in_description ? "Yes" : "No"} good={data.keyword_analysis.in_description} neutral={!data.keyword_analysis.in_description} />
+                      <SignalCard label="In H1 Tag" value={data.keyword_analysis.in_h1 ? "Yes" : "No"} good={data.keyword_analysis.in_h1} neutral={!data.keyword_analysis.in_h1} />
+                      <SignalCard label="In Other Headings" value={`${data.keyword_analysis.headings_count} times`} good={data.keyword_analysis.headings_count > 0} neutral={data.keyword_analysis.headings_count === 0} />
+                      <SignalCard label="In Bold Text" value={`${data.keyword_analysis.bold_count} times`} good={data.keyword_analysis.bold_count > 0} neutral={data.keyword_analysis.bold_count === 0} />
+                    </div>
+                  </>
+                )}
               </div>
             )}
 
@@ -402,7 +523,7 @@ function SEOAnalyzerApp() {
                           </td>
                           <td className="p-4">
                             <span className={`px-2 py-1 rounded text-xs font-medium ${
-                              l.http_status === 200 ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                              String(l.http_status).endsWith('200') ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
                               l.http_status === 'skipped' ? 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400' :
                               'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
                             }`}>
@@ -475,6 +596,43 @@ function SEOAnalyzerApp() {
               </div>
             )}
 
+            {/* ROBOTS & SITEMAP TAB */}
+            {activeTab === 'robots' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col">
+                  <div className="bg-slate-50 dark:bg-slate-800 px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                    <span className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                      <Bot size={16} /> robots.txt
+                    </span>
+                    <a href={`${new URL(data.url).origin}/robots.txt`} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">Open in new tab</a>
+                  </div>
+                  <div className="p-4 bg-slate-900 text-slate-300 overflow-y-auto text-sm font-mono h-[500px]">
+                    {data.robots_txt ? (
+                      <pre className="whitespace-pre-wrap">{data.robots_txt}</pre>
+                    ) : (
+                      <p className="text-slate-500 italic">No robots.txt found or unable to fetch.</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col">
+                  <div className="bg-slate-50 dark:bg-slate-800 px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                    <span className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                      <FileCode2 size={16} /> sitemap.xml
+                    </span>
+                    <a href={`${new URL(data.url).origin}/sitemap.xml`} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">Open in new tab</a>
+                  </div>
+                  <div className="p-4 bg-slate-900 text-slate-300 overflow-y-auto text-sm font-mono h-[500px]">
+                    {data.sitemap_xml ? (
+                      <pre className="whitespace-pre-wrap">{data.sitemap_xml}</pre>
+                    ) : (
+                      <p className="text-slate-500 italic">No standard sitemap.xml found at the root, or unable to fetch. Check robots.txt for custom sitemap locations.</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* SIGNALS TAB */}
             {activeTab === 'signals' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -532,6 +690,44 @@ function SignalCard({ label, value, good, neutral }) {
         <Icon size={18} className={textColor} />
       </div>
       <span className={`text-xl font-bold ${textColor}`}>{value}</span>
+    </div>
+  );
+}
+
+function DiffCard({ icon: Icon, label, value, prevValue, inverseLogic, colorClass }) {
+  const hasDiff = prevValue !== undefined;
+  const diff = hasDiff ? value - prevValue : 0;
+  
+  let diffColor = 'text-slate-500';
+  let diffBg = 'bg-slate-100 dark:bg-slate-800';
+  
+  if (hasDiff && diff !== 0) {
+    const isGood = inverseLogic ? diff < 0 : diff > 0;
+    diffColor = isGood ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400';
+    diffBg = isGood ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30';
+  }
+
+  return (
+    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl flex items-center justify-between gap-4">
+      <div className="flex items-center gap-4">
+        <div className={`p-3 rounded-lg ${colorClass}`}>
+          <Icon size={24} />
+        </div>
+        <div>
+          <p className="text-sm text-slate-500">{label}</p>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">{value}</p>
+        </div>
+      </div>
+      {hasDiff && diff !== 0 && (
+        <div className={`px-2 py-1 rounded text-xs font-bold ${diffColor} ${diffBg}`}>
+          {diff > 0 ? '+' : ''}{diff}
+        </div>
+      )}
+      {hasDiff && diff === 0 && (
+        <div className="px-2 py-1 rounded text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-800">
+          No change
+        </div>
+      )}
     </div>
   );
 }
