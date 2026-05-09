@@ -19,6 +19,7 @@ function SEOAnalyzerApp() {
   const [url, setUrl] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
   const [focusKeyword, setFocusKeyword] = useState('');
+  const [forceJs, setForceJs] = useState(false);
   const [previousData, setPreviousData] = useState(null);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -27,7 +28,7 @@ function SEOAnalyzerApp() {
       const response = await fetch(`${API_V1}/tools/seo-analyzer/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: targetUrl, focus_keyword: focusKeyword || undefined })
+        body: JSON.stringify({ url: targetUrl, focus_keyword: focusKeyword || undefined, force_js: forceJs })
       });
       if (!response.ok) {
         const err = await response.json();
@@ -135,6 +136,15 @@ function SEOAnalyzerApp() {
                 className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white"
               />
             </div>
+            <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer w-fit">
+              <input 
+                type="checkbox" 
+                checked={forceJs} 
+                onChange={(e) => setForceJs(e.target.checked)} 
+                className="rounded border-slate-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-slate-600 dark:bg-slate-700"
+              />
+              Force JS Rendering (Slow but gets dynamic schema)
+            </label>
           </div>
           <div className="flex flex-col gap-3 justify-start">
             <button 

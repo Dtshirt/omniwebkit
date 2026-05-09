@@ -17,7 +17,7 @@ function generateSlug(length = 6) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    let { url, customSlug, expiryHours } = body;
+    let { url, customSlug, expiryHours, userId } = body;
 
     if (!url || typeof url !== 'string') {
       return NextResponse.json({ error: 'Valid URL is required' }, { status: 400 });
@@ -27,7 +27,7 @@ export async function POST(request) {
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;
     }
-    
+
     try {
         new URL(url);
     } catch {
@@ -40,26 +40,20 @@ export async function POST(request) {
 
     // Handle custom slug logic
     if (slug) {
-        // Validate custom slug format (alphanumeric and hyphens only, 3-20 chars)
         if (!/^[a-zA-Z0-9-]{3,20}$/.test(slug)) {
             return NextResponse.json({ error: 'Custom slug must be 3-20 alphanumeric characters or hyphens' }, { status: 400 });
         }
-        
-        // Check if custom slug exists
         const existing = await Url.findOne({ slug });
         if (existing) {
             return NextResponse.json({ error: 'Custom alias is already taken' }, { status: 409 });
         }
     } else {
-        // Generate random slug and ensure it's unique
         let isUnique = false;
         let attempts = 0;
         while (!isUnique && attempts < 5) {
             slug = generateSlug(6);
             const existing = await Url.findOne({ slug });
-            if (!existing) {
-                isUnique = true;
-            }
+            if (!existing) isUnique = true;
             attempts++;
         }
         if (!isUnique) {
@@ -73,11 +67,17 @@ export async function POST(request) {
         expiresAt = new Date(Date.now() + expiryHours * 60 * 60 * 1000);
     }
 
+    // Sanitize userId — must be a non-empty string if provided
+    const safeUserId = (userId && typeof userId === 'string' && userId.trim().length > 0)
+        ? userId.trim()
+        : null;
+
     // Save to DB
     const newUrl = await Url.create({
         slug,
         originalUrl: url,
         expiresAt,
+        userId: safeUserId,
     });
 
     return NextResponse.json({
@@ -85,7 +85,8 @@ export async function POST(request) {
         slug: newUrl.slug,
         originalUrl: newUrl.originalUrl,
         shortUrl: `/s/${newUrl.slug}`,
-        expiresAt: newUrl.expiresAt
+        expiresAt: newUrl.expiresAt,
+        userId: newUrl.userId,
     }, { status: 201 });
 
   } catch (error) {

@@ -12,6 +12,12 @@ const UrlSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  userId: {
+    type: String,
+    default: null,   // anonymous userId generated client-side (UUID v4)
+    trim: true,
+    index: true,     // fast per-user queries
+  },
   clicks: {
     type: Number,
     default: 0,

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { API_V1 } from "@/lib/api-config";
 import {
     Download,
     Globe,
@@ -18,7 +19,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-const API_BASE = '/api/v1/tools/website-image-downloader';
+const API_BASE = `${API_V1}/tools/website-image-downloader`;
 
 function formatBytes(bytes) {
     if (bytes === -1) return 'Unknown size';
@@ -69,38 +70,135 @@ export default function WebsiteImageDownloaderClient() {
         setLoading(true);
         setImages([]);
         setSelectedImages(new Set());
-        setLoadingStage('Fetching page & extracting URLs...');
+        setLoadingStage('Fetching via Server & Client concurrently...');
 
         const activeFormats = Object.entries(formats)
             .filter(([_, active]) => active)
             .map(([fmt]) => fmt);
 
-        try {
-            const res = await fetch(`${API_BASE}/analyze`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    url,
-                    min_width: minWidth,
-                    min_size_kb: minSizeKb,
-                    formats: activeFormats,
-                    include_lazy: includeLazy
-                })
-            });
+        const clientSideExtract = async (targetUrl) => {
+            try {
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+                const res = await fetch(proxyUrl);
+                const data = await res.json();
+                const html = data.contents;
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const baseUrl = new URL(targetUrl);
+                
+                const extracted = [];
+                const seenUrls = new Set();
+                
+                const addImage = (urlStr, source, alt, width, height) => {
+                    if (!urlStr || urlStr.startsWith('data:')) return;
+                    try {
+                        const absUrl = new URL(urlStr, baseUrl).href;
+                        if (seenUrls.has(absUrl)) return;
+                        seenUrls.add(absUrl);
+                        
+                        let ext = 'jpg';
+                        if (absUrl.includes('.')) {
+                            const parts = absUrl.split('?')[0].split('.');
+                            ext = parts[parts.length - 1].toLowerCase();
+                        }
+                        if (ext === 'jpeg') ext = 'jpg';
+                        
+                        extracted.push({
+                            url: absUrl,
+                            source,
+                            alt: alt || null,
+                            width: width || null,
+                            height: height || null,
+                            filename: absUrl.split('/').pop().split('?')[0] || 'image.jpg',
+                            extension: ext,
+                            content_length: -1,
+                            status: 200,
+                            client_extracted: true
+                        });
+                    } catch (e) {}
+                };
 
-            if (!res.ok) {
-                const errorData = await res.json().catch(() => ({}));
-                throw new Error(errorData.detail || 'Failed to analyze website');
+                doc.querySelectorAll('img').forEach(img => {
+                    const src = img.getAttribute('src');
+                    const lazySrc = img.getAttribute('data-src') || img.getAttribute('data-lazy-src') || img.getAttribute('data-original');
+                    if (src) addImage(src, 'img_src', img.alt, img.width, img.height);
+                    if (lazySrc) addImage(lazySrc, 'lazy_img', img.alt, img.width, img.height);
+                    
+                    const srcset = img.getAttribute('srcset');
+                    if (srcset) {
+                        const parts = srcset.split(',');
+                        if (parts.length > 0) {
+                            const firstUrl = parts[0].trim().split(' ')[0];
+                            addImage(firstUrl, 'srcset', img.alt, img.width, img.height);
+                        }
+                    }
+                });
+
+                doc.querySelectorAll('*').forEach(el => {
+                    const bg = el.style?.backgroundImage;
+                    if (bg && bg !== 'none') {
+                        const match = bg.match(/url\(['"]?(.*?)['"]?\)/);
+                        if (match && match[1]) {
+                            addImage(match[1], 'background');
+                        }
+                    }
+                });
+                
+                doc.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]').forEach(meta => {
+                    addImage(meta.getAttribute('content'), 'meta_tag');
+                });
+
+                return extracted;
+            } catch (e) {
+                console.error("Client side extraction failed", e);
+                return [];
             }
+        };
 
-            const data = await res.json();
+        try {
+            const [serverRes, clientImagesRes] = await Promise.allSettled([
+                fetch(`${API_BASE}/analyze`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        url,
+                        min_width: minWidth,
+                        min_size_kb: minSizeKb,
+                        formats: activeFormats,
+                        include_lazy: includeLazy
+                    })
+                }),
+                clientSideExtract(url)
+            ]);
+
+            let combinedImages = [];
             
-            setImages(data.images);
+            if (serverRes.status === 'fulfilled' && serverRes.value.ok) {
+                const data = await serverRes.value.json();
+                combinedImages = data.images || [];
+            } else if (serverRes.status === 'fulfilled' && !serverRes.value.ok) {
+                console.warn("Backend extraction failed:", await serverRes.value.text().catch(() => ""));
+            }
             
-            if (data.images.length === 0) {
+            if (clientImagesRes.status === 'fulfilled' && clientImagesRes.value.length > 0) {
+                const serverUrls = new Set(combinedImages.map(i => i.url));
+                for (const img of clientImagesRes.value) {
+                    if (!serverUrls.has(img.url)) {
+                        // Apply active filters on client side images
+                        if (minWidth > 0 && img.width && img.width < minWidth) continue;
+                        if (activeFormats.length > 0 && !activeFormats.includes(img.extension)) continue;
+                        combinedImages.push(img);
+                    }
+                }
+            }
+            
+            setImages(combinedImages);
+            
+            if (combinedImages.length === 0) {
                 toast.error('No images found matching your criteria.');
             } else {
-                toast.success(`Found ${data.images.length} images!`);
+                toast.success(`Found ${combinedImages.length} images!`);
                 setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
             }
         } catch (err) {
