@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
+import Link from 'next/link';
 import {
   FileUp, Link as LinkIcon, Search, AlertCircle, CheckCircle,
   XCircle, Download, RefreshCw, Info, BarChart2, Shield,
@@ -266,10 +267,10 @@ export default function SEOBacklinkAuditor() {
                       {visibleResults.map((r, i) => (
                         <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition">
                           <td className="px-4 py-3 max-w-xs">
-                            <a href={r.original} target="_blank" rel="noopener noreferrer"
+                            <Link href={r.original} target="_blank" rel="noopener noreferrer"
                               className="text-blue-600 dark:text-blue-400 hover:underline text-xs font-mono break-all line-clamp-2">
                               {r.original}
-                            </a>
+                            </Link>
                           </td>
                           <td className="px-4 py-3">
                             <div className="flex items-center gap-1.5">

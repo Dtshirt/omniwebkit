@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Copy, Check, ExternalLink, Lightbulb } from 'lucide-react';
 
+
 const PROVIDER_SPF = {
   google:    'v=spf1 include:_spf.google.com ~all',
   microsoft: 'v=spf1 include:spf.protection.outlook.com ~all',

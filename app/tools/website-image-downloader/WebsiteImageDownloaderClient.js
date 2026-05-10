@@ -1,572 +1,480 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { API_V1 } from "@/lib/api-config";
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { extractImages, downloadSingle, downloadBulk } from './api';
 import {
-    Download,
-    Globe,
-    AlertTriangle,
-    RefreshCw,
-    Check,
-    X,
-    Image as ImageIcon,
-    FileImage,
-    Zap,
-    Shield,
-    MousePointerClick,
-    CheckSquare,
-    Filter
+    Download, Globe, Filter, Search, Image as ImageIcon,
+    Check, X, FileImage, ExternalLink, RefreshCw, Layers, Sliders, CheckSquare, Grid, List
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-const API_BASE = `${API_V1}/tools/website-image-downloader`;
-
-function formatBytes(bytes) {
-    if (bytes === -1) return 'Unknown size';
-    if (bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+function formatBytes(kb) {
+    if (kb === undefined || kb === null) return 'Unknown';
+    if (kb === 0) return '0 KB';
+    if (kb < 1024) return `${kb} KB`;
+    return `${(kb / 1024).toFixed(2)} MB`;
 }
 
 export default function WebsiteImageDownloaderClient() {
     const [url, setUrl] = useState('');
     const [images, setImages] = useState([]);
-    
-    // Filters
-    const [minWidth, setMinWidth] = useState(0);
-    const [minSizeKb, setMinSizeKb] = useState(0);
-    const [formats, setFormats] = useState({
-        jpg: true,
-        png: true,
-        webp: true,
-        gif: true,
-        svg: true
-    });
-    const [includeLazy, setIncludeLazy] = useState(false);
-    const [showFilters, setShowFilters] = useState(false);
-    
     const [loading, setLoading] = useState(false);
-    const [loadingStage, setLoadingStage] = useState('');
+    const [loadingMessage, setLoadingMessage] = useState('');
     
-    const [selectedImages, setSelectedImages] = useState(new Set());
-    const [downloadingImages, setDownloadingImages] = useState(new Set());
-    const [bulkDownloadInProgress, setBulkDownloadInProgress] = useState(false);
-    const resultsRef = useRef(null);
+    // Options
+    const [showOptions, setShowOptions] = useState(false);
+    const [includeCss, setIncludeCss] = useState(true);
+    const [includeSrcset, setIncludeSrcset] = useState(true);
+    const [minSizeKb, setMinSizeKb] = useState(0);
+    const [minWidth, setMinWidth] = useState(0);
+    const [minHeight, setMinHeight] = useState(0);
 
-    const extractImages = async () => {
-        if (!url.trim()) {
-            toast.error('Please enter a website URL');
-            return;
+    // Results Filters
+    const [searchQuery, setSearchQuery] = useState('');
+    const [activeFormat, setActiveFormat] = useState('All');
+    const [sortBy, setSortBy] = useState('largest'); // 'largest', 'smallest', 'name'
+    const [viewMode, setViewMode] = useState('grid'); // 'grid', 'list'
+
+    // Selections & Downloads
+    const [selectedImages, setSelectedImages] = useState(new Set());
+    const [isBulkDownloading, setIsBulkDownloading] = useState(false);
+
+    const loadingMessages = [
+        "Fetching page...",
+        "Parsing images...",
+        "Fetching metadata...",
+        "Almost done..."
+    ];
+
+    useEffect(() => {
+        let idx = 0;
+        let interval;
+        if (loading) {
+            setLoadingMessage(loadingMessages[0]);
+            interval = setInterval(() => {
+                idx = (idx + 1) % loadingMessages.length;
+                setLoadingMessage(loadingMessages[idx]);
+            }, 2000);
         }
+        return () => clearInterval(interval);
+    }, [loading]);
+
+    const handlePaste = async () => {
         try {
-            new URL(url);
-        } catch {
-            toast.error('Please enter a valid URL (e.g. https://example.com)');
-            return;
+            const text = await navigator.clipboard.readText();
+            setUrl(text);
+        } catch (err) {
+            toast.error("Failed to read clipboard");
         }
+    };
+
+    const handleExtract = async () => {
+        if (!url.trim()) return toast.error("Please enter a URL");
+        try { new URL(url); } catch { return toast.error("Invalid URL format"); }
 
         setLoading(true);
         setImages([]);
         setSelectedImages(new Set());
-        setLoadingStage('Fetching via Server & Client concurrently...');
-
-        const activeFormats = Object.entries(formats)
-            .filter(([_, active]) => active)
-            .map(([fmt]) => fmt);
-
-        const clientSideExtract = async (targetUrl) => {
-            try {
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-                const res = await fetch(proxyUrl);
-                const data = await res.json();
-                const html = data.contents;
-                
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const baseUrl = new URL(targetUrl);
-                
-                const extracted = [];
-                const seenUrls = new Set();
-                
-                const addImage = (urlStr, source, alt, width, height) => {
-                    if (!urlStr || urlStr.startsWith('data:')) return;
-                    try {
-                        const absUrl = new URL(urlStr, baseUrl).href;
-                        if (seenUrls.has(absUrl)) return;
-                        seenUrls.add(absUrl);
-                        
-                        let ext = 'jpg';
-                        if (absUrl.includes('.')) {
-                            const parts = absUrl.split('?')[0].split('.');
-                            ext = parts[parts.length - 1].toLowerCase();
-                        }
-                        if (ext === 'jpeg') ext = 'jpg';
-                        
-                        extracted.push({
-                            url: absUrl,
-                            source,
-                            alt: alt || null,
-                            width: width || null,
-                            height: height || null,
-                            filename: absUrl.split('/').pop().split('?')[0] || 'image.jpg',
-                            extension: ext,
-                            content_length: -1,
-                            status: 200,
-                            client_extracted: true
-                        });
-                    } catch (e) {}
-                };
-
-                doc.querySelectorAll('img').forEach(img => {
-                    const src = img.getAttribute('src');
-                    const lazySrc = img.getAttribute('data-src') || img.getAttribute('data-lazy-src') || img.getAttribute('data-original');
-                    if (src) addImage(src, 'img_src', img.alt, img.width, img.height);
-                    if (lazySrc) addImage(lazySrc, 'lazy_img', img.alt, img.width, img.height);
-                    
-                    const srcset = img.getAttribute('srcset');
-                    if (srcset) {
-                        const parts = srcset.split(',');
-                        if (parts.length > 0) {
-                            const firstUrl = parts[0].trim().split(' ')[0];
-                            addImage(firstUrl, 'srcset', img.alt, img.width, img.height);
-                        }
-                    }
-                });
-
-                doc.querySelectorAll('*').forEach(el => {
-                    const bg = el.style?.backgroundImage;
-                    if (bg && bg !== 'none') {
-                        const match = bg.match(/url\(['"]?(.*?)['"]?\)/);
-                        if (match && match[1]) {
-                            addImage(match[1], 'background');
-                        }
-                    }
-                });
-                
-                doc.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]').forEach(meta => {
-                    addImage(meta.getAttribute('content'), 'meta_tag');
-                });
-
-                return extracted;
-            } catch (e) {
-                console.error("Client side extraction failed", e);
-                return [];
-            }
-        };
 
         try {
-            const [serverRes, clientImagesRes] = await Promise.allSettled([
-                fetch(`${API_BASE}/analyze`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        url,
-                        min_width: minWidth,
-                        min_size_kb: minSizeKb,
-                        formats: activeFormats,
-                        include_lazy: includeLazy
-                    })
-                }),
-                clientSideExtract(url)
-            ]);
+            const data = await extractImages(url, {
+                minWidth,
+                minSizeKb,
+                includeCssBackgrounds: includeCss,
+                includeSrcset
+            });
 
-            let combinedImages = [];
+            if (data.warning) toast.error(data.warning, { duration: 5000 });
             
-            if (serverRes.status === 'fulfilled' && serverRes.value.ok) {
-                const data = await serverRes.value.json();
-                combinedImages = data.images || [];
-            } else if (serverRes.status === 'fulfilled' && !serverRes.value.ok) {
-                console.warn("Backend extraction failed:", await serverRes.value.text().catch(() => ""));
-            }
-            
-            if (clientImagesRes.status === 'fulfilled' && clientImagesRes.value.length > 0) {
-                const serverUrls = new Set(combinedImages.map(i => i.url));
-                for (const img of clientImagesRes.value) {
-                    if (!serverUrls.has(img.url)) {
-                        // Apply active filters on client side images
-                        if (minWidth > 0 && img.width && img.width < minWidth) continue;
-                        if (activeFormats.length > 0 && !activeFormats.includes(img.extension)) continue;
-                        combinedImages.push(img);
-                    }
-                }
-            }
-            
-            setImages(combinedImages);
-            
-            if (combinedImages.length === 0) {
-                toast.error('No images found matching your criteria.');
-            } else {
-                toast.success(`Found ${combinedImages.length} images!`);
-                setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+            if (data.images && data.images.length > 0) {
+                setImages(data.images);
+                toast.success(`Found ${data.images.length} images!`);
+            } else if (!data.warning) {
+                toast.error("No images found matching your criteria.");
             }
         } catch (err) {
-            toast.error(err.message || 'An error occurred during extraction');
+            toast.error(err.message);
         } finally {
             setLoading(false);
-            setLoadingStage('');
         }
     };
 
-    const toggleImageSelection = (imgUrl) => {
-        setSelectedImages((prev) => {
-            const next = new Set(prev);
-            next.has(imgUrl) ? next.delete(imgUrl) : next.add(imgUrl);
-            return next;
-        });
-    };
-    
-    const selectAllImages = () => setSelectedImages(new Set(images.map((img) => img.url)));
-    const deselectAllImages = () => setSelectedImages(new Set());
-
-    const downloadImage = async (imgUrl, filename) => {
-        setDownloadingImages((prev) => new Set([...prev, imgUrl]));
-
-        try {
-            const proxyUrl = `${API_BASE}/download-image?url=${encodeURIComponent(imgUrl)}&referer=${encodeURIComponent(url)}&filename=${encodeURIComponent(filename)}`;
-            
-            const link = document.createElement('a');
-            link.href = proxyUrl;
-            // Using download attribute works for same-origin downloads, which this proxy is
-            link.setAttribute('download', filename);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            toast.success('Download started');
-        } catch {
-            toast.error('Failed to download image.');
-        } finally {
-            setDownloadingImages((prev) => {
-                const next = new Set(prev);
-                next.delete(imgUrl);
-                return next;
-            });
-        }
-    };
-
-    const downloadSelectedImages = async () => {
-        const selected = images.filter((img) => selectedImages.has(img.url));
-        if (selected.length === 0) {
-            toast.error('Please select at least one image first');
-            return;
+    // Filter and sort images
+    const filteredImages = useMemo(() => {
+        let result = images;
+        
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            result = result.filter(img => 
+                (img.filename && img.filename.toLowerCase().includes(q)) ||
+                (img.url && img.url.toLowerCase().includes(q))
+            );
         }
 
-        setBulkDownloadInProgress(true);
-        const loadingToast = toast.loading(`Preparing ZIP with ${selected.length} image${selected.length !== 1 ? 's' : ''}…`);
-
-        try {
-            const hostname = (() => {
-                try { return new URL(url).hostname.replace(/[^a-zA-Z0-9]/g, '_'); }
-                catch { return 'website'; }
-            })();
-            const folderName = `${hostname}_images`;
-
-            const res = await fetch(`${API_BASE}/download-zip`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    urls: selected.map(img => img.url),
-                    referer: url,
-                    folder_name: folderName
-                })
-            });
-
-            if (!res.ok) {
-                throw new Error('Failed to create ZIP');
+        if (activeFormat !== 'All') {
+            if (activeFormat === 'Other') {
+                const known = ['JPG', 'JPEG', 'PNG', 'WEBP', 'GIF', 'SVG'];
+                result = result.filter(img => !known.includes(img.format));
+            } else {
+                result = result.filter(img => 
+                    img.format === activeFormat || 
+                    (activeFormat === 'JPG' && img.format === 'JPEG')
+                );
             }
+        }
 
-            const blob = await res.blob();
-            const blobUrl = URL.createObjectURL(blob);
-            
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            link.download = `${folderName}.zip`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        result = [...result].sort((a, b) => {
+            if (sortBy === 'largest') return (b.size_kb || 0) - (a.size_kb || 0);
+            if (sortBy === 'smallest') return (a.size_kb || 0) - (b.size_kb || 0);
+            if (sortBy === 'name') return (a.filename || '').localeCompare(b.filename || '');
+            return 0;
+        });
 
-            toast.success(`ZIP downloaded successfully!`);
-        } catch (err) {
-            toast.error('Failed to create ZIP file. Some images might be blocking access.');
-        } finally {
-            toast.dismiss(loadingToast);
-            setBulkDownloadInProgress(false);
+        return result;
+    }, [images, searchQuery, activeFormat, sortBy]);
+
+    const handleSelectAll = () => {
+        if (selectedImages.size === filteredImages.length) {
+            setSelectedImages(new Set());
+        } else {
+            setSelectedImages(new Set(filteredImages.map(i => i.url)));
         }
     };
+
+    const toggleImage = (imgUrl) => {
+        const next = new Set(selectedImages);
+        next.has(imgUrl) ? next.delete(imgUrl) : next.add(imgUrl);
+        setSelectedImages(next);
+    };
+
+    const handleSingleDownload = async (img) => {
+        try {
+            await downloadSingle(img.url, img.filename);
+            toast.success("Download started");
+        } catch (e) {
+            toast.error(e.message);
+        }
+    };
+
+    const handleBulkDownload = async () => {
+        const toDownload = images.filter(i => selectedImages.has(i.url));
+        if (!toDownload.length) return;
+
+        setIsBulkDownloading(true);
+        const tId = toast.loading(`Preparing ZIP for ${toDownload.length} images...`);
+
+        try {
+            await downloadBulk(toDownload.map(i => i.url), toDownload.map(i => i.filename));
+            toast.success("ZIP downloaded successfully!", { id: tId });
+            setSelectedImages(new Set());
+        } catch (e) {
+            toast.error(e.message, { id: tId });
+        } finally {
+            setIsBulkDownloading(false);
+        }
+    };
+
+    const totalSelectedSize = useMemo(() => {
+        let total = 0;
+        images.forEach(img => {
+            if (selectedImages.has(img.url) && img.size_kb) {
+                total += img.size_kb;
+            }
+        });
+        return formatBytes(total);
+    }, [images, selectedImages]);
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-8">
-            <div className="container mx-auto px-4 max-w-6xl">
-
-                {/* ── Hero ── */}
-                <div className="text-center mb-10">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 dark:bg-primary-900/40 rounded-2xl mb-5">
-                        <Download className="h-8 w-8 text-primary-600 dark:text-primary-400" />
-                    </div>
-                    <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-                        Website Image Downloader
-                    </h1>
-                    <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                        Paste any website URL and extract every image on the page. Uses advanced backend bypassing to handle CORS, Referer checks, and lazy loading.
-                    </p>
-                </div>
-
-                {/* ── URL Input Card ── */}
-                <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-soft border border-slate-200 dark:border-slate-700 p-6 mb-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                            <Globe className="h-5 w-5 text-primary-600 dark:text-primary-400" />
-                            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
-                                Enter Website URL
-                            </h2>
+        <div className="bg-slate-50 dark:bg-slate-900 min-h-screen py-8">
+            <div className="container mx-auto px-4 max-w-7xl">
+                
+                {/* Input Section */}
+                <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 mb-6">
+                    <div className="flex flex-col md:flex-row gap-3">
+                        <div className="flex-1 relative flex">
+                            <input 
+                                type="url" 
+                                value={url}
+                                onChange={e => setUrl(e.target.value)}
+                                onKeyDown={e => e.key === 'Enter' && handleExtract()}
+                                placeholder="https://example.com"
+                                className="w-full pl-4 pr-24 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-transparent text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                            />
+                            <button 
+                                onClick={handlePaste}
+                                className="absolute right-2 top-2 bottom-2 px-3 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700 rounded-lg transition"
+                            >
+                                Paste
+                            </button>
                         </div>
                         <button 
-                            onClick={() => setShowFilters(!showFilters)}
-                            className="text-sm flex items-center gap-1.5 text-slate-500 hover:text-primary-600 dark:text-slate-400 dark:hover:text-primary-400 transition"
-                        >
-                            <Filter className="w-4 h-4" />
-                            {showFilters ? 'Hide Filters' : 'Show Filters'}
-                        </button>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-3">
-                        <input
-                            type="url"
-                            value={url}
-                            onChange={(e) => setUrl(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && extractImages()}
-                            placeholder="https://example.com"
-                            className="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition"
-                        />
-                        <button
-                            onClick={extractImages}
+                            onClick={handleExtract}
                             disabled={loading}
-                            className="btn-primary flex items-center justify-center gap-2 min-w-[160px]"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition disabled:opacity-70 min-w-[180px]"
                         >
-                            {loading ? (
-                                <>
-                                    <RefreshCw className="h-4 w-4 animate-spin" />
-                                    {loadingStage || 'Extracting…'}
-                                </>
-                            ) : (
-                                <>
-                                    <ImageIcon className="h-4 w-4" />
-                                    Extract Images
-                                </>
-                            )}
+                            {loading ? <RefreshCw className="w-5 h-5 animate-spin" /> : <ImageIcon className="w-5 h-5" />}
+                            Extract Images
                         </button>
                     </div>
 
-                    {/* Filters Panel */}
-                    {showFilters && (
-                        <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <button 
+                        onClick={() => setShowOptions(!showOptions)}
+                        className="mt-4 flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition"
+                    >
+                        <Sliders className="w-4 h-4" /> 
+                        {showOptions ? "Hide Options" : "Show Extraction Options"}
+                    </button>
+
+                    {showOptions && (
+                        <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 cursor-pointer">
+                                    <input type="checkbox" checked={includeCss} onChange={e => setIncludeCss(e.target.checked)} className="rounded text-blue-600 focus:ring-blue-500 w-4 h-4" />
+                                    Extract CSS Backgrounds
+                                </label>
+                                <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
+                                    <input type="checkbox" checked={includeSrcset} onChange={e => setIncludeSrcset(e.target.checked)} className="rounded text-blue-600 focus:ring-blue-500 w-4 h-4" />
+                                    Extract Srcset Variants
+                                </label>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                    Min Size ({minSizeKb} KB)
+                                </label>
+                                <input 
+                                    type="range" min="0" max="500" step="10" 
+                                    value={minSizeKb} onChange={e => setMinSizeKb(Number(e.target.value))}
+                                    className="w-full accent-blue-600"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                                     Min Width (px)
                                 </label>
                                 <input 
-                                    type="number" 
-                                    min="0"
-                                    value={minWidth} 
-                                    onChange={e => setMinWidth(Number(e.target.value))}
+                                    type="number" min="0" value={minWidth} onChange={e => setMinWidth(Number(e.target.value))}
                                     className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                    Min Size (KB)
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                    Min Height (px)
                                 </label>
                                 <input 
-                                    type="number" 
-                                    min="0"
-                                    value={minSizeKb} 
-                                    onChange={e => setMinSizeKb(Number(e.target.value))}
+                                    type="number" min="0" value={minHeight} onChange={e => setMinHeight(Number(e.target.value))}
                                     className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                                 />
-                            </div>
-                            <div className="col-span-1 md:col-span-2">
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                    Formats
-                                </label>
-                                <div className="flex flex-wrap gap-2">
-                                    {Object.keys(formats).map(fmt => (
-                                        <label key={fmt} className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer">
-                                            <input 
-                                                type="checkbox" 
-                                                checked={formats[fmt]}
-                                                onChange={e => setFormats(prev => ({...prev, [fmt]: e.target.checked}))}
-                                                className="rounded border-slate-300 text-primary-600 focus:ring-primary-500"
-                                            />
-                                            <span className="text-sm font-medium uppercase text-slate-700 dark:text-slate-300">{fmt}</span>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="col-span-1 md:col-span-4 mt-2">
-                                <label className="flex items-center gap-2 cursor-pointer p-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/50 rounded-xl">
-                                    <input 
-                                        type="checkbox"
-                                        checked={includeLazy}
-                                        onChange={e => setIncludeLazy(e.target.checked)}
-                                        className="rounded border-amber-300 text-amber-600 focus:ring-amber-500 w-4 h-4"
-                                    />
-                                    <div>
-                                        <span className="block text-sm font-medium text-amber-900 dark:text-amber-200">Bypass Lazy Loading (Slower)</span>
-                                        <span className="block text-xs text-amber-700 dark:text-amber-400 mt-0.5">Launches a headless browser to scroll the page and trigger all lazy-loaded images. Use if some images are missing.</span>
-                                    </div>
-                                </label>
                             </div>
                         </div>
                     )}
                 </div>
 
-                {/* ── Results ── */}
-                {images.length > 0 && (
-                    <div
-                        ref={resultsRef}
-                        className="bg-white dark:bg-slate-800 rounded-2xl shadow-soft border border-slate-200 dark:border-slate-700 p-6 mb-6"
-                    >
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sticky top-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur z-10 py-2 -mx-2 px-2 border-b border-slate-100 dark:border-slate-700">
-                            <div>
-                                <h3 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                                    Found <span className="px-2 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300">{images.length}</span> images
-                                </h3>
-                                {selectedImages.size > 0 && (
-                                    <p className="text-sm text-slate-500 mt-1">{selectedImages.size} selected</p>
-                                )}
-                            </div>
-                            <div className="flex flex-wrap items-center gap-2">
-                                <button
-                                    onClick={selectAllImages}
-                                    className="text-sm font-medium px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition"
-                                >
-                                    Select All
-                                </button>
-                                <button
-                                    onClick={deselectAllImages}
-                                    className="text-sm font-medium px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition"
-                                >
-                                    Deselect
-                                </button>
-                                <button
-                                    onClick={downloadSelectedImages}
-                                    disabled={selectedImages.size === 0 || bulkDownloadInProgress}
-                                    className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {bulkDownloadInProgress ? (
-                                        <>
-                                            <RefreshCw className="h-4 w-4 animate-spin" />
-                                            Building ZIP…
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Download className="h-4 w-4" />
-                                            Download ZIP ({selectedImages.size})
-                                        </>
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            {images.map((image, idx) => {
-                                const isSelected = selectedImages.has(image.url);
-                                const isDownloading = downloadingImages.has(image.url);
-                                const proxyUrl = `${API_BASE}/proxy-image?url=${encodeURIComponent(image.url)}&referer=${encodeURIComponent(url)}`;
-                                
-                                return (
-                                    <div
-                                        key={idx}
-                                        className={`group relative rounded-xl overflow-hidden border-2 transition-all cursor-pointer bg-slate-50 dark:bg-slate-900 ${isSelected
-                                            ? 'border-primary-500 shadow-glow'
-                                            : 'border-slate-200 dark:border-slate-700 hover:border-primary-300 dark:hover:border-primary-600'
-                                            }`}
-                                        onClick={() => toggleImageSelection(image.url)}
-                                    >
-                                        {/* Image container */}
-                                        <div className="relative aspect-square bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
-                                            {/* Pattern background for transparent images */}
-                                            <div className="absolute inset-0 opacity-20 dark:opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), repeating-linear-gradient(45deg, #ccc 25%, #fff 25%, #fff 75%, #ccc 75%, #ccc)', backgroundPosition: '0 0, 10px 10px', backgroundSize: '20px 20px' }}></div>
-                                            
-                                            <img
-                                                src={proxyUrl}
-                                                alt={image.alt || 'Extracted image'}
-                                                className="w-full h-full object-contain relative z-10 transition-transform duration-300 group-hover:scale-105"
-                                                loading="lazy"
-                                                onError={(e) => {
-                                                    e.target.onerror = null;
-                                                    e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM5NDBhMWUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHg9IjMiIHk9IjMiIHJ4PSIyIiByeT0iMiIvPjxjaXJjbGUgY3g9IjkiIGN5PSI5IiByPSIyIi8+PHBhdGggZD0ibTIxIDE1LTMuMDgtMy4wOGMtLjU0LS41NC0xLjQ2LS41NC0yIDBMMTEgMThsLTIuMDgtMi4wOGMtLjU0LS41NC0xLjQ2LS41NC0yIDBMMyAxNyIvPjxwYXRoIGQ9Ik0zIDNsMTggMTgiLz48L3N2Zz4=';
-                                                }}
-                                            />
-
-                                            {/* Format Badge */}
-                                            <div className="absolute top-2 right-2 z-20">
-                                                <span className="px-2 py-1 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold uppercase rounded-md shadow-sm border border-white/10">
-                                                    {image.extension || 'IMG'}
-                                                </span>
-                                            </div>
-
-                                            {/* Selected tick */}
-                                            {isSelected && (
-                                                <div className="absolute top-2 left-2 z-20 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center shadow">
-                                                    <Check className="h-3.5 w-3.5 text-white" />
-                                                </div>
-                                            )}
-
-                                            {/* Download overlay */}
-                                            <div
-                                                className={`absolute inset-0 z-30 transition-all flex items-center justify-center ${isDownloading
-                                                    ? 'opacity-100 bg-slate-900/50'
-                                                    : 'opacity-0 group-hover:opacity-100 bg-slate-900/0 group-hover:bg-slate-900/40'
-                                                    }`}
-                                            >
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        if (isDownloading) return;
-                                                        downloadImage(image.url, image.filename);
-                                                    }}
-                                                    disabled={isDownloading}
-                                                    className="bg-white text-slate-900 hover:bg-primary-600 hover:text-white font-semibold text-xs px-3 py-2 rounded-lg flex items-center gap-1.5 shadow-lg transition disabled:cursor-wait"
-                                                >
-                                                    {isDownloading ? (
-                                                        <><RefreshCw className="h-3.5 w-3.5 animate-spin" /> Saving…</>
-                                                    ) : (
-                                                        <><Download className="h-3.5 w-3.5" /> Download</>
-                                                    )}
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        {/* Card footer */}
-                                        <div className="px-3 py-2 bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700">
-                                            <p className="text-xs font-medium text-slate-800 dark:text-slate-200 truncate" title={image.filename}>
-                                                {image.filename}
-                                            </p>
-                                            <div className="flex items-center justify-between mt-1">
-                                                <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                                                    {formatBytes(image.content_length)}
-                                                </p>
-                                                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">
-                                                    {image.width ? `${image.width}×${image.height||'?'}` : 'Size unknown'}
-                                                </p>
-                                            </div>
-                                            <div className="mt-1.5 inline-block">
-                                                <span className="text-[9px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700">
-                                                    {image.source.replace('_', ' ')}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                {loading && (
+                    <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 text-center">
+                        <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
+                        <h3 className="text-lg font-medium text-slate-900 dark:text-white">{loadingMessage}</h3>
+                        <div className="w-full max-w-md mx-auto mt-4 h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                            <div className="h-full bg-blue-600 animate-pulse rounded-full w-full"></div>
                         </div>
                     </div>
                 )}
+
+                {!loading && images.length > 0 && (
+                    <>
+                        {/* Results Toolbar */}
+                        <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 mb-6 flex flex-wrap items-center gap-4 sticky top-4 z-20">
+                            <div className="flex items-center gap-3 mr-auto">
+                                <span className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-bold">
+                                    {filteredImages.length} Images
+                                </span>
+                            </div>
+
+                            <div className="relative">
+                                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input 
+                                    type="text" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+                                    className="pl-9 pr-4 py-2 w-48 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                />
+                            </div>
+
+                            <div className="flex bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
+                                {['All', 'JPG', 'PNG', 'WEBP', 'GIF', 'SVG', 'Other'].map(fmt => (
+                                    <button 
+                                        key={fmt}
+                                        onClick={() => setActiveFormat(fmt)}
+                                        className={`px-3 py-1.5 text-xs font-medium rounded-md transition ${activeFormat === fmt ? 'bg-white dark:bg-slate-600 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'}`}
+                                    >
+                                        {fmt}
+                                    </button>
+                                ))}
+                            </div>
+
+                            <select 
+                                value={sortBy} onChange={e => setSortBy(e.target.value)}
+                                className="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="largest">Largest first</option>
+                                <option value="smallest">Smallest first</option>
+                                <option value="name">Name A-Z</option>
+                            </select>
+
+                            <div className="flex gap-1 border border-slate-300 dark:border-slate-600 rounded-lg p-1">
+                                <button onClick={() => setViewMode('grid')} className={`p-1.5 rounded ${viewMode==='grid'?'bg-slate-200 dark:bg-slate-600':'hover:bg-slate-100 dark:hover:bg-slate-700'}`}>
+                                    <Grid className="w-4 h-4" />
+                                </button>
+                                <button onClick={() => setViewMode('list')} className={`p-1.5 rounded ${viewMode==='list'?'bg-slate-200 dark:bg-slate-600':'hover:bg-slate-100 dark:hover:bg-slate-700'}`}>
+                                    <List className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Gallery */}
+                        {viewMode === 'grid' ? (
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 mb-24">
+                                {filteredImages.map((img, i) => {
+                                    const isSelected = selectedImages.has(img.url);
+                                    return (
+                                        <div 
+                                            key={`${img.url}-${i}`} 
+                                            className={`group relative rounded-xl overflow-hidden border-2 transition ${isSelected ? 'border-blue-500 shadow-md' : 'border-slate-200 dark:border-slate-700 hover:border-blue-300'}`}
+                                            onClick={(e) => {
+                                                // If clicking inner buttons, ignore
+                                                if (e.target.closest('button') || e.target.closest('a')) return;
+                                                toggleImage(img.url);
+                                            }}
+                                        >
+                                            <div className="aspect-[4/3] bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden">
+                                                <img 
+                                                    src={img.url} 
+                                                    alt={img.filename} 
+                                                    loading="lazy"
+                                                    className="w-full h-full object-cover"
+                                                    onError={(e) => {
+                                                        e.target.onerror = null;
+                                                        e.target.parentElement.innerHTML = '<div class="text-center text-slate-400 flex flex-col items-center gap-2"><svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span class="text-xs">Failed to load preview</span></div>';
+                                                    }}
+                                                />
+                                                
+                                                {/* Checkbox overlay */}
+                                                <div className={`absolute top-2 left-2 w-6 h-6 rounded-md border-2 flex items-center justify-center z-10 transition-colors ${isSelected ? 'bg-blue-500 border-blue-500' : 'bg-black/20 border-white/70 group-hover:bg-black/40'}`}>
+                                                    {isSelected && <Check className="w-4 h-4 text-white" />}
+                                                </div>
+
+                                                {/* Hover Overlay */}
+                                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-3 pointer-events-none">
+                                                    <div className="flex justify-end pointer-events-auto">
+                                                        <a 
+                                                            href={img.url} target="_blank" rel="noreferrer"
+                                                            className="p-1.5 bg-white/20 hover:bg-white/40 rounded-lg backdrop-blur text-white transition"
+                                                            title="Open in new tab"
+                                                        >
+                                                            <ExternalLink className="w-4 h-4" />
+                                                        </a>
+                                                    </div>
+                                                    <div className="flex justify-center pointer-events-auto">
+                                                        <button 
+                                                            onClick={(e) => { e.stopPropagation(); handleSingleDownload(img); }}
+                                                            className="bg-blue-600 hover:bg-blue-500 text-white rounded-full p-3 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all"
+                                                        >
+                                                            <Download className="w-5 h-5" />
+                                                        </button>
+                                                    </div>
+                                                    <div></div> {/* Spacer */}
+                                                </div>
+                                            </div>
+                                            <div className="p-3 bg-white dark:bg-slate-800">
+                                                <div className="flex items-center justify-between mb-1.5">
+                                                    <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                                                        {img.format}
+                                                    </span>
+                                                    <span className="text-xs text-slate-500 dark:text-slate-400">
+                                                        {formatBytes(img.size_kb)}
+                                                    </span>
+                                                </div>
+                                                <p className="text-sm text-slate-900 dark:text-white font-medium truncate" title={img.filename}>
+                                                    {img.filename}
+                                                </p>
+                                                <div className="flex justify-between items-center mt-1">
+                                                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                                                        {img.width ? `${img.width}x${img.height}` : 'Unknown px'}
+                                                    </p>
+                                                    <span className="text-[10px] text-blue-500 capitalize bg-blue-50 dark:bg-blue-900/30 px-1 rounded">
+                                                        {img.source_type.replace('_', ' ')}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col gap-2 mb-24">
+                                {filteredImages.map((img, i) => {
+                                    const isSelected = selectedImages.has(img.url);
+                                    return (
+                                        <div key={`${img.url}-${i}`} className={`flex items-center gap-4 p-3 bg-white dark:bg-slate-800 rounded-xl border ${isSelected ? 'border-blue-500' : 'border-slate-200 dark:border-slate-700'} cursor-pointer hover:border-blue-300 transition`} onClick={() => toggleImage(img.url)}>
+                                            <div className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 ${isSelected ? 'bg-blue-500 border-blue-500 text-white' : 'border-slate-300 dark:border-slate-600'}`}>
+                                                {isSelected && <Check className="w-3 h-3" />}
+                                            </div>
+                                            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-900 rounded-lg overflow-hidden shrink-0">
+                                                <img src={img.url} alt="" className="w-full h-full object-cover" loading="lazy" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="font-medium text-slate-900 dark:text-white truncate">{img.filename}</p>
+                                                <div className="flex gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                                    <span>{img.format}</span>
+                                                    <span>•</span>
+                                                    <span>{formatBytes(img.size_kb)}</span>
+                                                    <span>•</span>
+                                                    <span>{img.width ? `${img.width}x${img.height}` : 'Unknown'}</span>
+                                                </div>
+                                            </div>
+                                            <button 
+                                                onClick={(e) => { e.stopPropagation(); handleSingleDownload(img); }}
+                                                className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-700 rounded-lg shrink-0"
+                                            >
+                                                <Download className="w-5 h-5" />
+                                            </button>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )}
+                    </>
+                )}
             </div>
+
+            {/* Sticky Bulk Action Bar */}
+            {selectedImages.size > 0 && (
+                <div className="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-700 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 transform transition-transform">
+                    <div className="container mx-auto max-w-7xl px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                            <span className="font-semibold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 px-3 py-1.5 rounded-lg">
+                                {selectedImages.size} Selected
+                            </span>
+                            <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                                Total: {totalSelectedSize}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button 
+                                onClick={handleSelectAll}
+                                className="px-4 py-2 font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700 rounded-lg transition"
+                            >
+                                {selectedImages.size === filteredImages.length ? 'Deselect All' : 'Select All'}
+                            </button>
+                            <button 
+                                onClick={handleBulkDownload}
+                                disabled={isBulkDownloading}
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 transition disabled:opacity-70 shadow-sm"
+                            >
+                                {isBulkDownloading ? <RefreshCw className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+                                Download as ZIP
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

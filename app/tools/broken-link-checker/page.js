@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
+import Link from 'next/link';
 import {
     Link2, Search, CheckCircle, XCircle, AlertTriangle,
     Loader2, Copy, Check, RotateCcw, Download, Filter,
@@ -242,10 +243,10 @@ export default function BrokenLinkChecker() {
                                             {link.ok
                                                 ? <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                                                 : <XCircle className="w-4 h-4 text-red-500 flex-shrink-0" />}
-                                            <a href={link.url} target="_blank" rel="noopener noreferrer"
+                                            <Link href={link.url} target="_blank" rel="noopener noreferrer"
                                                 className="text-slate-700 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 truncate flex-1 font-mono">
                                                 {link.url}
-                                            </a>
+                                            </Link>
                                             <span className={`px-2 py-0.5 rounded-md font-mono font-semibold flex-shrink-0 ${statusPill(link.ok, link.status)}`}>
                                                 {link.status}
                                             </span>

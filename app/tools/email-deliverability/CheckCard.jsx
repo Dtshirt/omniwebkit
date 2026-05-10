@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { CheckCircle, XCircle, AlertTriangle, Info, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
+import Link from 'next/link';
 
 const STATUS_CONFIG = {
   pass:  { icon: CheckCircle,   color: 'text-green-500',  bg: 'bg-green-50 dark:bg-green-900/20',  border: 'border-green-200 dark:border-green-800',  badge: 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300' },
@@ -61,8 +62,8 @@ function CheckDetails({ check, data }) {
         {data.listed.slice(0, 5).map((l, i) => (
           <div key={i} className="flex items-center justify-between text-xs">
             <span className="text-red-600 dark:text-red-400 font-medium">{l.label} — IP {l.ip}</span>
-            {l.delist_url && <a href={l.delist_url} target="_blank" rel="noopener noreferrer"
-              className="text-blue-500 hover:underline ml-2">Delist →</a>}
+            {l.delist_url && <Link href={l.delist_url} target="_blank" rel="noopener noreferrer"
+              className="text-blue-500 hover:underline ml-2">Delist →</Link>}
           </div>
         ))}
       </div>

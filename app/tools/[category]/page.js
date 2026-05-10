@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import {
   Grid,
   List,
@@ -302,7 +303,7 @@ export default function CategoryPage({ params }) {
               .map((cat) => {
                 const CatIcon = cat.icon;
                 return (
-                  <a
+                  <Link
                     key={cat.id}
                     href={`/tools/${cat.id}`}
                     className="group p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 transition-all hover:shadow-lg"
@@ -316,7 +317,7 @@ export default function CategoryPage({ params }) {
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                       {cat.count}+ tools
                     </p>
-                  </a>
+                  </Link>
                 );
               })}
           </div>

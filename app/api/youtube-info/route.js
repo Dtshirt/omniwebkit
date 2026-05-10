@@ -130,11 +130,15 @@ export async function POST(request) {
         console.error('YouTube info error:', error.message || error);
         
         const errStr = String(error.stderr || error.message || '');
+        
+        if (errStr.toLowerCase().includes('bot') || errStr.toLowerCase().includes('captcha')) {
+            return NextResponse.json({ error: 'YouTube bot protection triggered. Please try again later.' }, { status: 400 });
+        }
         if (errStr.includes('Private video') || errStr.includes('private')) {
-            return NextResponse.json({ error: 'This video is private.' }, { status: 403 });
+            return NextResponse.json({ error: 'This video is private and cannot be downloaded.' }, { status: 400 });
         }
         if (errStr.includes('Sign in') || errStr.includes('age')) {
-            return NextResponse.json({ error: 'This video requires sign-in or age verification.' }, { status: 403 });
+            return NextResponse.json({ error: 'This video requires sign-in or age verification and cannot be downloaded.' }, { status: 400 });
         }
 
         return NextResponse.json({
