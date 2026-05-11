@@ -77,7 +77,7 @@ export default function YouTubeDownloader() {
     
     setLoading(true); setError(''); setVideoInfo(null);
     try {
-      const res = await fetch('/api/youtube-downloader/video-info', {
+      const res = await fetch('/api/v1/tools/youtube-downloader/video-info', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: raw }),
@@ -103,7 +103,7 @@ export default function YouTubeDownloader() {
     const taskId = Math.random().toString(36).substring(2, 15);
     setDownloadProgress({ status: 'starting', percent: '0%', eta: '', speed: '' });
     
-    const es = new EventSource(`/api/youtube-downloader/progress/${taskId}`);
+    const es = new EventSource(`/api/v1/tools/youtube-downloader/progress/${taskId}`);
     es.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
@@ -130,7 +130,7 @@ export default function YouTubeDownloader() {
       formatParam = `&format_id=${encodeURIComponent(selectedQuality)}`;
     }
 
-    const downloadUrl = `/api/youtube-downloader/download?url=${encodeURIComponent(url.trim())}&type=${type}${formatParam}&task_id=${taskId}`;
+    const downloadUrl = `/api/v1/tools/youtube-downloader/download?url=${encodeURIComponent(url.trim())}&type=${type}${formatParam}&task_id=${taskId}`;
     
     // Create an invisible iframe or anchor to trigger download without leaving page
     const a = document.createElement('a');
@@ -191,7 +191,7 @@ export default function YouTubeDownloader() {
           <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-[12px] shadow-xl overflow-hidden mb-8 transition-all duration-150">
             <div className="flex flex-col md:flex-row">
               <div className="w-full md:w-[40%] relative">
-                <img src={`/api/youtube-downloader/download?url=${encodeURIComponent(url)}&type=thumbnail`} alt="Thumbnail" className="w-full h-full object-cover aspect-video bg-zinc-900" />
+                <img src={`/api/v1/tools/youtube-downloader/download?url=${encodeURIComponent(url)}&type=thumbnail`} alt="Thumbnail" className="w-full h-full object-cover aspect-video bg-zinc-900" />
                 <div className="absolute bottom-2 right-2 bg-black/80 px-2 py-1 rounded text-xs font-semibold">
                   {formatDuration(videoInfo.duration_seconds)}
                 </div>
