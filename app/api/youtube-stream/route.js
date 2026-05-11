@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
 import { execFile } from 'child_process';
-import path from 'path';
 
-// Proxy stream directly using yt-dlp binary
-const isWin = process.platform === 'win32';
-const ytDlpBinary = path.join(process.cwd(), 'node_modules', 'yt-dlp-exec', 'bin', isWin ? 'yt-dlp.exe' : 'yt-dlp');
+// Use the venv yt-dlp which supports --js-runtime node for YouTube signature solving
+const ytDlpBinary = '/var/www/omni_backend/venv/bin/yt-dlp';
+const cookiesFile = '/var/www/omni_backend/cookies.txt';
 
 function extractVideoId(url) {
     if (!url) return null;
@@ -45,8 +44,14 @@ export async function GET(request) {
 
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
-        // Get fresh video info + format URLs from yt-dlp
-        const stdout = await execPromise(['--dump-json', '--no-warnings', '--no-check-certificates', videoUrl]);
+        // Get fresh format URLs with Node.js runtime for proper signature decryption + cookies
+        const stdout = await execPromise([
+            '--dump-json',
+            '--no-warnings',
+            '--js-runtime', 'node',
+            '--cookies', cookiesFile,
+            videoUrl,
+        ]);
         const info = JSON.parse(stdout);
 
         if (!info?.formats) {

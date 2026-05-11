@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
 import { execFile } from 'child_process';
-import path from 'path';
 
-// Using child_process directly to bypass Next.js bundling errors with yt-dlp-exec
-const isWin = process.platform === 'win32';
-const ytDlpBinary = path.join(process.cwd(), 'node_modules', 'yt-dlp-exec', 'bin', isWin ? 'yt-dlp.exe' : 'yt-dlp');
+// Use the venv yt-dlp which supports --js-runtime node for YouTube signature solving
+const ytDlpBinary = '/var/www/omni_backend/venv/bin/yt-dlp';
+const cookiesFile = '/var/www/omni_backend/cookies.txt';
 
 function extractVideoId(url) {
     if (!url) return null;
@@ -41,8 +40,14 @@ export async function POST(request) {
 
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
-        // Get video info
-        const stdout = await execPromise(['--dump-json', '--no-warnings', '--no-check-certificates', videoUrl]);
+        // Get video info with Node.js JS runtime for signature solving + cookies for auth
+        const stdout = await execPromise([
+            '--dump-json',
+            '--no-warnings',
+            '--js-runtime', 'node',
+            '--cookies', cookiesFile,
+            videoUrl,
+        ]);
         const info = JSON.parse(stdout);
 
         if (!info || !info.title) {
