@@ -7,6 +7,7 @@ import {
   Upload, Download, ImageIcon, Settings, X, RotateCw,
   CheckCircle, AlertCircle, Zap, ArrowRight, Shield, Cpu, Info
 } from 'lucide-react';
+import Link from "next/link";
 
 /* ─── Helpers ───────────────────────────────────────────────────────────── */
 const fmtSize = (b) => {
@@ -389,7 +390,7 @@ export default function ImageConverter() {
           <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-2xl mb-4 shadow-lg shadow-sky-500/20">
             <ImageIcon className="w-7 h-7 text-white" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-2">Image Converter</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-2">Free Image Converter</h1>
           <p className="text-slate-600 dark:text-slate-400 text-lg">Convert between JPG, PNG, WebP, AVIF, HEIC, TIFF, GIF, BMP & ICO — free, instant, in-browser</p>
           <div className="flex flex-wrap justify-center gap-2 mt-4">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 text-xs font-bold rounded-full border border-emerald-200 dark:border-emerald-800"><Shield className="w-3 h-3" />100% Private</span>
@@ -494,6 +495,47 @@ export default function ImageConverter() {
                 </div>
               );
             })()}
+
+            <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-100 dark:border-slate-700/50 shadow-soft">
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-3 text-sm">
+                  🔥 Related Image Tools
+                </h3>
+                <div className="space-y-2">
+                  <Link href="/tools/image-converter/avif-to-jpg" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Avif to Jpg Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/jpg-to-avif" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Jpg to Avif Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/jpg-to-png" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Jpg to Png Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/jpg-to-webp" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Jpg to Webp Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/png-to-jpg" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Png to Jpg Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/png-to-ico" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Png to ICO Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/heic-to-jpg" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Heic to Jpg Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/png-to-webp" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Png to Webp Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/heic-to-png" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Heic to Png Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/webp-to-jpg" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors pb-2 border-b border-slate-100 dark:border-slate-700">
+                    Webp to Jpg Converter
+                  </Link> 
+                  <Link href="/tools/image-converter/webp-to-png" className="block text-sm text-slate-600 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                    Webp to Png Converter
+                  </Link>  
+                </div>
+              </div>
           </div>
 
           {/* Right panel */}
