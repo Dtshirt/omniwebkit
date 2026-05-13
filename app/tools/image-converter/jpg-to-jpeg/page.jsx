@@ -216,10 +216,10 @@ export default function JpgToJpeg() {
           {/* Settings sidebar */}
           <div className="lg:col-span-1 space-y-4">
             <div className={`${cardCls} p-5`}>
-              <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">
+              <p className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">
                 <Settings className="w-5 h-5 text-indigo-500" />
                 Target Extension
-              </h2>
+              </p>
 
               <div className="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-xl mb-2">
                 <button
@@ -239,9 +239,9 @@ export default function JpgToJpeg() {
             </div>
 
             <div className={`${cardCls} p-5 bg-gradient-to-br from-indigo-50 to-sky-50 dark:from-indigo-900/10 dark:to-sky-900/10`}>
-              <h3 className="flex items-center gap-1.5 text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2">
+              <p className="flex items-center gap-1.5 text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2">
                 <Info className="w-4 h-4" /> Did you know?
-              </h3>
+              </p>
               <p className="text-xs text-indigo-700/80 dark:text-indigo-400/80 leading-relaxed mb-3">
                 <strong>JPG</strong> and <strong>JPEG</strong> are literally the exact same file format (Joint Photographic Experts Group). The only difference is the letters in the extension.
               </p>
@@ -265,7 +265,7 @@ export default function JpgToJpeg() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-indigo-500 to-sky-500 rounded-2xl mb-3 shadow-md">
                   <Upload className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop Images here!' : 'Upload JPG / JPEG Images'}</h3>
+                <p className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop Images here!' : 'Upload JPG / JPEG Images'}</p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">Drag & drop or click to browse</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   <span className="px-2.5 py-1 bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-lg border border-indigo-200 dark:border-indigo-800 border-dashed">JPG</span>

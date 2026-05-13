@@ -403,9 +403,9 @@ export default function ImageConverter() {
           {/* Settings sidebar */}
           <div className="lg:col-span-1 space-y-4">
             <div className={`${cardCls} p-5`}>
-              <h2 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wide mb-4 flex items-center gap-1.5">
+              <p className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wide mb-4 flex items-center gap-1.5">
                 <Settings className="w-3.5 h-3.5 text-sky-500" />Conversion Settings
-              </h2>
+              </p>
 
               {/* Output format */}
               <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2">Output Format</p>
@@ -552,7 +552,7 @@ export default function ImageConverter() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-2xl mb-3 shadow-md">
                   <Upload className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop images here!' : 'Upload Images to Convert'}</h3>
+                <p className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop images here!' : 'Upload Images to Convert'}</p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">Drag & drop or click to browse • HEIC, TIFF, AVIF & more supported</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {INPUT_FORMATS.map(f => (

@@ -213,9 +213,9 @@ export default function ImageCompressor() {
           {/* Settings sidebar */}
           <div className="lg:col-span-1 space-y-4">
             <div className={`${cardCls} p-5`}>
-              <h2 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wide mb-4 flex items-center gap-1.5">
+              <p className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wide mb-4 flex items-center gap-1.5">
                 <Settings className="w-3.5 h-3.5 text-violet-500" />Compression Settings
-              </h2>
+              </p>
 
               {/* Quality presets */}
               <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2">Preset Level</p>
@@ -313,7 +313,7 @@ export default function ImageCompressor() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl mb-3 shadow-md shadow-violet-500/20">
                   <Upload className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop images here!' : 'Upload Images to Compress'}</h3>
+                <p className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop images here!' : 'Upload Images to Compress'}</p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">Drag & drop or click to browse • Multiple files supported</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {['JPG', 'PNG', 'WebP', 'GIF', 'BMP'].map(f => (

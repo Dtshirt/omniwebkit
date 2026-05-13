@@ -261,10 +261,10 @@ export default function HeicToJpg() {
           {/* Settings sidebar */}
           <div className="lg:col-span-1 space-y-4">
             <div className={`${cardCls} p-5`}>
-              <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">
+              <p className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">
                 <Settings className="w-5 h-5 text-indigo-500" />
                 Settings
-              </h2>
+              </p>
 
               <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 mt-4">JPG Quality ({quality}%)</p>
               <input type="range" min="10" max="100" value={quality} onChange={(e) => setQuality(Number(e.target.value))}
@@ -276,9 +276,9 @@ export default function HeicToJpg() {
             </div>
 
             <div className={`${cardCls} p-5 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/10 dark:to-purple-900/10`}>
-              <h3 className="flex items-center gap-1.5 text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2">
+              <p className="flex items-center gap-1.5 text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2">
                 <Info className="w-4 h-4" /> About HEIC
-              </h3>
+              </p>
               <p className="text-xs text-indigo-700/80 dark:text-indigo-400/80 leading-relaxed">
                 HEIC is Apple's high-efficiency image format. While it saves space, it is not widely supported on Windows devices or older web browsers. Converting to JPG ensures maximum compatibility everywhere.
               </p>
@@ -299,7 +299,7 @@ export default function HeicToJpg() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl mb-3 shadow-md">
                   <Upload className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop HEIC photos here!' : 'Upload HEIC Images'}</h3>
+                <p className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop HEIC photos here!' : 'Upload HEIC Images'}</p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">Drag & drop or click to browse</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   <span className="px-2.5 py-1 bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-lg border border-indigo-200 dark:border-indigo-800 border-dashed">HEIC ONLY</span>
@@ -452,7 +452,7 @@ export default function HeicToJpg() {
           <h2>HEIC vs JPG – What Is the Difference?</h2>
           <p>Here is a simple comparison to help you understand both formats:</p>
 
-          <table>
+          <div className='overflow-x-auto w-full'><table>
             <thead>
                 <tr>
                   <th>Feature</th>
@@ -497,7 +497,7 @@ export default function HeicToJpg() {
                   <td>No (HEIC is Apple's default)</td>
                 </tr>
               </tbody>
-            </table>
+            </table></div>
 
           <p>JPG is the winner when it comes to sharing, social media, and everyday use. HEIC is great for saving phone storage, but JPG works everywhere. That is why converting HEIC to JPG is so useful.</p>
 

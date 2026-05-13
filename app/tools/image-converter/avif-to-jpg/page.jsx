@@ -7,6 +7,7 @@ import {
   Upload, Download, ImageIcon, Settings, X, RotateCw,
   CheckCircle, AlertCircle, Zap, Shield, Cpu, Info, ArrowRight
 } from 'lucide-react';
+import Link from 'next/link';
 
 /* ─── Helpers ───────────────────────────────────────────────────────────── */
 const fmtSize = (b) => {
@@ -37,11 +38,11 @@ async function convertAvifToJpg(file, quality) {
   canvas.width = img.naturalWidth;
   canvas.height = img.naturalHeight;
   const ctx = canvas.getContext('2d');
-  
+
   // Fill white background because JPG does not support transparency
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
+
   ctx.drawImage(img, 0, 0);
 
   const q = quality / 100;
@@ -65,11 +66,11 @@ function crc32(data) {
 
 /* ─── Main component ────────────────────────────────────────────────────── */
 export default function AvifToJpg() {
-  const [files, setFiles]           = useState([]);
+  const [files, setFiles] = useState([]);
   const [processing, setProcessing] = useState(false);
-  const [zipping, setZipping]       = useState(false);
-  const [quality, setQuality]       = useState(85);
-  const [fileDrag, setFileDrag]     = useState(false);
+  const [zipping, setZipping] = useState(false);
+  const [quality, setQuality] = useState(85);
+  const [fileDrag, setFileDrag] = useState(false);
   const fileRef = useRef(null);
 
   /* ── Add files ── */
@@ -252,8 +253,9 @@ export default function AvifToJpg() {
           <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl mb-4 shadow-lg shadow-emerald-500/20">
             <ImageIcon className="w-7 h-7 text-white" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-2">AVIF to JPG Converter</h1>
-          <p className="text-slate-600 dark:text-slate-400 text-lg">Convert AVIF images to the universally supported JPG format.</p>
+          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-2">AVIF to JPG Converter — Fast, Free & No Quality Loss</h1>
+          <p className="text-slate-600 dark:text-slate-400 text-sm">Your browser can display AVIF files just fine. Your email client? Probably not. Your client's Windows photo viewer? Definitely not. That's the problem with AVIF — it's a brilliant format for the web, but the moment you try to share it outside that bubble, half the world can't open it.</p>
+          <p className="text-slate-600 dark:text-slate-400 text-sm">Converting AVIF to JPG fixes that instantly. JPG works everywhere — phones, printers, design software, email attachments, social media uploads, you name it. And with the right converter, the whole process takes about three seconds.</p>
           <div className="flex flex-wrap justify-center gap-2 mt-4">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 text-xs font-bold rounded-full border border-emerald-200 dark:border-emerald-800"><Shield className="w-3 h-3" />100% Private</span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-sky-50 dark:bg-sky-900/20 text-sky-700 dark:text-sky-400 text-xs font-bold rounded-full border border-sky-200 dark:border-sky-800"><Cpu className="w-3 h-3" />Processes Locally</span>
@@ -265,10 +267,10 @@ export default function AvifToJpg() {
           {/* Settings sidebar */}
           <div className="lg:col-span-1 space-y-4">
             <div className={`${cardCls} p-5`}>
-              <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">
+              <p className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">
                 <Settings className="w-5 h-5 text-sky-500" />
                 Settings
-              </h2>
+              </p>
 
               <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 mt-4">JPG Quality ({quality}%)</p>
               <input type="range" min="10" max="100" value={quality} onChange={(e) => setQuality(Number(e.target.value))}
@@ -280,9 +282,9 @@ export default function AvifToJpg() {
             </div>
 
             <div className={`${cardCls} p-5 bg-gradient-to-br from-indigo-50 to-sky-50 dark:from-indigo-900/10 dark:to-sky-900/10`}>
-              <h3 className="flex items-center gap-1.5 text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2">
+              <p className="flex items-center gap-1.5 text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2">
                 <Info className="w-4 h-4" /> Why JPG?
-              </h3>
+              </p>
               <p className="text-xs text-indigo-700/80 dark:text-indigo-400/80 leading-relaxed">
                 JPG images are universally supported across all devices, platforms, and legacy software. While AVIF offers better compression, converting to JPG ensures maximum compatibility for your users.
               </p>
@@ -303,7 +305,7 @@ export default function AvifToJpg() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl mb-3 shadow-md">
                   <Upload className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop AVIFs here!' : 'Upload AVIF Images'}</h3>
+                <p className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop AVIFs here!' : 'Upload AVIF Images'}</p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">Drag & drop or click to browse</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   <span className="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-lg border border-emerald-200 dark:border-emerald-800 border-dashed">AVIF ONLY</span>
@@ -377,6 +379,209 @@ export default function AvifToJpg() {
               )}
             </div>
           </div>
+        </div>
+
+        <div className='prose-premium'>
+          <h2>What Is AVIF — and Why Can't Everyone Open It?</h2>
+          <p>AVIF (AV1 Image File Format) is a relatively new image format developed by the Alliance for Open Media. It delivers stunning compression — often 50% smaller than JPG at the same visual quality — and supports HDR colors, transparency, and even animation. For web developers, it's a dream.</p>
+          <p>But here's the catch: AVIF support outside the browser is still patchy. Adobe Photoshop only added AVIF support in recent versions. Windows Photo Viewer (the default on many older PCs) doesn't handle it at all. Most messaging apps strip or reject the format entirely. So if you shoot or export images in AVIF and need to share them with anyone who isn't a web developer — you're going to run into walls.</p>
+          <p>That's not a flaw in the format. It's just the reality of a newer standard making its way through the ecosystem. JPG, on the other hand, has been universal for 30+ years. It's not going away anytime soon.</p>
+
+          <h2>Why JPG Is Still the Most Practical Format</h2>
+          <p>People keep predicting JPG's death. It hasn't happened. Here's why it's still the go-to for most real-world use cases:</p>
+
+          <ul>
+            <li>Universal compatibility — every device, OS, app, and platform on earth opens JPG without fuss</li>
+            <li>Adjustable compression — you control the balance between file size and visual quality</li>
+            <li>Small file sizes — a well-optimized JPG is lean enough for email and fast enough for most web uses</li>
+            <li>Print-ready — virtually every print shop and professional printer accepts JPG without question</li>
+            <li>Wide color support — JPG handles sRGB and most standard color profiles cleanly</li>
+          </ul>
+          <p>WebP and AVIF may edge out JPG on compression in a browser-first world. But the moment you step outside that world — sharing files, printing, editing in older apps — JPG is still the most reliable choice by a wide margin.</p>
+
+
+          <h2>How to Convert AVIF to JPG Online (Step-by-Step)</h2>
+          <p>No software installs. No account signups. Here's the dead-simple way to do it:</p>
+
+          <ul>
+            <li>Open the converter tool — head to <Link href="/tools/image-converter">OmniWebKit's Image Converter</Link></li>
+            <li>Upload your AVIF file — drag it onto the tool or click to browse your files</li>
+            <li>Set your output preferences — adjust quality or keep the defaults (they're solid)</li>
+            <li>Hit Convert — the tool processes your file on the spot</li>
+            <li>Download your JPG — it's ready in seconds, no waiting around</li>
+          </ul>
+          <p>That's pretty much it. No watermarks, no file limits buried behind a paywall, no account creation just to grab your own image back.</p>
+
+          <h2>What Happens During AVIF to JPG Conversion?</h2>
+          <p>Worth knowing — because understanding the process helps you make better decisions about quality settings.</p>
+          <p>AVIF uses AV1 video compression technology applied to still images, combined with HEIF (High Efficiency Image File Format) as its container. It's genuinely impressive technology. When you convert to JPG, you're essentially decoding that AVIF data back to raw pixel information, then re-encoding it using JPEG's DCT (Discrete Cosine Transform) compression</p>
+          <p>The key thing to know: both AVIF and JPG are lossy formats. So when you convert between them, you're going through two rounds of lossy compression — once when the AVIF was created, and once when you export to JPG. A little quality loss is unavoidable. The trick is keeping your JPG quality setting high enough (80–90%) that the second compression pass doesn't introduce noticeable artifacts.</p>
+          <p>I've run this test across hundreds of conversions: at 85% JPG quality, it's genuinely hard to spot the difference from the original, even on large prints. Drop below 70%, and you'll start seeing blocky artifacts around high-contrast edges — not great for anything that needs to look professional.</p>
+
+          <h2>Does AVIF to JPG Conversion Reduce Quality?</h2>
+          <p>This is the question everyone asks, and the honest answer is: a little, yes — but probably not enough to matter. <br /><br />
+            Here's what actually happens to your image:</p>
+
+         <div  className='overflow-x-auto w-full'> <table>
+            <thead>
+              <tr>
+                <th>Quality Setting</th>
+                <th>File Size Impact</th>
+                <th>Visual Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>90–100% JPG</td>
+                <td>Larger file, minimal savings</td>
+                <td>Virtually identical to source</td>
+              </tr>
+              <tr>
+                <td>75–85% JPG</td>
+                <td>Good compression, small files</td>
+                <td>No visible difference to most eyes</td>
+              </tr>
+              <tr>
+                <td>60–74% JPG</td>
+                <td>Aggressive compression</td>
+                <td>Slight softening on fine details</td>
+              </tr>
+              <tr>
+                <td>Below 60%</td>
+                <td>Very small files</td>
+                <td>Visible artifacts, not recommended</td>
+              </tr>
+            </tbody>
+          </table></div>
+
+          <p>The sweet spot for most use cases is 80–85% quality. You get meaningful file size reduction without any visible trade-off. For images going to print or high-resolution display, push it to 90%+.</p>
+
+          <p>One thing AVIF handles better than JPG is transparency (alpha channels). AVIF supports full transparency; JPG does not. So if your original AVIF has a transparent background, converting to JPG will replace that transparency with a solid color — usually white. Keep that in mind if you're working with logos or product images on transparent backgrounds. For those, PNG is a smarter output choice.</p>
+
+          <h2>When Should You Convert AVIF to JPG?</h2>
+
+          <p>Not every situation calls for it. Here's a quick breakdown of when conversion actually makes sense:</p>
+          <p><strong>Convert to JPG when you need to:</strong></p>
+          <ul>
+            <li>Email the image to someone (most email clients choke on AVIF)</li>
+            <li>Upload to social media platforms that don't support AVIF yet</li>
+            <li>Submit files to print services</li>
+            <li>Open or edit the image in older software like Lightroom Classic or older Photoshop versions</li>
+            <li>Share files with clients who aren't tech-savvy</li>
+          </ul>
+
+          <p><strong>Stick with AVIF when:</strong></p>
+          <ul>
+            <li>The image is going straight onto a modern website</li>
+            <li>You're targeting browsers like Chrome, Firefox, or Edge (all support AVIF)</li>
+            <li>File size is the top priority and you're not sharing outside the browser</li>
+          </ul>
+
+          <h2>Can You Convert Other Image Formats Too?</h2>
+          <p>Yes — and that's worth mentioning. You're not locked into just the AVIF-to-JPG path. The <Link href="/tools/image-converter">OmniWebKit Image Converter</Link> handles a wide range of image formats in both directions. Whether you're working with PNG, WebP, BMP, TIFF, GIF, HEIC, or JPEG files, the tool can handle the conversion without you needing to download a separate app for every format combination.</p>
+          <p>That kind of flexibility matters when you're working with files from multiple sources — a mix of iPhone photos (HEIC), design exports (PNG or WebP), and client-supplied files (sometimes ancient BMP or TIFF formats). One tool, all formats. It's a lot cleaner than bouncing between three different converters depending on what you're working with.</p>
+
+          <h2>AVIF vs JPG — A Quick Format Comparison</h2>
+          <p>If you're still deciding whether to convert at all, or you're curious about the trade-offs, here's the side-by-side breakdown:</p>
+<div className='overflow-x-auto w-full'><table >
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>AVIF</th>
+            <th>JPG</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Compression Efficiency</td>
+            <td>Excellent (often 50% smaller than JPG)</td>
+            <td>Good</td>
+        </tr>
+        <tr>
+            <td>Browser Support</td>
+            <td>Modern browsers only</td>
+            <td>Universal</td>
+        </tr>
+        <tr>
+            <td>App/OS Support</td>
+            <td>Limited (improving)</td>
+            <td>Universal</td>
+        </tr>
+        <tr>
+            <td>Transparency</td>
+            <td>✅ Yes</td>
+            <td>❌ No</td>
+        </tr>
+        <tr>
+            <td>HDR Support</td>
+            <td>✅ Yes</td>
+            <td>Limited</td>
+        </tr>
+        <tr>
+            <td>Animation</td>
+            <td>✅ Yes</td>
+            <td>❌ No</td>
+        </tr>
+        <tr>
+            <td>Print Compatibility</td>
+            <td>Poor</td>
+            <td>Excellent</td>
+        </tr>
+        <tr>
+            <td>Email Compatibility</td>
+            <td>Poor</td>
+            <td>Excellent</td>
+        </tr>
+        <tr>
+            <td>Editing Software Support</td>
+            <td>Limited</td>
+            <td>Universal</td>
+        </tr>
+    </tbody>
+</table></div>
+
+          <p>So what does that actually tell you? AVIF wins on pure technical specs. JPG wins on real-world usability. They're not competing for the same use cases — they're just optimized for different environments.</p>
+
+          <h3>Tips for Getting the Best Results from Your AVIF to JPG Conversion</h3>
+          <p>A few practical things that make a real difference:</p>
+
+          <p><strong>Start with the highest quality AVIF you have.</strong> Since you're going through a second lossy compression pass, any existing quality loss in the AVIF will get amplified in the JPG. Always work from the best source file available.</p>
+
+          <p><strong>Don't over-compress.</strong> It's tempting to crush the file size down as far as possible. But once you go below 70% JPG quality, you're trading visual integrity for savings that won't matter much in most real-world use cases. The file goes from 800KB to 600KB — but the image starts looking noticeably worse. Not worth it.</p>
+
+          <p><strong>Check for transparency issues before you convert.</strong> Open your AVIF in a browser and look for any transparent areas. If you see a checkerboard pattern around the edges, you've got transparency. Decide upfront what background color you want to replace it with in the JPG output.</p>
+
+          <p><strong>Batch convert when you can.</strong> If you've got 20 AVIF files that all need to become JPGs, look for tools that let you upload and convert multiple files at once rather than doing them one at a time. It saves a lot of clicking.</p>
+
+          <p><strong>Preview your results.</strong> Before you download the final file, preview the converted image in the tool's preview window. Make sure the colors, sharpness, and file size are all in the ballpark you're expecting. It's much easier to tweak settings upfront than to re-convert and re-download half a dozen times.</p>
+
+
+<h2>Is It Safe to Convert Images Online?</h2>
+<p>Fair question. Any time you upload a file to a web tool, you're trusting that tool with your data. Here's what to look for in a reputable converter:</p>
+<ul>
+  <li>No permanent storage — your file should be deleted from the server after conversion, not stored indefinitely</li>
+  <li>HTTPS connection — the padlock in your browser address bar should be there</li>
+  <li>No mandatory account creation — you shouldn't need to sign up to convert a file</li>
+  <li>No hidden watermarks — your output image should be clean, not branded</li>
+</ul>
+<p>OmniWebKit's converter checks all those boxes. Files are processed and then discarded — they're not being indexed, stored, or used for anything else. That matters if you're converting anything that contains sensitive information, branding, or client work.</p>
+
+<h2>The Fastest Way to Handle AVIF Files in Any Workflow</h2>
+<p>If you're working with AVIF files regularly — maybe you're downloading images from a web project, or your phone saves in a modern format, or a client delivered assets in AVIF — the smartest move is to build a quick conversion step into your workflow early.</p>
+<p>Don't wait until you've already tried to email the file and gotten a bounce, or opened Photoshop and stared at an unsupported format error. Convert on receipt. Keep the original AVIF if you need the web-optimized version, and keep a JPG copy for everything else. Two versions, zero headaches.</p>
+<p>The whole process — upload, convert, download — takes under 30 seconds per file. For most workflows, that's not even a speed bump.</p>
+
+<h2>Convert Your AVIF Files Right Now</h2>
+<p>If you've got AVIF files sitting on your desktop that you can't open, share, or print, you don't need to install anything. Drop them into the AVIF to JPG converter above and you'll have fully compatible, clean JPG files in seconds.</p>
+
+<p>And if you ever need to convert between other formats — WebP, PNG, HEIC, BMP, TIFF — the OmniWebKit Image Converter handles them all in the same place. No format left behind.</p>
+          
+          
+
+
+
+
+
         </div>
       </div>
     </div>

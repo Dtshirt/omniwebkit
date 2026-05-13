@@ -265,10 +265,10 @@ export default function PngToJpg() {
           {/* Settings sidebar */}
           <div className="lg:col-span-1 space-y-4">
             <div className={`${cardCls} p-5`}>
-              <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">
+              <p className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-slate-700 pb-3">
                 <Settings className="w-5 h-5 text-sky-500" />
                 Settings
-              </h2>
+              </p>
 
               <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 mt-4">JPG Quality ({quality}%)</p>
               <input type="range" min="10" max="100" value={quality} onChange={(e) => setQuality(Number(e.target.value))}
@@ -280,9 +280,9 @@ export default function PngToJpg() {
             </div>
 
             <div className={`${cardCls} p-5 bg-gradient-to-br from-indigo-50 to-sky-50 dark:from-indigo-900/10 dark:to-sky-900/10`}>
-              <h3 className="flex items-center gap-1.5 text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2">
+              <p className="flex items-center gap-1.5 text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2">
                 <Info className="w-4 h-4" /> Transparency Note
-              </h3>
+              </p>
               <p className="text-xs text-indigo-700/80 dark:text-indigo-400/80 leading-relaxed mb-2">
                 The JPG format does <strong>not support transparency</strong>.
               </p>
@@ -306,7 +306,7 @@ export default function PngToJpg() {
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl mb-3 shadow-md">
                   <Upload className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop PNGs here!' : 'Upload PNG Images'}</h3>
+                <p className="text-base font-bold text-slate-900 dark:text-white mb-1">{fileDrag ? 'Drop PNGs here!' : 'Upload PNG Images'}</p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">Drag & drop or click to browse</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   <span className="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-lg border border-emerald-200 dark:border-emerald-800 border-dashed">PNG ONLY</span>
