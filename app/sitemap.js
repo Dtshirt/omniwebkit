@@ -112,6 +112,9 @@ const TOOL_DATES = {
     'tech-detector': '2026-05-01',
     'github-readme-generator': '2026-05-01',
     'pdf-redaction': '2026-05-01',
+    'heic-to-jpg': '2026-05-12',
+    'heic-to-png': '2026-05-12',
+    'heic-image-viewer': '2026-05-12',
 };
 
 // Unique category slugs from tools-data
@@ -199,5 +202,18 @@ export default function sitemap() {
         { url: `${DOMAIN}/compress-video-whatsapp`, lastModified: new Date('2026-04-27'), changeFrequency: 'monthly', priority: 0.85 },
     ];
 
-    return [...staticRoutes, ...categoryRoutes, ...toolRoutes, ...blogRoutes, ...pseoVideoRoutes];
+    const imageConverterRoutes = [
+        { url: `${DOMAIN}/tools/image-converter/avif-to-jpg`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/jpg-to-avif`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/jpg-to-jpeg`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/jpg-to-png`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/jpg-to-webp`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/png-to-ico`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/png-to-jpg`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/png-to-webp`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/webp-to-jpg`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${DOMAIN}/tools/image-converter/webp-to-png`, lastModified: new Date('2026-05-12'), changeFrequency: 'monthly', priority: 0.8 },
+    ];
+
+    return [...staticRoutes, ...categoryRoutes, ...toolRoutes, ...blogRoutes, ...pseoVideoRoutes, ...imageConverterRoutes];
 }
