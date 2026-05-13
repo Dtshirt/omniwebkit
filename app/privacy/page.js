@@ -40,14 +40,13 @@ const PrivacyPage = () => {
 
             <h2>How Our Tools Work</h2>
             <p>
-              All our tools process your data entirely within your browser (client-side processing).
-              This means:
+              Most of our tools process your data entirely within your browser (client-side processing). However, some specific tools may require server-side processing for complex operations. In all cases:
             </p>
             <ul>
-              <li>Your files never leave your device</li>
-              <li>No data is sent to our servers</li>
-              <li>Processing happens locally on your computer</li>
-              <li>You maintain complete control over your data</li>
+              <li>For client-side tools, your files never leave your device.</li>
+              <li>For server-side tools, files are only temporarily uploaded for processing and are immediately and securely deleted afterward.</li>
+              <li>We never store, save, or share any of your uploaded files or data.</li>
+              <li>You maintain complete control over your privacy and data.</li>
             </ul>
 
             <h2>Third-Party Services</h2>

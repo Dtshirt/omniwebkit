@@ -39,7 +39,7 @@ const Footer = () => {
     {
       icon: Shield,
       title: 'Secure & Private',
-      description: 'All processing happens locally in your browser',
+      description: 'Files are processed securely. No data is ever stored.',
       color: 'text-emerald-600 dark:text-emerald-400',
       bgColor: 'bg-emerald-50 dark:bg-emerald-900/20'
     },
@@ -88,9 +88,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
+            <p className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
               Popular Tools
-            </h3>
+            </p>
             <ul className="space-y-2.5">
               {footerLinks.tools.map((link) => (
                 <li key={link.name}>
@@ -106,9 +106,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
+            <p className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
               Company
-            </h3>
+            </p>
             <ul className="space-y-2.5">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
@@ -121,12 +121,12 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div>  
 
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
+            <p className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
               Resources
-            </h3>
+            </p>
             <ul className="space-y-2.5">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
@@ -158,9 +158,9 @@ const Footer = () => {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white text-sm">
+                    <p className="font-semibold text-slate-900 dark:text-white text-sm">
                       {feature.title}
-                    </h4>
+                    </p>
                     <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
                       {feature.description}
                     </p>

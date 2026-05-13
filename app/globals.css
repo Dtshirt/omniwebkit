@@ -64,6 +64,71 @@
   .upload-zone.dragover {
     @apply border-primary-500 bg-primary-50 dark:bg-primary-900/20;
   }
+
+  /* Premium Prose Content Styling */
+  .prose-premium {
+    @apply max-w-none text-slate-600 dark:text-slate-400 leading-relaxed;
+  }
+
+  .prose-premium h2 {
+    @apply text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-12 mb-6 tracking-tight scroll-mt-20 border-b border-slate-100 dark:border-slate-800 pb-2;
+  }
+
+  .prose-premium h3 {
+    @apply text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-100 mt-8 mb-4 tracking-tight;
+  }
+
+  .prose-premium h4 {
+    @apply text-lg font-bold text-slate-800 dark:text-slate-200 mt-6 mb-3;
+  }
+
+  .prose-premium p {
+    @apply mb-6 text-base sm:text-lg;
+  }
+
+  .prose-premium ul {
+    @apply list-disc list-outside ml-6 mb-8 space-y-4;
+  }
+
+  .prose-premium li {
+    @apply pl-2 text-base sm:text-lg;
+  }
+
+  .prose-premium strong {
+    @apply text-slate-900 dark:text-white font-bold;
+  }
+
+  .prose-premium blockquote {
+    @apply border-l-4 border-primary-500 bg-primary-50/50 dark:bg-primary-900/10 px-6 py-5 italic rounded-r-2xl my-10 text-primary-900 dark:text-primary-300 shadow-sm text-lg;
+  }
+
+  .prose-premium mark {
+    @apply bg-primary-100 dark:bg-primary-500/30 text-primary-900 dark:text-primary-200 px-1.5 rounded font-medium;
+  }
+
+  .prose-premium a {
+    @apply text-primary-600 dark:text-primary-400 font-semibold hover:underline decoration-2 underline-offset-4 transition-all;
+  }
+
+  .prose-premium table {
+    @apply w-full border-collapse my-8 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/20;
+  }
+
+  .prose-premium th {
+    @apply bg-indigo-50/80 dark:bg-indigo-900/40 text-indigo-900 dark:text-indigo-200 font-extrabold p-4 text-left border-b-2 border-indigo-200 dark:border-indigo-800 uppercase text-xs tracking-wider;
+  }
+
+  .prose-premium tr {
+    @apply transition-colors duration-200;
+  }
+
+  .prose-premium tr:hover td {
+    @apply bg-slate-50/50 dark:bg-slate-800/30;
+  }
+
+  .prose-premium td {
+    @apply p-4 border-b border-slate-100 dark:border-slate-800/50 text-slate-600 dark:text-slate-400;
+  }
 }
 
 /* Animations */
