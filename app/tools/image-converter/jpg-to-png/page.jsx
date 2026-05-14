@@ -429,7 +429,7 @@ export default function JpgToPng() {
  
 <p>Not every image needs to be a PNG. Here's a quick breakdown to help you decide:</p>
  
-<table border="1" cellpadding="8" cellspacing="0">
+<div className="w-full overflow-auto"><table border="1" cellpadding="8" cellspacing="0">
   <thead>
     <tr>
       <th>Feature</th>
@@ -479,7 +479,7 @@ export default function JpgToPng() {
       <td>Better for graphics</td>
     </tr>
   </tbody>
-</table>
+</table></div>
  
 <p>The short answer: use JPG for photos you're just displaying. Use PNG for anything you're going to edit, layer, or use as a design asset.</p> 
  

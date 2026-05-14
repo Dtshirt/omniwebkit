@@ -447,7 +447,7 @@ export default function JpgToWebp() {
  
   <h3>WebP vs JPG vs PNG — Which Format Should You Use When?</h3>
  
-  <div class="table-wrap">
+  <div className='w-full overflow-auto'>
     <table>
       <thead>
         <tr>
@@ -513,7 +513,7 @@ export default function JpgToWebp() {
  
   <p>WebP's quality scale runs from 0 (maximum compression, terrible quality) to 100 (near-lossless, large file). Here's what actually happens at different settings:</p>
  
-  <div class="table-wrap">
+  <div className='w-full overflow-auto'>
     <table>
       <thead>
         <tr>

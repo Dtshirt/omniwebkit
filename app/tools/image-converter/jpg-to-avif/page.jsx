@@ -399,7 +399,7 @@ export default function JpgToAvif() {
 
           <p>Let's put the two formats side by side so you can see exactly what you're gaining when you make the switch.</p>
 
-          <table>
+          <div className="w-full overflow-auto"><table>
             <thead>
               <tr>
                 <th>Feature</th>
@@ -444,7 +444,7 @@ export default function JpgToAvif() {
                 <td>Web, mobile, modern apps</td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
 
           <p>JPG had a 30-year run. It's still useful when you need universal compatibility — old email clients, certain CMS platforms, legacy print workflows. But for anything going on the web today, AVIF wins on almost every metric.</p>
 
