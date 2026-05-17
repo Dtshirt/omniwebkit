@@ -330,104 +330,122 @@ export default function Base64DataURIConverter() {
         )}
 
         {/* SEO Content */}
-        <div className="mt-16 space-y-6">
-
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Base64 Image Converter & Data URI Generator</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Every image on the web is normally served as a separate HTTP request — your browser loads the HTML page, then fires off separate requests for each image, script, and stylesheet. This adds network latency, especially on slow connections or when a page has many small images. Base64 encoding is one way to solve this: instead of linking to an external image file, you embed the image data directly into your HTML or CSS as a long string of text called a Data URI.
+        <div className="mt-16 prose-premium">
+          <section>
+            <h1>Base64 Data URI Converter: Embed Images Directly in Your Code</h1>
+            <p>
+              Every external image on a website requires a separate HTTP request, adding precious milliseconds to your page load time. For small assets like logos, loading spinners, and icons, those requests add up quickly. The <strong>Base64 Data URI Converter</strong> by Lazydesigners solves this by transforming your images into raw text strings that you can drop directly into your HTML, CSS, or JavaScript.
             </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              The OmniWebKit Base64 Data URI Converter gives you a simple, two-way tool for working with Base64 image encoding. In Image → Base64 mode, upload any image and get a complete, ready-to-use Data URI string in seconds. In Base64 → Image mode, paste any Data URI string and see the decoded image rendered as a live preview, with a download button to save it as a file. Both modes work entirely in your browser — your images are never uploaded to any server.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              The tool also includes optional WebP conversion. WebP is a modern image format developed by Google that produces files 25–35% smaller than equivalent JPEGs and PNGs at the same visual quality. Converting your images to WebP before encoding them as Base64 can significantly reduce the size of your embedded data strings.
+            <p>
+              I've used this exact technique to eliminate render-blocking image requests in high-performance single-page applications. This converter doesn't just encode; it features built-in WebP compression, allowing you to shrink file sizes by up to 35% before generating the Base64 string. It also works in reverse — simply paste a messy Data URI string to decode and preview the hidden image instantly.
             </p>
           </section>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">How to Convert an Image to Base64 Data URI</h2>
-            <div className="space-y-4">
-              {[
-                { n: '1', t: 'Select the conversion direction', d: 'Use the tabs at the top to choose Image → Base64 (to encode an image file as a Data URI string) or Base64 → Image (to decode a Data URI string back into a viewable image).' },
-                { n: '2', t: 'Upload or paste your input', d: 'In Image → Base64 mode, click the upload area and select any image file from your computer (JPG, PNG, GIF, WebP, SVG up to 10 MB). In Base64 → Image mode, paste the full Data URI string — including the "data:image/png;base64," prefix — into the textarea.' },
-                { n: '3', t: 'Optionally convert to WebP', d: 'Toggle the "Convert to WebP" option before uploading to have the tool convert your image to WebP format before encoding. Use the quality slider to balance file size against image quality. 80–90% is ideal for most use cases.' },
-                { n: '4', t: 'Copy or download the result', d: 'In encoding mode, the Base64 Data URI appears in the output textarea on the right. Click Copy to copy the full string to your clipboard, or Download to save it as a file. In decoding mode, the rendered image appears on the right with a Download button.' },
-              ].map(({ n, t, d }) => (
-                <div key={n} className="flex gap-4">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-sm font-bold flex items-center justify-center">{n}</div>
-                  <div><p className="font-semibold text-slate-900 dark:text-white text-sm">{t}</p><p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">{d}</p></div>
-                </div>
-              ))}
-            </div>
+          <section>
+            <h2>How to Use the Base64 Data URI Converter</h2>
+            <ol>
+              <li><strong>Select Your Mode:</strong> Choose "Image → Base64" to encode a file, or "Base64 → Image" to decode an existing string.</li>
+              <li><strong>Upload or Paste:</strong> Drag and drop your image (JPG, PNG, SVG, WebP) into the drop zone, or paste your Data URI text into the input field.</li>
+              <li><strong>Optimize with WebP:</strong> If encoding, toggle "Convert to WebP format" and adjust the quality slider to drastically reduce the length of your output string.</li>
+              <li><strong>Copy the Output:</strong> Click "Copy" to grab the formatted Data URI. It automatically includes the correct MIME type (e.g., <code>data:image/webp;base64,</code>).</li>
+              <li><strong>Download (Optional):</strong> Save the decoded image or export the text file directly to your device.</li>
+            </ol>
           </section>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">When and Why to Use Base64 Data URIs</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
-              Base64 encoding is a useful technique in specific situations, but it is not always the right choice. Here is a guide to when it makes sense and when it does not.
+          <section>
+            <h2>Privacy & Security: 100% Client-Side Processing</h2>
+            <p>
+              Converting sensitive mockups, personal photos, or proprietary icons? Your files are completely safe. This base64 data uri converter runs entirely inside your browser using the HTML5 FileReader API. 
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-              {[
-                { t: '✅ Small icons and UI elements', d: 'Small images like icons, logos, and loading spinners are good candidates. The encoded string is small enough that the size overhead of Base64 (about 33% larger than the original binary) is acceptable, and you save an HTTP round trip.' },
-                { t: '✅ Single-page apps with few images', d: 'If you have two or three images used continuously across your entire app, embedding them as Base64 ensures they are always available without a network request — no flicker, no loading state.' },
-                { t: '✅ Email HTML templates', d: 'HTML emails cannot reference external images reliably due to email client restrictions. Embedding images as Base64 Data URIs ensures they always render, regardless of the recipient\'s email client or network situation.' },
-                { t: '✅ CSS background images', d: 'You can embed small background textures, patterns, or decorative SVGs directly in your CSS using the url("data:image/svg+xml;base64,...") syntax, reducing the number of external files your stylesheet depends on.' },
-                { t: '❌ Large photographs', d: 'A 1 MB JPEG becomes 1.37 MB as Base64. For large images, the size overhead is significant, and modern HTTP/2 handles parallel requests efficiently anyway. Use external image URLs for large photos.' },
-                { t: '❌ Frequently changing images', d: 'If an image changes often, you lose the ability for the browser to cache it separately. An external image URL can be cached and reused across many pages; a Base64-embedded image is re-sent with every HTML page load.' },
-              ].map(({ t, d }) => (
-                <div key={t} className="p-4 border border-slate-100 dark:border-slate-700 rounded-xl">
-                  <p className="font-semibold text-slate-900 dark:text-white text-sm mb-1.5">{t}</p>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{d}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Understanding the Base64 Data URI Format</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              A Base64 Data URI is a specific string format defined by RFC 2397. It always follows this structure:
+            <p>
+              <strong>We never upload your images to our servers.</strong> There are no backend databases, no temporary storage folders, and absolutely no data tracking. The moment you close the tab, your data is gone forever. This makes the tool perfectly compliant with strict corporate data handling policies.
             </p>
-            <pre className="bg-slate-900 text-slate-200 text-xs font-mono p-4 rounded-xl mb-4 overflow-x-auto">{`data:[mediatype];base64,[encoded-data]`}</pre>
-            <div className="space-y-3">
-              {[
-                { part: 'data:', desc: 'The URI scheme identifier. This tells the browser (or any parser) that what follows is inline data rather than an external resource URL.' },
-                { part: '[mediatype]', desc: 'The MIME type of the data. Common values: image/png, image/jpeg, image/webp, image/gif, image/svg+xml. This tells the browser how to interpret and render the data.' },
-                { part: ';base64,', desc: 'Indicates that the data is Base64-encoded. The comma separates the metadata from the actual data payload.' },
-                { part: '[encoded-data]', desc: 'The Base64-encoded binary content of the image. Base64 uses 64 ASCII characters (A–Z, a–z, 0–9, +, /) to represent arbitrary binary data in a text-safe format.' },
-              ].map(({ part, desc }) => (
-                <div key={part} className="flex gap-3 p-3 border border-slate-100 dark:border-slate-700 rounded-xl">
-                  <code className="text-xs font-mono text-violet-600 dark:text-violet-400 font-bold flex-shrink-0 mt-0.5 whitespace-nowrap">{part}</code>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{desc}</p>
-                </div>
-              ))}
-            </div>
           </section>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'Is this Base64 converter free?', a: 'Yes, 100% free with no usage limits. Everything runs in your browser — no images are sent to any server. Your files stay completely private on your device.' },
-                { q: 'What image formats can I convert to Base64?', a: 'You can upload JPG, JPEG, PNG, GIF, WebP, SVG, BMP, and any other format your browser supports reading via the FileReader API. The output is always a complete Data URI with the correct MIME type included.' },
-                { q: 'What does the WebP option do?', a: 'When enabled, the tool draws your uploaded image onto a hidden HTML5 Canvas element and re-encodes it in WebP format before generating the Base64 string. WebP typically produces file sizes 25–35% smaller than PNG or JPEG at equivalent visual quality, giving you a shorter Base64 string to embed.' },
-                { q: 'Does Base64 encoding make my images larger?', a: 'Yes, by about 33%. Base64 encodes every 3 bytes of binary data as 4 ASCII characters — a 33% size increase. This is the trade-off for being able to embed binary data in text-based formats like HTML and CSS. For large images, this overhead may outweigh the benefit of saving an HTTP request.' },
-                { q: 'Can I use a Base64 Data URI in CSS?', a: 'Yes. Use it in the url() function: background-image: url("data:image/png;base64,..."). This works in all modern browsers for background images, border images, and any other CSS property that accepts a URL.' },
-                { q: 'How do I use a Base64 string in a React or Next.js project?', a: 'You can set the src prop of an img component directly to the Data URI string: <img src="data:image/png;base64,..." alt="embedded" />. You can also store it in a constant and import it into your components, or use it as a placeholder while an external image loads (blur placeholder pattern).' },
-                { q: 'Why does my Base64 string not decode to a valid image?', a: 'The most common cause is a truncated or malformed string. A complete Base64 image Data URI includes the "data:image/...;base64," prefix followed by the full encoded data. If you copied just the raw Base64 data without the prefix, add the appropriate data: header. The string should not contain spaces or line breaks.' },
-                { q: 'Is Base64 encoding the same as encryption?', a: 'No. Base64 is an encoding scheme, not encryption. Base64-encoded data can be decoded by anyone instantly — there is no key or password. Do not use Base64 to secure sensitive data. Use it only to transport or embed binary data in text contexts.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none">
-                    <span>{q}</span>
-                    <span className="text-slate-400 dark:text-slate-500 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                </details>
-              ))}
-            </div>
+          <section>
+            <h2>Features That Set This Converter Apart</h2>
+            <ul>
+              <li><strong>On-the-Fly WebP Compression:</strong> Most converters just encode what you give them. We allow you to convert heavy PNGs or JPGs to WebP first, making your Base64 strings significantly shorter.</li>
+              <li><strong>Two-Way Processing:</strong> Seamlessly switch between encoding files and decoding long strings back into visual previews.</li>
+              <li><strong>Syntax Helpers:</strong> Get instant, copy-paste ready code snippets for HTML <code>&lt;img&gt;</code> tags, CSS <code>background-image</code>, and JavaScript.</li>
+              <li><strong>Instant Size Feedback:</strong> See exactly how large your Base64 string will be compared to the original binary file.</li>
+            </ul>
           </section>
+
+          <section>
+            <h2>Technical Specifications</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Specification</th>
+                  <th>Detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Supported Image Formats</td>
+                  <td>PNG, JPG/JPEG, GIF, WebP, SVG, BMP</td>
+                </tr>
+                <tr>
+                  <td>Maximum File Size</td>
+                  <td>10 MB (Browser memory limited)</td>
+                </tr>
+                <tr>
+                  <td>Base64 Overhead</td>
+                  <td>~33% size increase over binary</td>
+                </tr>
+                <tr>
+                  <td>Processing Environment</td>
+                  <td>Client-side (Local Browser)</td>
+                </tr>
+                <tr>
+                  <td>Output Format</td>
+                  <td>RFC 2397 compliant Data URI</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section>
+            <h2>Frequently Asked Questions</h2>
+            
+            <h3>Is this Base64 Data URI Converter free?</h3>
+            <p>Yes, it is completely free to use. There are no daily limits, no paywalls, and no account registrations required.</p>
+
+            <h3>Why should I convert images to Base64?</h3>
+            <p>Embedding Base64 Data URIs reduces the number of HTTP requests your browser makes. It is highly effective for small icons, CSS background textures, or HTML email templates where external image loading is often blocked.</p>
+
+            <h3>Does Base64 encoding make my file size smaller?</h3>
+            <p>No, it actually makes the file size about 33% larger because it uses 4 ASCII characters to represent every 3 bytes of binary data. This is why we included the WebP optimization feature — compressing the image before encoding helps offset this size penalty.</p>
+
+            <h3>Why won't my Base64 string decode properly?</h3>
+            <p>A valid Data URI must include the media type prefix. If you only paste the raw Base64 string without <code>data:image/png;base64,</code> (or similar) at the beginning, the browser won't know how to render it. Ensure you are copying the complete URI.</p>
+          </section>
+
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "Base64 Data URI Converter",
+                "url": "https://omniwebkit.com/tools/base64-data-uri-converter",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "All",
+                "description": "A free Base64 Data URI converter that encodes images to text strings and decodes text back to images, completely client-side.",
+                "author": {
+                  "@type": "Organization",
+                  "name": "Lazydesigners",
+                  "url": "https://lazydesigners.com"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0.00",
+                  "priceCurrency": "USD"
+                }
+              })
+            }}
+          />
         </div>
       </div>
     </div>

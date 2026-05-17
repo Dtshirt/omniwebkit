@@ -271,119 +271,92 @@ export default function ImageToBase64() {
                 )}
 
                 {/* ── SEO Content ── */}
-                <div className="mt-12 space-y-5">
-
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Image to Base64 Converter — Convert Any Image to a Base64 Data URL Instantly</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            Base64 is a way of encoding binary data — like an image file — into a string of printable ASCII characters. This is useful in many web development and programming scenarios where you need to embed image data directly into code, rather than linking to a separate file. The OmniWebKit Image to Base64 converter does this in your browser, instantly, without any server upload or file size limit.
+                <div className="mt-12 prose-premium">
+                    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8 mb-6">
+                        <h2>About the Tool: Your Local Image to Base64 Converter</h2>
+                        <p>
+                            If you build websites, write emails, or work with APIs, you know that managing tiny image files can be a real headache. That is where our <strong>image to Base64 converter</strong> steps in. Instead of linking to external files on a server, this tool turns your pictures directly into text. 
                         </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            Upload any image (PNG, JPG, WebP, GIF, SVG, BMP), and the tool immediately produces four ready-to-use output formats: the full Data URL (with MIME type prefix), the raw Base64 string, a CSS <code className="text-xs bg-slate-100 dark:bg-slate-700 px-1 py-0.5 rounded font-mono">background-image</code> declaration, and an HTML <code className="text-xs bg-slate-100 dark:bg-slate-700 px-1 py-0.5 rounded font-mono">&lt;img&gt;</code> tag with the Base64 value embedded. Copy any format with one click.
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            The tool also works in reverse: switch to "Base64 → Image" mode, paste any Base64 string or Data URL, and the tool decodes it back into a visible image preview that you can save as a file. This is useful for debugging email templates, API responses, or any system that stores images as Base64 strings.
+                        <p>
+                            It takes your standard image formats and instantly turns them into a raw Base64 string or a complete Data URL. We built it for speed. It runs completely inside your browser, meaning you get instant results without waiting for uploads.
                         </p>
                     </div>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">What is Base64 Encoding?</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            Base64 is an encoding scheme that converts binary data into a text format. Computers store images as binary data — sequences of 1s and 0s — which cannot be reliably transmitted through all text-based protocols. Base64 solves this by mapping every 3 bytes of binary data to 4 printable ASCII characters using a fixed alphabet of 64 characters (A–Z, a–z, 0–9, +, /, and sometimes =).
+                    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8 mb-6">
+                        <h2>How to Use This Tool</h2>
+                        <p>We designed this page to stay out of your way. Here is exactly how to encode your images in just a few clicks:</p>
+                        <ul>
+                            <li><strong>Drop your file:</strong> Drag any photo onto the upload box, or click to pick a file.</li>
+                            <li><strong>Pick your format:</strong> The tool instantly creates your Data URL, raw Base64 string, CSS background rule, and HTML img tag.</li>
+                            <li><strong>Copy and paste:</strong> Click the copy button next to the format you need. Paste it straight into your code.</li>
+                        </ul>
+                        <p>And what if you need to go backwards? Just switch to the "Base64 → Image" mode. Paste your long text string in the box, and you'll get your original picture back immediately.</p>
+                    </div>
+
+                    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8 mb-6">
+                        <h2>Privacy & Security Anchor</h2>
+                        <p>
+                            Here's the thing — we do not want your files. This converter runs 100% locally on your own machine. 
                         </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            The resulting string can be safely included in HTML attributes, CSS style rules, JSON objects, XML documents, email bodies, and any other text-based format — without worrying about character encoding, binary corruption during transfer, or file path dependencies.
+                        <p>
+                            When you drop an image onto the page, your browser's internal engine does all the math. Your photos never leave your computer. There are no server uploads, no temporary storage bins, and absolutely zero risk of your private graphics being intercepted by someone else. You get total privacy by default.
                         </p>
-                        <div className={`p-4 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl mb-4`}>
-                            <p className="text-xs font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-1.5"><Info className="w-3.5 h-3.5 text-violet-500" />Base64 Size Penalty</p>
-                            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                Base64 encoding increases file size by approximately 33%. A 100 KB image becomes roughly 133 KB as a Base64 string. This is the trade-off for embedding the image directly in text. For large images used repeatedly across a website, external files (referenced by URL) are more efficient. Base64 is best used for small images — icons, logos, data URIs — where the HTTP request overhead would be higher than the 33% size penalty.
-                            </p>
-                        </div>
                     </div>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">When to Use Base64 for Images — Real-World Use Cases</h2>
-                        <div className="space-y-3">
-                            {[
-                                {
-                                    title: 'Email Templates and Newsletters',
-                                    body: 'Email clients like Gmail, Outlook, and Apple Mail are notorious for blocking externally hosted images. Many corporate email servers strip image links for security reasons. Embedding images as Base64 Data URLs directly in the email HTML ensures the image is always displayed, regardless of whether the recipient\'s server allows external requests. This is especially useful for logos, headers, and signature images in HTML email templates.'
-                                },
-                                {
-                                    title: 'CSS Inline Icons and Small UI Graphics',
-                                    body: 'Small icons and decorative graphics can be embedded directly in a CSS file as Base64 Data URLs using the background-image property. This eliminates separate HTTP requests for icon files. For website critical path assets — like a loading spinner or a small logo that appears on every page — embedding as Base64 can improve page load time by removing one or more round-trip server requests, especially for HTTP/1.1 connections.'
-                                },
-                                {
-                                    title: 'Single-File HTML Documents',
-                                    body: 'Sometimes you need to send a complete, self-contained HTML file that includes all assets — no external files, no server. This is common for documentation, reports, offline tools, and quick prototypes. Embedding images as Base64 Data URLs means the entire web page, including all images, is contained in a single .html file that works locally in any browser without any internet connection.'
-                                },
-                                {
-                                    title: 'API Payloads and JSON Data',
-                                    body: 'REST APIs and JSON-based data formats cannot contain raw binary data. When an API needs to accept or return image data — for example, a document scanning API or an AI image generation endpoint — Base64 is the standard way to transmit image data in a JSON body. Many APIs (including Google\'s Vision API and OpenAI\'s image APIs) accept images as Base64-encoded strings in their request payloads.'
-                                },
-                                {
-                                    title: 'Database Storage',
-                                    body: 'Some database schemas store image data as text strings rather than binary BLOBs. This is common in NoSQL databases like MongoDB (when images are stored in document fields) and in SQLite applications. Base64 encoding allows image binary data to be stored safely in VARCHAR or TEXT columns.'
-                                },
-                                {
-                                    title: 'Canvas and Dynamic Image Generation',
-                                    body: 'When working with the HTML5 Canvas API, the toDataURL() method returns a Base64-encoded PNG or JPEG string representing the current canvas state. You will also encounter Base64 strings when working with image capture via the getUserMedia API, when processing images with JavaScript libraries, or when passing image data between Web Workers.'
-                                },
-                            ].map(({ title, body }) => (
-                                <details key={title} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-bold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                                        <span>{title}</span>
-                                        <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{body}</div>
-                                </details>
-                            ))}
-                        </div>
+                    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8 mb-6">
+                        <h2>Features & Specs</h2>
+                        <p>What makes this tool actually useful for developers?</p>
+                        <ul>
+                            <li><strong>Broad format support:</strong> Drop in PNG, JPG, WebP, GIF, SVG, or BMP files without a problem.</li>
+                            <li><strong>Four instant outputs:</strong> Grab the exact code snippet you need, so you do not have to format strings by hand.</li>
+                            <li><strong>Reverse decoding:</strong> Decode any Base64 string back into a viewable, downloadable picture.</li>
+                            <li><strong>Live size tracking:</strong> See exactly how much larger your encoded string is compared to the original file.</li>
+                        </ul>
                     </div>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Base64 Output Formats Explained</h2>
-                        <div className="space-y-4">
-                            {[
-                                { fmt: 'Data URL', code: 'data:image/png;base64,iVBORw0KGgo...', body: 'The complete Data URL includes the MIME type prefix (data:image/png;base64, or data:image/jpeg;base64, etc.). This is the most complete and portable format. You can use it directly as the src attribute value in an HTML <img> tag, as a CSS background-image value, or wherever a URL is expected. The MIME type tells the browser what kind of binary data follows.' },
-                                { fmt: 'Raw Base64 String', code: 'iVBORw0KGgo...', body: 'The raw Base64 string is the encoded data without the data: prefix. Use this format when you are passing the image to an API that expects raw Base64 (not a Data URL), when constructing your own data URI in code, or when storing in a database field that handles its own type metadata.' },
-                                { fmt: 'CSS background-image', code: 'background-image: url("data:image/png;base64,...");', body: 'Ready to paste directly into a CSS rule. Copy this output and paste it into your stylesheet — the image is embedded without any separate file. This is the standard way to embed icons and small graphics directly in CSS. Works in all modern browsers.' },
-                                { fmt: 'HTML <img> tag', code: '<img src="data:image/png;base64,..." alt="image" />', body: 'A complete, ready-to-use HTML image element with the Base64 Data URL as the src. Copy and paste this directly into any HTML file. The image will render in any browser that supports Data URLs (all modern browsers, and most legacy ones too).' },
-                            ].map(({ fmt, code, body }) => (
-                                <div key={fmt} className="p-5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <h3 className="font-bold text-slate-900 dark:text-white text-sm mb-1">{fmt}</h3>
-                                    <code className="block text-[10px] font-mono text-violet-600 dark:text-violet-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 mb-2 overflow-x-auto whitespace-nowrap">{code}</code>
-                                    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{body}</p>
-                                </div>
-                            ))}
-                        </div>
+                    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8 mb-6">
+                        <h2>Technical Breakdown: Why Use Base64?</h2>
+                        <p>
+                            Computers naturally read images as binary data — streams of 1s and 0s. But many text-based systems, like JSON APIs or older email clients, break if you try to shove raw binary data through them. 
+                        </p>
+                        <p>
+                            Base64 fixes this issue. It translates every 3 bytes of your image into 4 standard text characters. This lets you safely embed images anywhere that accepts plain text. 
+                        </p>
+                        <p>
+                            But there's a catch. Because it adds extra text characters to do this translation, your file size grows by about 33%. That means you should only use this method for tiny assets like interface icons or CSS background patterns. For large hero photos, stick to standard file hosting so your web pages stay fast.
+                        </p>
                     </div>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {[
-                                { q: 'Is my image uploaded to a server?', a: 'No. All encoding and decoding runs entirely in your browser using the FileReader API and JavaScript. Your images never leave your device and are never stored anywhere.' },
-                                { q: 'What image formats can I convert to Base64?', a: 'You can upload PNG, JPG, GIF, SVG, WebP, and BMP images. The output Data URL will include the correct MIME type for each format (e.g. data:image/png;base64,... or data:image/jpeg;base64,...).' },
-                                { q: 'Why is the Base64 string so much longer than the original file?', a: 'Base64 encoding increases file size by approximately 33% because it maps every 3 bytes of binary data to 4 ASCII characters. A 100 KB image produces roughly a 133 KB Base64 string.' },
-                                { q: 'Can I use the Base64 output directly in an HTML file?', a: 'Yes. Use the "HTML <img> tag" output format — it generates a complete <img> element with the Base64 Data URL as the src. Copy and paste it into any HTML file. No external files are needed.' },
-                                { q: 'Can I decode a Base64 string back to an image?', a: 'Yes. Switch to "Base64 → Image" mode, paste your Base64 string (with or without the data:image/ prefix), and click Decode. The image is displayed as a preview and can be downloaded as a file.' },
-                                { q: 'What is a Data URL?', a: 'A Data URL (also called a data URI) is a URL scheme that allows embedding small files directly in web pages as inline data rather than as external file references. Image data URLs have the format: data:[mime-type];base64,[base64-data].' },
-                                { q: 'Should I use Base64 for large images on my website?', a: 'No. Base64 encoding increases file size by 33% and is not cached separately by the browser. For large images used on websites, external file references (with proper caching headers) are significantly more efficient. Use Base64 only for small assets like icons, favicons, and email template images.' },
-                                { q: 'What does the "Raw Base64" format mean vs the full Data URL?', a: 'The Data URL includes the MIME type prefix (data:image/png;base64,). The Raw Base64 is only the encoded data string without the prefix. Some APIs and databases expect the raw string without the prefix — use the Raw Base64 format in those cases.' },
-                            ].map(({ q, a }) => (
-                                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                                        <span>{q}</span>
-                                        <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                                </details>
-                            ))}
-                        </div>
+                    <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8 mb-6">
+                        <h2>Frequently Asked Questions</h2>
+                        <details className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden mb-3">
+                            <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-bold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
+                                <span>Does converting an image to Base64 lower its quality?</span>
+                                <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
+                            </summary>
+                            <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">
+                                Not at all. Base64 simply changes how the data is written down. It doesn't compress or alter the actual picture. When you decode the string later, you get the exact same quality you started with.
+                            </div>
+                        </details>
+                        <details className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden mb-3">
+                            <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-bold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
+                                <span>Why shouldn't I encode all my website images this way?</span>
+                                <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
+                            </summary>
+                            <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">
+                                Encoding makes the file about 33% bigger. Plus, browsers cannot cache Base64 text the way they cache normal image files. If you encode large photos, your web page will load much slower.
+                            </div>
+                        </details>
+                        <details className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden mb-3">
+                            <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-bold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
+                                <span>Can I put the CSS output straight into my stylesheet?</span>
+                                <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
+                            </summary>
+                            <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">
+                                Yes. We format the CSS output as a complete background-image rule. Just copy it and paste it directly into your CSS file. It works perfectly in all modern browsers.
+                            </div>
+                        </details>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -12,11 +12,17 @@ export const metadata = {
 
 const schemas = [
   {
-    '@context': 'https://schema.org', '@type': 'WebApplication',
+    '@context': 'https://schema.org', '@type': 'SoftwareApplication',
     name: 'Convert PDF to PDF/A', url: 'https://omniwebkit.com/tools/pdf-to-pdfa',
     description: 'Free online tool to convert PDF documents to the ISO-standardized PDF/A format for long-term preservation.',
     applicationCategory: 'ProductivityApplication', operatingSystem: 'Any',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: {
+        '@type': 'Organization',
+        name: 'Lazydesigners',
+        url: 'https://github.com/Dtshirt/omniwebkit',
+        sameAs: 'https://github.com/Dtshirt/omniwebkit'
+    },
   },
   {
     '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to Convert a PDF to PDF/A',

@@ -142,6 +142,79 @@ export default function DebtPayoffCalculator() {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
   };
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Debt Payoff Calculator",
+        "description": "Calculate the fastest way to become debt-free. Compare Avalanche vs Snowball methods and see how extra payments save you money.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Lazydesigners",
+          "url": "https://github.com/Dtshirt/omniwebkit"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to use the Debt Payoff Calculator",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Enter your debts",
+            "text": "Input the current balance, interest rate, and minimum payment for each of your debts."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Add extra payments",
+            "text": "Include any extra money you can pay each month to speed up your payoff."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Choose a strategy",
+            "text": "Select either the Avalanche method to save the most interest, or the Snowball method for quick mental wins."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the fastest way to pay off debt?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The fastest way is the Avalanche method. You pay minimums on everything, then put all your extra cash toward the debt with the highest interest rate."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the Snowball method?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "With the Snowball method, you focus your extra payments on the debt with the smallest balance first. This gives you quick wins to keep you motivated."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does an extra payment really make a difference?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Even an extra $50 a month can shave years off your payoff date and save you thousands in compound interest."
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-4 sm:p-8 font-sans">
       <div className="max-w-6xl mx-auto">
@@ -425,46 +498,99 @@ export default function DebtPayoffCalculator() {
           </div>
         </div>
 
-        {/* SEO Educational Content */}
-        <div className="mt-16 max-w-4xl space-y-8">
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">How to Use the Debt Payoff Calculator</h2>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-              Getting out of debt requires a clear strategy. Our free online Debt Payoff Calculator helps you map out exactly when you will become debt-free and how much interest you will pay along the way. By inputting your credit cards, student loans, and personal loans, the calculator builds a customized amortization schedule.
-            </p>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-              The power of this tool lies in the "Extra Payment" field. By adding even a small amount—like $50 or $100 extra per month—you can see exactly how many months (or years) it shaves off your payoff date, and thousands of dollars saved in compound interest.
-            </p>
+        {/* ── SEO Section ── */}
+        <div className="prose-premium" style={{ marginTop: 64 }}>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+
+          <h1>Debt Payoff Calculator: Find Your Fastest Way Out</h1>
+          
+          <h2>About the Tool</h2>
+          <p>
+            Credit card interest is designed to keep you paying forever. If you only make the minimum payment, a simple $5,000 balance can take decades to clear.
+          </p>
+          <p>
+            The <strong>Debt Payoff Calculator</strong> helps you build a real escape plan. Instead of guessing when you will be debt-free, this tool does the math for you. It compares the two most popular payment strategies—Avalanche and Snowball—and shows you exactly how much time and interest you save by adding extra payments to your monthly budget.
+          </p>
+
+          <h2>How to Use the Calculator</h2>
+          <p>
+            You don't need to be a math genius to build a payoff plan. Just follow these steps:
+          </p>
+          <ol>
+            <li><strong>Enter your debts:</strong> Type in the name, remaining balance, interest rate, and minimum payment for each loan or credit card.</li>
+            <li><strong>Add extra cash:</strong> If you have an extra $50 or $100 to spare each month, enter it in the "Monthly Extra Payment" box.</li>
+            <li><strong>Pick a strategy:</strong> Click "Avalanche" to attack high interest rates first, or "Snowball" to clear small balances fast.</li>
+            <li><strong>See your results:</strong> Scroll down to see your exact debt-free date and total interest saved.</li>
+          </ol>
+
+          <h2>Privacy & Security</h2>
+          <p>
+            Here is the thing — your money is your business.
+          </p>
+          <p>
+            This calculator runs entirely in your web browser. When you type in your credit card balances or loan amounts, that data never leaves your computer. We do not store your numbers, we do not require you to make an account, and we certainly don't share your financial information with banks or lenders.
+          </p>
+
+          <h2>Features</h2>
+          <p>
+            Getting out of debt requires a clear view of the finish line. Here is how this tool helps you get there:
+          </p>
+          <ul>
+            <li><strong>Strategy Comparison:</strong> Switch between Avalanche and Snowball methods instantly to see which path fits your mindset and budget.</li>
+            <li><strong>Live Chart Updates:</strong> Watch your projected balances drop on the chart as you test different extra payment amounts.</li>
+            <li><strong>Rollover Math:</strong> When you finish paying off one debt, the tool automatically rolls that payment into the next debt, showing the true power of momentum.</li>
+            <li><strong>Unlimited Debts:</strong> Add as many credit cards, student loans, or personal loans as you need to build a complete picture.</li>
+          </ul>
+
+          <h2>Technical Specifications</h2>
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Calculation Engine</strong></td>
+                  <td>Compound interest monthly amortization</td>
+                </tr>
+                <tr>
+                  <td><strong>Processing Type</strong></td>
+                  <td>100% Client-side (Browser)</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Storage</strong></td>
+                  <td>None (Stateless)</td>
+                </tr>
+                <tr>
+                  <td><strong>Max Payoff Length</strong></td>
+                  <td>60 years (Infinite loop protection)</td>
+                </tr>
+                <tr>
+                  <td><strong>Rollover Support</strong></td>
+                  <td>Automatic payment compounding</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Avalanche vs. Snowball Method</h2>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-              When paying off multiple debts, personal finance experts generally recommend one of two strategies:
-            </p>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-indigo-50 dark:bg-indigo-900/20 p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800">
-                <h3 className="text-lg font-bold text-indigo-800 dark:text-indigo-300 mb-2">The Avalanche Method</h3>
-                <p className="text-indigo-700/80 dark:text-indigo-200/80 text-sm leading-relaxed">
-                  <strong>How it works:</strong> You pay minimums on everything, and put all extra cash towards the debt with the <strong>highest interest rate</strong> first.
-                </p>
-                <p className="text-indigo-700/80 dark:text-indigo-200/80 text-sm leading-relaxed mt-2">
-                  <strong>Why use it:</strong> This is mathematically the fastest way to get out of debt and saves you the most money on interest overall.
-                </p>
-              </div>
-              
-              <div className="bg-emerald-50 dark:bg-emerald-900/20 p-5 rounded-2xl border border-emerald-100 dark:border-emerald-800">
-                <h3 className="text-lg font-bold text-emerald-800 dark:text-emerald-300 mb-2">The Snowball Method</h3>
-                <p className="text-emerald-700/80 dark:text-emerald-200/80 text-sm leading-relaxed">
-                  <strong>How it works:</strong> You pay minimums on everything, and put all extra cash towards the debt with the <strong>smallest balance</strong> first.
-                </p>
-                <p className="text-emerald-700/80 dark:text-emerald-200/80 text-sm leading-relaxed mt-2">
-                  <strong>Why use it:</strong> It provides quick psychological "wins" by eliminating entire accounts rapidly, which keeps you highly motivated.
-                </p>
-              </div>
-            </div>
-          </div>
+          <h2>FAQ</h2>
+          <h3>What is the fastest way to pay off debt?</h3>
+          <p>
+            The fastest method is the Avalanche strategy. You pay the minimums on everything, then put every extra dollar toward the debt with the highest interest rate. This stops the bank from charging you heavy fees and saves you the most money overall.
+          </p>
+
+          <h3>What is the Snowball method?</h3>
+          <p>
+            With the Snowball method, you focus your extra cash on the debt with the smallest total balance first. While it might cost a little more in interest over time, getting quick wins by clearing out small accounts keeps you highly motivated to finish the journey.
+          </p>
+
+          <h3>Does a small extra payment really matter?</h3>
+          <p>
+            Yes. Because interest compounds over time, adding just an extra $50 a month to your payments can shave years off your debt-free date and save you thousands of dollars.
+          </p>
         </div>
 
       </div>

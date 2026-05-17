@@ -1,26 +1,46 @@
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
-import SEOAnalyzerClient from './SEOAnalyzerClient';
+import SeoAnalyzerClient from './SeoAnalyzerClient';
+
+export const metadata = {
+  title: 'Website SEO Analyzer - Audit On-Page SEO & Meta Tags',
+  description: 'Instantly audit any webpage for critical SEO metrics, meta tags, and headings, or upload a CSV to scan thousands of URLs automatically.',
+};
 
 export default function SEOAnalyzerPage() {
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Website SEO Analyzer",
+    "description": "Instantly audit any webpage for critical SEO metrics, meta tags, and headings, or upload a CSV to scan thousands of URLs automatically.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "url": "https://omniwebkit.com/tools/seo-analyzer",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Lazydesigners",
+      "url": "https://github.com/Dtshirt/omniwebkit"
+    }
+  };
+
   return (
     <div className="w-full">
-      <div className="mb-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+      <div className="pt-6 px-6 max-w-5xl mx-auto">
         <Breadcrumbs 
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'Tools', href: '/tools' },
-            { label: 'SEO Analyzer', href: '/tools/seo-analyzer' },
+            { name: 'SEO Analyzer', href: '/tools/seo-analyzer' },
           ]} 
         />
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mt-4 mb-2">
-          Full-Stack SEO Analyzer
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          Analyze any website for technical SEO issues, meta tags, heading structure, links, and more.
-        </p>
       </div>
-
-      <SEOAnalyzerClient />
+      <SeoAnalyzerClient />
     </div>
   );
 }

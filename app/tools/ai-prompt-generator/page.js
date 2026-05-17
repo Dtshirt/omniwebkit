@@ -163,191 +163,190 @@ const CATEGORIES = {
 
 // ─── Prompt generators ───────────────────────────────
 const generators = {
-  'content-writing': (d) => `Act as an expert content writer and SEO specialist. Create a comprehensive ${d.contentType || 'blog post'} about "${d.topic}" for ${d.audience || 'the target audience'}.
+  'content-writing': (d) => `You are an elite, top-tier copywriter and content strategist. Your task is to write a highly engaging, masterclass-level ${d.contentType || 'blog post'} about "${d.topic}".
 
-REQUIREMENTS:
-- Tone: ${d.tone || 'Professional'}
-- Word count: ${d.wordCount || '800–1200 words'}
-- Target audience: ${d.audience}
-${d.keywords ? `- Keywords to include naturally: ${d.keywords}` : ''}
+### TARGET AUDIENCE PROFILE
+${d.audience || 'The general public. Adapt the reading level and terminology appropriately.'}
 
-STRUCTURE:
-${d.structure?.length ? d.structure.map(s => `- ${s}`).join('\n') : `- Engaging hook in the introduction
-- Clear main points with H2/H3 subheadings
-- Supporting examples and evidence
-- Actionable conclusion with call-to-action`}
+### TONE & VOICE
+Adopt a ${d.tone || 'Professional'} tone. The writing must be authoritative yet accessible.
+- Avoid generic filler, fluff, and robotic AI-sounding phrases.
+- Use active voice, strong verbs, and compelling transitions.
 
-GUIDELINES:
-- Write in a ${(d.tone || 'professional').toLowerCase()} tone
-- Use clear, easy-to-read language (Grade 8 readability)
-- Include relevant statistics and examples
-- Optimise for readability with short paragraphs and bullet points
-- End with a compelling call-to-action
+### CONTENT PARAMETERS
+- Target Word Count: ${d.wordCount || '800–1200 words'}
+- Required Keywords: ${d.keywords ? d.keywords : 'Identify and naturally integrate semantic keywords.'}
 
-Produce high-quality, original content that genuinely helps readers while being well-optimised for search engines.`,
+### STRUCTURAL REQUIREMENTS
+${d.structure?.length ? d.structure.map(s => `- ${s}`).join('\n') : `- Craft a magnetic headline that promises value.
+- Hook the reader in the first 3 sentences using a surprising fact, question, or bold statement.
+- Use clear H2 and H3 subheadings for scannability.
+- Provide actionable, non-obvious insights.
+- Conclude with a strong, definitive Call to Action (CTA).`}
 
-  'seo': (d) => `Act as an SEO expert and content strategist. Create fully SEO-optimised content targeting the primary keyword "${d.primaryKeyword}".
+### EXECUTION INSTRUCTIONS
+1. Before writing, briefly outline the core narrative arc and value proposition.
+2. Draft the content using formatting (bullet points, bold text, short paragraphs) to maximize readability.
+3. Include at least two real-world analogies or examples to illustrate complex points.
+4. Ensure the Flesch reading ease score aligns with an 8th-grade reading level.
 
-SEO REQUIREMENTS:
-- Primary keyword: ${d.primaryKeyword}
-- Search intent: ${d.searchIntent}
-- Competition level: ${d.competition || 'Medium'}
-${d.secondaryKeywords ? `- Secondary / LSI keywords: ${d.secondaryKeywords}` : ''}
-${d.location ? `- Geographic target: ${d.location}` : ''}
+Deliver the final content formatted in clean Markdown.`,
 
-CONTENT TYPE: ${d.contentType}
+  'seo': (d) => `You are an advanced Technical SEO Architect and Entity-Based Content Strategist. Your objective is to engineer a piece of content that will definitively outrank the top 3 Google results for the keyword: "${d.primaryKeyword}".
 
-SEO CHECKLIST:
-- Use primary keyword in title, first 100 words, and naturally throughout
-- Include semantic and LSI keywords
-- Write compelling meta title (50–60 characters)
-- Write engaging meta description (150–160 characters)
-- Use proper heading hierarchy (H1 → H2 → H3)
-- Add FAQ section if relevant
-- Suggest internal and external link opportunities
-- Optimise for featured snippets and People Also Ask
+### CORE SEO PARAMETERS
+- Primary Keyword: ${d.primaryKeyword}
+- Search Intent: ${d.searchIntent}
+- Competition Level: ${d.competition || 'Medium'}
+- Target Location: ${d.location || 'Global'}
+${d.secondaryKeywords ? `- LSI / NLP Keywords to weave naturally: ${d.secondaryKeywords}` : ''}
 
-Create content that ranks well while providing genuine value to users searching for "${d.primaryKeyword}".`,
+### CONTENT TYPE
+${d.contentType}
+
+### OPTIMIZATION DIRECTIVES
+1. **Title Tag & Meta Description:** Provide an optimized Title Tag (under 60 chars) and Meta Description (under 160 chars) designed to maximize CTR.
+2. **Semantic HTML Structure:** Use strict H1, H2, and H3 hierarchy. The H1 must contain the exact primary keyword.
+3. **Information Gain:** Do not just regurgitate existing web content. Introduce unique perspectives, data synthesis, or expert insights that satisfy the "${d.searchIntent}" intent better than current SERP leaders.
+4. **Readability & UX:** Write in short paragraphs (max 3-4 sentences). Use bulleted lists, bolded text for emphasis, and tables if comparing data.
+5. **Entity Connections:** Establish clear relationships between the primary topic and related sub-entities.
+6. **FAQ Schema:** Generate 3-5 highly relevant FAQs based on "People Also Ask" queries, formatted in JSON-LD FAQPage Schema at the end.
+
+Execute the content completely in Markdown. Prioritize user value over keyword stuffing.`,
 
   'social-media': (d) => {
-    const guide = { LinkedIn: 'professional, thought leadership, industry insights', 'Twitter/X': 'concise, punchy, hashtag-driven', Facebook: 'community, storytelling, visual', Instagram: 'visual-first, aesthetic, hashtag-rich', Reddit: 'authentic, community-specific, value-first', YouTube: 'educational, clear value proposition', TikTok: 'trendy, creative, viral-potential', Pinterest: 'inspirational, DIY, seasonal' };
-    return `Create an engaging ${d.platform} post about "${d.topic}" with a ${(d.postType || '').toLowerCase()} approach.
+    const guide = { LinkedIn: 'professional, narrative-driven, thought-provoking', 'Twitter/X': 'punchy, high-impact, thread-style', Facebook: 'community-focused, relatable, story-driven', Instagram: 'visually-descriptive, aesthetic, engaging', Reddit: 'highly authentic, jargon-fluent, strictly anti-marketing', YouTube: 'high-energy, educational, visually-cued', TikTok: 'trend-aware, fast-paced, highly engaging', Pinterest: 'inspiring, actionable, visually-oriented' };
+    return `You are a viral Social Media Strategist and Growth Hacker. Your task is to craft a highly engaging, algorithm-optimized ${d.platform} post.
 
-PLATFORM: ${d.platform}
-STYLE: ${guide[d.platform] || 'Authentic and engaging'}
-POST TYPE: ${d.postType}
-TOPIC: ${d.topic}
-LENGTH: ${d.length || 'Medium (one paragraph)'}
-CALL-TO-ACTION: ${d.cta || 'Engage with audience'}
-${d.hashtags ? '- Include 5–10 relevant hashtags' : ''}
-${d.emoji ? '- Use appropriate emojis to boost engagement' : ''}
+### CONTEXT & PARAMETERS
+- Platform: ${d.platform} (Style: ${guide[d.platform] || 'Authentic and engaging'})
+- Core Topic: ${d.topic}
+- Post Type: ${d.postType}
+- Length: ${d.length || 'Medium (one paragraph)'}
+- Goal / Call-to-Action: ${d.cta || 'Drive deep engagement'}
 
-ENGAGEMENT TIPS:
-- Hook readers in the very first line
-- Provide clear value or entertainment
-- Ask a question to spark comments
-- Match platform best practices
+### PSYCHOLOGICAL HOOK
+Start with a "Scroll-Stopper." The first sentence must create an information gap, challenge a common belief, or trigger an immediate emotional response.
 
-Create a post that stops the scroll and drives real engagement.`;
+### BODY COPY STRUCTURE
+- Use spacing and line breaks strategically to increase read time.
+- Write in a conversational, human tone. Avoid corporate jargon.
+- Deliver the value or story quickly and effectively.
+${d.emoji ? '- Integrate emojis strategically to guide the eye, but do not overuse them.' : '- Do not use emojis. Keep it text-only.'}
+
+### OPTIMIZATION
+${d.hashtags ? `- Provide 5-7 highly targeted hashtags relevant to the ${d.platform} algorithm.` : ''}
+- Include 3 variations of the hook so I can A/B test.
+
+Deliver the exact post text ready to be copy-pasted.`;
   },
 
-  'image-generation': (d) => `Generate a detailed AI image prompt:
+  'image-generation': (d) => `You are a Master Prompt Engineer for advanced diffusion models (Midjourney v6, DALL-E 3, Stable Diffusion). Construct a highly optimized, technically precise image generation prompt.
 
-SUBJECT: ${d.subject}
-ART STYLE: ${d.style}
-${d.mood ? `MOOD: ${d.mood}` : ''}
-${d.lighting ? `LIGHTING: ${d.lighting}` : ''}
-${d.composition ? `COMPOSITION: ${d.composition}` : ''}
-${d.colors ? `COLORS: ${d.colors}` : ''}
-${d.quality?.length ? `QUALITY: ${d.quality.join(', ')}` : ''}
+### SUBJECT & SCENE
+Main Subject: ${d.subject}
+${d.composition ? `Camera/Composition: ${d.composition}` : ''}
 
-OPTIMISED PROMPT:
-"${d.subject}, ${(d.style || 'digital art').toLowerCase()}, ${(d.mood || 'beautiful').toLowerCase()} atmosphere, ${(d.lighting || 'professional lighting').toLowerCase()}, ${(d.composition || 'well composed').toLowerCase()}${d.colors ? ', ' + d.colors.toLowerCase() : ''}, ${d.quality?.join(', ').toLowerCase() || 'highly detailed, high quality'}"
+### ARTISTIC DIRECTION
+Style/Medium: ${d.style}
+${d.mood ? `Atmosphere/Mood: ${d.mood}` : ''}
+${d.colors ? `Color Grading: ${d.colors}` : ''}
 
-NEGATIVE PROMPT:
-"blurry, low quality, distorted, deformed, bad anatomy, poorly drawn, watermark, text, signature"
+### TECHNICAL SPECIFICATIONS
+${d.lighting ? `Lighting Setup: ${d.lighting}` : ''}
+${d.quality?.length ? `Rendering/Quality Tags: ${d.quality.join(', ')}` : ''}
 
-TIPS:
-- Add specific artistic references for stronger style guidance
-- For photorealistic results, include camera model and lens specs
-- Be specific about textures, materials, and background details`,
+### OUTPUT REQUIREMENTS
+Provide the response in the following format:
 
-  'code-generation': (d) => `Act as a senior ${d.language} developer. Create ${(d.projectType || 'application code').toLowerCase()} that meets these requirements:
+1. **Midjourney/Stable Diffusion Prompt:** A comma-separated, highly descriptive text block starting with the main subject, followed by environment, lighting, camera specs (e.g., 35mm lens, f/1.8, Unreal Engine 5 render, volumetric lighting), and styling.
+2. **DALL-E 3 Prompt:** A natural language, paragraph-style description of the exact same scene.
+3. **Negative Prompt:** A comprehensive list of elements to exclude (e.g., ugly, deformed, text, watermark, bad anatomy, bad proportions, CGI, plastic).
 
-LANGUAGE: ${d.language}
-PROJECT TYPE: ${d.projectType}
-COMPLEXITY: ${d.complexity || 'Intermediate'}
-${d.framework ? `FRAMEWORK / LIBRARIES: ${d.framework}` : ''}
+Ensure the vocabulary is highly specific to photography, art history, and 3D rendering.`,
 
-FUNCTIONALITY:
-${d.functionality}
+  'code-generation': (d) => `You are a Distinguished Staff Engineer / Architect with deep expertise in ${d.language}. Your task is to write production-grade, highly optimized ${d.projectType || 'code'}.
 
-${d.requirements ? `SPECIAL REQUIREMENTS:\n${d.requirements}` : ''}
+### REQUIREMENTS & CONTEXT
+- Language: ${d.language}
+- Target Framework/Environment: ${d.framework || 'Standard / Vanilla'}
+- Complexity Level: ${d.complexity || 'Intermediate'}
+- Core Functionality: ${d.functionality}
+${d.requirements ? `- Specific Constraints: ${d.requirements}` : ''}
 
-CODE STANDARDS:
-- Write clean, readable, well-structured code
-- Follow ${d.language} naming conventions
-- Include proper error handling and input validation
-${d.comments ? '- Add inline comments explaining non-obvious logic' : ''}
-${d.bestPractices ? '- Apply SOLID principles and appropriate design patterns' : ''}
-- Consider performance and security implications
-- Make code modular and easy to extend
+### EXECUTION PROTOCOL (THINK STEP-BY-STEP)
+1. **Architecture & Design:** Briefly outline your approach, the design patterns you are choosing, and why.
+2. **Time & Space Complexity:** State the Big-O notation for your solution if applicable.
+3. **Implementation:** Write the complete, robust code.
+   - Use strict typing where the language supports it.
+   - Implement comprehensive error handling and edge-case management.
+   ${d.bestPractices ? '- Adhere strictly to SOLID principles and clean code heuristics.' : ''}
+   ${d.comments ? '- Include descriptive JSDoc/docstrings and inline comments explaining the *why* (not just the *what*).' : ''}
+4. **Testing & Usage:** Provide a clear, real-world example of how to instantiate and test this code.
 
-OUTPUT:
-- Complete, working code ready to run
-- Setup / installation instructions
-- Usage examples with sample input/output
-- Brief explanation of key design decisions
-- Suggestions for future improvements`,
+Do not provide half-finished code or use placeholders like "// implement here". Provide fully functional, enterprise-ready code.`,
 
-  'business': (d) => `Act as a seasoned business consultant. Create a comprehensive ${(d.objective || 'business strategy').toLowerCase()} for a ${(d.businessType || '').toLowerCase()} in the ${d.industry} industry.
+  'business': (d) => `You are a Tier-1 Management Consultant (ex-McKinsey/Bain/BCG) and elite business strategist. Your task is to develop a robust, data-informed ${(d.objective || 'strategy')} for a ${d.businessType} in the ${d.industry} sector.
 
-CONTEXT:
-- Business type: ${d.businessType}
-- Industry: ${d.industry}
-- Target market: ${d.targetMarket}
-- Budget: ${d.budget || 'To be determined'}
-- Timeline: ${d.timeline || 'Flexible'}
-- Objective: ${d.objective}
+### BUSINESS CONTEXT
+- Target Market & ICP (Ideal Customer Profile): ${d.targetMarket}
+- Available Budget: ${d.budget || 'To be determined'}
+- Execution Timeline: ${d.timeline || 'Flexible'}
 
-DELIVERABLES:
-1. Executive Summary
-2. Market Analysis (industry overview, target segments, competitive landscape)
-3. Strategic Recommendations (goals, initiatives, roadmap, KPIs)
-4. Financial Considerations (budget allocation, ROI projections, risk assessment)
-5. Action Plan (priorities, milestones, resource requirements)
+### DELIVERABLE REQUIREMENTS
+Structure the ${d.objective} using the following advanced framework:
 
-Base all recommendations on current market trends. Include actionable, data-informed insights. Address potential challenges and mitigation strategies. Deliver professional, implementable advice.`,
+1. **Executive Summary:** The 30-second elevator pitch of the strategy.
+2. **Market & Competitive Dynamics:** A brief Porter's Five Forces or SWOT analysis tailored to this specific scenario.
+3. **Strategic Initiatives:** 3-5 high-impact, actionable steps to achieve the objective. For each, include:
+   - Rationale
+   - Required resources
+   - Expected impact
+4. **KPIs & Success Metrics:** Specific, measurable, and time-bound (SMART) metrics to track progress.
+5. **Risk Mitigation:** Identify the 2 biggest potential points of failure and how to preemptively solve them.
 
-  'creative-writing': (d) => `Act as a creative writing expert. Create an engaging ${(d.genre || 'story').toLowerCase()} about "${d.theme}".
+Format the output professionally using Markdown headers, bullet points, and bold text for maximum scannability by executives. Adopt an authoritative, analytical, and highly pragmatic tone.`,
 
-CREATIVE BRIEF:
+  'creative-writing': (d) => `You are an award-winning, critically acclaimed author known for your masterful prose and deep emotional resonance. Write a captivating ${(d.genre || 'story').toLowerCase()} exploring the theme of "${d.theme}".
+
+### NARRATIVE PARAMETERS
 - Genre: ${d.genre}
-- Theme: ${d.theme}
-- Writing style: ${d.style || 'Engaging narrative'}
-- Mood / tone: ${d.mood || 'Captivating'}
-- Length: ${d.length || 'Medium (500–2000 words)'}
-- Audience: ${d.audience || 'General audience'}
+- Tone/Atmosphere: ${d.mood || 'Immersive and captivating'}
+- Pacing/Style: ${d.style || 'Show, don\'t tell, with strong narrative drive'}
+- Target Length: ${d.length || 'Medium (500–2000 words)'}
+- Target Audience: ${d.audience || 'General audience'}
 
-GUIDELINES:
-- Open with a strong hook that grabs attention immediately
-- Develop compelling, believable characters
-- Use vivid, sensory descriptions (sight, sound, smell, touch, taste)
-- Show don't tell — let actions and dialogue reveal character
-- Build tension and maintain momentum throughout
-- Create emotional resonance with the reader
-- End with an impactful, memorable conclusion
+### WRITING DIRECTIVES
+1. **The Hook:** Start *in media res* or with a highly unusual, striking detail. Do not begin with weather or waking up.
+2. **Sensory Immersion:** Ground the reader heavily in the scene using specific, evocative sensory details (sight, sound, texture, smell).
+3. **Character Depth:** Reveal character through micro-expressions, dialogue subtext, and action rather than explicit exposition.
+4. **Prose Quality:** Vary sentence length to control rhythm. Use strong, specific verbs. Avoid adverbs where a stronger verb suffices.
+5. **The Climax/Resolution:** Deliver a conclusion that feels inevitable yet surprising, leaving a lingering emotional impact.
 
-Demonstrate mastery of the ${(d.genre || 'genre').toLowerCase()} form while telling a story that stays with the reader long after they finish.`,
+Execute the piece flawlessly, focusing on subtext and masterful pacing.`,
 
-  'video-generation': (d) => `Create a complete video production brief:
+  'video-generation': (d) => `You are an elite Video Producer and YouTube Strategist. Create a high-retention, algorithm-optimized production brief and script.
 
-VIDEO TYPE: ${d.videoType}
-DURATION: ${d.duration}
-AUDIENCE: ${d.audience}
-PLATFORM: ${d.platform || 'General / Multi-platform'}
-STYLE: ${d.style || 'Professional'}
+### VIDEO SPECIFICATIONS
+- Format: ${d.videoType}
+- Target Duration: ${d.duration}
+- Target Platform: ${d.platform || 'General / Multi-platform'}
+- Audience: ${d.audience}
+- Core Message: ${d.message}
 
-KEY MESSAGE:
-${d.message}
+### THE SCRIPT & STORYBOARD
+Provide a two-column formatted script (or structured Markdown equivalent) with "Visual/B-Roll" and "Audio/Dialogue".
 
-SCRIPT STRUCTURE:
-1. Hook (first 3–5 sec): Grab attention immediately — start with a question, bold statement, or striking visual
-2. Problem / Context: Establish why this matters to the viewer
-3. Solution / Value: Deliver the main message and supporting points
-4. Call-to-Action: One clear next step for viewers
+**Structure the video using the AVD (Attention, Value, Destination) framework:**
+1. **The Hook (0:00 - 0:05):** A highly kinetic, visually disruptive opening that immediately answers "Why should I watch this?"
+2. **The Setup (0:05 - 0:15):** Validate the viewer's problem or curiosity.
+3. **The Core Value (Body):** Deliver the content efficiently. Break it into clear, digestible chapters.
+   - Include specific visual cues (e.g., "ZOOM IN", "TEXT ON SCREEN: [Text]", "SOUND EFFECT: Whoosh").
+   - Maintain pacing; suggest a new camera angle or b-roll every 4-6 seconds to maintain audience retention.
+4. **The Payoff & CTA (Ending):** A concise, high-conversion Call to Action pointing directly to the next step.
 
-PRODUCTION NOTES:
-- Optimise aspect ratio and format for ${d.platform || 'target platform'}
-- Use brand-consistent colours, fonts, and motion style
-- Include subtitles for accessibility and muted viewing
-- Resolution: 1080p minimum; 4K preferred for YouTube
-- Thumbnail: Design for click-through with bold text overlay
-
-ENGAGEMENT:
-- Front-load the most compelling content
-- Include a clear, unmissable CTA at the end
-- Optimise title, description, and tags for platform SEO`,
+### PRODUCTION NOTES
+Include a brief list of recommended visual assets, lighting mood, and pacing notes for the editor to ensure maximum viewer retention. Tone should be ${d.style || 'engaging and professional'}.`,
 };
 
 export default function AIPromptGenerator() {

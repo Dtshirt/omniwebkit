@@ -72,12 +72,7 @@ export default function CronTesterClient() {
     }
   };
 
-  const faqs = [
-    { q: "What is a Cron Expression?", a: "A cron expression is a string comprising five or six fields separated by white space that represents a set of times, normally as a schedule to execute some routine. It's used heavily in Unix-like operating systems and task schedulers." },
-    { q: "How are the fields structured?", a: "Standard cron has 5 fields: Minute (0-59), Hour (0-23), Day of Month (1-31), Month (1-12), and Day of Week (0-6, where 0 is Sunday)." },
-    { q: "What do the special characters mean?", a: "Asterisk (*) means 'every'. Comma (,) separates values (e.g. 1,5). Hyphen (-) defines ranges (1-5). Slash (/) defines increments (*/15 means every 15 units)." },
-    { q: "Why is there a server verification option?", a: "While the browser instantly calculates the next dates based on your local timezone, your actual server might be running in UTC or another timezone. The server verification runs the exact Python `croniter` library used in production backends to ensure 100% compatibility and shows exact UTC execution times." },
-  ];
+
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24 font-sans text-slate-900">
@@ -249,26 +244,7 @@ export default function CronTesterClient() {
           </div>
         )}
 
-        {/* FAQs */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <div key={i} className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
-                <button 
-                  className="w-full text-left px-6 py-4 font-bold flex justify-between items-center text-slate-800 hover:bg-slate-50" 
-                  onClick={() => setFaqOpen(faqOpen === i ? null : i)}
-                >
-                  {faq.q}
-                  {faqOpen === i ? <ChevronUp className="w-5 h-5 text-indigo-500" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-                </button>
-                <div className={`px-6 text-slate-600 text-sm leading-relaxed transition-all duration-300 ${faqOpen === i ? "pb-6 max-h-40 opacity-100" : "max-h-0 opacity-0 py-0"}`}>
-                  {faq.a}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+
 
       </div>
     </div>

@@ -320,131 +320,90 @@ export default function ImageToPdf() {
                 </div>
 
                 {/* ── SEO Content ── */}
-                <div className="mt-12 space-y-5">
+                <div className="mt-16 prose-premium">
+                    <div className={`${cardCls} p-5 sm:p-8`}>
+                        <section>
+                            <h2>About the Tool</h2>
+                            <p>
+                                Sending ten separate photos in an email is messy. That is why we built this <strong>image to PDF converter</strong>. It takes your scattered photos, receipts, or screenshots and binds them into a single, clean document that is easy to share and print. 
+                            </p>
+                            <p>
+                                Unlike basic tools that lock you into one size, you get full control. You can pick standard document sizes like A4 or US Letter, adjust the white space around your pictures, and set exactly how the images fit on the page. Whether you need to convert JPG to PDF or combine PNGs, the result looks professional every time.
+                            </p>
+                        </section>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Online Image to PDF Converter — Combine Multiple Photos into One PDF</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            There are many situations where you need multiple images in a single PDF file. Submitting scanned documents to a government office. Sending a portfolio of photographs by email. Attaching a multi-page receipt to an expense report. Creating a photo album. Combining product images for a client presentation. Each of these tasks requires the same thing: a reliable way to turn image files into a properly formatted PDF document.
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            The OmniWebKit Image to PDF converter does this directly in your browser. Upload any number of images — JPG, PNG, WebP, GIF, or BMP — arrange them in the order you want, choose your page size and orientation, and generate the PDF with a single click. Each image becomes one page in the PDF. The entire process runs client-side using jsPDF — your files never leave your device.
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            Five page sizes are supported: A4, A3, A5, US Letter, and US Legal. Both portrait and landscape orientations are available. A margin slider controls the whitespace around each image. The quality slider lets you balance between PDF file size and image clarity. Three image fit modes give you control over how each image fills the page.
-                        </p>
-                    </div>
+                        <section className="mt-8">
+                            <h2>How to Use</h2>
+                            <p>
+                                You do not need an account or complicated software to build your document. Follow these steps:
+                            </p>
+                            <ol>
+                                <li><strong>Drop your files:</strong> Click the upload box or drag your images right onto the screen. You can add as many as you need.</li>
+                                <li><strong>Set the order:</strong> Use the little arrow buttons under each picture to arrange them exactly how you want them to appear.</li>
+                                <li><strong>Tweak the layout:</strong> Pick your page size and orientation from the side menu. If you want a full-page photo, set the margin to zero.</li>
+                                <li><strong>Save your file:</strong> Hit the generate button. The tool builds your document instantly and saves it to your computer.</li>
+                            </ol>
+                        </section>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">PDF Page Settings — What Each Option Does</h2>
+                        <section className="mt-8">
+                            <h2>Privacy & Security Anchor</h2>
+                            <p>
+                                When you convert personal documents like tax forms or family photos, privacy is a big deal. 
+                            </p>
+                            <p>
+                                Here is the truth: your files never leave your computer. This converter runs completely inside your web browser using local processing. We do not upload your images to our servers, we do not store your PDFs, and no one else can see your files. It is 100% private and secure.
+                            </p>
+                        </section>
 
-                        <div className="space-y-5">
-                            <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-3 text-base">Page Size</h3>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-sm border-collapse">
-                                        <thead>
-                                            <tr className="bg-slate-100 dark:bg-slate-900/50">
-                                                {['Size', 'Dimensions', 'Best used for'].map(h => (
-                                                    <th key={h} className="text-left px-4 py-3 text-xs font-bold text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700">{h}</th>
-                                                ))}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {[
-                                                ['A4', '210 × 297 mm', 'Standard international document size — used in most countries for business and personal documents'],
-                                                ['Letter', '216 × 279 mm', 'Standard US document size — used in the United States and Canada for business and professional documents'],
-                                                ['A3', '297 × 420 mm', 'Large format — twice the size of A4. Use for posters, technical drawings, architectural plans, or large photo prints'],
-                                                ['A5', '148 × 210 mm', 'Half the size of A4. Use for booklets, handouts, pocket-sized documents, or compact photo books'],
-                                                ['Legal', '216 × 356 mm', 'US legal format — taller than Letter. Used for legal contracts, government forms, and official documents in the United States'],
-                                            ].map(([size, dims, use], i) => (
-                                                <tr key={size} className={i % 2 === 0 ? 'bg-white dark:bg-slate-800/30' : 'bg-slate-50 dark:bg-slate-900/20'}>
-                                                    <td className="px-4 py-2.5 text-sky-600 dark:text-sky-400 font-bold text-xs border border-slate-200 dark:border-slate-700">{size}</td>
-                                                    <td className="px-4 py-2.5 text-slate-900 dark:text-white font-mono text-xs border border-slate-200 dark:border-slate-700">{dims}</td>
-                                                    <td className="px-4 py-2.5 text-slate-500 dark:text-slate-400 text-xs border border-slate-200 dark:border-slate-700">{use}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <section className="mt-8">
+                            <h2>Features</h2>
+                            <p>
+                                Here is what makes this the best way to merge your images:
+                            </p>
+                            <ul>
+                                <li><strong>Local Processing:</strong> Zero wait times for uploading or downloading because the work happens right on your device.</li>
+                                <li><strong>Format Support:</strong> Throw in JPG, PNG, WebP, GIF, or BMP files. It handles them all smoothly.</li>
+                                <li><strong>Page Controls:</strong> Standard formats like A4, A3, and US Letter are built-in for perfect printing.</li>
+                                <li><strong>Smart Fit Modes:</strong> Choose to stretch images, keep their original size, or fit them perfectly without cutting off any edges.</li>
+                                <li><strong>Quality Slider:</strong> Compress the final file for email or keep it high-res for printing.</li>
+                            </ul>
+                        </section>
 
-                            <div>
-                                <h3 className="font-bold text-slate-900 dark:text-white mb-3 text-base">Image Fit Modes</h3>
-                                <div className="grid sm:grid-cols-3 gap-3">
-                                    {[
-                                        { mode: 'Fit', icon: '⬜', body: 'The image is scaled proportionally to fit within the printable area (page minus margins). The aspect ratio is always preserved — you never get a distorted image. If the image does not fill the entire page, the remaining space is left white. This is the best choice for most use cases.' },
-                                        { mode: 'Stretch', icon: '⬛', body: 'The image is stretched to exactly fill the printable area regardless of its original proportions. This fills the entire page with the image but may distort it — people and objects could look wider or taller than they actually are. Use this for backgrounds or textures where distortion is acceptable.' },
-                                        { mode: 'Original', icon: '◼', body: 'The image is placed at its actual pixel size, centred on the page. If the image is larger than the page, it is scaled down to fit. If it is smaller, it is left at its original size and centred on the page with white space around it. Use this when preserving exact pixel dimensions is important.' },
-                                    ].map(({ mode, icon, body }) => (
-                                        <div key={mode} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                            <div className="text-2xl mb-2">{icon}</div>
-                                            <h4 className="font-bold text-slate-900 dark:text-white text-sm mb-1.5">{mode}</h4>
-                                            <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{body}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                        <section className="mt-8">
+                            <h2>Technical Specs</h2>
+                            <p>
+                                For the tech-curious, here is how we handle your files without a server. 
+                            </p>
+                            <p>
+                                The tool uses the powerful jsPDF library to generate documents client-side. When you drag an image in, we read it as a Data URL and process it directly in your browser's memory. Regardless of whether you upload a PNG or WebP, the engine converts it to an optimized JPEG internally to keep the final PDF size low. You control the compression ratio through the quality slider.
+                            </p>
+                        </section>
 
-                            <div className="grid sm:grid-cols-2 gap-4">
-                                <div className="p-5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <h4 className="font-bold text-slate-900 dark:text-white text-sm mb-2">Page Margin</h4>
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">The margin controls whitespace between the image and the edge of the page. A margin of 20 pt (the default) is standard for most documents. Set it to 0 for a full-bleed layout where the image extends to the very edge of the page. Larger margins work well for framed photo prints or documents that will be bound.</p>
-                                </div>
-                                <div className="p-5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <h4 className="font-bold text-slate-900 dark:text-white text-sm mb-2">Image Quality</h4>
-                                    <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">The quality slider controls JPEG compression applied to images when embedding them in the PDF. Higher quality means clearer images and a larger PDF file. Lower quality means smaller PDF file with more visible compression artefacts. At 90% (the default), quality is excellent and the file is significantly smaller than at 100%. For documents where file size matters, try 70–80%.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <section className="mt-8">
+                            <h2>Frequently Asked Questions</h2>
+                            
+                            <h3>Is there a limit on how many images I can convert?</h3>
+                            <p>
+                                There is no hard block. Each image becomes one page. Most modern browsers can handle batches of 20 to 50 photos easily. If you load hundreds of huge files, your browser might slow down.
+                            </p>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Common Uses for Image to PDF Conversion</h2>
-                        <div className="space-y-3">
-                            {[
-                                { title: 'Sharing Scanned Documents', body: 'When you scan physical documents with your phone camera or a scanner, you typically get a series of image files — one per page. Converting them to a PDF creates a single, properly ordered multi-page document that can be emailed, uploaded to a government portal, or stored in a document management system. PDF is the universally accepted format for official document submission.' },
-                                { title: 'Creating Photo Portfolios', body: 'Photographers, graphic designers, architects, and other creative professionals often need to share work samples as a PDF portfolio. Compiling your best images into a PDF lets you send a single file that maintains the exact layout and quality you intended, without relying on the recipient having the same apps to view individual image files.' },
-                                { title: 'Expense Reports and Receipts', body: 'Many corporate expense reporting systems require receipts to be submitted as a single PDF. If you have photographed multiple receipts, converting them to a multi-page PDF is the most efficient way to submit them in one file attachment rather than individually.' },
-                                { title: 'Photo Books and Albums', body: 'Creating a PDF photo book is a quick way to compile photos from an event — a wedding, a holiday, a family gathering — into a shareable document. Order the images, choose landscape orientation for a cinematic feel, and generate the PDF in seconds.' },
-                                { title: 'Legal and Healthcare Documents', body: 'Patient intake forms, consent forms, insurance claims, and legal evidence often need to be submitted as PDFs. If you have photographed these documents, converting them to PDF is the standard method for professional document submission.' },
-                            ].map(({ title, body }) => (
-                                <details key={title} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-bold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                                        <span>{title}</span>
-                                        <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{body}</div>
-                                </details>
-                            ))}
-                        </div>
-                    </div>
+                            <h3>Will this crop or cut off my pictures?</h3>
+                            <p>
+                                Not unless you want it to. If you leave the fit mode on "Fit", the tool shrinks the image to fit the page perfectly without losing any edges. It adds white space where needed.
+                            </p>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {[
-                                { q: 'Are my images uploaded to a server?', a: 'No. All PDF generation runs entirely in your browser using the jsPDF library. Your images are never uploaded to any server and never leave your device.' },
-                                { q: 'How many images can I add to one PDF?', a: 'There is no hard limit. Each image becomes one page in the PDF. The number of images you can process is limited by your browser\'s available memory. In practice, you can typically combine 20–50 standard photos without any issues.' },
-                                { q: 'Can I change the order of pages before generating the PDF?', a: 'Yes. Use the ← and → arrow buttons below each image thumbnail to move it left or right in the page order. The page number badge (p1, p2, p3...) updates in real time to show the new order.' },
-                                { q: 'What page size should I use for photos?', a: 'A4 (portrait) is the international standard and works well for most photos. If you are in the United States, use Letter. For wide/landscape photographs, select Landscape orientation. A3 is good for large format prints and detailed images.' },
-                                { q: 'Which image fit mode should I use?', a: '"Fit" is the best choice for most situations — it preserves the correct proportions with no distortion and adds white space where needed. Use "Stretch" only for backgrounds and textures. Use "Original" when exact pixel dimensions matter more than the layout.' },
-                                { q: 'What is the maximum image resolution the PDF supports?', a: 'There is no set resolution limit. Images are embedded at their original resolution, scaled to fit the page dimensions. For print-quality PDFs, use high-resolution source images (300 DPI or higher) and set quality to 90–100%.' },
-                                { q: 'Can I add images in different formats (JPG and PNG in the same PDF)?', a: 'Yes. You can mix JPG, PNG, WebP, GIF, and BMP images in a single PDF. Each image is converted to JPEG internally when embedding in the PDF.' },
-                                { q: 'Will the PDF be searchable?', a: 'No. The PDF generated by this tool contains images only — it is not a text-searchable PDF. For searchable PDFs from scanned documents, you would need an OCR (Optical Character Recognition) tool in addition to this converter.' },
-                            ].map(({ q, a }) => (
-                                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                                        <span>{q}</span>
-                                        <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                                </details>
-                            ))}
-                        </div>
+                            <h3>Can I use this on my phone?</h3>
+                            <p>
+                                Yes. The tool works great on mobile devices. You can select photos straight from your camera roll and save the final document directly to your files app.
+                            </p>
+
+                            <h3>Does it cost anything?</h3>
+                            <p>
+                                No. It is entirely free to use. We do not charge fees, we do not ask for a credit card, and we never watermark your documents.
+                            </p>
+                        </section>
                     </div>
                 </div>
-            </div>
         </div>
     );
 }

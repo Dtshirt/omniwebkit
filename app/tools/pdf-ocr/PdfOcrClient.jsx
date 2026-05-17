@@ -264,7 +264,7 @@ export default function PdfOcrClient() {
             <Type className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white mb-3 tracking-tight">
-            PDF OCR Tool
+            PDF OCR: Extract Text from Scanned PDFs
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
             Extract text from scanned PDFs safely. Small files process locally in your browser for absolute privacy; heavy files use our powerful server queue.

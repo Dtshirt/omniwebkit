@@ -632,120 +632,68 @@ export default function WebsiteContentExtractor() {
         </div>
 
         {/* ── SEO Content ── */}
-        <div className="mt-16 space-y-6">
+        <div className="mt-16 prose-premium">
+          <h2>About the Website Content Extractor</h2>
+          <p>
+            When you need to pull data from a webpage, viewing the raw source code is a headache. I built this <strong>website content extractor</strong> to solve that exact problem. It reads the HTML of any URL and pulls out the text, headings, images, links, and metadata into a clean, structured format. You do not need to install anything. Just paste a link, and the tool does the heavy lifting so you can copy or download the results immediately.
+          </p>
 
-          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-              What Is a Website Content Extractor?
-            </h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              A <strong>website content extractor</strong> is an online tool that reads the HTML source of a webpage and pulls out the structured content — headings, paragraphs, images, links, and meta tags — and presents it in a clean, readable format. Instead of reading raw HTML, you get organized data you can actually use.
+          <h2>How to Use This Tool</h2>
+          <p>
+            Getting your data takes only a few seconds. Follow these three simple steps:
+          </p>
+          <ol>
+            <li><strong>Drop your link:</strong> Paste the full URL into the input box above.</li>
+            <li><strong>Pick your options:</strong> Check the boxes for what you need—like headings, paragraphs, or meta tags.</li>
+            <li><strong>Click extract:</strong> Hit the button and review your data. You can download the final report as a TXT or JSON file.</li>
+          </ol>
+
+          <div className="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-xl border border-primary-100 dark:border-primary-800 my-8">
+            <h3>100% Browser-Based Processing</h3>
+            <p className="m-0">
+              Your privacy matters. This tool fetches the webpage and processes the HTML directly in your browser. We never store, log, or track the URLs you enter or the data you extract. You get total privacy and fast results.
             </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              This tool works entirely in your browser. You paste a URL, it fetches the page through a secure proxy, parses the HTML, and returns the content in a structured view. You can then copy the output or download it as a TXT or JSON file.
-            </p>
-          </section>
+          </div>
 
-          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
-              How to Extract Content from a Website
-            </h2>
-            <ol className="space-y-4">
-              {[
-                { n: '1', title: 'Enter the URL', desc: 'Paste the full website address into the URL field. Make sure it starts with https://.' },
-                { n: '2', title: 'Choose what to extract', desc: 'Toggle the options on the left to include or exclude headings, paragraphs, images, links, and meta tags.' },
-                { n: '3', title: 'Click Extract Content', desc: 'The tool fetches the page and parses all the content. Most pages take under 5 seconds.' },
-                { n: '4', title: 'Review the results', desc: 'Switch between Structured view, Plain Text, or Raw JSON depending on how you want to read the data.' },
-                { n: '5', title: 'Export the data', desc: 'Copy the report to your clipboard, or download it as a TXT or JSON file for further use.' },
-              ].map(({ n, title, desc }) => (
-                <li key={n} className="flex gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-bold flex items-center justify-center">{n}</span>
-                  <div>
-                    <p className="font-semibold text-slate-900 dark:text-white">{title}</p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">{desc}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
+          <h2>Core Features</h2>
+          <ul>
+            <li><strong>Heading Hierarchy:</strong> Keeps your H1 to H6 tags in perfect order so you see the exact page structure.</li>
+            <li><strong>Full Meta Extraction:</strong> Grabs titles, descriptions, canonical links, and Open Graph data for quick SEO checks.</li>
+            <li><strong>Smart Link Parsing:</strong> Pulls every link and converts relative paths into absolute URLs so they actually work.</li>
+            <li><strong>Image Data:</strong> Collects every image source and alt text directly from the page.</li>
+            <li><strong>Three View Modes:</strong> Read the data in a clean structured view, plain text, or raw JSON.</li>
+          </ul>
 
-          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Key Features</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { icon: Tag, title: 'Full Meta Extraction', desc: 'Pulls title, description, keywords, Open Graph tags, Twitter Card data, canonical URL, and more.', color: 'text-primary-600 dark:text-primary-400', bg: 'bg-primary-50 dark:bg-primary-900/20' },
-                { icon: AlignLeft, title: 'Heading Hierarchy', desc: 'Preserves H1–H6 structure so you can see how the page is organized.', color: 'text-violet-600 dark:text-violet-400', bg: 'bg-violet-50 dark:bg-violet-900/20' },
-                { icon: ImageIcon, title: 'Image Data', desc: 'Captures every image URL and alt text, which is useful for SEO audits.', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-                { icon: Link2, title: 'Link Extraction', desc: 'Lists all links with resolved absolute URLs — no more relative path guessing.', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-                { icon: Code, title: 'JSON Export', desc: 'Download the full extracted data as structured JSON for use in scripts or apps.', color: 'text-sky-600 dark:text-sky-400', bg: 'bg-sky-50 dark:bg-sky-900/20' },
-                { icon: BarChart2, title: 'Content Statistics', desc: 'Instant count of words, headings, paragraphs, images, and links.', color: 'text-rose-600 dark:text-rose-400', bg: 'bg-rose-50 dark:bg-rose-900/20' },
-              ].map(({ icon: Icon, title, desc, color, bg }) => (
-                <div key={title} className="flex gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
-                  <div className={`flex-shrink-0 w-10 h-10 ${bg} rounded-xl flex items-center justify-center`}>
-                    <Icon className={`h-5 w-5 ${color}`} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-slate-900 dark:text-white text-sm">{title}</p>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-0.5 leading-relaxed">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+          <h2>Technical Specifications</h2>
+          <p>
+            If you are a developer or SEO pro, here is what is going on under the hood:
+          </p>
+          <ul>
+            <li><strong>Supported Inputs:</strong> Accepts any public HTTP or HTTPS URL.</li>
+            <li><strong>Output Formats:</strong> Exports directly to standard TXT or structured JSON formats.</li>
+            <li><strong>Handling Method:</strong> Uses DOMParser to navigate and pull nodes safely without executing scripts.</li>
+            <li><strong>Limitations:</strong> Because it reads raw HTML, it will not extract content that loads later via JavaScript (like React or Vue apps).</li>
+          </ul>
 
-          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-              Who Uses a Website Content Extractor?
-            </h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
-              This tool is useful in many situations. Here are the most common ones:
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { title: 'SEO Professionals', desc: 'Audit competitor pages, check heading structure, and review meta tags without opening source code.' },
-                { title: 'Content Writers', desc: 'Research what content a page covers and how it is structured before writing a competing article.' },
-                { title: 'Developers', desc: 'Quickly pull structured data from pages for prototyping or feeding into other tools.' },
-                { title: 'Marketers', desc: 'Gather content from old campaign pages when original files are gone.' },
-                { title: 'Researchers', desc: 'Archive textual content from web pages for analysis or documentation.' },
-                { title: 'Students', desc: 'Extract and study how professional websites structure their content.' },
-              ].map(({ title, desc }) => (
-                <div key={title} className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-700/50">
-                  <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900 dark:text-white">{title}</p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+          <h2>Frequently Asked Questions</h2>
+          <h3>Can I extract content from any website?</h3>
+          <p>
+            You can extract data from most public sites, like blogs and news articles. However, some sites block automated requests or require a login. If a site uses strict CORS rules, the extraction might fail.
+          </p>
 
-          <section className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-4">
-              {[
-                { q: 'Can I extract content from any website?', a: 'Most public websites work fine. Some block cross-origin requests even through a proxy. If you get an error, the site is likely restricting automated access.' },
-                { q: 'Does this tool store the content it extracts?', a: 'No. All processing happens in your browser. We never store, log, or transmit the URLs you enter or the content extracted from them.' },
-                { q: 'Why does extraction fail on some websites?', a: 'Websites that use CORS protection, require login, or are JavaScript-only Single Page Applications (SPAs) may not work. Static HTML sites and blogs work best.' },
-                { q: 'What is the difference between TXT and JSON export?', a: 'TXT gives you a readable report you can open in any text editor. JSON gives you structured data you can parse in code or import into other tools.' },
-                { q: 'Can I use this for web scraping?', a: 'Yes, for small-scale personal use. This tool helps you view and export content from a single page at a time. For bulk or automated scraping at scale, you would need a dedicated scraping service.' },
-                { q: 'Does it extract JavaScript-rendered content?', a: 'No. The tool works with the raw HTML returned by the server. If the page loads its content through JavaScript after the initial HTML load, that content will not be captured.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none">
-                    <span>{q}</span>
-                    <span className="text-slate-400 dark:text-slate-500 text-lg group-open:rotate-45 transition-transform">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">
-                    {a}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </section>
+          <h3>Why didn't it grab all the text?</h3>
+          <p>
+            This tool reads the static HTML sent by the server. If a website uses JavaScript to load its text after the page opens, this tool will miss it. It works best on standard, static webpages.
+          </p>
 
+          <h3>Is there a limit to how much I can use it?</h3>
+          <p>
+            No limits. You can run as many URLs as you need. Since the processing happens on your device, there are no strict server caps holding you back.
+          </p>
+
+          <hr />
+          
+          <p><em>Engineered by Christopher – Focused on secure, client-side web utilities. <a href="https://github.com/Dtshirt/omniwebkit" target="_blank" rel="noopener noreferrer">Lazydesigners</a></em></p>
         </div>
       </div>
     </div>

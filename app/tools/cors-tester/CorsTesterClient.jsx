@@ -121,12 +121,6 @@ export default function CorsTesterClient() {
   const overall = result?.analysis?.overall;
   const overallMeta = overall ? OVERALL_META[overall] : null;
 
-  const faqs = [
-    { q: "Why can't this be tested in the browser?", a: "CORS is enforced by the browser — it blocks you from reading headers of cross-origin responses that fail. Our server acts as a neutral third party, sending the same preflight request your browser would, and can freely read all response headers to give you a complete diagnosis." },
-    { q: "What is a preflight request?", a: "A preflight is an HTTP OPTIONS request automatically sent by browsers before non-simple cross-origin requests (e.g. POST with JSON body). The server must respond with appropriate Access-Control-Allow-* headers, otherwise the browser blocks the actual request." },
-    { q: "What does 'Vary: Origin' do?", a: "The Vary: Origin header tells CDNs and proxy caches that the response varies per Origin. Without it, a proxy might cache a response for origin A and serve it to origin B — causing incorrect CORS failures even when your server is correctly configured." },
-    { q: "Can I use wildcard (*) with credentials?", a: "No. Browsers require that Access-Control-Allow-Origin be set to a specific origin (not *) when Access-Control-Allow-Credentials is true. Mixing wildcard with credentials will always fail in browsers." },
-  ];
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24 font-sans text-slate-900">
@@ -286,38 +280,7 @@ export default function CorsTesterClient() {
           </div>
         )}
 
-        {/* How it works */}
-        {!result && !loading && (
-          <div className="grid md:grid-cols-3 gap-6 mt-4 mb-12">
-            {[
-              { icon: <Globe className="w-6 h-6" />, title: "Preflight Analysis", desc: "Sends a real OPTIONS request with your Origin and inspects all Access-Control-* response headers to determine what's allowed.", bg: "bg-violet-100 text-violet-600" },
-              { icon: <Shield className="w-6 h-6" />, title: "6 CORS Checks", desc: "Validates Origin allowance, method permissions, header allowlist, credentials support, Max-Age caching, and Vary header correctness.", bg: "bg-purple-100 text-purple-600" },
-              { icon: <Zap className="w-6 h-6" />, title: "Fix Guidance", desc: "Every failed or warning check includes a plain-English explanation of exactly what to add to your server's CORS configuration.", bg: "bg-indigo-100 text-indigo-600" },
-            ].map((f, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <div className={`w-12 h-12 ${f.bg} rounded-xl flex items-center justify-center mb-4`}>{f.icon}</div>
-                <h3 className="text-base font-bold mb-2">{f.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        )}
 
-        {/* FAQs */}
-        <section className="mt-8">
-          <h2 className="text-2xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <div key={i} className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                <button className="w-full text-left px-6 py-4 font-bold flex justify-between items-center text-slate-800 hover:bg-slate-50" onClick={() => setFaqOpen(faqOpen === i ? null : i)}>
-                  {faq.q}
-                  {faqOpen === i ? <ChevronUp className="w-5 h-5 text-violet-500" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-                </button>
-                <div className={`px-6 text-slate-600 text-sm leading-relaxed transition-all duration-300 ${faqOpen === i ? "pb-6 max-h-48 opacity-100" : "max-h-0 opacity-0 py-0"}`}>{faq.a}</div>
-              </div>
-            ))}
-          </div>
-        </section>
       </div>
     </div>
   );

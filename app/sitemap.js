@@ -115,6 +115,8 @@ const TOOL_DATES = {
     'heic-to-jpg': '2026-05-12',
     'heic-to-png': '2026-05-12',
     'heic-image-viewer': '2026-05-12',
+    'est-to-pst-converter': '2026-05-17',
+    'pst-to-est-converter': '2026-05-17',
 };
 
 // Unique category slugs from tools-data

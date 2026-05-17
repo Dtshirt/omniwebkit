@@ -197,9 +197,9 @@ export default function PDFMerger() {
           {/* Sidebar */}
           <div>
             <div className={`${cardCls} p-5 lg:sticky lg:top-24`}>
-              <h2 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide mb-4 flex items-center gap-1.5">
+              <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide mb-4 flex items-center gap-1.5">
                 <Settings className="w-3.5 h-3.5 text-violet-500" />Merge Settings
-              </h2>
+              </p>
 
               <div className="space-y-3 mb-5">
                 {[
@@ -353,88 +353,78 @@ export default function PDFMerger() {
           </div>
         </div>
 
-                {/* ── SEO Content ── */}
-        <div className="mt-16 space-y-12">
+        {/* ── SEO Content ── */}
+        <div className="prose-premium">
+          <h2>About the Tool: Free Online PDF Merger</h2>
+          <p>
+            Managing digital paperwork is often a scattered mess. You get an invoice here, a signed contract there, and a spec sheet in another thread. Sending a disorganized string of five separate PDF attachments looks unprofessional. It invites confusion.
+          </p>
+          <p>
+            The <strong>OmniWebKit PDF Merger</strong> is the easiest way to solve document fragmentation. This free, browser-based tool lets you combine multiple PDF files into a single document. Whether you're assembling a legal dossier, a student portfolio, or compiling tax returns, you can unify your files in seconds. I built this tool to handle the heavy lifting without making you jump through hoops or pay for bloated software.
+          </p>
 
-          {/* Introduction */}
-          <div className={`${cardCls} p-8 lg:p-12`}>
-            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">Free Online PDF Merger — Combine Multiple PDF Files Instantly</h2>
-            <div className="prose prose-slate dark:prose-invert max-w-none space-y-6">
-              <p className="text-lg leading-relaxed">
-                Managing digital paperwork is a modern nightmare. You receive an invoice in one email, a signed contract in another, and a project spec sheet from a client portal. When it's time to archive the project or forward the documents to an accounting department, sending a disorganized string of five separate PDF attachments looks unprofessional and invites confusion.
-              </p>
-              <p className="text-lg leading-relaxed">
-                The <strong>OmniWebKit PDF Merger</strong> is the ultimate solution for document consolidation. This free, browser-based utility allows you to seamlessly append, interleave, and combine multiple independent PDF files into a single, cohesive document. Whether you are assembling a legal dossier, compiling a student portfolio, or merging tax returns, you can unify your files in seconds.
-              </p>
-              <p className="text-lg leading-relaxed">
-                Security and privacy are non-negotiable when dealing with PDFs, as they frequently contain highly sensitive personally identifiable information (PII). Our PDF Merger leverages a smart Hybrid architecture. For standard files (under 100MB), the process happens 100% locally within your web browser using JavaScript libraries (like PDF-lib). For massive files that would crash your browser, the tool automatically routes your files through our secure cloud queue, generating the merged file instantly and completely wiping the data from our servers the second the download finishes.
-              </p>
-            </div>
+          <h2>Privacy &amp; Security Anchor: 100% Local Processing</h2>
+          <p>
+            Security is non-negotiable when dealing with PDFs. They frequently contain highly sensitive information.
+          </p>
+          <p>
+            Our PDF Merger runs directly in your browser. <strong>Your files never leave your device.</strong> We use modern JavaScript to process everything right in your local memory. There are zero server uploads. That means total privacy and instant merging. Once you close the tab, your data is gone forever.
+          </p>
+
+          <h2>How to Use the PDF Merger</h2>
+          <ol>
+            <li><strong>Drop your files:</strong> Drag your PDF files into the upload zone, or click to browse your computer.</li>
+            <li><strong>Set the order:</strong> Use the arrow buttons to rearrange your files. The file at the top becomes the first part of your new PDF.</li>
+            <li><strong>Merge and save:</strong> Click the "Merge PDFs" button. The tool stitches the pages together instantly. Then, click download to save your new file.</li>
+          </ol>
+
+          <h2>Features</h2>
+          <ul>
+            <li><strong>Flawless Formatting:</strong> Merging shouldn't break your documents. This engine preserves your original fonts, vector paths, embedded images, and exact page layouts.</li>
+            <li><strong>Interactive Sorting:</strong> Visualizing your document order matters. The clean interface lets you easily sort dozens of files into perfect chronological order.</li>
+            <li><strong>Lightning Fast Execution:</strong> Since you aren't waiting for a server upload, the speed is bound only by your computer. You can combine a hundred pages in milliseconds.</li>
+            <li><strong>Metadata Controls:</strong> Choose to keep the original metadata or optimize the file size for smaller downloads.</li>
+          </ul>
+
+          <h2>Technical Specifications</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr>
+                  <th className="border-b border-slate-200 dark:border-slate-700 py-2 font-bold text-slate-900 dark:text-white">Specification</th>
+                  <th className="border-b border-slate-200 dark:border-slate-700 py-2 font-bold text-slate-900 dark:text-white">Capability</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400"><strong>Processing Method</strong></td>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400">100% Client-side (Browser-based)</td>
+                </tr>
+                <tr>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400"><strong>Max File Size</strong></td>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400">Bound by local RAM (Typically 100MB+)</td>
+                </tr>
+                <tr>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400"><strong>Input Formats</strong></td>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400">Standard PDF (.pdf)</td>
+                </tr>
+                <tr>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400"><strong>Performance</strong></td>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400">Supports batch processing of 50+ files</td>
+                </tr>
+                <tr>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400"><strong>Output Quality</strong></td>
+                  <td className="border-b border-slate-200 dark:border-slate-700 py-2 text-slate-600 dark:text-slate-400">100% Lossless (Exact page copies)</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
-          {/* Step-by-Step Guide */}
-          <div className={`${cardCls} p-8 lg:p-12 bg-rose-50/50 dark:bg-rose-900/10`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">How to Merge PDF Files Safely</h2>
-            <div className="space-y-6">
-              {[
-                { step: '1', title: 'Select Your Documents', desc: 'Drag and drop your PDF files into the upload zone, or click the browse button to select files from your hard drive. You can upload as many files as you need to combine.' },
-                { step: '2', title: 'Rearrange the Order', desc: 'The order in which the files appear in the list dictates how they will be assembled. Click and drag the files using the grip handles to rearrange them. The file at the top will constitute the first pages of the new PDF.' },
-                { step: '3', title: 'Review Page Counts', desc: 'Check the metadata displayed next to each file. Ensure the page counts look correct so you know exactly how large your final, combined document will be.' },
-                { step: '4', title: 'Merge the Files', desc: 'Click the "Merge PDF" button. Our local engine will instantly extract the page streams from your individual files and weave them into a new, single PDF structure.' },
-                { step: '5', title: 'Download the Result', desc: 'Save the unified document to your device. Because the process is entirely local, the download is instantaneous, regardless of how large the files were.' }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-rose-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md shadow-rose-500/30">
-                    {item.step}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{item.title}</h3>
-                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Key Features */}
-          <div className={`${cardCls} p-8 lg:p-12`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">Enterprise-Grade PDF Features</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {[
-                { title: 'Hybrid Cloud/Local Architecture', desc: 'When you merge standard documents, our tool executes all binary parsing locally in your browser memory for maximum privacy. For files exceeding 100MB, it utilizes our secure, queue-managed backend server to prevent your browser from freezing.' },
-                { title: 'Flawless Formatting Retention', desc: 'Merging PDFs shouldn\'t break them. Our engine preserves the original fonts, vector paths, embedded images, and absolute positioning of every page, ensuring the merged file looks identical to the originals.' },
-                { title: 'Interactive Drag & Drop Interface', desc: 'Visualizing your document order is critical. Our intuitive, touch-friendly drag-and-drop interface lets you easily sort dozens of files into the exact chronological order required.' },
-                { title: 'Lightning Fast Execution', desc: 'Because you aren\'t uploading megabytes of data to a remote server, the merge process is bound only by your local CPU speed. Combine a hundred pages in a matter of milliseconds.' }
-              ].map((feature, i) => (
-                <div key={i} className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 text-rose-600 dark:text-rose-400">{feature.title}</h3>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{feature.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* FAQs */}
-          <div className={`${cardCls} p-8 lg:p-12`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'Is there a limit to how many PDFs I can merge at once?', a: 'Since the merging process happens within your local browser memory, there is no hard-coded limit. However, attempting to merge hundreds of massive files might exhaust your browser\'s RAM and cause the tab to crash. For standard documents, you can comfortably merge 50+ files without issue.' },
-                { q: 'Will merging PDFs degrade the quality of the text or images?', a: 'No. The PDF Merger performs a structural append. It does not rasterize, flatten, or compress the contents of the pages. Text remains highlightable vector text, and high-resolution images retain their original pixel density.' },
-                { q: 'Can I merge a password-protected PDF?', a: 'Currently, you cannot merge an encrypted or password-protected PDF. The browser engine must be able to read the internal binary structure to stitch the pages together. You must remove the password protection from the file before uploading it to the merger.' },
-                { q: 'Are my merged files saved anywhere?', a: 'Absolutely not. The resulting merged PDF is generated as a Blob object in your browser\'s temporary memory. Once you download the file or close the tab, the data ceases to exist entirely. We have no backend storage capability for this tool.' },
-                { q: 'Will the merged PDF be larger than the sum of the original files?', a: 'Usually, the merged file size will be roughly equal to the combined sizes of the original files. In some rare cases, if the original files share embedded resources (like the exact same font file), the merged PDF might actually be slightly smaller.' }
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800">
-                  <summary className="flex items-center justify-between cursor-pointer px-6 py-5 font-semibold text-slate-900 dark:text-white hover:text-rose-600 dark:hover:text-rose-400 transition-colors select-none">
-                    <span className="text-base pr-4">{q}</span>
-                    <span className="text-slate-400 text-2xl group-open:rotate-45 transition-transform flex-shrink-0 leading-none">+</span>
-                  </summary>
-                  <div className="px-6 pb-6 pt-2 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                </details>
-              ))}
-            </div>
-          </div>
+          <hr className="my-8 border-slate-200 dark:border-slate-700" />
+          
+          <p className="text-sm italic">
+            Engineered by Christopher at <a href="https://github.com/Dtshirt/omniwebkit" target="_blank" rel="noopener noreferrer">Lazydesigners</a> – Focused on secure, client-side web utilities.
+          </p>
         </div>
       </div>
     </div>

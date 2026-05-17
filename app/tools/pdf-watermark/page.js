@@ -12,5 +12,27 @@ export const metadata = {
 };
 
 export default function PdfWatermarkPage() {
-  return <PdfWatermarkClient />;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'PDF Watermark Tool',
+    description: 'Free online tool to add text or image watermarks to PDF files. Control opacity, position, angle, and size.',
+    url: 'https://omniwebkit.com/tools/pdf-watermark',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: {
+      '@type': 'Organization',
+      name: 'Lazydesigners',
+      url: 'https://github.com/Dtshirt/omniwebkit',
+      sameAs: 'https://github.com/Dtshirt/omniwebkit'
+    }
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <PdfWatermarkClient />
+    </>
+  );
 }

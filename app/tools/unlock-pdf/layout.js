@@ -24,10 +24,16 @@ export const metadata = {
 };
 
 const webAppSchema = {
-    '@context': 'https://schema.org', '@type': 'WebApplication',
+    '@context': 'https://schema.org', '@type': 'SoftwareApplication',
     name: 'Unlock PDF', description: 'Remove PDF password protection and restrictions online. Supports user and owner passwords. Small files processed in-browser for privacy, large files via secure server queue. Free, no watermark, no signup.',
     url: 'https://omniwebkit.com/tools/unlock-pdf', applicationCategory: 'ProductivityApplication', operatingSystem: 'Any',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: {
+        '@type': 'Organization',
+        name: 'Lazydesigners',
+        url: 'https://github.com/Dtshirt/omniwebkit',
+        sameAs: 'https://github.com/Dtshirt/omniwebkit'
+    },
     publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
     featureList: ['Remove user and owner passwords', 'Unlock print, copy, and edit restrictions', 'Client-side processing for small files', 'Secure server queue for large files', 'No watermark, no signup', 'Files auto-deleted after download'],
 };

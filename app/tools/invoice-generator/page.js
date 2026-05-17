@@ -465,101 +465,180 @@ const InvoiceGenerator = () => {
         </div>
 
         {/* ── SEO Content ── */}
-        <div className="mt-14 space-y-5">
+        <div className="mt-14 prose-premium space-y-8">
 
+          {/* 1. About the Tool */}
           <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Invoice Generator — Create Professional Invoices Online in Minutes</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Getting paid on time starts with sending a professional, clear invoice. A well-designed invoice builds trust with your clients, communicates payment terms clearly, and gives recipients all the information they need to process your payment without delays. The OmniWebKit Invoice Generator lets you create, customise, and print professional invoices directly in your browser — for free, with no account, no watermark, and no file upload to any server.
+            <h2>Free Invoice Generator — Create Professional PDF Invoices Online</h2>
+            <p>
+              Most freelancers and small business owners lose hours every month building invoices from scratch in Word or Excel — fixing alignment, recalculating totals, and hoping the PDF exports cleanly. This <strong>free invoice generator</strong> skips all of that. You fill in your details, add your line items, and hit print. The PDF is ready in under two minutes, and nothing you type is sent to any server.
             </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Fill in your company details, your client's information, add line items with quantities and rates, set a discount and tax rate if needed, and your invoice is ready to print or save as a PDF. The live preview on the right updates in real time as you type, so you always see exactly what your invoice will look like before you send it. The tool supports 12 currencies including USD, EUR, GBP, INR, AED, PKR, CAD, AUD, CHF, JPY, CNY, and SGD.
+            <p>
+              The tool handles everything a professional invoice needs: your company details, client billing address, unlimited line items with auto-calculated amounts, a percentage-based discount, a tax rate applied on the post-discount subtotal, and a live preview that updates as you type. So what you see on screen is exactly what prints.
             </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              Unlike most invoice tools, this generator is completely client-side. Nothing you type is stored, uploaded, or transmitted anywhere. Your client data and invoice amounts remain private on your device at all times.
+            <p>
+              It supports 12 currencies — USD, EUR, GBP, INR, AED, PKR, CAD, AUD, CHF, JPY, CNY, and SGD — which makes it useful whether you're billing locally or sending invoices across borders. No signup. No watermark. No monthly plan.
+            </p>
+            <p>
+              Type your company name above and you'll have a finished, professional invoice ready to send in the time it takes to make a coffee.
             </p>
           </div>
 
+          {/* 2. How to Use */}
           <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">What to Include on a Professional Invoice</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              A proper invoice is a legal document that creates a record of the transaction between you and your client. Missing information on an invoice can delay payment, cause accounting issues, or create legal complications. Here is what every invoice should include:
+            <h2>How to Use the Free Invoice Generator</h2>
+            <p>
+              The whole process takes about 90 seconds once you know what you're doing. Here's exactly how it works.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { t: 'Invoice Number', b: 'Each invoice needs a unique identifier. This makes it easy to track payments, refer back to specific invoices in communications, and organise your financial records. A simple sequential format (INV-001, INV-002) or date-based format (INV-2025-001) works well.' },
-                { t: 'Invoice & Due Date', b: 'The invoice date establishes when the bill was issued. The due date tells the client when payment is expected. Common payment terms are Net 15 (15 days), Net 30 (30 days), or Due on Receipt. Clear dates reduce late payments.' },
-                { t: 'Your Business Details', b: 'Include your full company name, address, email, and phone number. If you are VAT/GST registered, include your tax registration number. This lets clients contact you and gives them the information their accounting team needs to process the payment.' },
-                { t: 'Client\'s Details (Bill To)', b: 'The full name or company name of who you are billing, their postal address, and their email. Some businesses require a Purchase Order (PO) number — add this in the notes or description field if needed.' },
-                { t: 'Line Items', b: 'Each item or service provided should be listed separately with a description, quantity, unit rate, and line total. Itemised invoices are less likely to be disputed because the client can see exactly what they are being charged for.' },
-                { t: 'Tax & Discount', b: 'If you are charging VAT, GST, or sales tax, list it separately as a percentage and amount. Discounts should also be itemised. This makes the invoice compliant with tax law and gives clients a transparent breakdown.' },
-                { t: 'Total Amount Due', b: 'Make the total amount large and prominent. Clients should be able to see the amount they owe at a glance. Include the currency clearly — especially important for international invoices.' },
-                { t: 'Payment Notes', b: 'Tell your clients how to pay. Include your bank account details, PayPal address, or any other accepted payment method in the notes section. Clear payment instructions significantly reduce the time it takes to receive payment.' },
-              ].map(({ t, b }) => (
-                <div key={t} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                  <h3 className="font-bold text-slate-900 dark:text-white text-sm mb-1.5">{t}</h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{b}</p>
-                </div>
-              ))}
-            </div>
+            <ol>
+              <li>
+                <strong>Set the invoice basics.</strong> Enter an invoice number (the tool auto-generates one like INV-123456 to start). Set the invoice date and the due date. Choose your currency from the dropdown — 12 options available.
+              </li>
+              <li>
+                <strong>Fill in your company details.</strong> Add your company name, address, city, ZIP code, country, email, phone, and website. This is the "From" section — it shows on the invoice as your business identity. Do this once and hit New Invoice for the next one — your company details stay saved.
+              </li>
+              <li>
+                <strong>Add your client details.</strong> Enter the client's name or company name, address, and email in the Bill To section. This is who the invoice is going to.
+              </li>
+              <li>
+                <strong>Add your line items.</strong> Click Add Item for each product or service. Enter a description, quantity, and rate. The amount — quantity × rate — calculates automatically. You can add as many lines as needed and delete any row with the trash icon.
+              </li>
+              <li>
+                <strong>Set discount and tax.</strong> Enter a discount percentage if you're giving one. Then add your tax rate — the tool applies tax to the post-discount subtotal, which is the standard way. The subtotal, discount, tax, and total all update live in the preview.
+              </li>
+              <li>
+                <strong>Add notes and terms.</strong> Use the Notes field for payment instructions — bank details, PayPal link, or anything else. The Terms field is for your standard payment conditions (e.g., "Payment due within 30 days").
+              </li>
+              <li>
+                <strong>Download as PDF.</strong> Click <strong>Print / Save PDF</strong>. In the print dialog, set the destination to "Save as PDF" (on Mac or Chrome) or "Microsoft Print to PDF" (on Windows). Click Save. Done.
+              </li>
+            </ol>
+            <p>
+              Need to send another invoice right after? Hit <strong>New Invoice</strong>. Your company details stay in place — only the line items, invoice number, and dates reset.
+            </p>
           </div>
 
+          {/* 3. Privacy & Security */}
           <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Invoice Payment Terms — Which Are Best for Your Business?</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Payment terms define when you expect to be paid after sending an invoice. Choosing the right terms for your business and your clients makes a big difference to your cash flow. Here are the most common invoice payment terms:
+            <h2>Your Invoice Data Never Leaves Your Browser</h2>
+            <p>
+              Invoice data is sensitive. Client names, billing amounts, business addresses — you don't want that floating around on someone else's server. So here's the honest version of how this tool works: <strong>everything stays on your device</strong>.
             </p>
+            <p>
+              The invoice generator runs entirely in your browser using React. When you type your company name or enter a client's address, that data goes into browser memory — not to a database, not to any API, not to us. When you close the tab, it's gone.
+            </p>
+            <p>
+              The PDF you download is generated using your browser's built-in print dialog. The tool opens a print-ready version of your invoice in a new tab and calls the browser's native print function. No third-party PDF library processes your data. No file upload happens.
+            </p>
+            <p>
+              One thing worth knowing: because nothing is saved server-side, there's no auto-save either. If you refresh the page mid-invoice, you'll start over. The fix is simple — either download the PDF before you close, or keep the tab open until you're done.
+            </p>
+          </div>
+
+          {/* 4. Features */}
+          <div className={`${cardCls} p-8`}>
+            <h2>What Makes This Invoice Maker Different from Other Free Tools</h2>
+            <p>
+              Most free online invoice tools either put a watermark on your PDF, require an email signup, or charge after a few uses. This one doesn't. But beyond that, the actual feature set goes further than what most tools offer.
+            </p>
+            <ul>
+              <li>
+                <strong>Live invoice preview.</strong> The preview panel on the right updates in real time as you type. You see the exact invoice layout — your company name, client details, line items, totals — before you print. No surprises in the PDF.
+              </li>
+              <li>
+                <strong>Correct tax calculation order.</strong> Tax is applied to the post-discount subtotal — not the original total. So if your subtotal is $1,000 and you give a 10% discount, the taxable amount is $900, not $1,000. This is the legally correct way to calculate tax in most countries.
+              </li>
+              <li>
+                <strong>Unlimited line items.</strong> There's no cap. Add 1 item or 50 — the table scrolls, the totals update, and the preview adjusts. Each row auto-calculates the amount from quantity × rate.
+              </li>
+              <li>
+                <strong>12 currencies built in.</strong> USD, EUR, GBP, INR, AED, PKR, CAD, AUD, CHF, JPY, CNY, SGD — with the correct currency symbol displayed in both the form and the invoice preview. Useful for international freelancers who bill in multiple currencies.
+              </li>
+              <li>
+                <strong>New Invoice shortcut.</strong> Hit the New Invoice button and your company details stay in place while the invoice number, dates, line items, discount, and tax all reset. If you're invoicing multiple clients in a row, this saves significant time compared to starting fresh each time.
+              </li>
+              <li>
+                <strong>Auto-generated invoice number.</strong> The tool generates a unique invoice number on load using a timestamp-derived ID (INV-xxxxxx). You can edit it to match your own numbering system — sequential, date-based, or client-specific.
+              </li>
+              <li>
+                <strong>Notes and terms fields.</strong> Add bank transfer details, a PayPal link, a thank-you note, or any project reference number in the Notes section. The Terms field is for your standard payment conditions. Both appear on the printed invoice.
+              </li>
+              <li>
+                <strong>Clean PDF output.</strong> The print window opens a styled, print-optimized HTML page with no UI chrome — just the invoice. The layout is designed to fit cleanly on A4 and US Letter paper with proper margins and typography.
+              </li>
+              <li>
+                <strong>Zero data collection.</strong> No analytics on what you invoice. No tracking of client names or amounts. No account to create. The tool is private by design, not just by policy.
+              </li>
+            </ul>
+          </div>
+
+          {/* 5. Technical */}
+          <div className={`${cardCls} p-8`}>
+            <h2>Technical Specifications</h2>
+            <p>For developers and users who want to know exactly how the invoice generator works.</p>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border-collapse">
+              <table>
                 <thead>
-                  <tr className="bg-slate-100 dark:bg-slate-900/50">
-                    {['Term', 'Meaning', 'Best for'].map(h => (
-                      <th key={h} className="text-left px-4 py-3 text-xs font-bold text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700">{h}</th>
-                    ))}
-                  </tr>
+                  <tr><th>Spec</th><th>Detail</th></tr>
                 </thead>
                 <tbody>
-                  {[
-                    ['Due on Receipt', 'Payment expected immediately', 'Small businesses, freelancers, new clients'],
-                    ['Net 7', 'Payment due within 7 days', 'Recurring clients, urgent work, small amounts'],
-                    ['Net 15', 'Payment due within 15 days', 'Standard service businesses, consultants'],
-                    ['Net 30', 'Payment due within 30 days', 'Most common term — used by most businesses'],
-                    ['Net 60', 'Payment due within 60 days', 'Large corporations, government contracts'],
-                    ['2/10 Net 30', '2% discount if paid within 10 days, otherwise Net 30', 'Incentivising early payment'],
-                  ].map(([term, meaning, best], i) => (
-                    <tr key={term} className={i % 2 === 0 ? 'bg-white dark:bg-slate-800/30' : 'bg-slate-50 dark:bg-slate-900/20'}>
-                      <td className="px-4 py-2.5 font-bold text-indigo-600 dark:text-indigo-400 text-xs border border-slate-200 dark:border-slate-700">{term}</td>
-                      <td className="px-4 py-2.5 text-slate-900 dark:text-white text-xs border border-slate-200 dark:border-slate-700">{meaning}</td>
-                      <td className="px-4 py-2.5 text-slate-500 dark:text-slate-400 text-xs border border-slate-200 dark:border-slate-700">{best}</td>
-                    </tr>
-                  ))}
+                  <tr><td><strong>Framework</strong></td><td>Next.js (React 18) — client component with useState hooks</td></tr>
+                  <tr><td><strong>Data storage</strong></td><td>Browser memory (React state) only — no localStorage, no cookies, no server</td></tr>
+                  <tr><td><strong>Line item calculation</strong></td><td>Amount = quantity × rate, calculated on each input change via updateItem()</td></tr>
+                  <tr><td><strong>Discount logic</strong></td><td>Discount = subtotal × (discountRate / 100). Applied before tax.</td></tr>
+                  <tr><td><strong>Tax logic</strong></td><td>Tax = (subtotal − discount) × (taxRate / 100). Applied to post-discount subtotal.</td></tr>
+                  <tr><td><strong>Total calculation</strong></td><td>Total = subtotal − discount + tax. Displayed to 2 decimal places.</td></tr>
+                  <tr><td><strong>PDF generation</strong></td><td>Browser's native print dialog via window.open() + document.write() + window.print()</td></tr>
+                  <tr><td><strong>Print styles</strong></td><td>Inline CSS injected into print window — no external dependencies</td></tr>
+                  <tr><td><strong>Invoice number</strong></td><td>Auto-generated as INV- + last 6 digits of Date.now(). Editable.</td></tr>
+                  <tr><td><strong>Currency support</strong></td><td>12 currencies with correct symbols: $, €, £, ₹, د.إ, ₨, C$, A$, Fr, ¥, S$</td></tr>
+                  <tr><td><strong>New Invoice</strong></td><td>Resets invoiceNumber, date, dueDate, items, notes, taxRate, discountRate. Preserves company object.</td></tr>
+                  <tr><td><strong>Server calls</strong></td><td>None — zero data transmitted off-device</td></tr>
+                  <tr><td><strong>Browser support</strong></td><td>Chrome, Firefox, Safari, Edge — requires JavaScript enabled</td></tr>
+                  <tr><td><strong>Device support</strong></td><td>Desktop and tablet — optimized for keyboard input</td></tr>
                 </tbody>
               </table>
             </div>
+
+            <h3>What the Tool Does Not Do</h3>
+            <p>
+              Being honest about limitations matters. This tool doesn't support logo upload (your company name appears as text), doesn't auto-save to the cloud, and doesn't track invoice status (sent, paid, overdue). It also doesn't have a client database or invoice history. For very light invoicing needs — freelancers sending a few invoices a month — it's ideal. For heavier billing workflows, you'd eventually want accounting software.
+            </p>
           </div>
 
+          {/* 6. FAQ */}
           <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'Is this invoice generator free?', a: 'Yes, completely free. No account required, no watermark on the output, no usage limits.' },
-                { q: 'Is my data saved or uploaded anywhere?', a: 'No. Everything runs in your browser. Your company details, client information, and invoice amounts are never stored or transmitted anywhere.' },
-                { q: 'How do I save the invoice as a PDF?', a: 'Click "Print / Save PDF". In the print dialog that opens, select "Save as PDF" (or "Microsoft Print to PDF" on Windows) as the destination, then click Save.' },
-                { q: 'Can I generate invoices in currencies other than USD?', a: 'Yes. The tool supports 12 currencies: USD, EUR, GBP, INR, AED, PKR, CAD, AUD, CHF, JPY, CNY, and SGD.' },
-                { q: 'How do I add a tax rate to my invoice?', a: 'Enter your tax rate percentage in the Tax Rate field under Tax & Discount. The tax amount is calculated automatically based on the subtotal after any discount is applied.' },
-                { q: 'Can I add multiple line items?', a: 'Yes. Click "Add Item" to add as many line items as you need. Each item has a description, quantity, and rate, and the amount is calculated automatically.' },
-                { q: 'What should I put in the Notes section?', a: 'Payment instructions (bank details, PayPal, etc.), a thank you note, project reference numbers, or any other information that doesn\'t fit in the line items.' },
-                { q: 'Is this invoice legally valid?', a: 'This tool generates a professional invoice document. Whether an invoice is legally valid depends on your country\'s invoicing laws. For tax compliance (VAT invoices, GST invoices, etc.), consult a local accountant to ensure you include all required fields.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                    <span>{q}</span>
-                    <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                </details>
-              ))}
-            </div>
+            <h2>Frequently Asked Questions About the Invoice Generator</h2>
+
+            <h3>Is this invoice generator completely free?</h3>
+            <p>Yes — completely free. No account required, no watermark on the PDF output, and no usage limits. Download as many invoices as you need.</p>
+
+            <h3>Is my invoice data stored or uploaded?</h3>
+            <p>No. Everything runs in your browser. Your company details, client info, and amounts never leave your device. Close the tab and the data is gone — nothing is saved on any server.</p>
+
+            <h3>How do I save the invoice as a PDF?</h3>
+            <p>Click <strong>Print / Save PDF</strong>. In the print dialog, set the destination to "Save as PDF" (Chrome on Mac/Windows) or "Microsoft Print to PDF" (Windows). Click Save and the file downloads to your device.</p>
+
+            <h3>How does the tax calculation work?</h3>
+            <p>The discount is subtracted from the subtotal first. The tax rate then applies to that lower amount. Example: subtotal $1,000 with a 10% discount gives a taxable amount of $900. A 15% tax on $900 is $135 — not $150. This order is correct for most tax systems globally.</p>
+
+            <h3>Which currencies are supported?</h3>
+            <p>12 currencies: USD, EUR, GBP, INR, AED, PKR, CAD, AUD, CHF, JPY, CNY, and SGD. Select your currency from the dropdown in the Invoice Details section.</p>
+
+            <h3>Can I invoice multiple clients without re-entering my company details?</h3>
+            <p>Yes. Click <strong>New Invoice</strong> — the invoice number, dates, and all line items reset, but your company name, address, email, and phone stay exactly as they were. Great for sending back-to-back invoices.</p>
+
+            <h3>What should I write in the Notes field?</h3>
+            <p>Your payment instructions. Bank account details, a PayPal address, Venmo handle, or any project reference number the client needs to process the payment. Clear payment instructions in the notes section are one of the easiest ways to get paid faster.</p>
+
+            <h3>Is the invoice legally valid?</h3>
+            <p>This tool creates a professional invoice document. Whether it satisfies your country's specific legal invoicing requirements (VAT invoice fields, GST registration number, etc.) depends on local laws. For tax-compliant invoices, check your country's rules and speak with a local accountant if you're unsure what fields are required.</p>
+
+            <h3>Can I add a logo to my invoice?</h3>
+            <p>Not yet — the current version displays your company name as text in the invoice header. Logo upload support isn't available in this version. Your company name and contact details still make the invoice look professional.</p>
+
+            <h3>What's the maximum number of line items I can add?</h3>
+            <p>There's no built-in limit. The tool lets you add as many line items as you need. Very long invoices may span more than one printed page — that's handled automatically by the browser's print dialog.</p>
           </div>
 
         </div>

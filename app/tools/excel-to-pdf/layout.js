@@ -37,7 +37,7 @@ export const metadata = {
 
 const webAppSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
+    '@type': 'SoftwareApplication',
     name: 'Excel to PDF Converter',
     description:
         'Free browser-based Excel to PDF converter. Supports .xlsx, .xls (via the xlsx library), and .csv files up to 20 MB. Multi-sheet workbooks: each sheet is placed on a separate PDF page. PDF customisation: custom document title, portrait/landscape orientation, three table styles (Grid, Striped, Plain), five header accent colours (Blue, Green, Violet, Slate, Rose), font size slider (6–12pt), page number toggle, and title toggle. Generated using jsPDF and jsPDF-AutoTable. Files are never uploaded to any server.',
@@ -46,6 +46,12 @@ const webAppSchema = {
     operatingSystem: 'Any',
     browserRequirements: 'Requires JavaScript',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: {
+        '@type': 'Organization',
+        name: 'Lazydesigners',
+        url: 'https://github.com/Dtshirt/omniwebkit',
+        sameAs: 'https://github.com/Dtshirt/omniwebkit'
+    },
     publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
     featureList: [
         'Supports .xlsx, .xls, and .csv files',

@@ -180,8 +180,8 @@ const IPAddressFinder = () => {
               <div className="inline-flex items-center space-x-4 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border-2 border-dashed border-blue-200">
                 <Shield className="w-8 h-8 text-blue-600" />
                 <div className="text-left">
-                  <p className="text-3xl font-bold text-gray-900 dark:text-white font-mono">{ipData?.ip}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{ipData?.type} Address</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-slute-800 font-mono">{ipData?.ip}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-900 mt-1">{ipData?.type} Address</p>
                 </div>
                 <button
                   onClick={() => copyToClipboard(ipData?.ip, 'main-ip')}
@@ -293,7 +293,7 @@ const IPAddressFinder = () => {
         </div>
 
         {/* Security Notice */}
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 shadow-lg">
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 shadow-lg mb-12">
           <div className="flex items-start space-x-4">
             <Shield className="w-8 h-8 text-amber-600 mt-1 flex-shrink-0" />
             <div>
@@ -306,10 +306,161 @@ const IPAddressFinder = () => {
             </div>
           </div>
         </div>
+
+        {/* SEO Content */}
+        <div className="mt-16 prose-premium">
+          <h2>About the IP Address Finder</h2>
+          <p>
+            Whenever you connect to the internet, your device is assigned a unique digital identifier. If you find yourself asking "<strong>what's my IP</strong>", you are looking for this exact string of numbers. Our <strong>IP Address Finder</strong> instantly detects and displays your current public IP address along with the network details tied to it.
+          </p>
+          <p>
+            Knowing your exact IP address is essential for a variety of tasks. You might need it to troubleshoot a stubborn network issue, configure a home router, whitelist your connection for a remote work server, or set up a dedicated game server for your friends. It is also the fastest way to verify that your VPN is actually working and masking your real location.
+          </p>
+          <p>
+            Instead of digging through complex computer settings or dealing with messy command prompts, this tool gives you everything you need in a single click. We provide a clean, readable dashboard that explains exactly what your network is broadcasting to the world.
+          </p>
+
+          <h2>How to Use This Tool</h2>
+          <p>
+            We designed this tool to be completely frictionless. There is nothing to install, no software to download, and no complicated steps. Here is how to use it:
+          </p>
+          <ol>
+            <li><strong>Open the page:</strong> The moment you load this tool, it instantly scans your connection and displays your exact public IP address at the top of the screen.</li>
+            <li><strong>Review your details:</strong> Scroll through the information cards to see your detected city, country, Internet Service Provider (ISP), and timezone.</li>
+            <li><strong>Copy what you need:</strong> Click the small copy icon next to any piece of data to instantly save it to your clipboard. You can paste it straight into an email for your IT support team.</li>
+            <li><strong>Check for updates:</strong> If you just switched from Wi-Fi to cellular, or if you just turned on a VPN, click the "Refresh Data" button to run a fresh scan without having to reload the entire page.</li>
+          </ol>
+
+          <h2>Privacy & Security</h2>
+          <p>
+            When dealing with network data, privacy is a major concern. Many free IP lookup sites run heavy tracking scripts, log your connection data, or sell your location profiles to data brokers. We take a distinctly different approach.
+          </p>
+          <p>
+            This IP Address Finder operates strictly as a mirror. It securely queries your active connection to show you what websites already see when you visit them. We do not store your IP address in a database, we do not log your searches, and we do not track your location over time. Once you close this tab, your data is gone. 
+          </p>
+          <p>
+            Remember, your public IP address reveals your approximate geographic location and your ISP to every single website you visit. If you want to hide this information and browse anonymously, we highly recommend using a trusted Virtual Private Network (VPN) to mask your true identity.
+          </p>
+
+          <h2>Core Features</h2>
+          <p>
+            This tool provides much more than just a string of numbers. We engineered it to give you a complete picture of your network fingerprint:
+          </p>
+          <ul>
+            <li><strong>Instant IP detection:</strong> See your IPv4 or IPv6 address the exact moment the page loads. The detection happens automatically in the background.</li>
+            <li><strong>Deep geolocation:</strong> Discover exactly where your IP is registered, including your city, region, continent, and postal code.</li>
+            <li><strong>Network insights:</strong> Identify your Internet Service Provider (ISP) and Autonomous System Number (ASN) to verify your connection quality.</li>
+            <li><strong>One-click copy:</strong> Grab any piece of data instantly to share with tech support or network administrators without risking typos.</li>
+            <li><strong>Live refresh:</strong> Update your network details instantly if you change networks, allowing you to test different connections rapidly.</li>
+          </ul>
+
+          <h2>Technical Details</h2>
+          <p>
+            How does an IP address actually work? Think of it like a digital return address for your internet traffic. 
+          </p>
+          <p>
+            Every time you load a website, watch a streaming video, or send an email, your device sends a request to a remote server. That server needs to know exactly where to send the data back. Your <strong>Internet Protocol (IP) address</strong> is that exact location. 
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>IP Type</th>
+                <th>Format Example</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>IPv4</td>
+                <td><code>192.168.1.1</code></td>
+                <td>The older, most common standard using four sets of numbers. We are currently running out of these addresses globally.</td>
+              </tr>
+              <tr>
+                <td>IPv6</td>
+                <td><code>2001:0db8:85a3::8a2e</code></td>
+                <td>The newer standard using longer alphanumeric strings. It was created to support billions of new smart devices.</td>
+              </tr>
+              <tr>
+                <td>Public IP</td>
+                <td>(Varies)</td>
+                <td>The main address assigned to your modem by your ISP. This is the single address the internet sees.</td>
+              </tr>
+              <tr>
+                <td>Private IP</td>
+                <td><code>10.0.0.1</code></td>
+                <td>The internal address your router assigns to your specific phone or laptop. It is invisible to the outside world.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            This tool specifically checks your <strong>public IP address</strong>. It communicates with an external API server to see exactly what address your router is broadcasting to the outside world. This is why it works even if you are buried behind a complex corporate firewall or a home Wi-Fi network.
+          </p>
+
+          <h2>Frequently Asked Questions</h2>
+          <h3>Can someone find my exact house using my IP address?</h3>
+          <p>
+            No. A public IP address only reveals your approximate geographic location, usually down to a specific city or zip code. It points to your Internet Service Provider's local routing hub, not your actual physical street address. Only your ISP has the billing records tying your IP address to your home, and they do not share that without a legal warrant.
+          </p>
+
+          <h3>Why does my IP address change?</h3>
+          <p>
+            Most home internet connections use a "Dynamic IP." This means your Internet Service Provider occasionally rotates the address assigned to your modem to manage their network efficiently. It might change when you restart your router or when your ISP performs maintenance. If you switch from Wi-Fi to a cellular data network on your phone, your IP will also change instantly.
+          </p>
+
+          <h3>How do I hide my IP address?</h3>
+          <p>
+            The most effective way to hide your real IP address is by using a Virtual Private Network (VPN). A VPN routes your internet traffic through an encrypted, secure server in a completely different location. When a website checks your IP, it sees the VPN's address instead of your real one, effectively masking your location.
+          </p>
+          
+          <h3>What is the difference between my public IP and private IP?</h3>
+          <p>
+            Your public IP is like your home's main street address—it is how the outside internet finds your entire network. Your private IP is like a specific room number inside that house—it is how your Wi-Fi router identifies your specific phone, smart TV, or laptop internally. This tool shows your public street address.
+          </p>
+          
+          <h3>Why does my location look wrong?</h3>
+          <p>
+            IP geolocation is not perfect. Sometimes, your ISP routes your traffic through a hub in a neighboring city or even a different state. If you are using a VPN or a corporate proxy, the tool will display the location of that proxy server, not your actual physical location. This is completely normal behavior for network routing.
+          </p>
+        </div>
+
+        {/* Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "What's My IP Address Finder",
+              "url": "https://omniwebkit.com/tools/whats-my-ip",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "All",
+              "offers": {
+                "@type": "Offer",
+                "price": "0.00",
+                "priceCurrency": "USD"
+              },
+              "author": {
+                "@type": "Organization",
+                "name": "Lazydesigners",
+                "url": "https://github.com/Dtshirt/omniwebkit"
+              },
+              "description": "Instantly check your public IP address, network location, ISP, and geographic details with this free, private IP lookup tool."
+            })
+          }}
+        />
       </div>
- 
     </div>
   );
 };
 
 export default IPAddressFinder;
+
+/* 
+---
+**Meta Title:** What's My IP? | Instant Public IP Address Finder
+**Meta Description:** Instantly check your public IP address, network location, and ISP details. A fast, private, and secure browser-based IP lookup tool.
+**Primary Keyword:** What's my IP
+**Word Count:** 880
+**Estimated Reading Time:** 4.4 min read
+---
+*/

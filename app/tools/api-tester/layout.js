@@ -36,36 +36,6 @@ export const metadata = {
     },
 };
 
-const webAppSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'API Tester',
-    description:
-        'Free browser-based REST API testing tool. Send HTTP requests (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS) with custom headers, query parameters, and JSON request body. Inspect response status codes, response headers, and response body with JSON syntax highlighting. Session request history, JSON Beautify, and quick API presets included.',
-    url: 'https://omniwebkit.com/tools/api-tester',
-    applicationCategory: 'DeveloperApplication',
-    operatingSystem: 'Any',
-    browserRequirements: 'Requires JavaScript',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
-    featureList: [
-        'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS HTTP methods',
-        'Custom request headers with enable/disable toggle',
-        'Query parameter builder with live URL preview',
-        'JSON request body editor with Beautify button',
-        'HTTP status code display with colour coding',
-        'Response time measurement in milliseconds',
-        'Response body size display',
-        'JSON response syntax highlighting',
-        'Response headers viewer with one-click copy',
-        'Request history (last 20 requests, session)',
-        'Quick API presets (JSONPlaceholder, GitHub, IP APIs)',
-        'One-click copy of response body',
-        'No login or account required',
-        '100% free, no usage limits',
-    ],
-};
-
 const howToSchema = {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
@@ -141,7 +111,6 @@ const breadcrumbSchema = {
 export default function ApiTesterLayout({ children }) {
     return (
         <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />

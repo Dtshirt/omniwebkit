@@ -38,7 +38,7 @@ export const metadata = {
 
 const webAppSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  '@type': 'SoftwareApplication',
   name: 'Word to PDF Converter',
   description:
     'Real server-side Word to PDF converter powered by LibreOffice. Upload .docx, .doc, .rtf, .txt, or .odt and get a proper vector PDF with full formatting. Tables, images, headers, footers, fonts — all preserved. Not a browser screenshot. Files auto-deleted after download. Free, no watermark.',
@@ -46,6 +46,12 @@ const webAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  author: {
+      '@type': 'Organization',
+      name: 'Lazydesigners',
+      url: 'https://github.com/Dtshirt/omniwebkit',
+      sameAs: 'https://github.com/Dtshirt/omniwebkit'
+  },
   publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
   featureList: [
     'Real LibreOffice server-side rendering',

@@ -36,15 +36,20 @@ export const metadata = {
 
 const webAppSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  '@type': 'SoftwareApplication',
   name: 'Website Content Extractor',
   description:
     'Free online tool to extract structured content from any webpage by URL. Pulls headings, paragraphs, images, links, and complete meta tag data. Export as TXT or JSON.',
   url: 'https://omniwebkit.com/tools/website-content-extractor',
-  applicationCategory: 'UtilitiesApplication',
+  applicationCategory: 'WebApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  author: {
+    '@type': 'Organization',
+    name: 'Lazydesigners',
+    url: 'https://github.com/Dtshirt/omniwebkit'
+  },
   publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
   featureList: [
     'Extract headings H1–H6 with hierarchy',

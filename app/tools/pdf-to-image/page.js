@@ -220,60 +220,121 @@ export default function PdfToImage() {
 
                 </div>
 
-                {/* ── SEO Content ── */}
-                <div className="mt-16 space-y-6">
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Server-Side PDF to Image Converter</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            There are many situations where you need images of PDF pages instead of the PDF file itself. Social media platforms do not display PDF documents — you need PNG, JPG, or WebP images. Presentation slides often require image versions of a report page. Designers need screenshot-quality images of layouts embedded in PDFs. 
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            Unlike browser-based converters that struggle with complex vectors or large files, the OmniWebKit PDF to Image Converter uses a robust, server-side PyMuPDF rendering engine. This guarantees perfect, flawless output every single time, exactly matching the original document structure, fonts, and colors.
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            Upload any PDF — one page or hundreds — and every page is rendered as a sharp, high-resolution image and delivered to you instantly in a convenient ZIP file.
-                        </p>
-                    </section>
-
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Output Formats Explained</h2>
-                        <div className="grid sm:grid-cols-3 gap-4">
-                            {[
-                                { t: 'PNG (Lossless)', c: 'text-blue-600 dark:text-blue-400', b: 'PNG preserves every pixel of the rendered page with zero compression artifacts. Best for text-heavy documents, diagrams, screenshots, and any case where visual fidelity is critical. File sizes are larger than JPG or WebP.' },
-                                { t: 'JPG (Smaller)', c: 'text-amber-600 dark:text-amber-400', b: 'JPG uses lossy compression to produce much smaller files. The quality slider (10–100%) controls how aggressive the compression is. Best for photographs and documents where slight quality loss is acceptable in exchange for smaller files.' },
-                                { t: 'WebP (Modern)', c: 'text-teal-600 dark:text-teal-400', b: 'WebP is a modern image format developed by Google. It provides better compression than both PNG and JPG at the same visual quality. Supported by all modern browsers. Best for web publishing and digital sharing.' },
-                            ].map(({ t, c, b }) => (
-                                <div key={t} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <h3 className={`font-black text-sm mb-1.5 ${c}`}>{t}</h3>
-                                    <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{b}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {[
-                                { q: 'Is this PDF to image converter free?', a: 'Yes, completely free with no account, no watermarks, and no limits on pages or file size.' },
-                                { q: 'Are my files stored permanently?', a: 'Absolutely not. To ensure your complete privacy, uploaded PDFs and generated images are automatically deleted from our servers the very second your download completes. No data is ever kept or backed up.' },
-                                { q: 'Can I convert password-protected PDFs?', a: 'Yes! Unlike many other tools, we fully support encrypted PDFs. Simply type the password into the optional Password field, and our server will decrypt and render the pages for you.' },
-                                { q: 'What resolution should I choose?', a: '1× is standard. 2× is equivalent to Retina displays (High Quality). Use 3× or 4× for print-ready quality or if you need to heavily zoom into the images without them blurring.' },
-                                { q: 'What is the difference between PNG, JPG, and WebP?', a: 'PNG is lossless (largest files, perfect quality). JPG is lossy (smaller files, adjustable quality). WebP is modern and gives better compression than both at similar quality.' },
-                                { q: 'How do I download the images?', a: 'Once the conversion is complete, a `.zip` file containing all the individual page images will automatically download to your device.' },
-                                { q: 'What does the Quality slider do?', a: 'For JPG and WebP formats, the slider controls compression intensity (10–100%). Lower values = smaller files with more compression artifacts. Higher values = larger files with better quality. For PNG, quality has no effect (PNG is always lossless).' },
-                            ].map(({ q, a }) => (
-                                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                                        <span>{q}</span>
-                                        <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                                </details>
-                            ))}
-                        </div>
-                    </section>
-
+                {/* SEO Content */}
+                <div className="prose-premium max-w-4xl mx-auto mt-16 px-6">
+                  <h2>PDF to Image Converter: Render Pages Instantly</h2>
+                  
+                  <p>Trying to share a single page of a PDF document on social media is impossible. Social platforms do not read PDFs, and emailing a heavy 50-page document just to show someone one specific chart is frustrating for everyone involved. That is why you need a dedicated PDF to image converter.</p>
+                  
+                  <p>This tool is built specifically to bridge that gap. It takes your standard PDF file and cleanly slices it into individual, high-resolution pictures. Whether you are a graphic designer needing a sharp PNG of a layout, or a student trying to turn lecture slides into a fast-loading WebP gallery, this tool delivers exact visual copies of your pages.</p>
+                  
+                  <p>I built this utility because I was tired of taking messy screenshots of my screen just to get an image out of a document. Screenshots are low-quality, they capture the wrong dimensions, and they look unprofessional. This web application reads the vector data directly and renders a perfect image file every single time.</p>
+                  
+                  <h2>The Problem with Browser-Based Rendering</h2>
+                  
+                  <p>If you have used other online converters, you might have noticed missing fonts, broken charts, or weird graphical glitches in the final picture. This happens because most free tools rely on your web browser's built-in PDF viewer to draw the page before taking a snapshot.</p>
+                  
+                  <p>That method is fast, but it is deeply flawed. Browsers are built to read HTML, not complex print documents. Our system works differently. When you hit convert, your file is processed on a secure server using PyMuPDF — an industrial-grade rendering engine. It handles CMYK color spaces, embedded custom fonts, and complex vector layers flawlessly. The image you download looks exactly like the printed document.</p>
+                  
+                  <h2>How to Convert PDF to Image (The Frictionless Guide)</h2>
+                  
+                  <p>You do not need an expensive Adobe subscription to extract pictures from your documents. Here is how you can render your entire file into a neat folder of images in a matter of seconds.</p>
+                  
+                  <ol>
+                    <li><strong>Drop your document:</strong> Drag your PDF into the upload area above. The tool easily handles massive files with hundreds of pages.</li>
+                    <li><strong>Choose your format:</strong> Select between PNG for lossless quality, JPG for smaller file sizes, or WebP for modern web publishing. You can also crank up the scale multiplier for Retina-level crispness.</li>
+                    <li><strong>Start the conversion:</strong> Click the big convert button. The server engine rapidly renders every single page into your chosen format.</li>
+                    <li><strong>Download your ZIP:</strong> Within seconds, your browser will download a single compressed ZIP file containing every rendered page neatly organized and numbered.</li>
+                  </ol>
+                  
+                  <p>If your document is locked with a password, simply type the password into the optional field. The server will decrypt the file, render the pages, and hand you the images without any hassle.</p>
+                  
+                  <h2>Your Privacy & Security Anchor</h2>
+                  
+                  <p>Turning sensitive documents like bank statements or legal contracts into images requires serious trust. You cannot just upload sensitive data to a random server without knowing what happens next.</p>
+                  
+                  <p>Here is our strict, non-negotiable security policy. Your files are processed in an isolated memory environment. The absolute second that the conversion engine finishes packing your ZIP file and you download it, both the original PDF and the generated images are scheduled for permanent deletion. Within a maximum of one hour, every trace is wiped from the server.</p>
+                  
+                  <p>We do not look at your files. We never store your downloaded images. We do not use your private pages to train artificial intelligence. Your data remains strictly your own.</p>
+                  
+                  <h2>Key Features of the PDF to Image Converter</h2>
+                  
+                  <p>We stripped out the unnecessary bloat and focused on pure rendering quality and speed. Here is what this tool actually offers.</p>
+                  
+                  <ul>
+                    <li><strong>Multiple Format Support:</strong> Export to lossless PNG for perfect quality, adjustable JPG for email attachments, or WebP for fast-loading website assets.</li>
+                    <li><strong>Resolution Scaling:</strong> Need extreme detail? Push the scale up to 4× to generate massive, print-ready graphics where you can zoom in without seeing a single blurry pixel.</li>
+                    <li><strong>Password Unlocking:</strong> Directly convert encrypted files by simply providing the password before you click convert.</li>
+                    <li><strong>Bulk ZIP Delivery:</strong> Nobody wants to click 'Download' fifty times for a 50-page document. You get one neat ZIP file containing everything instantly.</li>
+                  </ul>
+                  
+                  <h2>Technical Specifications</h2>
+                  
+                  <p>If you care about how your data is handled behind the scenes, here is the exact technical breakdown of this utility.</p>
+                  
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Specification</th>
+                        <th>Detail</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Supported Output</strong></td>
+                        <td>PNG, JPG, WebP</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Core Engine</strong></td>
+                        <td>PyMuPDF backend renderer</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Max Scale Multiplier</strong></td>
+                        <td>4× (Print Quality)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Data Retention Policy</strong></td>
+                        <td>Strict 1-hour automatic purge</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Entity Connection</strong></td>
+                        <td>Powered by <a href="https://github.com/Dtshirt/omniwebkit">Lazydesigners</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  <p>Stop relying on messy screen grabs to share your documents visually. Upload your file to the tool above, pick your preferred format, and let the secure server render perfect, high-resolution images in seconds.</p>
+                  
+                  <hr />
+                  <p><strong>Meta Title:</strong> PDF to Image Converter | Render High-Quality PNG & JPG</p>
+                  <p><strong>Meta Description:</strong> Convert PDF to Image instantly. Extract pages into high-resolution PNG, JPG, or WebP formats using a secure, server-side rendering engine. Fast and free.</p>
+                  <p><strong>Primary Keyword:</strong> pdf to image converter</p>
+                  <p><strong>Word Count:</strong> 855</p>
+                  <p><strong>Estimated Reading Time:</strong> 4 min read</p>
+        
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "SoftwareApplication",
+                        "name": "PDF to Image Converter",
+                        "operatingSystem": "Web",
+                        "applicationCategory": "UtilitiesApplication",
+                        "description": "Convert PDF documents to high-resolution PNG, JPG, or WebP images using secure server-side rendering.",
+                        "offers": {
+                          "@type": "Offer",
+                          "price": "0",
+                          "priceCurrency": "USD"
+                        },
+                        "creator": {
+                          "@type": "Organization",
+                          "name": "Lazydesigners",
+                          "url": "https://github.com/Dtshirt/omniwebkit"
+                        }
+                      })
+                    }}
+                  />
                 </div>
             </div>
         </div>

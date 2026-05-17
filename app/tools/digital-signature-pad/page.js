@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Download, Trash2, Edit3, Type, Check, Palette, Undo2, Redo2, Copy, Share2, Pen } from 'lucide-react';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
@@ -389,112 +389,141 @@ export default function DigitalSignaturePad() {
           {!hasSigned && <p className="text-slate-400 dark:text-slate-500 text-sm text-center mt-3">Create a signature above to enable download</p>}
         </div>
 
-        {/* SEO Content */}
-        <div className="mt-16 space-y-5">
+        {/* SEO Content — prose-premium */}
+        <div className="mt-16 prose-premium max-w-5xl mx-auto space-y-8">
+
+          {/* 1. About the Tool */}
           <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Online Digital Signature Pad — Create and Download Your Signature Instantly</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Signatures are everywhere — contracts, legal forms, invoices, offer letters, NDAs, and dozens of other documents pass through our hands every week. In a world where most of that paperwork is digital, you need a way to sign without printing, scanning, or buying expensive software. The OmniWebKit Digital Signature Pad gives you exactly that: a free, browser-based signature creator that works on any device, any screen, any time.
+            <h2>Free Digital Signature Pad — Draw or Type Your Signature Online</h2>
+            <p>
+              Most people still print a document, sign it by hand, scan it, and email it back. That is a lot of steps for something that should take ten seconds. The <strong>OmniWebKit Digital Signature Pad</strong> is a free <strong>online signature maker</strong> that skips all of that. You sign right here in your browser — no print, no scan, no software to install.
             </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Use your mouse, trackpad, or finger to sign naturally in Draw mode — or let the tool generate a handwriting-style signature from your name using premium cursive fonts in Type mode. When you're done, download your signature as a transparent PNG, a JPG, or a scalable SVG. No watermarks. No account required. No software to install.
+            <p>
+              The tool works in two ways. <strong>Draw mode</strong> lets you sign with your mouse, trackpad, or finger — just like a real pen on paper. <strong>Type mode</strong> turns your name into a handwriting-style <strong>electronic signature</strong> using six professional cursive fonts. Either way, you get a clean, high-quality signature you can download as a transparent PNG, a JPG, or a scalable SVG file.
             </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              Everything happens in your browser. Your signature is never uploaded to any server. It stays completely private from creation to download.
+            <p>
+              No watermarks. No account. Nothing to install. Your <strong>digital signature</strong> is ready in seconds — and it never leaves your device.
             </p>
           </div>
 
+          {/* 2. How to Use */}
           <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Two Ways to Create Your Digital Signature</h2>
-            <div className="grid sm:grid-cols-2 gap-5">
-              <div className="p-5 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-2xl">
-                <h3 className="font-bold text-indigo-900 dark:text-indigo-200 text-base mb-3 flex items-center gap-2"><Edit3 className="w-4 h-4" />Draw Mode</h3>
-                <p className="text-indigo-800 dark:text-indigo-300 text-sm leading-relaxed mb-3">
-                  Click and drag (or touch and drag on mobile) to draw your signature just like you would with a pen on paper. This produces the most natural, authentic signature because it captures the actual movement of your hand.
-                </p>
-                <ul className="text-indigo-700 dark:text-indigo-400 text-xs space-y-1">
-                  <li>• Smooth stroke interpolation for natural curves</li>
-                  <li>• Adjustable ink width from 1px to 12px</li>
-                  <li>• Undo and redo any stroke</li>
-                  <li>• Touch-screen friendly for phones and tablets</li>
-                </ul>
-              </div>
-              <div className="p-5 bg-violet-50 dark:bg-violet-900/20 border border-violet-100 dark:border-violet-800 rounded-2xl">
-                <h3 className="font-bold text-violet-900 dark:text-violet-200 text-base mb-3 flex items-center gap-2"><Type className="w-4 h-4" />Type Mode</h3>
-                <p className="text-violet-800 dark:text-violet-300 text-sm leading-relaxed mb-3">
-                  Type your name and the tool instantly renders it in a professional cursive font. Choose from six handwriting-style fonts including Dancing Script, Great Vibes, Pacifico, Allura, Sacramento, and Pinyon Script. The text scales automatically to fill the canvas.
-                </p>
-                <ul className="text-violet-700 dark:text-violet-400 text-xs space-y-1">
-                  <li>• Six premium Google Fonts cursive styles</li>
-                  <li>• Full-colour ink picker</li>
-                  <li>• Optional date stamp below the signature</li>
-                  <li>• Instant regeneration when you switch fonts</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Which Export Format Is Right for You?</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
-              The tool exports your signature in three formats, each suited to a different use case. Choosing the right one takes less than a second once you understand the difference.
+            <h2>How to Use the Digital Signature Pad</h2>
+            <p>
+              The tool is designed to get you from zero to a finished signature in under 30 seconds. Here is exactly how it works.
             </p>
-            <div className="space-y-3">
-              {[
-                { fmt: 'PNG', color: 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-100 dark:border-indigo-800', tc: 'text-indigo-900 dark:text-indigo-200', dc: 'text-indigo-700 dark:text-indigo-300', desc: 'Best for most digital document use. PNG preserves transparency — if you set the canvas background to transparent, your signature will sit cleanly on top of any document colour when you place it in Word, Google Docs, or PDF software. This is the format most people need.' },
-                { fmt: 'JPG', color: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800', tc: 'text-emerald-900 dark:text-emerald-200', dc: 'text-emerald-700 dark:text-emerald-300', desc: 'A smaller file size option with a white background. JPG does not support transparency. Use it when file size matters, when you need to embed the signature in a system that only accepts JPEG images, or when a white background is acceptable.' },
-                { fmt: 'SVG', color: 'bg-purple-50 dark:bg-purple-900/20 border-purple-100 dark:border-purple-800', tc: 'text-purple-900 dark:text-purple-200', dc: 'text-purple-700 dark:text-purple-300', desc: 'A vector-based file that scales perfectly to any size — from a tiny email footer to a large printed page — without any pixelation. SVG is ideal for developers who need to embed the signature in a website or app, or for use cases where the signature will appear at many different sizes.' },
-              ].map(({ fmt, color, tc, dc, desc }) => (
-                <div key={fmt} className={`p-5 ${color} border rounded-2xl`}>
-                  <h3 className={`font-bold ${tc} text-sm mb-2`}>{fmt} Export</h3>
-                  <p className={`${dc} text-sm leading-relaxed`}>{desc}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-5 p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-2xl">
-              <h3 className="font-bold text-slate-900 dark:text-white text-sm mb-2">Copy as Base64</h3>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">The Copy Base64 button copies the raw PNG image data as a base64-encoded string to your clipboard. This is useful for developers who want to embed the signature directly into HTML, CSS, or a JSON payload without storing a separate file.</p>
-            </div>
-          </div>
-
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Is a Digital Signature Legally Valid?</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              This is one of the most common questions about digital signatures. The short answer is: it depends on the country and the type of document.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              In the United States, the ESIGN Act and UETA give electronic signatures the same legal weight as handwritten signatures for most contracts and agreements. In the European Union, the eIDAS regulation similarly validates electronic signatures. The UK, Australia, India, Canada, and most other countries have equivalent legislation.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              However, there are exceptions. Some documents — last wills, real estate deeds, powers of attorney, court filings — may require a wet (physical) signature or a more formally verified electronic signature (like those provided by DocuSign or Adobe Sign, which use certificate-based identity verification).
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              For everyday use — client agreements, contractor invoices, internal forms, consent forms, email attachments — a digital signature image is widely accepted. When in doubt about legal requirements for a specific document, consult a licensed legal professional in your jurisdiction.
+            <ol>
+              <li><strong>Pick a mode.</strong> Click <strong>Draw</strong> to sign by hand or <strong>Type</strong> to generate a signature from your name. Draw is better when you want something that looks like your real signature. Type is faster when you just need something clean and professional.</li>
+              <li><strong>Create your signature.</strong> In Draw mode, click and drag on the canvas — or use your finger on a phone or tablet. In Type mode, enter your full name, pick a cursive font from the six options shown, and hit <strong>Generate</strong>.</li>
+              <li><strong>Adjust the look.</strong> Change the ink color using the preset swatches or the custom color picker. Adjust stroke width from 1px to 12px. In Type mode, toggle the date stamp if you want today's date printed below the signature.</li>
+              <li><strong>Set the background.</strong> White keeps it simple. The checkerboard (transparent) means your signature floats cleanly on top of any document color — that is the one most people want for PDF and Word use.</li>
+              <li><strong>Download it.</strong> Click <strong>Download PNG</strong> for transparent use, <strong>Download JPG</strong> for a smaller file, or <strong>Download SVG</strong> for a vector version you can scale to any size.</li>
+            </ol>
+            <p>
+              Made a mistake? Hit the undo button to go back stroke by stroke. You get up to 20 undo steps. That is pretty much it.
             </p>
           </div>
 
+          {/* 3. Privacy & Security */}
           <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'Is the digital signature pad free to use?', a: 'Yes, completely free. There is no account, no subscription, no limits on usage, and no watermarks on downloaded files.' },
-                { q: 'Is my signature uploaded anywhere?', a: 'No. Your signature is generated and stored entirely in your browser session. Nothing is sent to any server. When you close the tab, the signature is gone.' },
-                { q: 'Can I use this on a mobile phone or tablet?', a: 'Yes. The drawing canvas fully supports touch input on iOS and Android devices. You can sign with your finger just like you would on a paper form.' },
-                { q: 'What is the difference between Draw mode and Type mode?', a: 'Draw mode lets you create a freehand signature using your mouse, trackpad, or finger. Type mode generates a stylized cursive signature from your name using one of six premium handwriting fonts.' },
-                { q: 'How do I get a transparent background?', a: 'Click the checkerboard pattern in the Background section to set transparency. Then download in PNG format. The resulting file will have no background — the signature ink sits on a transparent layer.' },
-                { q: 'Can I undo a stroke?', a: 'Yes. Click the undo button (↩) at the top of the canvas to remove the last stroke. You can undo up to 20 actions and redo them as needed.' },
-                { q: 'What does Copy Base64 do?', a: 'It copies the raw PNG image encoded as a base64 data URI to your clipboard. Developers use this to embed images directly in HTML, CSS, or API payloads without needing a separate image file.' },
-                { q: 'Can I add a date to my typed signature?', a: 'Yes. In Type mode, enable the "Add today\'s date below signature" toggle before clicking Generate. The current date will appear in a smaller font beneath the cursive signature.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                    <span>{q}</span><span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                </details>
-              ))}
+            <h2>Your Signature Never Leaves Your Device</h2>
+            <p>
+              A signature is one of the most personal things you own. So here is the part that actually matters: <strong>this tool runs 100% inside your browser</strong>. There is no server receiving your signature. No database storing it. No company seeing what you signed.
+            </p>
+            <p>
+              The canvas you draw on is a standard HTML5 element. Everything — the drawing, the font rendering, the file export — happens in browser memory using JavaScript. When you close the tab, it is gone. Not archived. Not cached on a server. Gone.
+            </p>
+            <p>
+              We do not collect analytics on what signatures you create. We do not ask for your email. The tool is genuinely private, not just "private" in a terms-of-service kind of way.
+            </p>
+            <p>
+              One honest note: this tool creates a <em>signature image</em>, not a certificate-backed digital signature. If a legal document needs a verified identity (like a DocuSign-style audit trail with timestamps and signer ID), this tool will not cover that. But for everyday use — contracts, invoices, consent forms — a signed image works fine in most countries. More on that in the FAQ below.
+            </p>
+          </div>
+
+          {/* 4. Features */}
+          <div className={`${cardCls} p-8`}>
+            <h2>What Makes This Online Signature Generator Different</h2>
+            <p>
+              Most free <strong>signature tools</strong> give you a basic canvas and call it done. This one goes further — because the details actually matter when you are signing real documents.
+            </p>
+            <ul>
+              <li><strong>Bezier curve stroke smoothing.</strong> When you draw, the tool uses quadratic bezier interpolation between mouse points. Your curves are smooth — no jagged edges or wobbly lines. You can turn it off if you prefer raw point-to-point strokes.</li>
+              <li><strong>20-step undo and redo.</strong> Most signature pads let you clear the canvas or nothing. This one stores up to 20 canvas states so you can step back stroke by stroke without starting over.</li>
+              <li><strong>Six real handwriting fonts.</strong> In Type mode you get Dancing Script, Great Vibes, Pacifico, Allura, Sacramento, and Pinyon Script — all loaded from Google Fonts. Auto-scaling keeps your name fully visible no matter how long it is.</li>
+              <li><strong>Three export formats.</strong> PNG with real transparency, JPG with a white background, and SVG as a true vector file. The SVG wraps the canvas as a proper XML document that opens correctly in Figma, Illustrator, and browsers.</li>
+              <li><strong>Copy as Base64.</strong> Developers can copy the full PNG data URI to the clipboard and embed it directly in HTML or a JSON payload — no file hosting needed.</li>
+              <li><strong>Date stamp option.</strong> In Type mode, toggle a date label that prints today's date below the signature in a smaller, muted font. Useful for dated agreements or signed receipts.</li>
+              <li><strong>Full touch support.</strong> Works on iOS Safari and Android Chrome using the same drawing logic as desktop. No special app required.</li>
+              <li><strong>Custom background colors.</strong> Switch between white, off-white, light blue, transparent, or enter any custom hex value. JPG export always composites on white regardless of background setting.</li>
+            </ul>
+          </div>
+
+          {/* 5. Technical */}
+          <div className={`${cardCls} p-8`}>
+            <h2>Technical Specifications</h2>
+            <p>For developers and anyone who wants to know exactly how the tool works under the hood.</p>
+            <div className="overflow-x-auto">
+              <table>
+                <thead>
+                  <tr><th>Spec</th><th>Detail</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Rendering Engine</strong></td><td>HTML5 Canvas 2D API — all drawing runs client-side</td></tr>
+                  <tr><td><strong>Stroke Smoothing</strong></td><td>Quadratic bezier via <code>quadraticCurveTo()</code> between midpoints</td></tr>
+                  <tr><td><strong>Undo / Redo Stack</strong></td><td>Up to 20 <code>ImageData</code> snapshots in browser memory</td></tr>
+                  <tr><td><strong>Stroke Width</strong></td><td>1px – 12px adjustable via range slider</td></tr>
+                  <tr><td><strong>Typed Signature Fonts</strong></td><td>Dancing Script, Great Vibes, Pacifico, Allura, Sacramento, Pinyon Script (Google Fonts)</td></tr>
+                  <tr><td><strong>Font Auto-Scaling</strong></td><td>Starts at 90px, steps down 4px until text fits canvas width − 60px margin</td></tr>
+                  <tr><td><strong>PNG Export</strong></td><td><code>canvas.toDataURL('image/png')</code> — full alpha transparency</td></tr>
+                  <tr><td><strong>JPG Export</strong></td><td>Composited on white via offscreen canvas, then <code>toDataURL('image/jpeg', 0.95)</code></td></tr>
+                  <tr><td><strong>SVG Export</strong></td><td>PNG embedded as <code>xlink:href</code> inside a valid XML <code>&lt;svg&gt;</code> document</td></tr>
+                  <tr><td><strong>Base64 Copy</strong></td><td>Full PNG data URI via <code>navigator.clipboard.writeText()</code></td></tr>
+                  <tr><td><strong>Touch Input</strong></td><td><code>touchstart / touchmove / touchend</code> — <code>touch-none</code> prevents scroll conflict</td></tr>
+                  <tr><td><strong>Canvas Resize</strong></td><td>Redraws on window resize, preserves content via <code>getImageData</code> save/restore</td></tr>
+                  <tr><td><strong>Server Calls</strong></td><td>None — zero data transmitted off-device</td></tr>
+                  <tr><td><strong>Browser Support</strong></td><td>Chrome, Firefox, Safari, Edge — requires JavaScript</td></tr>
+                  <tr><td><strong>Framework</strong></td><td>Next.js (React 18) — client component with hooks</td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
+
+          {/* 6. FAQ */}
+          <div className={`${cardCls} p-8`}>
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>Is the digital signature pad free to use?</h3>
+            <p>Yes, completely free. No account. No subscription. No usage limits. Downloaded files have no watermarks — the PNG, JPG, and SVG you get are clean.</p>
+
+            <h3>Is my signature uploaded or stored anywhere?</h3>
+            <p>No. Everything runs in your browser using the HTML5 Canvas API. Nothing is sent to a server. Close the tab and the signature is gone — not archived, not logged.</p>
+
+            <h3>Can I use this on a phone or tablet?</h3>
+            <p>Yes. The canvas handles touch events on iOS and Android natively. You can sign with your finger just like writing on paper. Works well in both portrait and landscape.</p>
+
+            <h3>What is the difference between Draw mode and Type mode?</h3>
+            <p>Draw mode captures your actual hand movement — more authentic, looks like your real signature. Type mode generates a cursive version of your typed name using one of six handwriting fonts — faster, and always clean.</p>
+
+            <h3>How do I get a transparent background on my signature?</h3>
+            <p>Click the checkerboard swatch in the Background section. Then click <strong>Download PNG</strong>. The file has only the signature ink — no background color — so it sits cleanly on any document you drop it into.</p>
+
+            <h3>Can I undo a mistake without clearing everything?</h3>
+            <p>Yes. The undo button steps back one stroke at a time, up to 20 steps. Redo is also available. This is a big deal — most browser signature tools only let you clear the whole canvas.</p>
+
+            <h3>Is a digital signature legally valid?</h3>
+            <p>In most countries, yes — for everyday documents. The US ESIGN Act, EU eIDAS regulation, and similar laws in the UK, Canada, Australia, and India all treat electronic signatures as binding for most contracts. But wills, real estate deeds, and court filings may require a wet signature or a certificate-backed identity. When in doubt, check with a legal professional for your specific document type.</p>
+
+            <h3>What does Copy Base64 do?</h3>
+            <p>It copies the signature as a base64-encoded PNG data URI to your clipboard. Developers use this to embed the image directly in HTML, a CSS <code>background-image</code>, or an API JSON payload — no separate file hosting needed.</p>
+
+            <h3>Can I add a date to my signature?</h3>
+            <p>Yes, in Type mode. Toggle the <strong>Add today's date below signature</strong> switch before hitting Generate. The date appears in a smaller, muted font below the cursive name — useful for dated agreements or signed forms.</p>
+
+            <h3>What if my name is too long for the canvas?</h3>
+            <p>The font auto-scales down until the text fits. A long name might render at a smaller size, but it will always stay fully visible on the canvas and in the exported file.</p>
+          </div>
+
         </div>
       </div>
     </div>

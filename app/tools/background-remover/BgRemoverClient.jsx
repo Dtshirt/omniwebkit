@@ -190,12 +190,7 @@ export default function BgRemoverClient() {
     }
   };
 
-  const faqs = [
-    { q: "How does the background removal work?", a: "We utilize advanced AI Vision models (U-Net architectures) that have been trained to distinguish between foreground subjects and background scenery with pixel-perfect accuracy." },
-    { q: "Are my photos kept private?", a: "Yes. For photos under 5MB, the AI runs entirely inside your web browser using WebAssembly. The image never touches the internet. For massive images over 5MB, our servers process them securely and delete the file immediately after." },
-    { q: "What types of images work best?", a: "Images with clear contrast between the subject and the background yield the best results. Complex hair, fur, and transparent objects (like glasses) are supported but might vary in perfection based on lighting." },
-    { q: "Is this really free?", a: "100% free with no watermarks and no hidden API costs." }
-  ];
+
 
   return (
     <div className="min-h-screen text-slate-900 font-sans pb-24">
@@ -354,55 +349,6 @@ export default function BgRemoverClient() {
 
         </div>
 
-        {/* Info Blocks */}
-        <div className="grid md:grid-cols-2 gap-6 mb-16">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 text-purple-600">
-              <Zap className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold mb-2">WebAssembly Intelligence</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              Experience the future of edge computing. For standard images, we securely download an ONNX neural network directly into your browser, executing complex background removal locally in seconds.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <div className="w-12 h-12 bg-fuchsia-100 rounded-xl flex items-center justify-center mb-4 text-fuchsia-600">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold mb-2">Cloud Resiliency</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              Uploading a 20MB raw photo? No problem. Our system intelligently bypasses browser memory limits by queuing massive files to our dedicated Python servers powered by the industry-standard `rembg` engine.
-            </p>
-          </div>
-        </div>
-
-        {/* FAQs */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                <button
-                  className="w-full text-left px-6 py-4 font-bold flex justify-between items-center text-slate-800 focus:outline-none hover:bg-slate-50"
-                  onClick={() => setFaqOpen(faqOpen === index ? null : index)}
-                >
-                  {faq.q}
-                  {faqOpen === index ? (
-                    <ChevronUp className="w-5 h-5 text-purple-500" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-slate-400" />
-                  )}
-                </button>
-                <div
-                  className={`px-6 text-slate-600 text-sm leading-relaxed transition-all duration-300 ease-in-out ${faqOpen === index ? "pb-6 max-h-40 opacity-100" : "max-h-0 opacity-0 py-0"
-                    }`}
-                >
-                  {faq.a}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
       </div>
     </div>

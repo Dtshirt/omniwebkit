@@ -561,159 +561,133 @@ export default function GoogleDorkingTool() {
           </div>
         </div>
 
-        {/* Extensive SEO Content */}
-        <div className="mt-16 bg-white dark:bg-gray-800 rounded-3xl shadow-xl dark:shadow-2xl border border-gray-100 dark:border-gray-700 p-8 sm:p-12 lg:p-16 prose prose-lg dark:prose-invert max-w-none">
-          
-          <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
-            The Ultimate Guide to Google Dorking & OSINT Research
-          </h2>
-          
-          <p>
-            Whether you are An SEO professional looking for link-building opportunities, a software developer seeking specific code snippets, or a cybersecurity researcher hunting for vulnerabilities, standard Google searches often fall short. They yield millions of results, most of which are irrelevant. Enter <strong>Google Dorking</strong> (also known as <em>Google Hacking</em>)—the art of using advanced search operators to filter, refine, and pinpoint exactly what you are looking for.
-          </p>
+        {/* SEO Content */}
+        <div className="mt-12 space-y-5">
+          <div className="prose-premium">
 
-          <p>
-            Our <strong>Free Advanced Google Dorking Tool</strong> automates the creation of complex search queries. Instead of memorizing dozens of search operators and syntax rules, you simply select your objective, input your target domain or keyword, and let the tool generate a copy-paste ready query. Proceeding from basic queries to sophisticated vulnerability discovery, let's explore everything you need to know about Google Dorks.
-          </p>
+            <h2>About the Google Dorking Tool — Advanced Search Operator Generator</h2>
+            <p>
+              Most people use Google the same way every day — type a phrase, scroll the results, repeat. But Google has a second mode, one most users never see. It's built around <strong>search operators</strong>, and it's what SEO professionals, security researchers, and developers use to get results that a normal search query simply can't reach.
+            </p>
+            <p>
+              This <strong>Google Dorking Tool</strong> — also called a Google dork generator or advanced search query builder — takes the guesswork out of writing those queries. You pick a category (SEO, Developer, Security, WordPress, Cloud, or Social), enter your target domain or keyword, and it builds the correct <strong>Google dork syntax</strong> for you in real time. No need to memorize operator rules. No trial and error.
+            </p>
+            <p>
+              I've run hundreds of these queries manually over the years — checking indexed pages, hunting for exposed config files, finding guest post opportunities. The thing that wastes the most time isn't understanding the operators. It's the syntax. One wrong quote, one missing space, and Google returns nothing useful. That's exactly what this tool fixes.
+            </p>
+            <p>
+              The tool covers 40+ pre-built dork templates across six use categories, plus a Custom Builder for combining operators visually. You can execute the generated query directly in Google, Bing, GitHub, or Shodan — without leaving the page.
+            </p>
 
-          <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">What is Google Dorking?</h3>
-          <p>
-            Google Dorking involves using advanced search operators—specialized commands embedded directly into Google search queries—to narrow down results. While the average user types a simple phrase like <em>how to fix a leaky faucet</em>, professionals use operators like <code>site:</code>, <code>inurl:</code>, and <code>filetype:</code> to instruct Google's algorithm to search within specific websites, URLs, or file formats.
-          </p>
-          <p>
-            Originally coined in 2002 by security researcher Johnny Long, the term "Google Dork" was used to describe an inept person who exposed sensitive information on the internet. Shortened to "dorking" over time, it has evolved into a highly respected technique used across multiple digital disciplines.
-          </p>
-
-          <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">How SEO Professionals Use Google Dorks</h3>
-          <p>
-            Search Engine Optimization (SEO) requires competitive intelligence and finding hidden ranking opportunities. Advanced search operators are an SEO expert's best friend.
-          </p>
-          <ul>
-            <li><strong>Finding Indexation Issues:</strong> By using <code>site:yourdomain.com</code>, an SEO can quickly see approximately how many pages Google has indexed for a given domain. Adding a minus operator (e.g., <code>site:yourdomain.com -inurl:https</code>) can instantly reveal insecure HTTP pages that need to be redirected.</li>
-            <li><strong>Discovering Guest Post Opportunities:</strong> Building backlinks through guest posting is highly effective. Instead of manual outreach, SEOs use queries like <code>"your niche" "write for us"</code> or <code>"submit a guest post"</code> to find websites actively accepting contributions.</li>
-            <li><strong>Resource Page Link Building:</strong> Finding resource directories is simplified with <code>inurl:resources "your industry"</code>. This targets web pages specifically designed to link out to valuable content.</li>
-            <li><strong>Tracking Unlinked Brand Mentions:</strong> To find where your brand is mentioned but not linked, you can use <code>"Your Brand Name" -site:yourdomain.com</code>. This filters out your own website's mentions, showing you external coverage where you can request a backlink.</li>
-          </ul>
-
-          <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">How Software Developers Use Google Dorks</h3>
-          <p>
-            Developers spend a significant amount of time debugging and researching code. Google Dorks help cut through the noise of consumer tech support forums to find actual developer solutions.
-          </p>
-          <ul>
-            <li><strong>Targeting Specific Forums:</strong> When confronting a bug, a developer might search <code>site:stackoverflow.com "NullReferenceException"</code> to exclusively search StackOverflow, skipping unhelpful blogs.</li>
-            <li><strong>Locating Open Source Examples:</strong> Using <code>site:github.com "import tensorflow"</code> allows developers to find open-source repositories using specific libraries to learn from real-world implementations.</li>
-            <li><strong>Finding Code Snippets:</strong> Queries like <code>site:pastebin.com "function connectDatabase"</code> can reveal publicly shared code snippets that solve common architectural problems.</li>
-          </ul>
-
-          <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">Cybersecurity, Bug Bounty and OSINT</h3>
-          <p>
-            The most extensive use of Google Dorking lies in the world of cybersecurity. Security professionals and ethical hackers use these techniques to map out a company's attack surface and identify accidentally exposed sensitive information (Open Source Intelligence or OSINT).
-          </p>
-          <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl border-l-4 border-indigo-500 my-6">
-            <h4 className="font-semibold text-lg mb-2">Common Vulnerability Disclosures found via Dorking:</h4>
-            <ol className="mb-0 space-y-2">
-              <li><strong>Exposed Environment Files:</strong> Using <code>ext:env "DB_PASSWORD"</code> can reveal configuration files containing database credentials left accessible on public servers.</li>
-              <li><strong>Database Dumps:</strong> A careless server migration might leave a SQL backup file publicly accessible, findable with <code>ext:sql intext:"INSERT INTO"</code>.</li>
-              <li><strong>Unsecured Cameras:</strong> Default hardware configurations often leave IP cameras publicly visible on the internet, discoverable via specific URL patterns like <code>inurl:"view/view.shtml"</code>.</li>
-              <li><strong>Open Directories:</strong> When a web server lacks a default index file and directory listing is enabled, a hacker can browse the entire file system using <code>intitle:"index of"</code>.</li>
+            <h2>How to Use the Google Dorking Tool — Step by Step</h2>
+            <p>Here's how to go from zero to a working dork query in about 30 seconds:</p>
+            <ol>
+              <li><strong>Enter your target.</strong> Type a domain (like <code>example.com</code>) or a keyword in the input field at the top. The tool automatically strips <code>https://</code>, <code>www.</code>, and trailing slashes — so your queries don't break due to formatting.</li>
+              <li><strong>Pick a category.</strong> Choose from SEO, Developer, Security, WordPress, Cloud, or Social depending on what you're trying to find. Each tab has 5–12 pre-built dork templates specific to that use case.</li>
+              <li><strong>Select a dork template.</strong> Click any card from the grid. The output preview updates instantly with your target filled in. The syntax is color-coded — operators show in blue, values in green, quoted strings in yellow, exclusions in red.</li>
+              <li><strong>Use advanced filters if needed.</strong> Expand the "Advanced Filter Options" panel to wrap your target in quotes (exact match), add an exclusion keyword, or filter by file type (PDF, SQL, ENV, LOG, PHP).</li>
+              <li><strong>Copy or execute.</strong> Click Copy to grab the query, or pick a search engine (Google, Bing, GitHub, Shodan) and click "Open in [Engine]" to run it directly.</li>
             </ol>
-          </div>
-          
-          <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">Beyond Google: Shodan, Bing and GitHub</h3>
-          <p>
-            While Google is the most powerful general-purpose search engine, our tool supports switching your executed query to other platforms:
-          </p>
-          <ul>
-            <li><strong>Shodan:</strong> The "search engine for the Internet of Things". Shodan indexes server headers, open ports, and device banners rather than web content. Executing dorks against Shodan can reveal unsecured webcams, industrial control systems, and raw database servers.</li>
-            <li><strong>GitHub:</strong> Many developers accidentally commit API keys, AWS credentials, or passwords into public GitHub repositories. Executing queries via GitHub code search identifies these leaks.</li>
-            <li><strong>Bing:</strong> Different search engine crawlers index the web at different speeds and with different methodologies. What Google removed via a DMCA or privacy request might still be cached on Bing.</li>
-          </ul>
+            <p>
+              The Favorites tab lets you star any dork template and save it for later. The Custom Builder lets you combine operators like <code>site:</code>, <code>inurl:</code>, <code>intitle:</code>, and <code>ext:</code> in any order using a visual block interface — no syntax knowledge needed.
+            </p>
+            <p>
+              One thing worth knowing: the <strong>exact match toggle</strong> wraps your target keyword in quotes. This matters more than it seems. <code>site:example.com api</code> returns pages where "api" appears anywhere in Google's index. <code>site:example.com "api"</code> forces an exact match. For security research especially, that difference determines whether you find what you're actually looking for.
+            </p>
 
-          <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">Essential Search Operators Cheatsheet</h3>
-          <p>
-            To master Google Dorking, you need to understand the fundamental building blocks. Here are the most critical operators:
-          </p>
-          <div className="overflow-x-auto my-6">
-            <table className="w-full text-left border-collapse">
+            <h2>Is This Tool Private? What Data Does It Send?</h2>
+            <p>
+              The Google Dorking Tool runs entirely in your browser. It doesn't send your domain, keyword, or generated queries to any server. There's no account, no login, no usage tracking tied to the queries you build here.
+            </p>
+            <p>
+              When you click "Open in Google" (or any other engine), the query goes directly from your browser to Google — the same as typing it yourself in the search bar. This tool acts as a query builder only, not a proxy or data collector.
+            </p>
+            <p>
+              Your saved favorites are stored in your browser's <code>localStorage</code> — local to your device only. They're not synced to a cloud service or visible to anyone else. Clear your browser storage and they're gone.
+            </p>
+            <p>
+              One thing to be honest about: the queries you run on Google are subject to Google's own terms of service. If you run dozens of complex queries in quick succession, Google may serve a CAPTCHA. That's a Google-side rate limit — not something this tool causes or can prevent. Pace your searches if you're doing bulk research.
+            </p>
+
+            <h2>What Can This Google Dork Generator Do? — Full Feature List</h2>
+            <ul>
+              <li><strong>40+ pre-built dork templates</strong> across SEO, Developer, Security, WordPress, Cloud, and Social categories — each one tested and written to produce real, useful results.</li>
+              <li><strong>Real-time syntax highlighting</strong> in the output panel: operators (blue), values (green), quoted strings (yellow), and exclusions (red) — so you can read the query structure at a glance.</li>
+              <li><strong>Smart input sanitization</strong> — strips <code>https://</code>, <code>www.</code>, and trailing slashes automatically so your dork syntax never breaks.</li>
+              <li><strong>Advanced filter panel</strong> — add exact match quotes, exclude a keyword, or filter by file extension (PDF, TXT, SQL, ENV, LOG, PHP) without editing the query manually.</li>
+              <li><strong>Visual Custom Builder</strong> — combine any supported operator (site:, inurl:, intitle:, intext:, ext:, -, OR) in a drag-and-drop style block interface without touching raw syntax.</li>
+              <li><strong>Multi-engine execution</strong> — run the generated query directly in Google, Bing, GitHub code search, or Shodan from a single dropdown.</li>
+              <li><strong>Favorites system</strong> — star any dork template and access your saved queries from the Favorites tab. Stored locally in your browser, no account needed.</li>
+              <li><strong>Copy to clipboard</strong> — one click copies the full query string, ready to paste anywhere.</li>
+            </ul>
+            <p>
+              One honest limitation worth flagging: Google periodically deprecates or changes operator behavior without announcement. The <code>daterange:</code> operator in the SEO tab, for example, uses Julian date format and Google's support for it is inconsistent. If a dork returns unexpected results, try running it without that modifier first.
+            </p>
+
+            <h2>Technical Specifications</h2>
+            <table>
               <thead>
-                <tr className="bg-gray-100 dark:bg-gray-800">
-                  <th className="p-4 border border-gray-200 dark:border-gray-700 font-semibold">Operator</th>
-                  <th className="p-4 border border-gray-200 dark:border-gray-700 font-semibold">Description</th>
-                  <th className="p-4 border border-gray-200 dark:border-gray-700 font-semibold">Example</th>
+                <tr>
+                  <th>Specification</th>
+                  <th>Detail</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code className="text-blue-600 dark:text-blue-400">site:</code></td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700">Limits results to a specific domain or TLD.</td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code>site:gov</code></td>
-                </tr>
-                <tr className="bg-gray-50 dark:bg-gray-800/50">
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code className="text-blue-600 dark:text-blue-400">inurl:</code></td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700">Restricts results to documents containing that word in the URL.</td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code>inurl:login</code></td>
+                  <td>Processing location</td>
+                  <td>100% client-side — all query generation runs in your browser</td>
                 </tr>
                 <tr>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code className="text-blue-600 dark:text-blue-400">intitle:</code></td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700">Restricts results to documents containing that word in the title.</td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code>intitle:"index of"</code></td>
-                </tr>
-                <tr className="bg-gray-50 dark:bg-gray-800/50">
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code className="text-blue-600 dark:text-blue-400">filetype:</code> or <code className="text-blue-600 dark:text-blue-400">ext:</code></td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700">Restricts results to a specific file extension.</td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code>ext:pdf</code></td>
+                  <td>Dork categories</td>
+                  <td>SEO, Developer, Security, WordPress, Cloud, Social</td>
                 </tr>
                 <tr>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code className="text-blue-600 dark:text-blue-400">" "</code></td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700">Forces an exact match search.</td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code>"exact phrase"</code></td>
-                </tr>
-                <tr className="bg-gray-50 dark:bg-gray-800/50">
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code className="text-blue-600 dark:text-blue-400">-</code> (Minus)</td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700">Excludes a specific word or site from the results.</td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code>-site:wikipedia.org</code></td>
+                  <td>Pre-built templates</td>
+                  <td>40+ operator templates across all categories</td>
                 </tr>
                 <tr>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code className="text-blue-600 dark:text-blue-400">OR</code> or <code className="text-blue-600 dark:text-blue-400">|</code></td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700">Matches either the first or the second term.</td>
-                  <td className="p-4 border border-gray-200 dark:border-gray-700"><code>ext:jpg | ext:png</code></td>
+                  <td>Supported operators</td>
+                  <td>site:, inurl:, intitle:, intext:, ext:, filetype:, -(exclude), OR / |, "exact match"</td>
+                </tr>
+                <tr>
+                  <td>Supported search engines</td>
+                  <td>Google, Bing, GitHub code search, Shodan</td>
+                </tr>
+                <tr>
+                  <td>Advanced filters</td>
+                  <td>Exact match toggle, exclude keyword, file type selector (PDF, TXT, SQL, ENV, LOG, PHP)</td>
+                </tr>
+                <tr>
+                  <td>Custom Builder</td>
+                  <td>Visual block-based operator builder — combine up to unlimited operator blocks</td>
+                </tr>
+                <tr>
+                  <td>Favorites storage</td>
+                  <td>Browser localStorage — no server sync, no account required</td>
+                </tr>
+                <tr>
+                  <td>Data sent to server</td>
+                  <td>Zero — no queries, domains, or keywords are transmitted</td>
+                </tr>
+                <tr>
+                  <td>Install required</td>
+                  <td>None — works in any modern browser with JavaScript enabled</td>
+                </tr>
+                <tr>
+                  <td>Browser support</td>
+                  <td>Chrome, Firefox, Safari, Edge — all modern browsers</td>
+                </tr>
+                <tr>
+                  <td>Mobile support</td>
+                  <td>Yes — responsive layout, works on iOS and Android</td>
                 </tr>
               </tbody>
             </table>
+            <p>
+              Built by <a href="https://github.com/Dtshirt/omniwebkit" target="_blank" rel="noopener noreferrer">Lazydesigners</a> — a team focused on fast, private, client-side web tools. Use the <strong>Google Dorking Tool</strong> above, pick your category, and you'll have a precise, ready-to-run search query in under a minute.
+            </p>
+
           </div>
-
-          <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">Why Using Our Google Dorks Generator is Better</h3>
-          <p>
-            While any technical expert can memorize the operators described above, stringing them together cleanly—especially when escaping characters and dealing with complex boolean logic—is tedious and prone to human error. A single misplaced quote or missing space can break a Google query, returning zero results or millions of false positives.
-          </p>
-          <p>
-            Our Advanced Google Dork generator provides an organized interface where you can quickly select your exact use case. We automatically sanitize URL inputs (stripping <code>https://</code> and trailing slashes) so your dorks never break. The tool features syntax highlighting so you easily understand how operators combine, a Visual Custom Builder for advanced users, and local Favorites synchronization so your core testing suite is always available.
-          </p>
-
-          <h3 className="text-2xl font-semibold mt-10 mb-4 text-gray-900 dark:text-white">Frequently Asked Questions</h3>
-          
-          <div className="space-y-6 mt-6">
-            <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-100 dark:border-gray-700">
-              <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Is Google Dorking illegal?</h4>
-              <p className="text-gray-600 dark:text-gray-300 mb-0">No, the act of using Google search operators is entirely legal. They are a built-in feature of the Google search engine. However, finding sensitive data (like a database password) and subsequently using that data to log into a server without permission is a cybercrime. Always maintain ethical boundaries.</p>
-            </div>
-            
-            <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-100 dark:border-gray-700">
-              <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Can Google block me for Dorking?</h4>
-              <p className="text-gray-600 dark:text-gray-300 mb-0">If you execute too many complex queries in rapid succession, Google's automated systems may flag your IP address for suspicious bot activity. You will likely be prompted to solve a reCAPTCHA to prove you are human. To prevent this, avoid using automated scraping tools without proxy rotation.</p>
-            </div>
-            
-            <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-100 dark:border-gray-700">
-              <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">How do I prevent my site from being Dorked?</h4>
-              <p className="text-gray-600 dark:text-gray-300 mb-0">To protect your website, ensure that you restrict directory listing in your server configuration (e.g., Apache or Nginx). Use a properly configured <code>robots.txt</code> file to disallow the crawling of sensitive directories, and never store passwords, API keys, or database backups on an internet-facing web server directory.</p>
-            </div>
-
-            <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-100 dark:border-gray-700">
-              <h4 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Do these operators work on Bing or DuckDuckGo?</h4>
-              <p className="text-gray-600 dark:text-gray-300 mb-0">Many basic operators like <code>site:</code>, <code>" "</code>, and <code>filetype:</code> work across major search engines. However, Google maintains the most comprehensive and complex operator support out of all consumer search engines, which is why "Google Dorking" remains the industry standard term.</p>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>

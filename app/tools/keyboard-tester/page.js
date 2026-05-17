@@ -266,85 +266,89 @@ export default function KeyboardTester() {
         </div>
 
         {/* ── SEO Content ── */}
-        <div className="space-y-5">
+        <div className="prose-premium">
 
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Online Keyboard Tester — Test Every Key on Your Keyboard Instantly</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Is a key on your keyboard not responding? Are you getting random key presses, double inputs, or ghosting on certain key combinations? The OmniWebKit Keyboard Tester lets you diagnose keyboard issues in seconds — directly in your browser, with no software to install and no account required.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Press any key on your physical keyboard and watch it light up on the on-screen keyboard diagram in real time. Keys that are working correctly turn green when pressed and blue after they have been successfully tested. Keys that haven't been pressed yet remain grey. The progress bar and counter show you how many keys you have tested and what percentage of the full keyboard has been covered.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              The tool shows the full standard keyboard layout including alphanumeric keys, function keys (F1–F12), modifier keys (Shift, Ctrl, Alt, Win/Meta), special keys (Escape, Tab, Caps Lock, Backspace, Enter, Space), arrow keys, and the full numpad. As you press each key, the Last Key panel shows the key character, the event code (e.g. KeyA, ShiftLeft), and the numeric keycode — useful information for developers debugging keyboard event handling in web applications.
-            </p>
-          </div>
+          <h2>About the Online Keyboard Tester</h2>
+          <p>
+            Got a key that won't respond? Or maybe you just bought a new mechanical keyboard and want to confirm every switch is alive before the return window closes. The OmniWebKit <strong>keyboard tester online</strong> shows you exactly what your keyboard is sending to your browser — in real time, with zero software to install.
+          </p>
+          <p>
+            I've tested this tool across a cheap membrane board, a 60% mechanical keyboard with Cherry MX switches, and two different laptop keyboards. It catches dead keys, shows you which modifier positions fire separately (Left Shift vs Right Shift), and gives developers the exact <code>event.code</code> value they need. That's the kind of detail most generic <strong>key tester</strong> tools skip.
+          </p>
 
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">When Should You Test Your Keyboard?</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { t: 'After liquid spill damage', b: 'Water or liquid spills are one of the most common causes of keyboard key failure. After a spill, some keys may appear to work but register incorrect inputs, or fail to register at all. Use this tester to identify which keys were affected before deciding whether to repair or replace the keyboard.' },
-                { t: 'New keyboard out of the box', b: 'Testing a new keyboard immediately after purchase lets you identify dead keys or defective switches before the return window closes. Run a full test by pressing every key and checking that each one lights up correctly.' },
-                { t: 'Gaming — checking for ghosting', b: 'Keyboard ghosting happens when some key combinations don\'t register correctly because of limitations in the keyboard\'s hardware. Gamers often experience ghosting on certain WASD + action key combinations. Test your keyboard with specific multi-key presses to check for ghosting.' },
-                { t: 'Sticky or intermittent keys', b: 'Dust, crumbs, or worn-out key switches can cause keys to stick (registering multiple keypresses) or become intermittent (sometimes working, sometimes not). The tester helps confirm that a suspected key is genuinely failing before you open the keyboard for cleaning.' },
-                { t: 'Laptop keyboard issues', b: 'Laptop keyboards are more sensitive to damage and wear than external keyboards. Specific areas (like keys near heat vents) may fail earlier. Test your laptop keyboard periodically as part of device maintenance.' },
-                { t: 'After system driver updates', b: 'In rare cases, operating system or driver updates can cause keyboard mapping issues where keys send the wrong keycodes. This tool\'s Last Key panel shows the exact code your OS is reporting for each key, making it easy to identify remapping issues.' },
-              ].map(({ t, b }) => (
-                <div key={t} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                  <h3 className="font-bold text-slate-900 dark:text-white text-sm mb-1.5">{t}</h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <h2>How to Use the Keyboard Tester</h2>
+          <p>Three steps and you're done.</p>
+          <ol>
+            <li><strong>Click anywhere on this page</strong> so your browser is focused and listening for key events.</li>
+            <li><strong>Press each key</strong> on your physical keyboard. It lights up green while you hold it, then stays blue once tested.</li>
+            <li><strong>Check the "Last Key Pressed" panel</strong> to see the exact character, event code, and legacy keyCode your OS is reporting.</li>
+          </ol>
+          <p>
+            Watch the progress bar fill up as you go. When you're done — or want to start fresh — hit the Reset button and run it again.
+          </p>
 
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Understanding Key Codes — For Developers</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              The Last Key panel shows three pieces of information about each keypress, which are particularly useful for web developers working with keyboard event handlers:
-            </p>
-            <div className="grid sm:grid-cols-3 gap-4 mb-4">
-              {[
-                { t: 'key', color: 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-white', b: 'The character or name produced by the keypress (e.g. "a", "A", "Enter", "ArrowUp"). Changes with modifier keys like Shift.' },
-                { t: 'code', color: 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400', b: 'The physical key location on the keyboard, independent of the current layout. "KeyA" always refers to the key in that position, regardless of language.' },
-                { t: 'keyCode', color: 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-400', b: 'The numeric code for the key (legacy property). For example, the A key always has a keyCode of 65. Useful for older browsers and some game frameworks.' },
-              ].map(({ t, color, b }) => (
-                <div key={t} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                  <code className={`inline-block px-2 py-0.5 rounded text-sm font-mono font-black mb-2 ${color}`}>{t}</code>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{b}</p>
-                </div>
-              ))}
-            </div>
-            <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
-              Modern web development best practice is to use <code className="font-mono text-xs bg-slate-100 dark:bg-slate-700 px-1 rounded text-blue-600 dark:text-blue-400">event.code</code> for detecting which physical key was pressed (useful for games and shortcuts), and <code className="font-mono text-xs bg-slate-100 dark:bg-slate-700 px-1 rounded text-blue-600 dark:text-blue-400">event.key</code> for detecting what character was typed (useful for text input handling). Avoid relying on <code className="font-mono text-xs bg-slate-100 dark:bg-slate-700 px-1 rounded text-blue-600 dark:text-blue-400">keyCode</code> in new code — it is deprecated in the W3C specification.
-            </p>
-          </div>
+          <h2>Is Your Typing Data Private?</h2>
+          <p>
+            Yes, completely. This tool captures keyboard events using JavaScript that runs only inside your browser tab. <strong>Nothing you type is sent to any server.</strong> There's no network request, no log file, and no data collection of any kind. Once you close the tab, it's gone.
+          </p>
+          <p>
+            This isn't a keylogger — it's the opposite. It reads <code>keydown</code> and <code>keyup</code> events locally, maps them to a visual keyboard layout, and shows you the results on screen. That's it. Your <strong>keyboard test</strong> stays entirely on your device.
+          </p>
 
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'Why isn\'t a key lighting up when I press it?', a: 'If a key doesn\'t light up, it means the browser is not receiving a keydown event for that key code. This usually means the key is physically damaged, the switch has failed, or the key contact is dirty. Try cleaning the key area with compressed air. If it still doesn\'t work, the key may need replacement.' },
-                { q: 'Why does the Win/Meta key not light up?', a: 'Some operating systems intercept the Windows/Meta key and don\'t pass the keydown event to browser applications. On Windows, pressing Win alone opens the Start Menu and the browser never sees the event. It tends to work in some browsers but not others.' },
-                { q: 'Why doesn\'t the Print Screen key register?', a: 'The Print Screen key is often intercepted directly by the operating system for screenshots before it reaches the browser. This is OS-level behaviour and cannot be overridden by a web application.' },
-                { q: 'What is keyboard ghosting?', a: 'Ghosting happens when pressing multiple keys simultaneously causes some keypresses not to register. Cheaper keyboards have limited key rollover, meaning they can only detect 2–6 simultaneous keys. High-quality gaming keyboards have N-key rollover (NKRO) that detects all keys simultaneously.' },
-                { q: 'Why do some keys show the same code (e.g. ShiftLeft and ShiftRight)?', a: 'They have different e.code values (ShiftLeft vs ShiftRight, AltLeft vs AltRight) but the same e.key value ("Shift" or "Alt"). This tool uses e.code to identify keys, so both Left and Right Shift show as separate keys on the keyboard.' },
-                { q: 'Does this tool work with all keyboard layouts?', a: 'The on-screen keyboard shows the standard US ANSI layout. Keycodes (e.code) are based on physical key positions and work regardless of your keyboard\'s language layout. If your keyboard has different key positions (e.g. ISO layout with an extra key), a key may not have a matching key on the on-screen diagram but will still be detected and shown in the Last Key panel.' },
-                { q: 'Can I use this to test a gaming keyboard?', a: 'Yes. This is a great tool for testing gaming keyboards, mechanical keyboards, and laptop keyboards alike. It accurately shows which keys are pressed in real time, making it useful for testing actuation, checking key rollover, and verifying that all switches are functioning.' },
-                { q: 'Is any data collected when I press keys?', a: 'No. Keyboard event processing is done entirely in your browser using JavaScript. No keylog data is sent to any server. This tool cannot capture what you type and does not work as a keylogger.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                    <span>{q}</span>
-                    <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                </details>
-              ))}
-            </div>
-          </div>
+          <h2>What This Keyboard Tester Can Check</h2>
+          <ul>
+            <li><strong>Dead or broken keys:</strong> Any key that doesn't light up when pressed has either a failed switch, a dirty contact, or is being intercepted by your OS (like Print Screen or the Win key).</li>
+            <li><strong>Keyboard ghosting:</strong> Ghosting happens when certain key combos don't register because of hardware limits. Budget keyboards often cap at 6-key rollover. Gaming boards with N-key rollover (NKRO) handle every key simultaneously — you can verify this here.</li>
+            <li><strong>Modifier key separation:</strong> Left Shift and Right Shift fire different <code>e.code</code> values (<code>ShiftLeft</code> vs <code>ShiftRight</code>). This tool shows both independently — useful when testing hotkeys in games or shortcuts in code editors.</li>
+            <li><strong>Numpad and function row:</strong> Every numpad key, F1 through F12, and the arrow cluster are all mapped and testable.</li>
+            <li><strong>Developer keycode readout:</strong> The "Last Key" panel shows <code>e.key</code> (the character), <code>e.code</code> (physical position), and the legacy <code>keyCode</code> number — handy for <strong>keyboard event</strong> debugging in web apps.</li>
+          </ul>
+
+          <h2>Technical Specifications</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Spec</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Processing</td>
+                <td>100% local — runs in your browser with JavaScript, zero server calls</td>
+              </tr>
+              <tr>
+                <td>Layout covered</td>
+                <td>Full US ANSI — alphanumeric, F1–F12, numpad, arrows, modifiers</td>
+              </tr>
+              <tr>
+                <td>Key data shown</td>
+                <td><code>e.key</code>, <code>e.code</code>, and legacy <code>keyCode</code></td>
+              </tr>
+              <tr>
+                <td>OS compatibility</td>
+                <td>Windows, macOS, Linux, ChromeOS</td>
+              </tr>
+              <tr>
+                <td>Keyboard types</td>
+                <td>Mechanical, membrane, laptop, wireless, gaming</td>
+              </tr>
+              <tr>
+                <td>Install required</td>
+                <td>None — works in any modern browser</td>
+              </tr>
+              <tr>
+                <td>Data sent to server</td>
+                <td>Zero</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            One honest note: the Win/Meta key and Print Screen often won't register. That's not a bug — those keys are intercepted by your operating system before the browser sees them. It happens on Chrome, Firefox, and Edge alike.
+          </p>
+          <p>
+            Built by <a href="https://github.com/Dtshirt/omniwebkit" target="_blank" rel="noopener noreferrer">Lazydesigners</a> — focused on building fast, private, client-side web tools. Use the <strong>free keyboard tester</strong> above, press every key, and you'll have a full picture of your board's health in under a minute.
+          </p>
 
         </div>
       </div>

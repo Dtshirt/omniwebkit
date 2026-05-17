@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { API_V1 } from "@/lib/api-config";
+import Link from "next/link";
 
 const MAX_CLIENT_SIZE_BYTES = 50 * 1024 * 1024; // 50MB
 const POLLING_INTERVAL = 2000;
@@ -29,8 +30,6 @@ export default function RedirectCheckerClient() {
   const [bulkError, setBulkError] = useState(null);
   const [bulkSuccess, setBulkSuccess] = useState(false);
   
-  const [faqOpen, setFaqOpen] = useState(null);
-
   // ─── SINGLE MODE LOGIC (FastAPI Async) ────────────────────────
   
   const handleSingleLookup = async () => {
@@ -204,7 +203,7 @@ export default function RedirectCheckerClient() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
+    <div className="min-h-screen font-sans pb-24">
       
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-cyan-900 via-blue-900 to-indigo-950 text-white py-16 px-6 relative overflow-hidden">
@@ -396,56 +395,69 @@ export default function RedirectCheckerClient() {
           </div>
         </div>
 
-        {/* Info Blocks */}
-        <div className="grid md:grid-cols-2 gap-6 mb-16">
-           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <div className="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center mb-4 text-cyan-600">
-              <Zap className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold mb-2">Asynchronous I/O Server</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              Because modern browsers hide intermediate 301 redirects, we engineered a dedicated Async FastAPI route to trace your URLs. It securely pings the endpoints in milliseconds without utilizing heavy background workers.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-blue-600">
-              <Server className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold mb-2">Async Bulk Queues</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              When processing massive CSV files containing hundreds of redirects, we upload the data to a Redis worker queue. The background python script traces the full chains concurrently without crashing the core system.
-            </p>
-          </div>
+        <div className="prose-premium max-w-5xl mx-auto px-6 mb-24">
+          <h2>About Our Free Redirect Checker Tool</h2>
+          <p>A bad redirect chain can tank your page speed and confuse search engines before they even see your content. That’s exactly why we built this <strong>redirect checker</strong>. It pulls back the curtain on hidden 301 and 302 loops so you can see exactly where your links actually go.</p>
+          <p>If you're migrating a site or auditing old backlinks, you need to know if a URL hits five different stops before the final page. Browsers hide this journey from you. Our tool tracks every single server hop and shows you the exact path. I've used this to find affiliate links quietly bouncing through tracking domains. It exposes the raw route in milliseconds.</p>
+
+          <h2>How to Trace a Redirect Chain</h2>
+          <p>Tracing a single link or running a massive list takes just a few clicks. Here's how you do it:</p>
+          <ul>
+            <li><strong>Single Trace:</strong> Paste your target URL into the search box above.</li>
+            <li><strong>Click Trace:</strong> Hit the "Trace Chain" button.</li>
+            <li><strong>Review the Map:</strong> The tool instantly prints out every 301 permanent and 302 temporary redirect, ending at your final destination status code.</li>
+          </ul>
+          <p>Got a massive list of URLs? Use the <strong>bulk redirect checker</strong>. Drop your CSV file into the upload box. Our server runs the entire batch in the background and hands you a clean spreadsheet with every hop mapped out.</p>
+
+          <h2>Your Data Stays Private</h2>
+          <p>We respect your privacy. When you use our redirect chain checker, we don't store your URLs in a public database or track your audit history.</p>
+          <p>Your single URL checks happen in real-time. If you upload a CSV for bulk processing, our system reads the file, runs the trace, and delivers your results. We delete your uploaded lists from our temporary storage right after your background job finishes. You get full security without any shady data logging.</p>
+
+          <h2>Core Features of This SEO Tool</h2>
+          <p>We designed this utility to be fast and completely frictionless.</p>
+          <ul>
+            <li><strong>Deep Chain Discovery:</strong> Spot hidden redirect loops that drain your crawl budget.</li>
+            <li><strong>Bulk CSV Support:</strong> Track hundreds of URLs at once without freezing your browser.</li>
+            <li><strong>Status Code Clarity:</strong> Instantly see if a hop is a 301, 302, 200, or a dead 404.</li>
+            <li><strong>Visual Map:</strong> Read the path clearly from the starting link to the final destination.</li>
+          </ul>
+
+          <h2>How the Redirect Tracer Works Under the Hood</h2>
+          <p>Browsers implement strict security rules that block JavaScript from seeing intermediate redirect hops. That means your local machine can't easily map a full chain.</p>
+          <p>To fix this, we offload the work to our asynchronous backend. When you hit trace, our server sends a lightweight request to the target. It reads the raw HTTP headers and logs every location change. For bulk jobs, we use a worker queue. This spins up concurrent background checks so you can audit huge spreadsheets without crashing the core system. It's simple, highly scalable, and extremely fast.</p>
+
+          <h2>Frequently Asked Questions</h2>
+          <h3>Why does a redirect chain hurt my SEO?</h3>
+          <p>Every stop in a redirect chain adds load time. Google recommends keeping redirects to a minimum because slow pages hurt your Core Web Vitals. Long chains also dilute link equity, meaning your final page gets less ranking power from the original backlink.</p>
+
+          <h3>What's the difference between a 301 and 302 redirect?</h3>
+          <p>A 301 is permanent. It tells search engines to pass all ranking power to the new URL. A 302 is temporary. It means the move isn't permanent, so search engines won't pass the full link equity. Use 301s for site migrations and 302s for temporary maintenance.</p>
+
+          <h3>Why does my browser hide the redirect path?</h3>
+          <p>Browsers are built for speed and security. They automatically follow location headers and drop you at the final page. They don't want to bother you with the technical routing. Our tool acts like a raw HTTP client so you can see those hidden steps.</p>
+
+          <h3>Can I check affiliate links with this?</h3>
+          <p>Yes. Affiliate links often bounce through two or three tracking platforms before hitting the product page. You can drop the link into our tool and see every tracking domain it passes through.</p>
         </div>
 
-        {/* FAQs */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                <button 
-                  className="w-full text-left px-6 py-4 font-bold flex justify-between items-center text-slate-800 focus:outline-none hover:bg-slate-50"
-                  onClick={() => setFaqOpen(faqOpen === index ? null : index)}
-                >
-                  {faq.q}
-                  {faqOpen === index ? (
-                    <ChevronUp className="w-5 h-5 text-cyan-500" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-slate-400" />
-                  )}
-                </button>
-                <div 
-                  className={`px-6 text-slate-600 text-sm leading-relaxed transition-all duration-300 ease-in-out ${
-                    faqOpen === index ? "pb-6 max-h-40 opacity-100" : "max-h-0 opacity-0 py-0"
-                  }`}
-                >
-                  {faq.a}
-                </div>
-              </div>
-            ))}
+        {/* Related Tools */}
+        <div className="max-w-5xl mx-auto px-6 mb-24">
+          <h2 className="text-2xl font-bold text-slate-50 mb-6">Related SEO Tools</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link href="/tools/seo-analyzer" className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:border-cyan-300 group block">
+              <h3 className="font-bold text-lg text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">SEO Analyzer</h3>
+              <p className="text-slate-600 text-sm">Instantly audit any webpage for critical on-page SEO metrics and keyword density.</p>
+            </Link>
+            <Link href="/tools/website-content-extractor" className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:border-cyan-300 group block">
+              <h3 className="font-bold text-lg text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">Content Extractor</h3>
+              <p className="text-slate-600 text-sm">Extract clean text, headings, and images from any URL for content analysis.</p>
+            </Link>
+            <Link href="/tools/webhook-tester" className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:border-cyan-300 group block">
+              <h3 className="font-bold text-lg text-slate-800 mb-2 group-hover:text-cyan-600 transition-colors">Webhook Tester</h3>
+              <p className="text-slate-600 text-sm">Generate a unique URL to test and inspect HTTP requests and webhooks in real-time.</p>
+            </Link>
           </div>
-        </section>
+        </div>
 
       </div>
     </div>

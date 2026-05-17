@@ -12,5 +12,31 @@ export const metadata = {
 };
 
 export default function WebhookTesterPage() {
-  return <WebhookTesterClient />;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Webhook Tester",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Lazydesigners",
+      "url": "https://lazydesigners.com/"
+    }
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <WebhookTesterClient />
+    </>
+  );
 }

@@ -12,11 +12,17 @@ export const metadata = {
 
 const schemas = [
   {
-    '@context': 'https://schema.org', '@type': 'WebApplication',
+    '@context': 'https://schema.org', '@type': 'SoftwareApplication',
     name: 'Sign Documents Online', url: 'https://omniwebkit.com/tools/pdf-sign',
     description: 'Free online tool to sign PDFs and images. Draw, type, or upload signature. Place on any page with drag-and-drop.',
     applicationCategory: 'ProductivityApplication', operatingSystem: 'Any',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: {
+        '@type': 'Organization',
+        name: 'Lazydesigners',
+        url: 'https://github.com/Dtshirt/omniwebkit',
+        sameAs: 'https://github.com/Dtshirt/omniwebkit'
+    },
   },
   {
     '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to Sign a PDF Online for Free',

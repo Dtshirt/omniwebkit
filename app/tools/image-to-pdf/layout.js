@@ -46,6 +46,11 @@ const webAppSchema = {
     operatingSystem: 'Any',
     browserRequirements: 'Requires JavaScript',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: {
+        '@type': 'Organization',
+        name: 'Lazydesigners',
+        url: 'https://github.com/Dtshirt/omniwebkit'
+    },
     publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
     featureList: [
         'Combine multiple images into a single multi-page PDF',

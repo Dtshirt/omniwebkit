@@ -455,143 +455,110 @@ export default function ApiTester() {
                 </div>
 
                 {/* ── SEO Content Section ── */}
-                <div className="mt-16 space-y-6">
+        {/* ── SEO Content & Schema ── */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "API Tester",
+          "operatingSystem": "All",
+          "applicationCategory": "DeveloperApplication",
+          "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+          },
+          "author": {
+            "@type": "Organization",
+            "name": "Lazydesigners",
+            "url": "https://github.com/Dtshirt/omniwebkit"
+          }
+        }) }} />
+        <div className="prose-premium mt-10">
+          <h2>About the Tool</h2>
+          <p>Debugging endpoints shouldn't require a 300MB download and a forced account login. This online <strong>api tester</strong> is a lightweight, browser-based HTTP client that lets you test REST APIs instantly. Whether you are building a new backend, integrating a third-party service, or just verifying payload structures, this tool gives you raw access to send requests and inspect responses without the friction of desktop software.</p>
+          <p>I built this because half the time, developers just need to fire off a quick GET or POST request to see what comes back. You get the power of a dedicated HTTP client—custom headers, query builders, and JSON highlighting—packaged into a single, lightning-fast web interface.</p>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Online API Tester — Test REST APIs in Your Browser</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            Building and debugging APIs is one of the most common tasks in web development. Whether you are working on a REST API, testing a third-party integration, or verifying that your backend returns the right data, you need a tool that lets you send HTTP requests quickly and see exactly what comes back.
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            The OmniWebKit API Tester is a free, browser-based HTTP client that lets you do exactly that. You do not need to install Postman, configure an IDE plugin, or write a single line of code. Just enter a URL, choose your HTTP method, add headers or a request body if needed, and hit Send. The response appears instantly — status code, response time, response size, body, and all response headers included.
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            This tool is perfect for frontend developers testing backend APIs, QA engineers verifying endpoint behaviour, students learning how HTTP works, and anyone who needs to make a quick API call without pulling up a full desktop application.
-                        </p>
-                    </section>
+          <h2>How to Use</h2>
+          <p>Testing your endpoints takes less than ten seconds. Here is how you send your first request.</p>
+          <ol>
+            <li><strong>Drop in your endpoint:</strong> Paste your API URL into the main address bar. You can also click one of the "Quick Presets" to load a working example immediately.</li>
+            <li><strong>Select the method:</strong> Choose your HTTP method (GET, POST, PUT, PATCH, DELETE) from the dropdown next to the URL.</li>
+            <li><strong>Configure headers & params:</strong> If you need an auth token or custom query strings, jump into the Headers or Params tabs. The tool automatically encodes your query strings.</li>
+            <li><strong>Add your payload (if needed):</strong> For POST or PUT requests, switch to the Body tab. Drop your JSON in and hit the "Beautify JSON" button to format it properly.</li>
+            <li><strong>Fire the request:</strong> Click Send. The tool routes your call and instantly displays the status code, response time, and the highlighted JSON response body.</li>
+          </ol>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">How to Use the API Tester</h2>
-                        <div className="space-y-5">
-                            {[
-                                { n: '1', icon: Globe, title: 'Enter Your API URL', desc: 'Type or paste the full API endpoint URL into the address bar at the top. For example: https://api.example.com/users. You can also click any Quick Preset to load a real-world API URL instantly.' },
-                                { n: '2', icon: Zap, title: 'Choose an HTTP Method', desc: 'Select the method from the dropdown: GET to retrieve data, POST to create, PUT to replace, PATCH to partially update, or DELETE to remove a resource. HEAD and OPTIONS are also supported for advanced use cases.' },
-                                { n: '3', icon: Code2, title: 'Add Headers and Parameters', desc: 'Use the Headers tab to add authentication tokens (Authorization: Bearer …), content type declarations, or any custom headers. Use the Params tab to add query parameters like ?page=1&limit=10 — they are appended to the URL automatically.' },
-                                { n: '4', icon: BookOpen, title: 'Add a Request Body', desc: 'For POST, PUT, and PATCH requests, switch to the Body tab and enter your JSON payload. Use the Beautify JSON button to auto-format messy JSON before sending. The editor uses a dark terminal-style background for comfortable reading.' },
-                                { n: '5', icon: Send, title: 'Send and Inspect the Response', desc: 'Click Send (or press Enter) to fire the request. The response panel shows the HTTP status code (200, 404, 500 etc.), response time in milliseconds, body size, and the full response body with JSON syntax highlighting. Switch to the Headers tab in the response panel to see all response headers.' },
-                                { n: '6', icon: Clock, title: 'Use Request History', desc: 'Every successful request is saved in your session history. Click any history item to restore that URL and method so you can re-run or modify it. You can clear the history at any time.' },
-                            ].map(({ n, icon: Icon, title, desc }) => (
-                                <div key={n} className="flex gap-4">
-                                    <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-sm font-bold flex items-center justify-center">{n}</div>
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <Icon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                                            <p className="font-semibold text-slate-900 dark:text-white text-sm">{title}</p>
-                                        </div>
-                                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+          <h2>Privacy & Security</h2>
+          <p>Here's the thing — API keys and bearer tokens are sensitive. When you use this api tester, your session data stays private.</p>
+          <p>We do not log your request payloads, endpoints, or API keys in a database. Your history is stored strictly in your browser's local session and vanishes the moment you close the tab. To bypass strict CORS errors that block normal browser requests, your calls route through a secure, ephemeral server-side proxy. The proxy acts as a pass-through and immediately discards your data once the response hits your screen. You get the freedom to test secure endpoints safely.</p>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Key Features</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {[
-                                { icon: Zap, title: 'All HTTP Methods', desc: 'Supports GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS requests.', c: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-                                { icon: Code2, title: 'JSON Syntax Highlighting', desc: 'Response JSON is colour-highlighted for keys, strings, numbers, booleans, and null values.', c: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-                                { icon: ChevronRight, title: 'Query Parameter Builder', desc: 'Add query parameters visually. They are encoded and appended to the URL automatically.', c: 'text-violet-600 dark:text-violet-400', bg: 'bg-violet-50 dark:bg-violet-900/20' },
-                                { icon: Shield, title: 'Custom Request Headers', desc: 'Add any headers including Authorization, Accept, X-API-Key, and Content-Type with simple key-value pairs.', c: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-                                { icon: Clock, title: 'Request History', desc: 'Automatically saves your last 20 requests. Click any history item to reload that request instantly.', c: 'text-rose-600 dark:text-rose-400', bg: 'bg-rose-50 dark:bg-rose-900/20' },
-                                { icon: BookOpen, title: 'Quick Presets', desc: 'Load real-world API examples in one click — JSONPlaceholder, GitHub, IP geolocation, and more.', c: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-50 dark:bg-teal-900/20' },
-                                { icon: Info, title: 'Response Metadata', desc: 'See the exact HTTP status code, status text, response time (ms), and response body size for every request.', c: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
-                                { icon: Copy, title: 'One-click Copy', desc: 'Copy the full response body or individual response header values to clipboard with a single click.', c: 'text-slate-600 dark:text-slate-400', bg: 'bg-slate-100 dark:bg-slate-700' },
-                            ].map(({ icon: Icon, title, desc, c, bg }) => (
-                                <div key={title} className="flex gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
-                                    <div className={`flex-shrink-0 w-10 h-10 ${bg} rounded-xl flex items-center justify-center`}>
-                                        <Icon className={`w-5 h-5 ${c}`} />
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold text-slate-900 dark:text-white text-sm">{title}</p>
-                                        <p className="text-slate-600 dark:text-slate-400 text-sm mt-0.5 leading-relaxed">{desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+          <h2>Features</h2>
+          <p>I cut out the enterprise bloat and kept exactly what you actually use to debug APIs.</p>
+          <ul>
+            <li><strong>Complete HTTP Support:</strong> Send GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS requests effortlessly.</li>
+            <li><strong>Intelligent Query Builder:</strong> Stop manually encoding URLs. Add key-value pairs in the Params tab, and the tool builds the query string dynamically.</li>
+            <li><strong>Header Management:</strong> Inject custom headers, Bearer tokens, and Content-Type declarations with simple toggle switches.</li>
+            <li><strong>Response Insights:</strong> Instantly see the HTTP status code (color-coded for success or failure), the response time in milliseconds, and the exact payload size.</li>
+            <li><strong>JSON Auto-Formatting:</strong> The body editor comes with a one-click beautifier, and the response window automatically color-highlights valid JSON for easy reading.</li>
+          </ul>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">HTTP Methods Explained</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
-                            REST APIs use different HTTP methods to represent different actions on a resource. Choosing the right method is fundamental to building and testing APIs correctly. Here is what each method means and when to use it.
-                        </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {[
-                                { method: 'GET', desc: 'Retrieve a resource or list of resources. GET requests should never modify data. They are safe and can be cached.' },
-                                { method: 'POST', desc: 'Create a new resource. Send data in the request body. The server returns the created resource, usually with a 201 Created status.' },
-                                { method: 'PUT', desc: 'Replace an entire resource with the data in the request body. If the resource does not exist, some APIs will create it.' },
-                                { method: 'PATCH', desc: 'Partially update a resource. Only send the fields you want to change. More efficient than PUT when updating one or two fields.' },
-                                { method: 'DELETE', desc: 'Remove a resource permanently. A successful delete typically returns 200 OK or 204 No Content with an empty body.' },
-                                { method: 'HEAD', desc: 'Like GET, but returns only the response headers — not the body. Useful for checking if a resource exists or checking cache metadata.' },
-                                { method: 'OPTIONS', desc: 'Returns the HTTP methods the server supports for a URL. Used by browsers in CORS preflight requests before cross-origin API calls.' },
-                            ].map(({ method: m, desc }) => (
-                                <div key={m} className="flex gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-100 dark:border-slate-700">
-                                    <span className={`text-xs font-bold px-2 py-0.5 rounded self-start mt-0.5 flex-shrink-0 ${METHOD_COLORS[m]}`}>{m}</span>
-                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+          <h2>Technical Specifications</h2>
+          <p>For those who want to know how the request engine operates under the hood.</p>
+          <div className="overflow-x-auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Specification</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Request Engine</strong></td>
+                  <td>Server-side proxy bypass (CORS-immune)</td>
+                </tr>
+                <tr>
+                  <td><strong>Supported Methods</strong></td>
+                  <td>GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS</td>
+                </tr>
+                <tr>
+                  <td><strong>History Storage</strong></td>
+                  <td>Session-only (Max 20 requests)</td>
+                </tr>
+                <tr>
+                  <td><strong>Payload Handling</strong></td>
+                  <td>Raw JSON, text, form-data support via proxy</td>
+                </tr>
+                <tr>
+                  <td><strong>Timeout Limit</strong></td>
+                  <td>30 seconds per request</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">HTTP Status Codes You'll See</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
-                            Every HTTP response includes a three-digit status code. Understanding what these codes mean is essential for debugging APIs. The API Tester colour-codes them for quick identification — green for success, blue for redirects, amber for client errors, and red for server errors.
-                        </p>
-                        <div className="space-y-3">
-                            {[
-                                { range: '2xx — Success', color: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20', examples: '200 OK, 201 Created, 204 No Content', desc: 'The request was received, understood, and processed successfully. 200 is the standard success code. 201 means a resource was created. 204 means success but no content to return.' },
-                                { range: '3xx — Redirection', color: 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20', examples: '301 Moved Permanently, 302 Found, 304 Not Modified', desc: 'The client must take additional action to complete the request. 301 means the URL has permanently changed. 304 means the cached version is still valid.' },
-                                { range: '4xx — Client Errors', color: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20', examples: '400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found', desc: 'The request contained an error on the client side. 400 means bad syntax. 401 means authentication is required. 403 means you are authenticated but not allowed. 404 means the resource was not found.' },
-                                { range: '5xx — Server Errors', color: 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20', examples: '500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable', desc: 'The server failed to fulfil a valid request. 500 is a generic server-side error. 502 means the gateway received an invalid response. 503 means the server is temporarily unavailable.' },
-                            ].map(({ range, color, examples, desc }) => (
-                                <div key={range} className="p-4 rounded-xl border border-slate-100 dark:border-slate-700">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <span className={`text-xs font-bold px-2 py-0.5 rounded ${color}`}>{range}</span>
-                                    </div>
-                                    <p className="text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">{examples}</p>
-                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+          <h2>Postman vs Our Tool: Why Choose Ours?</h2>
+          <p>Postman is a fantastic enterprise tool, but it has grown heavy. If you manage massive team workspaces, complex CI/CD pipelines, or automated test suites, stick with Postman. But if you just want to test an endpoint right now without signing in, syncing workspaces, or waiting for a bloated electron app to load, this online api tester is your answer.</p>
+          <p>Our tool requires zero installation and loads in milliseconds. It handles CORS issues automatically via a background proxy, meaning you get desktop-level request power straight from your browser tab. Use it when you need speed, simplicity, and immediate results.</p>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {[
-                                { q: 'Is this API tester free?', a: 'Yes, 100% free. No account, no installation, no usage limits.' },
-                                { q: 'What is the difference between this API tester and Postman?', a: 'Postman is a full desktop application with teams, environments, automated testing, and mock servers. This tool is a lightweight browser-based alternative — faster to access, requires no installation, and is perfect for quick API tests and learning. For large teams or complex workflows, Postman has more features.' },
-                                { q: 'Does this tool have CORS issues?', a: 'No. Unlike most browser-based API testers, this tool routes all requests through a server-side proxy. Your API call is made from the server (not the browser), so CORS restrictions do not apply. Every API that works with Postman or curl will work here.' },
-                                { q: 'Can I test APIs that require authentication?', a: 'Yes. Go to the Headers tab and add an Authorization header with your token. For example: Key = Authorization, Value = Bearer your-token-here. You can also add API keys as headers or as query parameters using the Params tab.' },
-                                { q: 'How do I send a POST request with a JSON body?', a: 'Select POST from the method dropdown. In the Headers tab, make sure Content-Type is set to application/json. Switch to the Body tab and enter your JSON. You can use the Beautify JSON button to auto-format it. Then click Send.' },
-                                { q: 'Does the API tester save my requests?', a: 'Your last 20 requests are saved in your browser session as History (not persisted across page loads). You can click any history item to restore that URL and method. No data is sent to any server — everything stays in your browser.' },
-                                { q: 'What format does the response body support?', a: 'The API tester handles any text-based response. JSON responses are automatically syntax-highlighted in colour for keys, strings, numbers, booleans, and null values. HTML, XML, plain text, and other text formats display as plain preformatted text.' },
-                                { q: 'How do I add query parameters like ?page=2?', a: 'Use the Params tab. Add a row with Key = page and Value = 2. The tool will encode and append the parameters to the URL automatically. You can see the final URL with parameters shown in a preview at the bottom of the Params tab.' },
-                            ].map(({ q, a }) => (
-                                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none">
-                                        <span>{q}</span>
-                                        <span className="text-slate-400 dark:text-slate-500 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                                </details>
-                            ))}
-                        </div>
-                    </section>
+          <h2>Frequently Asked Questions</h2>
+          
+          <h3>Is this API tester actually free?</h3>
+          <p>Yes. There are no premium tiers, no hidden paywalls, and no forced account creations. It is a completely free developer utility.</p>
 
-                </div>
+          <h3>Why isn't my request hitting a CORS block?</h3>
+          <p>Normally, browsers block cross-origin requests. To fix this, our tool routes your request through a temporary server-side proxy. The proxy fetches the data and hands it back to your browser, bypassing CORS entirely.</p>
+
+          <h3>Can I send a POST request with a JSON body?</h3>
+          <p>Absolutely. Just select POST, make sure you add a <code>Content-Type: application/json</code> header, and drop your data into the Body tab. Hit Send and watch it work.</p>
+
+          <h3>How do I test an endpoint with a Bearer token?</h3>
+          <p>Jump into the Headers tab. Type <code>Authorization</code> in the key field and <code>Bearer YOUR_TOKEN</code> in the value field. The tool will inject it into your HTTP request.</p>
+
+          <h3>Does this tool save my API keys?</h3>
+          <p>No. Your request history is temporarily saved in your active browser session so you don't lose your work if you misclick. Once you close the tab, everything is wiped clean. We do not store your tokens on our servers.</p>
+ 
+        </div>
             </div>
         </div>
     );

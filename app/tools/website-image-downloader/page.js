@@ -34,18 +34,23 @@ export const metadata = {
 
 const webAppSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  '@type': 'SoftwareApplication',
   name: 'Website Image Downloader',
   description:
     'Free online tool to extract and download all images from any website by URL. Supports bulk download and individual image download.',
   url: 'https://omniwebkit.com/tools/website-image-downloader',
-  applicationCategory: 'UtilitiesApplication',
+  applicationCategory: 'WebApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'USD',
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'Lazydesigners',
+    url: 'https://github.com/Dtshirt/omniwebkit'
   },
   featureList: [
     'Extract images from any URL',
@@ -180,6 +185,70 @@ export default function WebsiteImageDownloaderPage() {
 
       {/* ── Interactive Tool ── */}
       <WebsiteImageDownloaderClient />
+
+      {/* ── SEO Content ── */}
+      <div className="mt-16 prose-premium max-w-4xl mx-auto px-4 pb-16">
+        <h2>About the Website Image Downloader</h2>
+        <p>
+          When you need to extract multiple pictures from a webpage, right-clicking each one is a massive waste of time. This <strong>website image downloader</strong> automates the entire process. It scans the provided URL, extracts every image hidden in the HTML or CSS, and presents them in a clean grid. From there, you can download a single file or grab the entire batch instantly. 
+        </p>
+
+        <h2>How to Use This Tool</h2>
+        <p>
+          Getting your images takes only a few clicks. Here is the exact process:
+        </p>
+        <ol>
+          <li><strong>Grab your link:</strong> Copy the full URL of the webpage you want to extract images from.</li>
+          <li><strong>Start the scanner:</strong> Paste the link into the box above and hit the extract button.</li>
+          <li><strong>Download your files:</strong> Browse the resulting grid. You can download individual images or select multiple for a bulk download.</li>
+        </ol>
+
+        <div className="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-xl border border-primary-100 dark:border-primary-800 my-8">
+          <h3>100% Client-Side Processing</h3>
+          <p className="m-0">
+            Total privacy is built into this tool. The image extraction happens directly through your browser connection. We do not store your target URLs, we do not intercept the images, and we do not keep logs. You get fast, private bulk downloads.
+          </p>
+        </div>
+
+        <h2>Core Features</h2>
+        <ul>
+          <li><strong>Bulk Downloading:</strong> Select all detected files and download them in one click.</li>
+          <li><strong>Comprehensive Detection:</strong> Pulls standard image tags as well as background images embedded in CSS.</li>
+          <li><strong>Format Support:</strong> Automatically handles JPG, PNG, WebP, SVG, AVIF, and GIF files.</li>
+          <li><strong>Manual HTML Fallback:</strong> If a site blocks external requests, you can paste the raw page source directly to bypass the block.</li>
+        </ul>
+
+        <h2>Technical Specifications</h2>
+        <p>
+          For those interested in the technical workflow, here is how the image grabber operates:
+        </p>
+        <ul>
+          <li><strong>Processing Method:</strong> Uses DOM parsing and regex to isolate <code>src</code> attributes and background-image URLs.</li>
+          <li><strong>CORS Handling:</strong> Routes through a secure proxy to bypass standard Cross-Origin Resource Sharing restrictions.</li>
+          <li><strong>Lazy-Load Limitation:</strong> Images that require scrolling (JavaScript lazy-loading) will not appear unless you use the raw HTML fallback method.</li>
+          <li><strong>Max Batch Size:</strong> Tested successfully with batches of 200+ high-resolution images.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Can I download images from any website?</h3>
+        <p>
+          Most public websites work perfectly. However, if a server has strict anti-scraping blocks or requires a login, the URL method will fail. In those cases, use the manual HTML paste option instead.
+        </p>
+
+        <h3>Why didn't it find all the pictures on the page?</h3>
+        <p>
+          This usually happens because of lazy-loading. If images only load as you scroll down a page, the static HTML scanner will not see them. To fix this, scroll through the entire page first, copy the raw source code, and use the manual paste feature.
+        </p>
+
+        <h3>Does this tool cost money or have limits?</h3>
+        <p>
+          It is completely free with no usage limits. You do not need an account, and we do not add watermarks or restrict your download speeds.
+        </p>
+
+        <hr />
+
+        <p><em>Engineered by Christopher – Focused on secure, client-side web utilities. <a href="https://github.com/Dtshirt/omniwebkit" target="_blank" rel="noopener noreferrer">Lazydesigners</a></em></p>
+      </div>
     </>
   );
 }

@@ -37,7 +37,7 @@ export const metadata = {
 
 const webAppSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  '@type': 'SoftwareApplication',
   name: 'Digital Signature Pad',
   description:
     'Free browser-based digital signature creator with two modes: Draw (freehand signature using mouse or touch with smooth bezier stroke interpolation, adjustable width 1–12px, 20-step undo/redo) and Type (generates cursive signature from name using six Google Fonts: Dancing Script, Great Vibes, Pacifico, Allura, Sacramento, Pinyon Script, with optional date stamp). Customizable ink color and background. Download as PNG (transparency supported), JPG, or SVG. Copy as base64 data URI. No server upload, no data collection.',
@@ -46,6 +46,7 @@ const webAppSchema = {
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  author: { '@type': 'Organization', name: 'Lazydesigners', url: 'https://github.com/Dtshirt/omniwebkit' },
   publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
   featureList: [
     'Freehand draw signature with mouse or touch input',

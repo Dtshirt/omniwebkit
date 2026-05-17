@@ -38,7 +38,7 @@ export const metadata = {
 
 const webAppSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  '@type': 'SoftwareApplication',
   name: 'PowerPoint to PDF Converter',
   description:
     'Server-side PowerPoint to PDF converter. Upload .pptx, .ppt, or .odp and get a proper vector PDF with full formatting. Slides, charts, images, fonts — all preserved. Text is crisp, selectable, and searchable. Files auto-deleted after download. Free, no watermark.',
@@ -46,6 +46,12 @@ const webAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  author: {
+    '@type': 'Organization',
+    name: 'Lazydesigners',
+    url: 'https://github.com/Dtshirt/omniwebkit',
+    sameAs: 'https://github.com/Dtshirt/omniwebkit'
+  },
   publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
   featureList: [
     'Server-side rendering engine',

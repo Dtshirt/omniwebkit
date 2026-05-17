@@ -9,24 +9,24 @@ import {
 import toast from 'react-hot-toast';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 
-// ─── Helpers ────────────────────────────────────────
+// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const pad = (n) => String(n).padStart(2, '0');
 
 const zodiacSign = (month, day) => {
   const signs = [
-    { name: 'Capricorn', emoji: '♑', end: [1, 19] },
-    { name: 'Aquarius', emoji: '♒', end: [2, 18] },
-    { name: 'Pisces', emoji: '♓', end: [3, 20] },
-    { name: 'Aries', emoji: '♈', end: [4, 19] },
-    { name: 'Taurus', emoji: '♉', end: [5, 20] },
-    { name: 'Gemini', emoji: '♊', end: [6, 20] },
-    { name: 'Cancer', emoji: '♋', end: [7, 22] },
-    { name: 'Leo', emoji: '♌', end: [8, 22] },
-    { name: 'Virgo', emoji: '♍', end: [9, 22] },
-    { name: 'Libra', emoji: '♎', end: [10, 22] },
-    { name: 'Scorpio', emoji: '♏', end: [11, 21] },
-    { name: 'Sagittarius', emoji: '♐', end: [12, 21] },
-    { name: 'Capricorn', emoji: '♑', end: [12, 31] },
+    { name: 'Capricorn', emoji: 'â™‘', end: [1, 19] },
+    { name: 'Aquarius', emoji: 'â™’', end: [2, 18] },
+    { name: 'Pisces', emoji: 'â™“', end: [3, 20] },
+    { name: 'Aries', emoji: 'â™ˆ', end: [4, 19] },
+    { name: 'Taurus', emoji: 'â™‰', end: [5, 20] },
+    { name: 'Gemini', emoji: 'â™Š', end: [6, 20] },
+    { name: 'Cancer', emoji: 'â™‹', end: [7, 22] },
+    { name: 'Leo', emoji: 'â™Œ', end: [8, 22] },
+    { name: 'Virgo', emoji: 'â™', end: [9, 22] },
+    { name: 'Libra', emoji: 'â™Ž', end: [10, 22] },
+    { name: 'Scorpio', emoji: 'â™', end: [11, 21] },
+    { name: 'Sagittarius', emoji: 'â™', end: [12, 21] },
+    { name: 'Capricorn', emoji: 'â™‘', end: [12, 31] },
   ];
   return signs.find(s => month < s.end[0] || (month === s.end[0] && day <= s.end[1])) || signs[0];
 };
@@ -72,7 +72,7 @@ const historicalEvents = {
   2013: { event: 'Mandela passed away', tech: 'PS4 & Xbox One launched', culture: 'Frozen released' },
   2014: { event: 'MH370 disappeared', tech: 'Apple Watch announced', culture: 'Interstellar released' },
   2015: { event: 'Paris Climate Agreement', tech: 'Windows 10 released', culture: 'Star Wars: TFA released' },
-  2016: { event: 'Brexit vote', tech: 'Pokémon GO launched', culture: "Stranger Things premiered" },
+  2016: { event: 'Brexit vote', tech: 'PokÃ©mon GO launched', culture: "Stranger Things premiered" },
   2017: { event: 'Hurricane Harvey', tech: 'iPhone X released', culture: 'Avengers: Infinity War announced' },
   2018: { event: 'Wakanda Forever released', tech: 'GDPR took effect', culture: 'Black Panther released' },
   2019: { event: 'Notre Dame fire', tech: '5G networks launched', culture: 'Avengers: Endgame released' },
@@ -119,7 +119,7 @@ const calculateAge = (birthDate, targetDate = new Date()) => {
   };
 };
 
-// ─── Sub-components ──────────────────────────────────
+// â”€â”€â”€ Sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function StatCard({ value, label, gradient }) {
   return (
     <div className={`${gradient} text-white p-6 rounded-2xl shadow-lg text-center`}>
@@ -223,7 +223,7 @@ export default function AgeCalculator() {
     { icon: Sun, title: 'Days Lived', value: liveAge.totalDays.toLocaleString(), desc: 'Days on Earth', color: 'text-amber-500' },
     { icon: Clock, title: 'Hours Alive', value: liveAge.totalHours.toLocaleString(), desc: 'Hours of existence', color: 'text-blue-500' },
     { icon: Timer, title: 'Minutes', value: liveAge.totalMinutes.toLocaleString(), desc: 'Minutes experienced', color: 'text-emerald-500' },
-    { icon: Zap, title: 'Seconds', value: liveAge.totalSeconds.toLocaleString(), desc: 'Seconds — and counting!', color: 'text-violet-500' },
+    { icon: Zap, title: 'Seconds', value: liveAge.totalSeconds.toLocaleString(), desc: 'Seconds â€” and counting!', color: 'text-violet-500' },
     { icon: Moon, title: 'Sleep Time', value: `~${Math.floor(liveAge.totalHours * 0.33 / 8760)} yrs`, desc: 'Time spent sleeping (est.)', color: 'text-indigo-500' },
     { icon: Gift, title: 'Meals', value: Math.floor(liveAge.totalDays * 3).toLocaleString(), desc: 'Approximate meals eaten', color: 'text-orange-500' },
     { icon: Globe, title: 'Earth Rotations', value: liveAge.totalDays.toLocaleString(), desc: 'Times Earth rotated since your birth', color: 'text-teal-500' },
@@ -244,7 +244,7 @@ export default function AgeCalculator() {
             Age Calculator
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Find your exact age in years, months, days — and even seconds. Explore fun life stats, countdown to your next birthday, and discover what was happening when you were born.
+            Find your exact age in years, months, days â€” and even seconds. Explore fun life stats, countdown to your next birthday, and discover what was happening when you were born.
           </p>
         </div>
 
@@ -255,7 +255,7 @@ export default function AgeCalculator() {
           <TabBtn active={activeTab === 'year'} onClick={() => setActiveTab('year')} icon={Star} label="Birth Year Explorer" />
         </div>
 
-        {/* ── Tab: Live Age ── */}
+        {/* â”€â”€ Tab: Live Age â”€â”€ */}
         {activeTab === 'live' && (
           <div className="space-y-6">
             <InfoCard className="text-center">
@@ -350,7 +350,7 @@ export default function AgeCalculator() {
           </div>
         )}
 
-        {/* ── Tab: Between Dates ── */}
+        {/* â”€â”€ Tab: Between Dates â”€â”€ */}
         {activeTab === 'between' && (
           <div className="space-y-6">
             <InfoCard>
@@ -397,7 +397,7 @@ export default function AgeCalculator() {
           </div>
         )}
 
-        {/* ── Tab: Birth Year Explorer ── */}
+        {/* â”€â”€ Tab: Birth Year Explorer â”€â”€ */}
         {activeTab === 'year' && (
           <div className="space-y-6">
             <InfoCard className="text-center">
@@ -454,91 +454,141 @@ export default function AgeCalculator() {
           </div>
         )}
 
-        {/* ── SEO Content ── */}
-        <div className="mt-16 space-y-6">
+        {/* SEO Content */}
+        <div className="prose-premium mt-16">
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">What Is an Age Calculator?</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              An age calculator is a digital tool that works out your exact age from your date of birth to today — or to any date you choose. Instead of doing the math yourself, you just enter two dates and get a precise result in years, months, and days instantly.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              Our free online age calculator goes several steps further. It shows your age live down to the second, counts how many heartbeats you've had, calculates your next birthday countdown, reveals your zodiac sign, and lets you explore what was happening in the world the year you were born. It is the most complete age calculator available — and it costs nothing.
-            </p>
-          </section>
+          <h2>About the Age Calculator — Find Your Exact Age in Seconds</h2>
+          <p>
+            Most people have no idea how old they really are beyond a rough number in years. The <strong>Age Calculator</strong> on OmniWebKit changes that. Type in your date of birth and you'll see your exact age — not just in years, but in months, days, hours, and live seconds that tick up in real time.
+          </p>
+          <p>
+            Here is what makes this <strong>age calculator online</strong> different from a regular birthday calculator: it does not stop at years and months. It tells you how many Earth rotations you have lived through, how many heartbeats your heart has made (based on an average of 70 beats per minute), and what generation you belong to. There is also a Between Dates mode that lets you <strong>calculate the exact time between any two calendar dates</strong> — useful for anniversaries, contracts, project timelines, or personal milestones.
+          </p>
+          <p>
+            I have used a lot of these tools over the years. Most just spit out 28 years, 3 months, 12 days and call it a day. This one goes further — and the live seconds counter alone is something most people find unexpectedly fascinating. Watching your total seconds tick past 900 million is a genuinely different experience.
+          </p>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">How to Use This Age Calculator</h2>
-            <ol className="space-y-4">
-              {[
-                { n: '1', t: 'Enter your date of birth', d: 'Use the date picker on the Live Age tab to select your birthday. The result appears immediately.' },
-                { n: '2', t: 'See your live age', d: 'Your age in years, months, days, weeks, and seconds updates in real time — every second.' },
-                { n: '3', t: 'Check your birthday countdown', d: 'The "Next Birthday" card shows how many days until your next birthday and how old you\'ll be.' },
-                { n: '4', t: 'Explore your life in numbers', d: 'Scroll down to see how many heartbeats, breaths, meals, and Earth rotations you\'ve experienced.' },
-                { n: '5', t: 'Calculate time between two dates', d: 'Switch to "Between Dates" to find the difference between any two dates — great for anniversaries, events, and milestones.' },
-                { n: '6', t: 'Discover your birth year', d: 'Use the "Birth Year Explorer" tab to learn about your generation, the world events of your birth year, and your Chinese zodiac animal.' },
-              ].map(({ n, t, d }) => (
-                <li key={n} className="flex gap-4">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 text-sm font-bold flex items-center justify-center">{n}</span>
-                  <div>
-                    <p className="font-semibold text-slate-900 dark:text-white">{t}</p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">{d}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
+          <h2>How to Use This Age Calculator — Three Steps, That's It</h2>
+          <p>You don't need to sign up or download anything. Here's how to get your results:</p>
+          <ol>
+            <li><strong>Enter your date of birth</strong> using the date picker on the Live Age tab. The results appear the instant you pick a date — no button to press.</li>
+            <li><strong>Read your exact age</strong> in years, months, days, total weeks, total months, and live seconds. The counter updates every single second.</li>
+            <li><strong>Explore the extras</strong> — check how many days until your next birthday, see your Western and Chinese zodiac signs, look at your estimated heartbeats and breaths, or switch tabs to <strong>calculate the time between any two specific dates</strong>.</li>
+          </ol>
+          <p>
+            The Between Dates tab is worth mentioning separately. Enter any start date and end date — it does not have to be your birth date — and you will get the precise gap in years, months, days, weeks, and total days. So what does that actually mean for you? It means you can check exactly how long you have been in a job, a relationship, or a home in one click.
+          </p>
+          <p>
+            The Birth Year Explorer tab is a fun one. Type in any year from 1900 onwards and it tells you the generation that year belongs to, the Chinese zodiac animal, and the key world events, tech milestones, and pop culture moments from that year.
+          </p>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Key Features</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { icon: Zap, title: 'Live Age Counter', desc: 'Your age updates every second in real time.', c: 'text-violet-600 dark:text-violet-400', bg: 'bg-violet-50 dark:bg-violet-900/20' },
-                { icon: Calendar, title: 'Between Dates Mode', desc: 'Calculate the difference between any two dates precisely.', c: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-                { icon: Gift, title: 'Birthday Countdown', desc: 'Know exactly how many days until your next birthday and upcoming age.', c: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-900/20' },
-                { icon: Sparkles, title: 'Zodiac Sign', desc: 'Instantly see your Western and Chinese zodiac signs.', c: 'text-fuchsia-600 dark:text-fuchsia-400', bg: 'bg-fuchsia-50 dark:bg-fuchsia-900/20' },
-                { icon: Heart, title: 'Life Stats', desc: 'Count your heartbeats, breaths, meals, and more since birth.', c: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-900/20' },
-                { icon: Star, title: 'Birth Year Explorer', desc: 'Learn your generation and the world events from your birth year.', c: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-              ].map(({ icon: Icon, title, desc, c, bg }) => (
-                <div key={title} className="flex gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
-                  <div className={`flex-shrink-0 w-10 h-10 ${bg} rounded-xl flex items-center justify-center`}>
-                    <Icon className={`h-5 w-5 ${c}`} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-slate-900 dark:text-white text-sm">{title}</p>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-0.5 leading-relaxed">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+          <h2>Is Your Birthday Data Private?</h2>
+          <p>
+            Yes — completely. This tool runs entirely inside your browser. <strong>Your date of birth is never sent to any server.</strong> There is no account, no login, no database storing your personal information, and no tracking of what dates you enter.
+          </p>
+          <p>
+            The calculation happens using JavaScript running locally on your device. The moment you close this tab, the data is gone. There is no cookie storing your birthday, and no analytics event fires when you pick a date. Your birth date is one of the most personal pieces of information you have — it is used in identity verification, government records, and financial checks. We treat it accordingly.
+          </p>
+          <p>
+            One honest note: the live-seconds counter uses your device's system clock, not a synced server clock. If your system clock is off by a few seconds, your live count will reflect that. It is a minor thing but worth knowing.
+          </p>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'How does an age calculator work?', a: 'It subtracts your date of birth from today\'s date (or a target date you choose). It accounts for leap years, different month lengths, and time zones to give a precise result in years, months, and days.' },
-                { q: 'How do I calculate my exact age in days?', a: 'Enter your date of birth in the Live Age tab. The calculator shows your total age in days, weeks, months, and years — including a live seconds counter that updates in real time.' },
-                { q: 'Can I calculate the age between two specific dates?', a: 'Yes. Use the "Between Dates" tab. Enter any start date and end date to find the exact difference. This works great for calculating the age of a contract, a project start, a relationship anniversary, or any past event.' },
-                { q: 'What is the difference between age in completed years and next birthday?', a: 'Completed years is your current age — the number of full years since you were born. The next birthday countdown tells you how many days until your age increases by one, and what age you\'ll turn.' },
-                { q: 'What generation am I?', a: 'Generations are defined by birth year ranges: Generation Alpha (2013–present), Generation Z (1997–2012), Millennials (1981–1996), Generation X (1965–1980), Baby Boomers (1946–1964), and the Silent Generation (before 1946). Our Birth Year Explorer tells you instantly.' },
-                { q: 'How accurate is the age calculator?', a: 'Very accurate. It correctly handles leap years, 28/29/30/31-day months, and calculates total days using precise millisecond arithmetic. The live counter updates every second.' },
-                { q: 'Is this age calculator free?', a: 'Yes, 100% free. No account needed, no download required, and no usage limits.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none">
-                    <span>{q}</span>
-                    <span className="text-slate-400 dark:text-slate-500 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">
-                    {a}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </section>
+          <h2>What Can This Age Calculator Do?</h2>
+          <ul>
+            <li><strong>Exact age in years, months, and days:</strong> The tool accounts for leap years and variable month lengths (28, 29, 30, or 31 days). It is not rounding — it is precise.</li>
+            <li><strong>Live age counter:</strong> Your total seconds lived update every second. At age 30, that is around 946 million seconds and counting.</li>
+            <li><strong>Next birthday countdown:</strong> See exactly how many days until your next birthday and what age you will turn. If your birthday is today, it shows how old you just became.</li>
+            <li><strong>Zodiac sign lookup:</strong> Enter your birthday and both your Western zodiac sign (with its symbol) and Chinese zodiac animal show up instantly.</li>
+            <li><strong>Life stats panel:</strong> Estimated heartbeats (avg 70 bpm), total breaths (avg 16 per minute), approximate meals eaten (3 per day), days lived, hours alive, and Earth rotations since birth.</li>
+            <li><strong>Date difference calculator:</strong> Find the time between any two dates — great for anniversaries, lease lengths, project durations, or anything date-related.</li>
+            <li><strong>Birth year historical explorer:</strong> Covers years 1990 to 2023 with real world events, tech launches, and pop culture moments from each year.</li>
+            <li><strong>Generation identifier:</strong> Shows which generation you belong to — Gen Alpha, Gen Z, Millennials, Gen X, Baby Boomers, or Silent Generation — with a brief trait description.</li>
+            <li><strong>Copy result:</strong> One click copies your full age summary to the clipboard.</li>
+          </ul>
+
+          <h2>Technical Specifications</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Spec</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Processing</td>
+                <td>100% client-side — runs in your browser with JavaScript, zero server calls</td>
+              </tr>
+              <tr>
+                <td>Age precision</td>
+                <td>Years, months, days, weeks, hours, minutes, and live seconds (millisecond arithmetic)</td>
+              </tr>
+              <tr>
+                <td>Leap year handling</td>
+                <td>Yes — fully accounted for in all calculations</td>
+              </tr>
+              <tr>
+                <td>Supported date range</td>
+                <td>Any date from year 1900 to today</td>
+              </tr>
+              <tr>
+                <td>Live counter refresh</td>
+                <td>Every 1,000 ms (1 second)</td>
+              </tr>
+              <tr>
+                <td>Zodiac systems</td>
+                <td>Western (12 signs) and Chinese (12 animals, 12-year cycle)</td>
+              </tr>
+              <tr>
+                <td>Generation coverage</td>
+                <td>Silent Generation through Generation Alpha</td>
+              </tr>
+              <tr>
+                <td>Historical events database</td>
+                <td>1990 to 2023 (world events, tech, pop culture)</td>
+              </tr>
+              <tr>
+                <td>Device compatibility</td>
+                <td>Any modern browser on desktop, tablet, or mobile</td>
+              </tr>
+              <tr>
+                <td>Install required</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td>Data sent to server</td>
+                <td>Zero</td>
+              </tr>
+              <tr>
+                <td>Cost</td>
+                <td>Free, no account required</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            Enter your date of birth in the <strong>age calculator</strong> above and you will have your exact age, birthday countdown, zodiac sign, and life stats in under three seconds. Built by <a href="https://github.com/Dtshirt/omniwebkit" target="_blank" rel="noopener noreferrer">Lazydesigners</a> — a team focused on fast, private, client-side tools that do not make you hand over personal data to get a simple answer.
+          </p>
 
         </div>
+
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Age Calculator",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Any",
+          "description": "Free online age calculator. Find your exact age in years, months, days, hours, and live seconds. Includes birthday countdown, zodiac sign, life stats, date difference calculator, and birth year historical explorer.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "author": {
+            "@type": "Organization",
+            "name": "Lazydesigners",
+            "url": "https://github.com/Dtshirt/omniwebkit"
+          }
+        }) }} />
       </div>
     </div>
   );

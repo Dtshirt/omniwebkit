@@ -12,5 +12,32 @@ export const metadata = {
 };
 
 export default function ImageOcrPage() {
-  return <ImageOcrClient />;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Image to Text Converter",
+    "operatingSystem": "Web Browser",
+    "applicationCategory": "UtilitiesApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Browser-based OCR tool that extracts text from images, supporting over 10 languages including Arabic, Russian, and Chinese.",
+    "author": {
+      "@type": "Organization",
+      "name": "Lazydesigners",
+      "url": "https://github.com/Dtshirt/omniwebkit"
+    }
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <ImageOcrClient />
+    </>
+  );
 }

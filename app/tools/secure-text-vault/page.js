@@ -334,63 +334,72 @@ export default function SecureTextVault() {
                 </div>
 
                 {/* ── SEO Content ── */}
-                <div className="mt-10 space-y-5">
+                <div className="prose-premium mt-10">
+                    
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Online Text Encryption Tool — Secure Text Vault</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            Privacy matters. Whether you are sending someone a sensitive message, storing a password, or keeping personal notes private, you need a way to encrypt text that you can trust. Most encryption tools require an account, store your data on their servers, or use methods that are not transparent. Secure Text Vault is different.
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            This tool uses AES-256 encryption — the same standard used by banks and governments — directly in your browser. Nothing is ever sent to a server. Your text, your password, and your encrypted output all stay on your device. You can encrypt with or without a password. If you use a password, you can also set up three security questions for recovery if you forget it.
-                        </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            The encrypted output is further obfuscated with random chunking and proprietary markers. It can only be decrypted using this exact tool. Copy the output, download it as a text file, or share it however you like. No one can read it without the correct password.
-                        </p>
-                    </div>
+                    <h2>About Secure Text Vault</h2>
+                    <p>Privacy is rarely guaranteed on the internet. Whether you need to send a private message to a client or just want to password protect text for your own records, you need a way to lock it down. <strong>Secure Text Vault</strong> is an online text encryption tool that runs entirely in your browser. You drop your text in, and it spits out a scrambled string. No accounts. No server uploads. The data stays on your machine.</p>
+                    <p>Most encryption tools secretly ping a server or log your keystrokes. We built this utility to fix that. Because it uses the Web Crypto API, your raw text never leaves your device. You can encrypt text with a password, or just scramble it without one to stop casual snooping. It's dead simple, fast, and completely free to use.</p>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">How Secure Text Vault Works</h2>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                            {[
-                                { t: 'AES-256 Encryption', c: 'text-violet-600 dark:text-violet-400', b: 'Your text is encrypted using AES-GCM with a 256-bit key. This is the same algorithm used by governments and financial institutions to protect classified data.' },
-                                { t: 'PBKDF2 Key Derivation', c: 'text-blue-600 dark:text-blue-400', b: 'Your password is converted into an encryption key using PBKDF2 with 100,000 iterations and SHA-256. This makes brute-force attacks extremely slow.' },
-                                { t: 'Password Recovery', c: 'text-emerald-600 dark:text-emerald-400', b: 'Set three security questions during encryption. If you forget your password, answer the questions correctly to recover it. Answers are hashed with SHA-256.' },
-                                { t: 'Custom Obfuscation', c: 'text-amber-600 dark:text-amber-400', b: 'After encryption, the output is split into random-sized chunks and wrapped with proprietary markers. This makes it impossible to identify the encryption method.' },
-                                { t: 'File Signature', c: 'text-rose-600 dark:text-rose-400', b: 'Every encrypted message starts with a STVAULT1.0 signature. The tool validates this before decryption, preventing errors from invalid input.' },
-                                { t: 'Zero Server Contact', c: 'text-teal-600 dark:text-teal-400', b: 'Everything runs using the Web Crypto API built into your browser. No data is sent to any server. No analytics, no logging, no tracking.' },
-                            ].map(({ t, c, b }) => (
-                                <div key={t} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <h3 className={`font-black text-sm mb-1.5 ${c}`}>{t}</h3>
-                                    <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{b}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <h2>How to Use This Encryption Tool</h2>
+                    <p>You don't need to be a cryptography expert to secure your messages. Follow these steps to lock down your text.</p>
+                    <ol>
+                        <li><strong>Pick your mode.</strong> Make sure the toggle at the top is set to "Encrypt".</li>
+                        <li><strong>Type your message.</strong> Paste or type whatever you want to keep hidden into the main text box.</li>
+                        <li><strong>Add a password (optional).</strong> If you leave this blank, the tool will encrypt the text using a default key. Anyone with the tool can decrypt it. If you add a password, only people with that exact password can unlock it.</li>
+                        <li><strong>Set up recovery (optional).</strong> If you used a password, you can enable security questions. Answer three questions so you can recover the text if you forget the password.</li>
+                        <li><strong>Encrypt and copy.</strong> Hit the purple button. Your text is now scrambled. Copy the output or download it as a text file to share safely.</li>
+                    </ol>
+                    <p>To read a secure message later, just switch to "Decrypt", paste the text, and enter the password if required. That's pretty much it.</p>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {[
-                                { q: 'Is this encryption tool free?', a: 'Yes, completely free with no account, no watermarks, and no limits.' },
-                                { q: 'Is my data sent to a server?', a: 'No. All encryption and decryption runs locally in your browser using the Web Crypto API.' },
-                                { q: 'What happens if I forget my password?', a: 'If you enabled security questions during encryption, answer them correctly to recover your password. Otherwise, the data cannot be recovered.' },
-                                { q: 'Can someone crack the encryption?', a: 'AES-256 with PBKDF2 (100,000 iterations) is considered unbreakable with current technology. Use a strong password for maximum security.' },
-                                { q: 'What is the obfuscation layer?', a: 'After encryption, the output is split into random chunks and wrapped with proprietary markers, making the format unrecognisable to outsiders.' },
-                                { q: 'Can I decrypt on a different device?', a: 'Yes. Open this tool on any device, paste the encrypted text, and enter the password. No installation needed.' },
-                                { q: 'What file format is used?', a: 'Encrypted output is plain text with a STVAULT1.0 signature. You can download it as a .txt file.' },
-                                { q: 'Does it work on mobile?', a: 'Yes. The layout is fully responsive and works on phones, tablets, and desktops.' },
-                            ].map(({ q, a }) => (
-                                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                                        <span>{q}</span>
-                                        <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                                </details>
-                            ))}
-                        </div>
-                    </div>
+                    <h2>Privacy & Security Focus</h2>
+                    <p>Here's the thing — an encryption tool is useless if you can't trust it. That's why Secure Text Vault is built around client-side execution. The encryption happens right in your browser using the exact same AES-GCM 256-bit standards that banks use.</p>
+                    <p>We can't read your text because we never see it. There is no backend database storing your secrets. Once you close the tab, the raw data is gone forever. This makes it impossible for us — or anyone else — to intercept your messages in transit.</p>
+                    <p>One catch — if you use a password and don't set up recovery questions, there is no backdoor. If you lose the password, you lose the message. We can't recover it for you.</p>
+
+                    <h2>Core Features</h2>
+                    <ul>
+                        <li><strong>Military-grade encryption.</strong> Uses AES-GCM with a 256-bit key to lock your data tightly.</li>
+                        <li><strong>Password recovery.</strong> Optional security questions hash your answers so you can recover forgotten passwords.</li>
+                        <li><strong>Custom obfuscation.</strong> The tool breaks your output into random chunks to hide the encryption signature from outsiders.</li>
+                        <li><strong>Offline capable.</strong> Once the page loads, you can turn off your internet and it still works perfectly.</li>
+                        <li><strong>File support.</strong> Download your encrypted text as a file, or upload a `.txt` file directly into the decryptor.</li>
+                    </ul>
+
+                    <h2>Technical Specifications</h2>
+                    <p>If you're curious about what happens under the hood, here are the technical details.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Specification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Encryption Standard</td>
+                                <td>AES-GCM</td>
+                            </tr>
+                            <tr>
+                                <td>Key Size</td>
+                                <td>256-bit</td>
+                            </tr>
+                            <tr>
+                                <td>Key Derivation</td>
+                                <td>PBKDF2 with 100,000 iterations and SHA-256</td>
+                            </tr>
+                            <tr>
+                                <td>Execution Environment</td>
+                                <td>Client-side browser (Web Crypto API)</td>
+                            </tr>
+                            <tr>
+                                <td>Data Storage</td>
+                                <td>None (Volatile RAM only)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p>If you want a reliable way to secure your messages, drop your text into the vault above and see how fast client-side encryption really is.</p>
 
                 </div>
             </div>

@@ -38,7 +38,7 @@ export const metadata = {
 
 const webAppSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  '@type': 'SoftwareApplication',
   name: 'Age Calculator',
   description:
     'Free online age calculator that shows your exact age in years, months, days, weeks, and live seconds. Includes birthday countdown, zodiac sign lookup, life stats (heartbeats, breaths, days lived), calculate age between two dates, and a birth year historical explorer.',
@@ -47,7 +47,7 @@ const webAppSchema = {
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-  publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
+  author: { '@type': 'Organization', name: 'Lazydesigners', url: 'https://github.com/Dtshirt/omniwebkit' },
   featureList: [
     'Live age counter updating every second',
     'Age in years, months, days, weeks, and total seconds',

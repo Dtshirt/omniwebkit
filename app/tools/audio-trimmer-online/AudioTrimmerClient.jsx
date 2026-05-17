@@ -178,12 +178,7 @@ export default function AudioTrimmerClient() {
 
   const trimDuration = Math.max(0, endSec - startSec);
 
-  const faqs = [
-    { q: "How does browser trimming work?", a: "For WAV files under 50MB, your browser decodes the audio into raw PCM samples, slices the array between your start and end frame positions, and re-encodes the slice as a WAV file — entirely locally with no upload." },
-    { q: "Which formats need server processing?", a: "MP3, AAC, FLAC, and OGG require server-side FFmpeg encoding since browsers can't natively encode these formats. Large files (> 50MB) are also routed to the server regardless of format." },
-    { q: "How precise is the trimming?", a: "Browser trimming is sample-accurate (1/44100th of a second precision). Server trimming uses FFmpeg's -ss and -t flags which are frame-accurate for most codecs." },
-    { q: "Can I use the waveform to set trim points?", a: "Yes! Drag the purple handles on the waveform to visually set start and end points. You can also type exact values in the time inputs below the waveform." },
-  ];
+
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24 font-sans text-slate-900">
@@ -351,21 +346,6 @@ export default function AudioTrimmerClient() {
           </div>
         </div>
 
-        {/* FAQs */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <div key={i} className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                <button className="w-full text-left px-6 py-4 font-bold flex justify-between items-center text-slate-800 hover:bg-slate-50" onClick={() => setFaqOpen(faqOpen===i?null:i)}>
-                  {faq.q}
-                  {faqOpen===i ? <ChevronUp className="w-5 h-5 text-orange-500" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-                </button>
-                <div className={`px-6 text-slate-600 text-sm leading-relaxed transition-all duration-300 ${faqOpen===i?"pb-6 max-h-40 opacity-100":"max-h-0 opacity-0 py-0"}`}>{faq.a}</div>
-              </div>
-            ))}
-          </div>
-        </section>
       </div>
     </div>
   );

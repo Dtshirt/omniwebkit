@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { API_V1 } from "@/lib/api-config";
+import Link from "next/link";
 
 const MAX_CLIENT_SIZE_BYTES = 50 * 1024 * 1024; // 50MB for CSV
 const POLLING_INTERVAL = 2000;
@@ -30,8 +31,6 @@ export default function SeoAnalyzerClient() {
   const [bulkError, setBulkError] = useState(null);
   const [bulkSuccess, setBulkSuccess] = useState(false);
   
-  const [faqOpen, setFaqOpen] = useState(null);
-
   // ─── SINGLE MODE LOGIC (CORS Proxy + DOMParser) ────────────────────────
   
   const handleSingleLookup = async () => {
@@ -391,7 +390,7 @@ export default function SeoAnalyzerClient() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
+    <div className="min-h-screen  font-sans pb-24">
       
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-indigo-900 via-blue-900 to-indigo-950 text-white py-16 px-6 relative overflow-hidden">
@@ -740,56 +739,70 @@ export default function SeoAnalyzerClient() {
           </div>
         </div>
 
-        {/* Info Blocks */}
-        <div className="grid md:grid-cols-2 gap-6 mb-16">
-           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-blue-600">
-              <Zap className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold mb-2">Browser DOM Parsing</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              When analyzing a single URL, our platform fetches the raw HTML and utilizes your browser's native DOMParser engine to compute the metrics. This creates an ultra-fast, seamless experience with zero lag.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-            <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4 text-indigo-600">
-              <Server className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold mb-2">Enterprise Bulk Crawling</h3>
-            <p className="text-slate-600 text-sm leading-relaxed">
-              When analyzing massive CSV files, we utilize dedicated Python scraping workers on our backend. These servers securely crawl thousands of pages recursively, bypass rate limits, and bundle the data into an actionable CSV report.
-            </p>
-          </div>
+        <div className="prose-premium max-w-5xl mx-auto px-6 mb-24">
+          <h2>About Our Free SEO Analyzer Tool</h2>
+          <p>Missing meta tags and broken heading structures can block search engines from understanding your site. That is why we built this <strong>SEO analyzer</strong>. It scans your pages instantly and highlights exactly what you need to fix to climb the rankings.</p>
+          <p>If you're publishing new content or auditing a client's site, you need to know if your target keyword actually appears where it matters. Our tool rips through the raw HTML of your URL. I've used this to quickly spot missing H1 tags and empty image alt attributes that were quietly hurting organic traffic. It gives you the full on-page SEO audit in seconds.</p>
+
+          <h2>How to Run an On-Page SEO Audit</h2>
+          <p>Testing a single page or scanning a massive list takes just a few clicks. Here's how you do it:</p>
+          <ul>
+            <li><strong>Enter the URL:</strong> Paste your webpage link into the search box above.</li>
+            <li><strong>Target Keyword (Optional):</strong> Drop in your main keyword to check your exact keyword density.</li>
+            <li><strong>Click Analyze:</strong> Hit the button.</li>
+            <li><strong>Review Your Score:</strong> The tool instantly prints out a 100-point score, grading your title length, meta description, heading structure, and internal links.</li>
+          </ul>
+          <p>Need to check hundreds of pages? Switch to the <strong>Bulk CSV Crawler</strong>. Drop your spreadsheet into the upload box. Our backend servers process the entire batch and hand you a clean, organized CSV report.</p>
+
+          <h2>Your Website Data Stays Private</h2>
+          <p>We respect your privacy. When you run a single URL through our SEO analyzer, we don't save your scan history or store your domain in a public database.</p>
+          <p>Your single page checks run locally in your browser using a secure proxy. If you upload a CSV for a bulk SEO scan, our system reads the file, runs the massive audit, and delivers your results. We delete your uploaded lists from our temporary storage right after your background job finishes. You get total security and full data ownership.</p>
+
+          <h2>Core Features of This SEO Tool</h2>
+          <p>We designed this scanner to be fast and completely frictionless.</p>
+          <ul>
+            <li><strong>Keyword Density Check:</strong> See exactly how many times your target phrase appears in headings, bold tags, and link anchors.</li>
+            <li><strong>Heading Hierarchy:</strong> Instantly visualize your H1 through H6 structure to ensure logical flow.</li>
+            <li><strong>Bulk CSV Support:</strong> Audit thousands of URLs simultaneously without freezing your browser.</li>
+            <li><strong>Actionable Suggestions:</strong> Get clear warnings for missing alt text, long meta descriptions, and missing title tags.</li>
+          </ul>
+
+          <h2>How the SEO Scanner Works Under the Hood</h2>
+          <p>Most lightweight scanners fail because modern websites block automated requests.</p>
+          <p>To fix this, our single-page analyzer routes your request through a secure backend proxy. It grabs the raw HTML and uses your browser's native DOMParser engine to compute the metrics locally. This creates a blazing-fast experience. For massive CSV files, we utilize dedicated Python scraping workers on our backend. These servers securely crawl thousands of pages, bypass rate limits, and bundle the exact SEO data into a simple spreadsheet.</p>
+
+          <h2>Frequently Asked Questions</h2>
+          <h3>What makes a good on-page SEO score?</h3>
+          <p>A score above 90 means your technical foundation is solid. You should have one clear H1 tag, a meta description between 50 and 160 characters, and descriptive alt text on all your images. Our tool flags anything that falls outside these best practices.</p>
+
+          <h3>Why is keyword density important?</h3>
+          <p>If you don't use your target keyword enough, search engines might not understand your topic. If you use it too much, you risk a penalty for keyword stuffing. We track your exact keyword count across the page, including inside bold tags and internal links, so you hit the sweet spot.</p>
+
+          <h3>Can I run a bulk SEO audit for free?</h3>
+          <p>Yes. You can upload a CSV list of URLs to our bulk crawler. Our backend servers will automatically check the title tags, meta descriptions, and heading counts for every link on your list and give you a downloadable report.</p>
+
+          <h3>Does this tool check external links?</h3>
+          <p>Yes. Our scanner counts all internal links pointing to your own domain and external links pointing away. Internal links help search engines crawl your site, while relevant external links show that your content is well-researched.</p>
         </div>
 
-        {/* FAQs */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
-                <button 
-                  className="w-full text-left px-6 py-4 font-bold flex justify-between items-center text-slate-800 focus:outline-none hover:bg-slate-50"
-                  onClick={() => setFaqOpen(faqOpen === index ? null : index)}
-                >
-                  {faq.q}
-                  {faqOpen === index ? (
-                    <ChevronUp className="w-5 h-5 text-blue-500" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-slate-400" />
-                  )}
-                </button>
-                <div 
-                  className={`px-6 text-slate-600 text-sm leading-relaxed transition-all duration-300 ease-in-out ${
-                    faqOpen === index ? "pb-6 max-h-40 opacity-100" : "max-h-0 opacity-0 py-0"
-                  }`}
-                >
-                  {faq.a}
-                </div>
-              </div>
-            ))}
+        {/* Related Tools */}
+        <div className="max-w-5xl mx-auto px-6 mb-24">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6">Related SEO Tools</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link href="/tools/redirect-checker" className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:border-blue-300 group block">
+              <h3 className="font-bold text-lg text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">Redirect Checker</h3>
+              <p className="text-slate-600 text-sm">Trace the exact path of any URL and discover hidden 301 and 302 redirect chains.</p>
+            </Link>
+            <Link href="/tools/website-content-extractor" className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:border-blue-300 group block">
+              <h3 className="font-bold text-lg text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">Content Extractor</h3>
+              <p className="text-slate-600 text-sm">Extract clean text, headings, and images from any URL for fast content analysis.</p>
+            </Link>
+            <Link href="/tools/webhook-tester" className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all hover:border-blue-300 group block">
+              <h3 className="font-bold text-lg text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">Webhook Tester</h3>
+              <p className="text-slate-600 text-sm">Generate a unique URL to test and inspect HTTP requests and webhooks in real-time.</p>
+            </Link>
           </div>
-        </section>
+        </div>
 
       </div>
     </div>

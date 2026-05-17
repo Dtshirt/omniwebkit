@@ -37,7 +37,7 @@ export const metadata = {
 
 const webAppSchema = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
+    '@type': 'SoftwareApplication',
     name: 'Image to Base64 Converter',
     description:
         'Free browser-based image to Base64 converter. Upload PNG, JPG, WebP, GIF, SVG, BMP images and get instant output in 4 formats: full Data URL (with MIME prefix), raw Base64 string, CSS background-image declaration, HTML img tag. Also includes reverse mode: paste Base64 string or Data URL and decode it back to a viewable and downloadable image. Displays file info: original size, Base64 character count, estimated Base64 byte size, size increase percentage. One-click copy per format. No server upload — all processing uses the FileReader API in browser.',
@@ -46,7 +46,16 @@ const webAppSchema = {
     operatingSystem: 'Any',
     browserRequirements: 'Requires JavaScript',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
+    author: {
+        '@type': 'Organization',
+        name: 'Lazydesigners',
+        url: 'https://github.com/Dtshirt/omniwebkit'
+    },
+    publisher: {
+        '@type': 'Organization',
+        name: 'Lazydesigners',
+        url: 'https://github.com/Dtshirt/omniwebkit'
+    },
     featureList: [
         'Convert PNG, JPG, WebP, GIF, SVG, BMP to Base64',
         'Output: full Data URL with MIME type',

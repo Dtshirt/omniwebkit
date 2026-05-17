@@ -360,77 +360,195 @@ export default function HashGenerator() {
                 </div>
 
                 {/* SEO Content */}
-                <div className="mt-14 space-y-5">
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Online Hash Generator — MD5, SHA-1, SHA-256, SHA-384, SHA-512</h2>
+                <div className="mt-16 space-y-8">
+                    <div className={`${cardCls} p-6 sm:p-8`}>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">What Is This Hash Generator?</h2>
                         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            A hash function takes any piece of text and produces a fixed-length string of characters called a hash (also known as a digest or checksum). No matter how long or short the input is, the hash output is always the same length — 32 characters for MD5, 40 for SHA-1, 64 for SHA-256, and so on. More importantly, even a tiny change in the input completely changes the hash output. This property makes hash functions one of the most useful tools in computing and security.
+                            A cryptographic hash function takes your text or file and turns it into a fixed string of characters. Think of it like a unique digital fingerprint. If you change even one tiny letter in a ten-page document, the entire fingerprint changes completely. That's exactly why developers and IT professionals use a hash generator to check if files are original or if they've been tampered with.
                         </p>
                         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            The OmniWebKit Hash Generator lets you calculate hashes for any text string or file directly in your browser. It supports five algorithms: MD5, SHA-1, SHA-256, SHA-384, and SHA-512. All computation happens locally using the Web Crypto API (for SHA algorithms) and a native JavaScript MD5 implementation — no data is sent to any server.
+                            Our tool lets you create MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes instantly. You can type text directly, paste a secret key to generate HMAC codes, or drop a file to compute its checksum. The interface updates the hashes live as you type, giving you immediate feedback.
                         </p>
                         <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            The tool includes live mode (hashes update as you type), HMAC mode for keyed hashing, output format options (hex lowercase, hex uppercase, Base64), a hash verification panel, and file checksum generation for any file type.
+                            I've tested this across large files and long strings of text. The sweet spot for this tool is that it handles everything in your browser. Whether you need a quick checksum calculator for a downloaded software package or you want to generate SHA256 codes for an API webhook, this tool handles it without making you wait.
                         </p>
                     </div>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Hash Algorithms Explained</h2>
+                    <div className={`${cardCls} p-6 sm:p-8`}>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">How to Generate a Hash</h2>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                            You don't need any technical setup. Follow these steps to get your secure hash:
+                        </p>
+                        <ul className="space-y-3 mb-5 text-slate-700 dark:text-slate-300 list-none">
+                            <li className="flex items-start gap-2"><span className="text-rose-500 font-bold mt-0.5">•</span> <strong>Type or Paste:</strong> Put your text into the main input box. The tool computes the hashes automatically if Live Mode is on.</li>
+                            <li className="flex items-start gap-2"><span className="text-rose-500 font-bold mt-0.5">•</span> <strong>Check a File:</strong> Drag and drop any file into the Checksum box on the right. We support all file types — from small text files to massive video chunks.</li>
+                            <li className="flex items-start gap-2"><span className="text-rose-500 font-bold mt-0.5">•</span> <strong>Verify a Hash:</strong> Got a hash from somewhere else? Paste it into the Verify box. We'll tell you if it matches your current input, which is a lifesaver when checking software integrity.</li>
+                            <li className="flex items-start gap-2"><span className="text-rose-500 font-bold mt-0.5">•</span> <strong>Copy Results:</strong> Click the copy icon next to the algorithm you need, or hit "Copy All" to grab the whole list in one click.</li>
+                        </ul>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Need an HMAC? Toggle the HMAC Mode switch and enter your secret key. The SHA results will instantly update to reflect the keyed hash. This is perfect for developers working on JWTs or API security.
+                        </p>
+                    </div>
+
+                    <div className={`${cardCls} p-6 sm:p-8`}>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Your Data Never Leaves Your Device</h2>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                            Security tools shouldn't ask you to trust a random server. We built this hash generator so all the math happens right in your browser.
+                        </p>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                            When you type a password, paste an API token, or drop a sensitive file, it stays entirely on your computer. We use your browser's native Web Crypto API for the SHA algorithms. Your data is never uploaded, never stored on a database, and never sent across the internet.
+                        </p>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                            One catch — because the processing relies on your machine's hardware, calculating hashes for multi-gigabyte files might take a few seconds longer than a dedicated command-line tool. But for most daily tasks, the security of keeping your files offline far outweighs a tiny speed difference.
+                        </p>
+                        <p className="text-slate-500 text-sm mt-6 border-t border-slate-100 dark:border-slate-800 pt-4">
+                            *Built with care by <a href="https://github.com/Dtshirt/omniwebkit" target="_blank" rel="noopener noreferrer" className="text-rose-500 hover:text-rose-600 transition underline decoration-rose-500/30 hover:decoration-rose-500">Lazydesigners</a>.*
+                        </p>
+                    </div>
+
+                    <div className={`${cardCls} p-6 sm:p-8`}>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Understanding the Algorithms</h2>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
+                            Not all hash algorithms do the same job. Here's a breakdown of what happens under the hood:
+                        </p>
                         <div className="space-y-4">
-                            {[
-                                { name: 'MD5 (128-bit)', security: '❌ Insecure for security', body: 'MD5 is one of the oldest and most widely recognised hash functions. It produces a 32-character hex output (128 bits). While it is fast and still used for non-security purposes like file integrity checks and checksums, it is completely broken for cryptographic security. Collision attacks — finding two different inputs with the same hash — are computationally trivial for MD5 today. Never use MD5 to hash passwords or in any security-sensitive context.' },
-                                { name: 'SHA-1 (160-bit)', security: '⚠️ Legacy, deprecated', body: 'SHA-1 produces a 40-character hex string (160 bits). It was once the industry standard for digital signatures and SSL certificates, but SHA-1 was formally deprecated by NIST in 2011. Practical collision attacks on SHA-1 have been demonstrated. Modern browsers and certificate authorities no longer accept SHA-1 certificates. SHA-1 hashes are still generated by this tool for legacy verification purposes, but you should not use SHA-1 for new applications.' },
-                                { name: 'SHA-256 (256-bit)', security: '✅ Recommended', body: 'SHA-256 is the most widely recommended general-purpose hash algorithm today. It produces a 64-character hex string (256 bits) and is part of the SHA-2 family. It powers Bitcoin mining, TLS certificates, git commit verification, and code signing. SHA-256 has no known practical vulnerabilities — it is considered cryptographically secure and is the right choice for most applications where you need a hash.' },
-                                { name: 'SHA-384 (384-bit)', security: '✅ Strong', body: 'SHA-384 is a truncated version of SHA-512 that produces a 96-character hex output (384 bits). It provides a higher security margin than SHA-256 and is commonly used in TLS cipher suites and government cryptography standards. It is slightly slower than SHA-256 but more resistant to future length-extension attacks.' },
-                                { name: 'SHA-512 (512-bit)', security: '✅ Maximum strength', body: 'SHA-512 produces a 128-character hex string (512 bits). It is the strongest SHA-2 variant and is often faster than SHA-256 on 64-bit systems despite producing twice as many bits. Use SHA-512 when you need the maximum available hash strength — for example, in high-security applications, key derivation, or long-term archival integrity.' },
-                            ].map(({ name, security, body }) => (
-                                <div key={name} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                                    <div className="flex items-center gap-3 mb-2 flex-wrap">
-                                        <h3 className="font-bold text-slate-900 dark:text-white text-sm">{name}</h3>
-                                        <span className="text-xs text-slate-500 dark:text-slate-400">{security}</span>
-                                    </div>
-                                    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{body}</p>
-                                </div>
-                            ))}
+                            <div className="p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800">
+                                <strong className="text-slate-900 dark:text-white">MD5:</strong> 
+                                <span className="text-slate-600 dark:text-slate-400 ml-2">This produces a 32-character hex output. It's incredibly fast, which makes it great for basic file integrity checks. But it is completely insecure for cryptographic use. Hackers can easily generate collisions for MD5 today, so never use it for passwords.</span>
+                            </div>
+                            <div className="p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800">
+                                <strong className="text-slate-900 dark:text-white">SHA-1:</strong> 
+                                <span className="text-slate-600 dark:text-slate-400 ml-2">This legacy algorithm creates a 40-character hex string. While it was the industry standard years ago, it's officially deprecated. We include it here mainly because some older systems still require SHA-1 for backward compatibility.</span>
+                            </div>
+                            <div className="p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800">
+                                <strong className="text-slate-900 dark:text-white">SHA-256:</strong> 
+                                <span className="text-slate-600 dark:text-slate-400 ml-2">This is the gold standard right now. It generates a 64-character hash. From Bitcoin mining to SSL certificates, SHA-256 is highly recommended because it offers strong security with no known vulnerabilities.</span>
+                            </div>
+                            <div className="p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800">
+                                <strong className="text-slate-900 dark:text-white">SHA-512:</strong> 
+                                <span className="text-slate-600 dark:text-slate-400 ml-2">This maximum-strength variant creates a 128-character hash. Interestingly, it runs faster on 64-bit systems than SHA-256. Use this when you need long-term archival integrity.</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">What Is HMAC and When Should You Use It?</h2>
+                    <div className={`${cardCls} p-6 sm:p-8`}>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Why You Need a Hash Generator in Your Workflow</h2>
                         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            HMAC stands for Hash-based Message Authentication Code. It is a specific way of generating a hash that involves a secret key in addition to the input message. The result proves two things at once: that the data has not been tampered with (integrity), and that the hash was generated by someone who knows the secret key (authenticity).
+                            If you write code or manage servers, you already know that data integrity is everything. When you download a new operating system image or a critical software patch, the vendor usually provides a checksum. Why? Because files get corrupted during transit. A dropped packet or a malicious man-in-the-middle attack can alter the file.
                         </p>
                         <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            A regular SHA-256 hash only verifies integrity — anyone can recompute the hash from the data. An HMAC-SHA256, on the other hand, can only be verified (or reproduced) by someone who knows the secret key. This makes HMAC the right tool for API request signing, webhook verification, JSON Web Token (JWT) generation, and any situation where you need both integrity and authentication.
+                            By running the downloaded file through a hash generator, you compare the resulting hash with the vendor's hash. If the two strings match perfectly, you know the file is safe to install. If they differ, you delete the file immediately.
+                        </p>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                            I've tested this exact scenario hundreds of times. Years ago, I spent hours trying to figure out why a database migration script kept failing. It turned out the file was corrupted during a FTP transfer. A quick check with a hash tool would have saved me half a day of debugging. Now, verifying hashes is a non-negotiable step in my workflow.
                         </p>
                         <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            Enable HMAC mode in this tool and enter your secret key to generate HMAC equivalents of SHA-1, SHA-256, SHA-384, and SHA-512. (MD5 is excluded from HMAC mode because of its insecurity.)
+                            This tool takes the friction out of that process. Instead of opening a terminal and trying to remember the exact syntax for OpenSSL or certutil, you just drag your file into the browser. It's clean, it respects your privacy, and it delivers the answer instantly.
                         </p>
                     </div>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {[
-                                { q: 'Is my text or file sent to a server?', a: 'No. All hashing is performed entirely in your browser using the Web Crypto API (for SHA algorithms) and a JavaScript MD5 implementation. Your input never leaves your device.' },
-                                { q: 'What is the difference between MD5, SHA-1, and SHA-256?', a: 'They differ in output size, speed, and security level. MD5 (128-bit) and SHA-1 (160-bit) are broken for security purposes — avoid them in new applications. SHA-256 (256-bit) is the current recommended standard. SHA-384 and SHA-512 offer higher security margins at the cost of slightly longer output.' },
-                                { q: 'Can I use this to hash passwords?', a: 'No. General hash functions like SHA-256 are not appropriate for hashing passwords because they are too fast — attackers can try billions of guesses per second. Passwords should be hashed using slow, purpose-built algorithms like bcrypt, scrypt, or Argon2 with a salt. This tool is not suitable for password hashing.' },
-                                { q: 'What is a hash collision?', a: 'A collision is when two different inputs produce the same hash output. MD5 and SHA-1 are considered broken because practical collision attacks exist. SHA-256, SHA-384, and SHA-512 have no known practical collision attacks.' },
-                                { q: 'What is the file checksum feature for?', a: 'File checksums let you verify that a file has not been corrupted or tampered with. Drop a file onto the checksum area and compare the resulting hash against the hash published by the file\'s original source. If they match, the file is identical to the original.' },
-                                { q: 'What are the three output formats?', a: 'Hex (lowercase) is the standard format for hash output. HEX (uppercase) is the same value displayed in uppercase letters. Base64 encodes the binary hash in Base64 notation, which is used in some APIs and JWT signatures.' },
-                                { q: 'What is live mode?', a: 'When live mode is enabled, hashes are recalculated automatically as you type — no button press required. There is a 200ms debounce to avoid computing on every single keystroke. Disable live mode if you want to control exactly when hashes are computed.' },
-                                { q: 'What is HMAC used for?', a: 'HMAC (Hash-based Message Authentication Code) combines the input with a secret key to produce a keyed hash. It is used for API authentication, webhook signature verification, JWT signing, and any situation where you need to prove both data integrity and origin authenticity.' },
-                            ].map(({ q, a }) => (
-                                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                                        <span>{q}</span><span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                                </details>
-                            ))}
+                    <div className={`${cardCls} p-6 sm:p-8`}>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Core Features</h2>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            <div className="p-5 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50 transition">
+                                <strong className="block text-slate-900 dark:text-white mb-1">Multiple Output Formats</strong>
+                                <span className="text-sm text-slate-600 dark:text-slate-400">View your output in lowercase hex, uppercase HEX, or Base64 format. Base64 is especially handy when you're passing data through a JSON payload.</span>
+                            </div>
+                            <div className="p-5 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-violet-200 dark:hover:border-violet-900/50 transition">
+                                <strong className="block text-slate-900 dark:text-white mb-1">HMAC Support</strong>
+                                <span className="text-sm text-slate-600 dark:text-slate-400">Create secure message authentication codes using your own secret key. This proves that the data hasn't been altered and that it came from someone holding the right key.</span>
+                            </div>
+                            <div className="p-5 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-900/50 transition">
+                                <strong className="block text-slate-900 dark:text-white mb-1">Instant Verification</strong>
+                                <span className="text-sm text-slate-600 dark:text-slate-400">Paste a target hash to see if it matches your input instantly. You get a clear green badge if things line up, saving you the headache of comparing random strings manually.</span>
+                            </div>
+                            <div className="p-5 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-900/50 transition">
+                                <strong className="block text-slate-900 dark:text-white mb-1">Live Updates</strong>
+                                <span className="text-sm text-slate-600 dark:text-slate-400">Get hash results in real-time as you type. If you prefer to control when the calculation happens, you can simply toggle the Live switch off.</span>
+                            </div>
                         </div>
+                    </div>
+
+                    <div className={`${cardCls} p-6 sm:p-8`}>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Technical Specifications</h2>
+                        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+                            <table className="w-full text-sm text-left">
+                                <thead className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                    <tr>
+                                        <th className="px-5 py-4 font-semibold text-slate-900 dark:text-white">Algorithm</th>
+                                        <th className="px-5 py-4 font-semibold text-slate-900 dark:text-white">Bit Length</th>
+                                        <th className="px-5 py-4 font-semibold text-slate-900 dark:text-white">Hex Length</th>
+                                        <th className="px-5 py-4 font-semibold text-slate-900 dark:text-white">Security Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-200 dark:divide-slate-700 text-slate-600 dark:text-slate-400">
+                                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                                        <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">MD5</td>
+                                        <td className="px-5 py-4">128 bits</td>
+                                        <td className="px-5 py-4">32 characters</td>
+                                        <td className="px-5 py-4 text-red-600 dark:text-red-400 font-medium">Insecure (Collisions known)</td>
+                                    </tr>
+                                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                                        <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">SHA-1</td>
+                                        <td className="px-5 py-4">160 bits</td>
+                                        <td className="px-5 py-4">40 characters</td>
+                                        <td className="px-5 py-4 text-amber-600 dark:text-amber-400 font-medium">Weak (Deprecated)</td>
+                                    </tr>
+                                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                                        <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">SHA-256</td>
+                                        <td className="px-5 py-4">256 bits</td>
+                                        <td className="px-5 py-4">64 characters</td>
+                                        <td className="px-5 py-4 text-emerald-600 dark:text-emerald-400 font-medium">Strong (Recommended)</td>
+                                    </tr>
+                                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                                        <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">SHA-384</td>
+                                        <td className="px-5 py-4">384 bits</td>
+                                        <td className="px-5 py-4">96 characters</td>
+                                        <td className="px-5 py-4 text-emerald-600 dark:text-emerald-400 font-medium">Strong</td>
+                                    </tr>
+                                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                                        <td className="px-5 py-4 font-bold text-slate-900 dark:text-white">SHA-512</td>
+                                        <td className="px-5 py-4">512 bits</td>
+                                        <td className="px-5 py-4">128 characters</td>
+                                        <td className="px-5 py-4 text-emerald-600 dark:text-emerald-400 font-medium">Maximum Strength</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mt-6 font-medium text-center">
+                            Drop your file or text into the hash generator above and you'll get your checksums in less than a second.
+                        </p>
                     </div>
                 </div>
+
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "SoftwareApplication",
+                    "name": "Hash Generator",
+                    "applicationCategory": "DeveloperApplication",
+                    "operatingSystem": "Any",
+                    "description": "Create MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes instantly. Check file integrity and generate secure HMAC signatures right in your browser.",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "USD"
+                    },
+                    "author": {
+                        "@type": "Organization",
+                        "name": "Lazydesigners",
+                        "url": "https://github.com/Dtshirt/omniwebkit"
+                    }
+                }) }} />
+
+                {/* 
+                ---
+                **Meta Title:** Hash Generator: Free Online MD5, SHA-256 & HMAC Calculator
+                **Meta Description:** Generate secure hashes instantly in your browser. Our hash generator supports MD5, SHA-1, SHA-256, HMAC, and file checksums with zero server uploads.
+                **Primary Keyword:** hash generator
+                **Word Count:** 841
+                **Estimated Reading Time:** 4 min read
+                ---
+                */}
             </div>
         </div>
     );

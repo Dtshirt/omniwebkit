@@ -37,15 +37,20 @@ export const metadata = {
 
 const webAppSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
+  '@type': 'SoftwareApplication',
   name: 'PDF Merger',
   description:
     'Free browser-based PDF merger. Combines multiple PDF files into a single document using real page-by-page merging via pdf-lib. Features: automatic page counting per file, drag-and-drop or click-to-upload, reorder files with arrow buttons or shuffle, preview any PDF before merging, metadata controls (add/preserve metadata, optimize size), merge statistics (total files, size, pages), single-click download. All processing browser-based — no server upload. No signup, no watermarks, no limits.',
   url: 'https://omniwebkit.com/tools/pdf-merger',
-  applicationCategory: 'ProductivityApplication',
+  applicationCategory: 'WebApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  author: {
+    '@type': 'Organization',
+    name: 'Lazydesigners',
+    url: 'https://github.com/Dtshirt/omniwebkit',
+  },
   publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
   featureList: [
     'Real page-by-page PDF merging via pdf-lib',

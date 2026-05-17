@@ -294,85 +294,131 @@ export default function BrokenLinkChecker() {
                 )}
 
                 {/* SEO Content */}
-                <div className="mt-16 space-y-6">
+                <div className="mt-16 prose-premium">
+                    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "SoftwareApplication",
+                        "name": "Broken Link Checker",
+                        "operatingSystem": "Web",
+                        "applicationCategory": "UtilitiesApplication",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "0.00",
+                            "priceCurrency": "USD"
+                        },
+                        "author": {
+                            "@type": "Organization",
+                            "name": "Lazydesigners",
+                            "url": "https://github.com/Dtshirt/omniwebkit"
+                        }
+                    }) }} />
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Broken Link Checker — Find Dead Links on Any Webpage</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            Broken links are one of the most damaging issues a website can have. When a user clicks a link and lands on a 404 error page, the experience is immediately frustrating. They will likely leave — and they may not come back. For your SEO, broken links are just as damaging. Search engine crawlers follow links to discover and index your content. When they encounter broken outbound or internal links, it signals poor site maintenance and reduces your crawl efficiency.
+                    <div>
+                        <h1>Broken Link Checker: Audit Your Site for Dead Links Instantly</h1>
+                        <p>
+                            A single broken link can kill your conversion rate and tell search engines your site is abandoned. When visitors click a link and hit a 404 error, they leave. It is that simple. For SEO, broken links waste crawl budget and destroy internal link equity. 
                         </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            The OmniWebKit Broken Link Checker makes it easy to find every broken link on a webpage. Enter any URL, click Check Links, and the tool fetches the page, extracts all linked URLs, and checks each one for a valid HTTP response. Results appear in a clear, colour-coded list — broken links in red, working links in green — with filter tabs and a Link Health Score so you can assess the state of your link profile at a glance.
+                        <p>
+                            The <strong>Broken Link Checker</strong> is a free, web-based tool that scans any webpage and finds every dead link, server error, and unexpected redirect. You don't need to install software or configure crawlers. Just drop your URL in the box above, and the tool fetches the page, extracts all the links, and tests each one in real-time. You get a clear, filterable report showing exactly which links work and which ones are broken.
                         </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            This tool is used by SEO professionals auditing client websites, web developers checking pages before launch, content managers maintaining long-running blogs and resource pages, and website owners who want to ensure their site delivers a clean, error-free experience on every page.
-                        </p>
-                    </section>
+                    </div>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">How to Check for Broken Links — Step by Step</h2>
-                        <div className="space-y-4">
-                            {[
-                                { n: '1', t: 'Enter the URL of the page you want to check', d: 'Type or paste the full URL of the page you want to scan. Include the https:// prefix. The tool will accept any public webpage URL — your homepage, a blog post, a resource page, or a product listing.' },
-                                { n: '2', t: 'Click Check Links', d: 'Hit the Check Links button or press Enter. The tool first fetches the page HTML through a server-side proxy (which avoids browser CORS restrictions), then extracts every anchor link on the page.' },
-                                { n: '3', t: 'Wait for the scan to complete', d: 'Each extracted link is verified by checking its HTTP response code. Links are processed in parallel batches of 5. A progress bar tracks the scan. Larger pages with many links may take 20–60 seconds.' },
-                                { n: '4', t: 'Review the results', d: 'Results show a Link Health Score, summary stats (Total, Working, Broken, Redirects), and a full colour-coded list. Use the filter tabs to view only Broken or Working links. Click any URL to open it in a new tab.' },
-                                { n: '5', t: 'Export the report', d: 'Click Export CSV to download the full results as a CSV file, or Copy Report to copy the summary to your clipboard. Use the CSV to share with developers, clients, or to import into your project management tool.' },
-                            ].map(({ n, t, d }) => (
-                                <div key={n} className="flex gap-4">
-                                    <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-sm font-bold flex items-center justify-center">{n}</div>
-                                    <div><p className="font-semibold text-slate-900 dark:text-white text-sm">{t}</p><p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">{d}</p></div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+                    <div>
+                        <h2>How to Use the Free Broken Link Checker</h2>
+                        <p>Scanning a page takes seconds. Follow these steps to find your dead links:</p>
+                        <ol>
+                            <li><strong>Enter your URL:</strong> Paste the full web address (including the https://) of the page you want to scan into the input box above.</li>
+                            <li><strong>Start the Scan:</strong> Click the "Check Links" button. The tool will bypass browser limits using a secure server proxy to fetch your page.</li>
+                            <li><strong>Watch the Progress:</strong> The checker extracts all anchor links and tests them in batches. You'll see a live progress bar as it verifies HTTP status codes.</li>
+                            <li><strong>Review the Report:</strong> Once finished, check your Link Health Score. Use the filter tabs to view only the broken links (red) or redirects (yellow).</li>
+                            <li><strong>Export the Data:</strong> Click "CSV" to download the full report, or "Copy Report" to grab a quick text summary for your team.</li>
+                        </ol>
+                    </div>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Understanding HTTP Status Codes in Link Checking</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
-                            When the tool checks a link, it receives an HTTP status code in the response. Here is what the most common codes mean and what action you should take.
+                    <div>
+                        <h2>Privacy & Security: Your Data Stays Safe</h2>
+                        <p>
+                            We built this tool with strict privacy standards. Here is exactly what happens when you run a scan:
                         </p>
-                        <div className="space-y-3">
-                            {[
-                                { code: '200 OK', c: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300', d: 'The link is working correctly. The server returned a valid response. No action needed.' },
-                                { code: '301 Moved Permanently', c: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300', d: 'The resource has permanently moved to a new URL. The link technically works but updating it to the new URL avoids an unnecessary redirect hop, which is better for SEO and slightly faster for users.' },
-                                { code: '302 Found', c: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300', d: 'Temporary redirect. The resource temporarily moved. If the redirect has been in place for a long time, consider updating the link to the current URL.' },
-                                { code: '403 Forbidden', c: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300', d: 'The server refused the request. The link URL is valid but access is restricted. This may be a false positive if the site blocks crawlers — check the link manually in a browser.' },
-                                { code: '404 Not Found', c: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300', d: 'The page does not exist. Either the URL was never valid, the content was deleted, or it was moved without a redirect. This should be fixed — update the link, find an alternative source, or remove the link.' },
-                                { code: '500 Server Error', c: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300', d: 'The linked server experienced an internal error. This is likely temporary — recheck the link later. If the error persists, the external site may have a serious issue.' },
-                                { code: 'Error / Timeout', c: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300', d: 'The request failed or timed out. The server may be down, blocking automated requests, or the URL may be completely unreachable. Check the link manually in a browser.' },
-                            ].map(({ code, c, d }) => (
-                                <div key={code} className="flex items-start gap-3 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
-                                    <span className={`px-2 py-0.5 rounded text-xs font-bold font-mono flex-shrink-0 mt-0.5 ${c}`}>{code}</span>
-                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{d}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
+                        <ul>
+                            <li><strong>No Data Retention:</strong> The tool fetches your page to extract links, but it never stores the HTML content or the resulting report on our servers.</li>
+                            <li><strong>Client-Side Filtering:</strong> Once the server returns the link status codes, all filtering and sorting happens directly in your browser.</li>
+                            <li><strong>No Tracking:</strong> We don't track which URLs you scan or build databases of your site structure. Your audits remain your business.</li>
+                        </ul>
+                    </div>
 
-                    <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {[
-                                { q: 'Is this broken link checker free?', a: 'Yes, 100% free. No account required. Enter any URL and check as many pages as you need. The tool uses a server-side proxy to fetch pages and check links.' },
-                                { q: 'What types of links does the checker find?', a: 'The tool extracts all anchor (<a href="...">) links from the page HTML. It excludes internal page anchors (#fragment), mailto: links, tel: links, and javascript: pseudo-links, as these are not HTTP resources that can be verified with a status code.' },
-                                { q: 'Why does a link show as broken even though it works in my browser?', a: 'Some websites block automated requests from crawlers, bots, or data centres. The link may return a 403 Forbidden or timeout error when checked programmatically, even though it works fine in a browser. Always manually verify 403 errors before removing or updating the link.' },
-                                { q: 'What is the Link Health Score?', a: 'The Link Health Score is the percentage of total links on the page that returned a successful 200 OK response. A score of 90% or higher is excellent. A lower score indicates that a significant portion of your outbound or internal links are broken, redirecting, or unreachable.' },
-                                { q: 'Can I export the broken link report?', a: 'Yes. Click Export CSV to download a CSV file containing all link URLs, their HTTP status codes, and whether they are working or broken. You can open this in Excel, Google Sheets, or import it into your project management or bug-tracking tool.' },
-                                { q: 'How many links can the tool check per page?', a: 'There is no hard limit. The tool processes links in batches of 5 in parallel. For pages with 50–100 links, a scan typically takes 20–40 seconds. Pages with 200+ links may take 1–2 minutes. Very large pages are checked completely, though the UI may not update live for every single link.' },
-                                { q: 'Why does the tool sometimes fail to scan a page?', a: 'Some websites actively block server-side crawlers using Cloudflare, bot detection, authentication walls, or strict CORS policies. If the tool cannot fetch the page HTML, it will show an error message explaining the issue. In these cases, use a browser extension or a dedicated crawling tool.' },
-                                { q: 'Can I use this to check broken backlinks?', a: 'This tool checks links on a page, not links pointing to your page. To verify that backlinks from external sites are still live and pointing to your target URL, use the SEO Backlink Auditor tool instead.' },
-                            ].map(({ q, a }) => (
-                                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none">
-                                        <span>{q}</span>
-                                        <span className="text-slate-400 dark:text-slate-500 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                                </details>
-                            ))}
-                        </div>
-                    </section>
+                    <div>
+                        <h2>Features That Make This Broken Link Checker Different</h2>
+                        <p>
+                            Most online link checkers are slow or hide results behind a paywall. Here is why this tool stands out:
+                        </p>
+                        <ul>
+                            <li><strong>Live Batch Processing:</strong> It tests links in parallel batches of five, cutting down scan times dramatically compared to one-by-one checkers.</li>
+                            <li><strong>Smart Link Extraction:</strong> It intelligently ignores internal page jumps, mailto links, and javascript functions that cause false positives in other tools.</li>
+                            <li><strong>Link Health Score:</strong> Get an instant percentage grade indicating the overall reliability of the outbound and internal links on your page.</li>
+                            <li><strong>Filterable Views:</strong> Don't scroll through hundreds of working links to find the dead ones. Click the "Broken" tab to isolate the problems immediately.</li>
+                            <li><strong>Instant CSV Export:</strong> Download a clean spreadsheet of your scan results in one click, perfect for sending to clients or developers.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h2>Technical Specifications & Status Codes Explained</h2>
+                        <p>
+                            The tool identifies links by checking the raw HTTP response headers. It categorizes them based on the exact status code returned by the server:
+                        </p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Status Code</th>
+                                    <th>Meaning</th>
+                                    <th>Action Required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>200 OK</strong></td>
+                                    <td>The link works perfectly.</td>
+                                    <td>None.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>301 / 302</strong></td>
+                                    <td>The URL redirects to another page.</td>
+                                    <td>Update the link to the final destination to save a redirect hop.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>403 Forbidden</strong></td>
+                                    <td>The server blocked the request.</td>
+                                    <td>Often a false positive if a site blocks bots. Check manually.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>404 Not Found</strong></td>
+                                    <td>The page no longer exists.</td>
+                                    <td>Remove the link or find an alternative source.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>500 Server Error</strong></td>
+                                    <td>The target server crashed.</td>
+                                    <td>Try again later. If it persists, remove the link.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <h2>Frequently Asked Questions (FAQ)</h2>
+                        
+                        <h3>Does this tool check my entire website?</h3>
+                        <p>No, this tool scans one specific webpage at a time. It is designed for deep, fast audits of high-value pages like your homepage, a popular blog post, or a specific resource list.</p>
+                        
+                        <h3>Why do some working links show up as broken?</h3>
+                        <p>Some websites employ strict firewalls (like Cloudflare) that block automated requests. If the target server refuses to answer the tool's ping, it logs a timeout or a 403 error. If you suspect a false positive, click the link to verify it manually.</p>
+                        
+                        <h3>How many links can it scan at once?</h3>
+                        <p>There is no strict limit, but scanning pages with over 500 links may take a few minutes. The tool is optimized to process links in parallel batches to maintain speed without overwhelming the target servers.</p>
+                        
+                        <h3>Can I use this to find broken backlinks?</h3>
+                        <p>This specific tool checks the links going out from a page you specify. If you want to see if other websites are linking to broken pages on your site, you will need a dedicated backlink auditor.</p>
+                    </div>
                 </div>
             </div>
         </div>

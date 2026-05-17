@@ -29,13 +29,19 @@ export default function ZipFileCreatorLayout({ children }) {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'WebApplication',
+        '@type': 'SoftwareApplication',
         name: 'Zip File Creator',
         url: 'https://omniwebkit.com/tools/zip-file-creator',
         description: 'A professional, fully local browser-based tool to create ZIP archives instantly. Compress multiple files into a single ZIP without uploading files to any server.',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'Any',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        author: {
+            '@type': 'Organization',
+            name: 'Lazydesigners',
+            url: 'https://github.com/Dtshirt/omniwebkit',
+            sameAs: 'https://github.com/Dtshirt/omniwebkit'
+        },
         publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
         featureList: [
           'Local browser processing',

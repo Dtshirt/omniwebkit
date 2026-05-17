@@ -11,6 +11,29 @@ export const metadata = {
   },
 };
 
+const webAppSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'PDF Splitter',
+    description: 'Split PDF files by page range, extract specific pages, or divide into equal chunks online for free. Instant browser processing for small files. Secure server processing for large files. Free, no watermark.',
+    url: 'https://omniwebkit.com/tools/pdf-splitter',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: {
+        '@type': 'Organization',
+        name: 'Lazydesigners',
+        url: 'https://github.com/Dtshirt/omniwebkit',
+        sameAs: 'https://github.com/Dtshirt/omniwebkit'
+    },
+    publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' }
+};
+
 export default function PdfSplitterPage() {
-  return <PdfSplitterClient />;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
+      <PdfSplitterClient />
+    </>
+  );
 }

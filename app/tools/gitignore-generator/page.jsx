@@ -348,6 +348,87 @@ export default function GitignoreGenerator() {
     URL.revokeObjectURL(url);
   };
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Gitignore Generator",
+        "description": "Generate custom .gitignore files instantly for any language, framework, or operating system.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Lazydesigners",
+          "url": "https://github.com/Dtshirt/omniwebkit"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to generate a .gitignore file",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Pick your stack",
+            "text": "Select the languages, frameworks, and operating systems you are using."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Generate the file",
+            "text": "Click generate to combine the templates and remove duplicate rules."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Download or copy",
+            "text": "Download the .gitignore file or copy the text directly into your project."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What exactly is a git ignore file?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A .gitignore file tells Git which files or folders it should pretend don't exist. This keeps passwords, local database files, and massive build folders out of your public code."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why shouldn't I just write one myself?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can, but you'll probably miss something. A standard macOS machine creates hidden .DS_Store files everywhere. Frameworks generate cache folders you might not know about. Using a generator ensures you don't accidentally push sensitive data."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this work for private repositories?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The file you download works for any Git repository, whether it's public on GitHub, private on GitLab, or hosted on your own server."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where do I put the downloaded file?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Place the .gitignore file right in the main folder of your project — the same place where your .git folder lives."
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   const btnLabel = selected.size === 0
     ? 'Generate .gitignore'
     : `Generate .gitignore (${selected.size} template${selected.size > 1 ? 's' : ''})`;
@@ -473,54 +554,105 @@ export default function GitignoreGenerator() {
         )}
 
         {/* ── SEO Section ── */}
-        <div style={s.seoSection}>
-          <div style={s.seoCard}>
-            <h2 style={s.h2}>How to use this Gitignore Generator</h2>
-            <p style={s.p}>
-              A <strong>.gitignore</strong> file tells Git which files and directories to exclude from version control.
-              Without it, build artifacts, dependency folders, secret keys, and IDE settings end up in your repository — creating noise,
-              security risks, and bloated clones for every collaborator.
-            </p>
-            <p style={s.p}>
-              To use this tool: select all technologies in your stack, click <em>Generate .gitignore</em>, then either copy
-              the output or download the file directly. Drop the <code>.gitignore</code> file into the root of your project.
-              Git will immediately start respecting its rules — no configuration needed.
-            </p>
-            <p style={{ ...s.p, marginBottom: 0 }}>
-              Templates are fetched in real time from the official{' '}
-              <strong>github/gitignore</strong> repository on GitHub and cached for 24 hours for performance.
-              Duplicate lines across templates are automatically removed so your file stays clean and minimal.
-            </p>
+        <div className="prose-premium" style={{ marginTop: 56 }}>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+          
+          <h1>Gitignore Generator: Keep Your Repositories Clean</h1>
+          
+          <h2>About the Tool</h2>
+          <p>
+            A 50MB log file can slow down your deployment — and cost you valuable repository storage before you even notice.
+          </p>
+          <p>
+            The <strong>Gitignore Generator</strong> stops unwanted files from ever reaching your GitHub or GitLab repo. It builds the perfect <code>.gitignore</code> file for your project by combining rules for your language, framework, and operating system. You don't have to guess which <code>node_modules</code> or <code>.env</code> files to exclude. The tool pulls official, up-to-date templates straight from GitHub's master list.
+          </p>
+
+          <h2>How to Use the Generator</h2>
+          <p>
+            Setting up your ignore rules takes about five seconds:
+          </p>
+          <ol>
+            <li><strong>Pick your stack:</strong> Click the buttons for your language (like Node or Python), framework (React or Django), and OS (macOS or Windows).</li>
+            <li><strong>Hit Generate:</strong> The tool combines the templates, removes duplicate rules, and creates one clean text block.</li>
+            <li><strong>Download or Copy:</strong> Click the copy button or download the <code>.gitignore</code> file directly to your project folder.</li>
+          </ol>
+          <p>
+            That's pretty much it. Your git repository is now safe from clutter.
+          </p>
+
+          <h2>Privacy & Security</h2>
+          <p>
+            Here's the thing — we don't look at your code. 
+          </p>
+          <p>
+            The Gitignore Generator runs the rule merging right here in your browser. When you select your tech stack, we fetch the templates from public repositories. We never scan your local files, ask for repo access, or store your generation history on our servers. Your project structure stays completely private.
+          </p>
+
+          <h2>Features</h2>
+          <p>
+            A good developer tool gets out of your way. Here is what makes this one different:
+          </p>
+          <ul>
+            <li><strong>Live Template Fetching:</strong> We pull rules directly from the official <code>github/gitignore</code> repo. You always get the latest standards.</li>
+            <li><strong>Smart Merging:</strong> If you select Node and React, you won't get two overlapping rules for <code>node_modules</code>. The tool strips duplicates instantly.</li>
+            <li><strong>One-Click Downloads:</strong> No copy-paste mistakes. Download the exact <code>.gitignore</code> file ready to drop into your root directory.</li>
+            <li><strong>Pre-built Stacks:</strong> Use our quick presets for common setups like the MERN stack or Python Django to save even more time.</li>
+          </ul>
+
+          <h2>Technical Specifications</h2>
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Processing Time</strong></td>
+                  <td>&lt; 1 second</td>
+                </tr>
+                <tr>
+                  <td><strong>Template Source</strong></td>
+                  <td>Official GitHub Repository</td>
+                </tr>
+                <tr>
+                  <td><strong>Caching</strong></td>
+                  <td>24-hour edge cache</td>
+                </tr>
+                <tr>
+                  <td><strong>Output Format</strong></td>
+                  <td>Plain text (.gitignore)</td>
+                </tr>
+                <tr>
+                  <td><strong>Offline Mode</strong></td>
+                  <td>Requires internet for initial fetch</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
-          <div style={s.seoCard}>
-            <h2 style={s.h2}>Popular combinations</h2>
-            <div style={s.comboGrid}>
-              {[
-                {
-                  title: '⚡ MERN Stack',
-                  desc: 'Node.js, React, macOS & Windows — full coverage for a MongoDB + Express + React + Node project.',
-                },
-                {
-                  title: '🐍 Python Django',
-                  desc: 'Python, Django, Linux & macOS — ideal for server-side Django apps deployed on Ubuntu or Mac.',
-                },
-                {
-                  title: '💙 Flutter App',
-                  desc: 'Flutter, Android, macOS & Windows — cross-platform mobile dev on both major desktops.',
-                },
-                {
-                  title: '▲ Next.js Full',
-                  desc: 'Next.js, Node.js, VS Code & macOS — covers server-side rendering, API routes, and editor clutter.',
-                },
-              ].map((c) => (
-                <div key={c.title} style={s.comboCard}>
-                  <div style={s.comboTitle}>{c.title}</div>
-                  <div style={s.comboDesc}>{c.desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <h2>FAQ</h2>
+          <h3>What exactly is a git ignore file?</h3>
+          <p>
+            A <code>.gitignore</code> file tells Git which files or folders it should pretend don't exist. This keeps passwords, local database files, and massive build folders out of your public code.
+          </p>
+
+          <h3>Why shouldn't I just write one myself?</h3>
+          <p>
+            You can, but you'll probably miss something. A standard macOS machine creates hidden <code>.DS_Store</code> files everywhere. Frameworks generate cache folders you might not know about. Using a generator ensures you don't accidentally push sensitive data.
+          </p>
+
+          <h3>Does this work for private repositories?</h3>
+          <p>
+            Yes. The file you download works for any Git repository, whether it's public on GitHub, private on GitLab, or hosted on your own server.
+          </p>
+
+          <h3>Where do I put the downloaded file?</h3>
+          <p>
+            Place the <code>.gitignore</code> file right in the main folder of your project — the same place where your <code>.git</code> folder lives.
+          </p>
         </div>
       </div>
     </div>

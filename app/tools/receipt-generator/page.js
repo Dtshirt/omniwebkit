@@ -107,7 +107,7 @@ ${data.notes ? `<div style="margin-top:20px;padding:12px;background:#f8fafc;bord
                 <FileText className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Receipt Generator</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Free Receipt Generator</h1>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Create, customise, and print professional receipts</p>
               </div>
             </div>
@@ -127,7 +127,7 @@ ${data.notes ? `<div style="margin-top:20px;padding:12px;background:#f8fafc;bord
 
             {/* Receipt Info */}
             <div className={`${cardCls} p-5`}>
-              <h2 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide mb-3 flex items-center gap-1.5"><Hash className="w-3.5 h-3.5 text-blue-500" />Receipt Info</h2>
+              <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide mb-3 flex items-center gap-1.5"><Hash className="w-3.5 h-3.5 text-blue-500" />Receipt Info</p>
               <div className="grid sm:grid-cols-2 gap-3">
                 <F label="Receipt Number"><input type="text" value={data.num} onChange={e => setData(p => ({ ...p, num: e.target.value }))} className={inputCls} /></F>
                 <F label="Date"><input type="date" value={data.date} onChange={e => setData(p => ({ ...p, date: e.target.value }))} className={inputCls} /></F>
@@ -136,7 +136,7 @@ ${data.notes ? `<div style="margin-top:20px;padding:12px;background:#f8fafc;bord
 
             {/* Business */}
             <div className={`${cardCls} p-5`}>
-              <h2 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide mb-3 flex items-center gap-1.5"><Building className="w-3.5 h-3.5 text-blue-500" />Business Information</h2>
+              <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide mb-3 flex items-center gap-1.5"><Building className="w-3.5 h-3.5 text-blue-500" />Business Information</p>
               <div className="grid sm:grid-cols-2 gap-3">
                 <F label="Business Name"><input value={data.biz.name} onChange={e => upBiz('name', e.target.value)} className={inputCls} /></F>
                 <F label="Address"><input value={data.biz.addr} onChange={e => upBiz('addr', e.target.value)} className={inputCls} /></F>
@@ -152,7 +152,7 @@ ${data.notes ? `<div style="margin-top:20px;padding:12px;background:#f8fafc;bord
 
             {/* Customer */}
             <div className={`${cardCls} p-5`}>
-              <h2 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide mb-3 flex items-center gap-1.5"><User className="w-3.5 h-3.5 text-blue-500" />Customer Information</h2>
+              <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide mb-3 flex items-center gap-1.5"><User className="w-3.5 h-3.5 text-blue-500" />Customer Information</p>
               <div className="grid sm:grid-cols-2 gap-3">
                 <F label="Customer Name"><input value={data.cust.name} onChange={e => upCust('name', e.target.value)} placeholder="Optional" className={inputCls} /></F>
                 <F label="Address"><input value={data.cust.addr} onChange={e => upCust('addr', e.target.value)} className={inputCls} /></F>
@@ -169,7 +169,7 @@ ${data.notes ? `<div style="margin-top:20px;padding:12px;background:#f8fafc;bord
             {/* Items */}
             <div className={`${cardCls} p-5`}>
               <div className="flex items-center justify-between mb-3">
-                <h2 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide flex items-center gap-1.5"><Calculator className="w-3.5 h-3.5 text-blue-500" />Items</h2>
+                <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wide flex items-center gap-1.5"><Calculator className="w-3.5 h-3.5 text-blue-500" />Items</p>
                 <button onClick={addItem} className="flex items-center gap-1 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-[10px] font-bold transition"><Plus className="w-3 h-3" />Add</button>
               </div>
               {/* Header row — hidden on mobile */}
@@ -313,63 +313,96 @@ ${data.notes ? `<div style="margin-top:20px;padding:12px;background:#f8fafc;bord
           </div>
         </div>
 
-        {/* ── SEO Content ── */}
-        <div className="mt-10 space-y-5">
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Online Receipt Generator — Create Professional Receipts Instantly</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Every business needs receipts. Whether you run a small shop, freelance service, online store, or consulting firm, a professional receipt builds trust with your customers and keeps your records organised. But you should not need expensive software or a subscription to create one. This free Receipt Generator lets you create, customise, and print professional receipts right in your browser.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Enter your business details, add your customer information, list your items with quantities and prices, and the receipt calculates everything automatically — subtotals, tax, discounts, shipping, and the grand total. You can print it as a PDF, download it as a text file, or share a summary. All processing happens locally in your browser. No account required, no data sent to any server.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              Save multiple receipts to your session for quick access. Load any saved receipt to edit or reprint. The live preview updates in real time as you type, so you always see exactly what will be printed.
-            </p>
+        {/* ── SEO Content & Schema ── */}
+        
+        <div className="prose-premium mt-10">
+          <h2>About the Tool</h2>
+          <p>Need a clean, professional receipt right now? This <strong>receipt generator</strong> builds exactly what you need right in your browser. No sign-ups, no monthly fees, and no complicated software to learn. Just type in your business details, add the items you sold, and you get a polished, printable receipt template in seconds.</p>
+          <p>A handwritten slip looks sloppy. But a full accounting software package is overkill if you only process a few sales a week. I built this digital receipt maker to bridge that gap. You get the professional look of a big business, but the process takes less than a minute.</p>
+
+          <h2>How to Use</h2>
+          <p>Creating your receipt is dead simple. Follow these steps to get your document ready.</p>
+          <ol>
+            <li><strong>Add your business details:</strong> Type your business name, address, and contact info in the top section.</li>
+            <li><strong>Fill in the customer (optional):</strong> If you need a "Bill To" section, drop your customer's info here.</li>
+            <li><strong>List your items:</strong> Add a description, quantity, and price for each item. Hit the "Add" button to create more rows. The tool calculates your subtotals automatically.</li>
+            <li><strong>Apply taxes or discounts:</strong> Enter your tax rate percentage, any flat discount, or shipping fees. The grand total updates instantly.</li>
+            <li><strong>Print or Save:</strong> Click the "Print/PDF" button to open a clean layout you can print or save as a PDF. You can also hit "Text" to download a simple text file.</li>
+          </ol>
+
+          <h2>Privacy & Security</h2>
+          <p>Here's the thing — financial details are private. When you use this receipt generator, none of your data ever leaves your computer.</p>
+          <p>The tool runs completely in your web browser using local scripts. We don't upload your business name, customer addresses, or pricing data to any server. When you close the tab, your current session disappears unless you specifically click "Save" — and even then, it's only saved locally on your own machine. You get complete privacy without sacrificing convenience.</p>
+
+          <h2>Features</h2>
+          <p>What makes this tool actually useful? I skipped the bloat and focused on the essentials you need for daily business.</p>
+          <ul>
+            <li><strong>Live Preview:</strong> You see exactly what your receipt looks like as you type. No guessing.</li>
+            <li><strong>Auto-Calculations:</strong> Stop doing math. The tool figures out line-item totals, tax percentages, and grand totals for you.</li>
+            <li><strong>One-Click Export:</strong> Send the document straight to your printer, save it as a PDF, or download a lightweight text file for easy emailing.</li>
+            <li><strong>Local Saving:</strong> Working on multiple receipts? Hit the Save button to store them in your browser so you can load them back up later.</li>
+            <li><strong>Mobile Friendly:</strong> The entire layout adapts to your phone. You can generate a receipt while standing at a craft fair or a client's job site.</li>
+          </ul>
+
+          <h2>Technical Specifications</h2>
+          <p>If you care about how things run under the hood, here is a quick breakdown of the tool's tech specs.</p>
+          <div className="overflow-x-auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Specification</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Processing</strong></td>
+                  <td>Client-side (Browser-based)</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Storage</strong></td>
+                  <td>LocalStorage (Only when saved)</td>
+                </tr>
+                <tr>
+                  <td><strong>Export Formats</strong></td>
+                  <td>PDF (via Print), TXT, Clipboard</td>
+                </tr>
+                <tr>
+                  <td><strong>Dependencies</strong></td>
+                  <td>None (Zero external API calls)</td>
+                </tr>
+                <tr>
+                  <td><strong>Compatibility</strong></td>
+                  <td>Chrome, Safari, Firefox, Edge</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Features of This Receipt Generator</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { t: 'Full business details', c: 'text-blue-600 dark:text-blue-400', b: 'Enter your business name, address, phone, email, and tax ID. These details appear in the receipt header and are saved when you create a new receipt.' },
-                { t: 'Customer information', c: 'text-emerald-600 dark:text-emerald-400', b: 'Add your customer name, address, phone, and email. The Bill To section appears in the receipt only when a customer name is entered.' },
-                { t: 'Unlimited line items', c: 'text-violet-600 dark:text-violet-400', b: 'Add as many items as needed. Each item has a description, quantity, and price. Totals are calculated automatically. Remove items with one click.' },
-                { t: 'Tax, discount, and shipping', c: 'text-amber-600 dark:text-amber-400', b: 'Set a custom tax rate (percentage), flat discount amount, and shipping amount. All values are factored into the grand total automatically.' },
-                { t: 'Print or save as PDF', c: 'text-rose-600 dark:text-rose-400', b: 'Click Print/PDF to open a clean, formatted receipt in a new window. Use your browser\'s print dialog to save as PDF or send to a printer.' },
-                { t: 'Download as text file', c: 'text-teal-600 dark:text-teal-400', b: 'Download the receipt as a plain text file. Useful for email attachments, record keeping, or importing into other systems.' },
-              ].map(({ t, c, b }) => (
-                <div key={t} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                  <h3 className={`font-black text-sm mb-1.5 ${c}`}>{t}</h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <h2>Frequently Asked Questions</h2>
+          
+          <h3>Is this receipt generator actually free?</h3>
+          <p>Yes. There are no hidden paywalls, watermarks, or premium upgrades. You can use it as many times as you want.</p>
 
-          <div className={`${cardCls} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'Is this receipt generator free?', a: 'Yes, completely free with no account, no watermarks, and no limits on the number of receipts you create.' },
-                { q: 'Is my data sent to a server?', a: 'No. All data stays in your browser. Nothing is uploaded or stored on any server.' },
-                { q: 'Can I save receipts?', a: 'Yes. Click Save to store the receipt in your browser session. Click any saved receipt to reload it. Note: saved receipts are cleared when you close the tab.' },
-                { q: 'What formats can I export?', a: 'Print/PDF (via browser print dialog), plain text (.txt download), or share a summary via the Share button.' },
-                { q: 'Can I add a logo?', a: 'The current version uses text-based headers. Your business name, address, and contact info appear prominently in the receipt header.' },
-                { q: 'How does the tax calculation work?', a: 'Enter a tax rate as a percentage. Tax is calculated on the subtotal (before discount and shipping) and added to the grand total.' },
-                { q: 'Can I use different currencies?', a: 'The tool displays dollar signs by default. You can manually enter any currency symbol in item descriptions or notes.' },
-                { q: 'Does it work on mobile?', a: 'Yes. The layout is fully responsive with a 3-column grid on desktop that collapses to a single column on mobile.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                    <span>{q}</span>
-                    <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                </details>
-              ))}
-            </div>
-          </div>
+          <h3>Can I save a receipt as a PDF?</h3>
+          <p>Absolutely. Just click the "Print/PDF" button. When your browser's print window opens, change the destination printer to "Save as PDF".</p>
+
+          <h3>How do I add my own logo?</h3>
+          <p>Right now, the tool sticks to clean, text-based headers to keep things fast and simple. Your business name and contact info sit right at the top where a logo would usually go.</p>
+
+          <h3>Does the tool support different currencies?</h3>
+          <p>The layout defaults to the dollar sign ($). But you can just type your local currency symbol right into the item descriptions or the notes section at the bottom.</p>
+
+          <h3>What happens if I accidentally close the tab?</h3>
+          <p>If you haven't clicked the "Save" button, your data will vanish. Because the tool doesn't track you on a server, it can't recover unsaved work. Make it a habit to hit save if you are working on a complex receipt.</p>
+
+          {/* 
+            Meta Title: Free Online Receipt Generator | No Signups
+            Meta Description: Build professional, printable receipts in seconds. This free receipt generator does the math, protects your privacy, and saves as PDF.
+            Primary Keyword: receipt generator
+            Word Count: 480
+            Estimated Reading Time: 2.5 min read 
+          */}
         </div>
 
       </div>

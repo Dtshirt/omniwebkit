@@ -1595,67 +1595,89 @@ const VCardGenerator = () => {
       )}
 
       {/* ── SEO Content ── */}
-      <div className="max-w-7xl mx-auto px-4 mt-10 space-y-5 pb-10">
+      <div className="max-w-7xl mx-auto px-4 mt-16 pb-10 prose-premium">
+        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-5 sm:p-8">
+          <section>
+            <h2>About the Tool</h2>
+            <p>
+              Typing out phone numbers and email addresses by hand is frustrating and leads to typos. We built this <strong>vCard generator</strong> to fix that. A vCard is essentially a digital business card that anyone can open on their phone or computer to instantly save your contact details. 
+            </p>
+            <p>
+              Instead of handing someone a paper card they might lose, you can use this tool to build a complete profile. You just type in your details, and the tool builds a perfect .vcf file. Send that file to a client, and with one tap, they have your phone, email, website, and social links saved right in their contacts app.
+            </p>
+          </section>
 
-        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Online vCard Generator — Create Digital Business Cards Instantly</h2>
-          <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-            A vCard is a digital business card. It is a standard file format (.vcf) that stores contact information — name, phone numbers, email addresses, websites, physical addresses, social media links, and more. When someone opens a vCard file on their phone, tablet, or computer, the contact is automatically added to their address book. No manual typing needed.
-          </p>
-          <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-            This free vCard Generator lets you create professional vCards directly in your browser. Fill in your personal details, contact information, professional info, home and work addresses, social media links, custom fields, and notes. The tool validates your data, formats everything according to the vCard 3.0 standard, and lets you download the .vcf file, copy the raw data to your clipboard, or generate a QR code that anyone can scan to instantly save your contact.
-          </p>
-          <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-            The interface is organized into five tabs — Personal, Contact, Professional, Address, and Social & Notes — so you can fill in exactly the information you need without being overwhelmed. A live preview shows you how your business card will look. You can expand it into a full-screen modal for a detailed view before downloading.
-          </p>
-          <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-            vCards are used by professionals, freelancers, sales teams, recruiters, and anyone who shares contact information regularly. Instead of exchanging paper business cards that get lost, you can share a .vcf file via email, messaging apps, or QR code. The recipient scans or opens it, and your full contact details are saved instantly. All processing runs in your browser. No data is sent to any server. No account required.
-          </p>
+          <section className="mt-8">
+            <h2>How to Use</h2>
+            <p>
+              Creating your digital business card takes about two minutes. Here is the exact process:
+            </p>
+            <ol>
+              <li><strong>Fill in the blanks:</strong> Start with the Personal tab for your name. Move through the Contact, Professional, and Address tabs to add as much or as little detail as you want.</li>
+              <li><strong>Add your links:</strong> Drop in your LinkedIn or Twitter URLs under the Social tab.</li>
+              <li><strong>Check the preview:</strong> Look at the card preview on your screen to make sure everything looks right.</li>
+              <li><strong>Download or share:</strong> Click the download button to get your .vcf file, or generate a QR code that someone can scan right off your phone screen.</li>
+            </ol>
+          </section>
+
+          <section className="mt-8">
+            <h2>Privacy & Security Anchor</h2>
+            <p>
+              We know you are typing in your personal phone number, home address, and private email. Here is why you don't need to worry about us taking it.
+            </p>
+            <p>
+              This tool runs entirely inside your web browser. When you type your information, it stays on your device. We do not have a server that collects your data, we do not save a copy of your card, and we do not track who you share it with. Once you close the tab, your data is gone forever.
+            </p>
+          </section>
+
+          <section className="mt-8">
+            <h2>Features</h2>
+            <p>
+              Here is everything you can pack into your digital contact card:
+            </p>
+            <ul>
+              <li><strong>Full Contact Profiles:</strong> Add multiple phone numbers, personal and work emails, and custom website links.</li>
+              <li><strong>Business Details:</strong> Include your exact job title, department, and company name.</li>
+              <li><strong>Social Integration:</strong> Attach direct links to your professional social media accounts.</li>
+              <li><strong>Instant QR Codes:</strong> Turn your entire profile into a scannable graphic in one click.</li>
+              <li><strong>Cross-Platform Support:</strong> Files work perfectly on iPhones, Androids, Mac, and Windows.</li>
+            </ul>
+          </section>
+
+          <section className="mt-8">
+            <h2>Technical Specs</h2>
+            <p>
+              If you want to know how the tool actually packages your data, here are the details.
+            </p>
+            <p>
+              The generator uses the vCard 3.0 standard. We chose 3.0 because it offers the best balance of modern features and total compatibility across older devices. It automatically formats your input into the correct `BEGIN:VCARD` text structure, handles base64 image encoding if you upload a profile photo, and sanitizes special characters so the file doesn't break when someone tries to open it.
+            </p>
+          </section>
+
+          <section className="mt-8">
+            <h2>Frequently Asked Questions</h2>
+            
+            <h3>Where does the file go when I download it?</h3>
+            <p>
+              It goes straight to your default downloads folder as a .vcf file. You can then attach it to an email, send it in a text message, or keep it on your phone for easy sharing.
+            </p>
+
+            <h3>Do I need an app to open a vCard?</h3>
+            <p>
+              No. Every modern smartphone and computer already knows how to read these files. Apple Contacts, Google Contacts, and Microsoft Outlook will open them automatically.
+            </p>
+
+            <h3>Can I put a photo on my card?</h3>
+            <p>
+              Yes. You can upload a profile picture, and the tool will encode it directly into the file. When someone saves your contact, your face will show up next to your name in their phone.
+            </p>
+
+            <h3>Why should I use a QR code?</h3>
+            <p>
+              It is the fastest way to share your info in person. Just pull up the QR code on your screen, have the other person point their camera at it, and your contact card will pop up on their phone instantly.
+            </p>
+          </section>
         </div>
-
-        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Features</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {[
-              { t: 'Comprehensive Contact Fields', c: 'text-blue-600 dark:text-blue-400', b: 'Name with prefix/suffix, nickname, personal and work emails, phone, mobile, fax, personal and work websites. Everything a professional contact needs.' },
-              { t: 'Home & Work Addresses', c: 'text-violet-600 dark:text-violet-400', b: 'Separate fields for home and work addresses with street, city, state, ZIP code, and country. Both are included in the vCard output.' },
-              { t: 'Social Media Links', c: 'text-emerald-600 dark:text-emerald-400', b: 'Add unlimited social media profiles with custom platform names and URLs. Pre-loaded with LinkedIn, Twitter, and GitHub.' },
-              { t: 'QR Code Generation', c: 'text-amber-600 dark:text-amber-400', b: 'Generate a scannable QR code containing your full vCard data. Anyone can scan it with their phone camera to instantly save your contact.' },
-              { t: 'Download & Copy', c: 'text-rose-600 dark:text-rose-400', b: 'Download your vCard as a .vcf file or copy the raw data to your clipboard. Share it via email, messaging, or embed it on your website.' },
-              { t: 'Professional Preview', c: 'text-indigo-600 dark:text-indigo-400', b: 'See a styled business card preview before downloading. Expand it to full-screen modal view with download and QR code buttons.' },
-            ].map(({ t, c, b }) => (
-              <div key={t} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                <h3 className={`font-black text-sm mb-1.5 ${c}`}>{t}</h3>
-                <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{b}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm p-8">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {[
-              { q: 'Is this vCard generator free?', a: 'Yes, completely free with no account, no limits, and no data collection.' },
-              { q: 'What is a vCard (.vcf) file?', a: 'A vCard is a standard file format for digital business cards. It stores contact information and is supported by all major contact apps including Outlook, Apple Contacts, and Google Contacts.' },
-              { q: 'Does it send my data to a server?', a: 'No. All processing happens in your browser. Nothing is uploaded or stored anywhere.' },
-              { q: 'Can I add social media links?', a: 'Yes. You can add unlimited social media profiles with custom platform names and URLs.' },
-              { q: 'Does it generate QR codes?', a: 'Yes. Click Generate QR Code to create a scannable QR code containing your full vCard data.' },
-              { q: 'What vCard version does it use?', a: 'vCard 3.0, which is the most widely supported version across all platforms and devices.' },
-              { q: 'Can I add custom fields?', a: 'Yes. The Social & Notes tab lets you add unlimited custom fields with any label and value.' },
-              { q: 'Does it work on mobile?', a: 'Yes. The interface is fully responsive with a tabbed layout that works on any screen size.' },
-            ].map(({ q, a }) => (
-              <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                  <span>{q}</span>
-                  <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                </summary>
-                <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-              </details>
-            ))}
-          </div>
-        </div>
-
       </div>
     </div>
   );

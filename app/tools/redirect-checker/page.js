@@ -12,5 +12,33 @@ export const metadata = {
 };
 
 export default function RedirectCheckerPage() {
-  return <RedirectCheckerClient />;
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Redirect Chain Checker",
+    "description": "Trace the exact path of any URL. Discover hidden 301 and 302 redirect chains, check final destination status codes, and perform bulk CSV redirect checks.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "url": "https://omniwebkit.com/tools/redirect-checker",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Lazydesigners",
+      "url": "https://github.com/Dtshirt/omniwebkit"
+    }
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+      <RedirectCheckerClient />
+    </>
+  );
 }

@@ -330,68 +330,88 @@ export default function VideoCompressor() {
         </div>
 
         {/* SEO Content */}
-        <div className="mt-10 space-y-5">
-          <div className={`${card} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-              Real FFmpeg Video Compression — Not a Browser Hack
-            </h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Most browser-based video compressors use the Canvas API and MediaRecorder — a workaround that only outputs WebM,
-              runs at real-time speed (a 5-minute video takes 5 minutes), and cannot truly control bitrate.
-              This tool is different. It runs FFmpeg on the server, the same engine used by YouTube, Netflix, and HandBrake.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              You choose quality (CRF), resolution, and output format. FFmpeg re-encodes using H.264 or VP9 with precise
-              bitrate control. A real-time progress bar shows actual FFmpeg output. The result is a proper MP4 or WebM file,
-              often 60–80% smaller than the original, with no visible quality loss at medium settings.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              The WhatsApp preset automatically applies the correct H.264 encoding profile, 720p resolution cap, and AAC
-              audio bitrate that WhatsApp, Telegram, and Instagram accept without re-processing.
-            </p>
-          </div>
+        <div className="mt-16 prose-premium">
+          <div className={`${card} p-5 sm:p-8`}>
+            <section>
+              <h2>About the Tool</h2>
+              <p>
+                A massive video file can eat up your storage space and take forever to send. That's why we built this <strong>video compressor</strong>. It uses real FFmpeg technology to reduce file sizes without making your video look like a blurry mess. 
+              </p>
+              <p>
+                Most online tools use quick browser tricks that don't actually shrink your file much. We use server-side encoding instead. This means you can drop a 100MB MP4 file into the tool and get a 20MB file back, and you probably won't even notice the difference in quality.
+              </p>
+            </section>
 
-          <div className={`${card} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-5">Features</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { t:'Real FFmpeg Engine', c:'text-violet-600 dark:text-violet-400', b:'Server-side H.264/VP9 encoding via FFmpeg — not Canvas API. Actual bitrate control, not fake browser re-encoding.' },
-                { t:'4 Quality Presets', c:'text-purple-600 dark:text-purple-400', b:'High (CRF 23), Medium (CRF 28), Low (CRF 34), WhatsApp (optimised for messaging apps).' },
-                { t:'5 Resolution Options', c:'text-blue-600 dark:text-blue-400', b:'Keep original or scale down to 1080p, 720p, 480p, 360p with proper aspect-ratio preservation.' },
-                { t:'MP4 & WebM Output', c:'text-emerald-600 dark:text-emerald-400', b:'Output as MP4 (H.264, universal compat) or WebM (VP9, web optimised).' },
-                { t:'Real Progress Bar', c:'text-amber-600 dark:text-amber-400', b:'Live progress from actual FFmpeg output — not a fake timer. See real encoding progress.' },
-                { t:'WhatsApp Preset', c:'text-rose-600 dark:text-rose-400', b:'One-click preset for WhatsApp, Telegram, Instagram. Correct codec profile, capped at 720p.' },
-              ].map(({t,c,b})=>(
-                <div key={t} className="p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 rounded-xl">
-                  <h3 className={`font-black text-sm mb-1.5 ${c}`}>{t}</h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{b}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+            <section className="mt-8">
+              <h2>How to Use</h2>
+              <p>
+                You don't need any technical skills to shrink your video. Follow these steps:
+              </p>
+              <ol>
+                <li><strong>Upload your file:</strong> Click the upload box above and pick any video from your phone or computer.</li>
+                <li><strong>Pick your settings:</strong> Choose a quality level. If you just want a smaller file that still looks good, stick with the "Medium" setting.</li>
+                <li><strong>Hit compress:</strong> Click the button and let the server do the heavy lifting. You'll see a real progress bar as it works.</li>
+                <li><strong>Download:</strong> Once it finishes, check how much space you saved and click download.</li>
+              </ol>
+            </section>
 
-          <div className={`${card} p-8`}>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q:'Is this video compressor free?', a:'Yes, completely free. No account, no watermark, no hidden limits.' },
-                { q:'Is this server-side or browser-based?', a:'Server-side. Your video is uploaded to a local FFmpeg server, compressed, and returned. This gives real compression unlike browser Canvas hacks.' },
-                { q:'What formats does it accept?', a:'MP4, WebM, MOV, AVI, MKV — any format FFmpeg supports, which is essentially all of them.' },
-                { q:'What is the WhatsApp preset?', a:'H.264 video codec, 720p resolution cap, AAC audio at 128kbps — the exact spec that WhatsApp and Telegram accept without re-processing.' },
-                { q:'How much can it compress a video?', a:'Typically 40–80% reduction depending on the original bitrate. A 100 MB phone video can often go down to 20–30 MB at medium quality.' },
-                { q:'What is CRF?', a:'Constant Rate Factor — a quality scale from 18 (near lossless) to 51 (very compressed). Lower = better quality, larger file. CRF 28 is a good default.' },
-                { q:'Are my files stored on the server?', a:'Temporarily. Files are stored during compression and deleted immediately after you download. No long-term storage.' },
-                { q:'Does it work on mobile?', a:'Yes. The interface is fully responsive. Upload, compress, and download from your phone.' },
-              ].map(({q,a})=>(
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                    <span>{q}</span>
-                    <span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                </details>
-              ))}
-            </div>
+            <section className="mt-8">
+              <h2>Privacy & Security Anchor</h2>
+              <p>
+                We know you don't want strangers looking at your personal videos. Here's the thing — we don't either. 
+              </p>
+              <p>
+                When you upload a file, it goes to a secure server just long enough to get compressed. The second you click download, the server deletes your original file and the new compressed version. We don't keep backups, and we never look at your content. Your files belong to you.
+              </p>
+            </section>
+
+            <section className="mt-8">
+              <h2>Features</h2>
+              <p>
+                Here is exactly what you get when you use this tool:
+              </p>
+              <ul>
+                <li><strong>Real FFmpeg Encoding:</strong> We use the exact same compression engine that massive video platforms use.</li>
+                <li><strong>WhatsApp Preset:</strong> One click fixes your video so it perfectly fits WhatsApp's strict size and format rules.</li>
+                <li><strong>Format Support:</strong> Drop in an MP4, MOV, AVI, or WebM file. The tool handles almost anything.</li>
+                <li><strong>Live Progress:</strong> Watch the bar fill up as the actual compression happens. No fake loading screens.</li>
+                <li><strong>Zero Limits:</strong> Upload files up to 500MB without paying a dime.</li>
+              </ul>
+            </section>
+
+            <section className="mt-8">
+              <h2>Technical Specs</h2>
+              <p>
+                For those who care about the details, here is how the compression actually works under the hood. 
+              </p>
+              <p>
+                The tool uses Constant Rate Factor (CRF) to control quality. The "High" setting runs at CRF 23, which keeps almost all the original details. "Medium" uses CRF 28, which is the sweet spot. It drops a lot of data that human eyes can't see, making the file much smaller. We process everything using H.264 or VP9 codecs to make sure your new video plays on any device.
+              </p>
+            </section>
+
+            <section className="mt-8">
+              <h2>Frequently Asked Questions</h2>
+              
+              <h3>Will this make my video blurry?</h3>
+              <p>
+                Not if you use the right settings. Lossy compression removes tiny details your eyes can't see anyway. If you pick the "High" or "Medium" preset, your video will still look sharp.
+              </p>
+
+              <h3>Why is the file size not shrinking?</h3>
+              <p>
+                If your original video is already highly compressed, there isn't much extra data to remove. Also, if you choose the "Original" resolution and a "High" quality setting, the file might stay the same size. Try dropping the quality to "Medium".
+              </p>
+
+              <h3>Does it work on an iPhone or Android?</h3>
+              <p>
+                Yes. The tool runs directly in your web browser. You don't need to install any apps. Just select a video from your camera roll, let it process, and save the new file.
+              </p>
+
+              <h3>Is there a watermark?</h3>
+              <p>
+                No. We never add watermarks to your videos. What you upload is what you get back, just smaller.
+              </p>
+            </section>
           </div>
         </div>
       </div>

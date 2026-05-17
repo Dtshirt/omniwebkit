@@ -64,6 +64,79 @@ export default function ReadmeGeneratorClient() {
 
   const preview = mdToHtml(markdown);
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "GitHub README Generator",
+        "description": "Create professional, stunning README.md files for your GitHub repositories visually. Add badges, tech stacks, and install guides in seconds.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Lazydesigners",
+          "url": "https://github.com/Dtshirt/omniwebkit"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to create a GitHub README",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Fill in project details",
+            "text": "Enter your project name, description, and repository details in the form."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Select badges and tech stack",
+            "text": "Click to add dynamic shields, language icons, and framework badges."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Export the file",
+            "text": "Review the live preview, then copy the markdown or download the README.md file."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why do I need a README generator?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Writing markdown from scratch takes time. A generator handles the formatting, badges, and structure so you can focus on shipping your project."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this support GitHub profile READMEs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can use this tool to build a personal profile README by leaving the project-specific fields blank and focusing on your skills and contact info."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are the badges automatically updated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The tool uses live shields that automatically update based on your GitHub repository data, like star count or license type."
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-20">
       <style dangerouslySetInnerHTML={{__html:PREVIEW_CSS}}/>
@@ -246,22 +319,99 @@ export default function ReadmeGeneratorClient() {
             </div>
           </div>
 
-          {/* SEO */}
-          <div className="grid md:grid-cols-2 gap-5">
-            <div className={card}>
-              <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-3">What makes a great GitHub README?</h2>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                A great README answers three questions immediately: what the project does, why someone should care, and how to get started in under 5 minutes. 
-                Badges signal project health at a glance. A live demo link eliminates friction. A clear installation block with copy-pasteable commands turns visitors into contributors.
-              </p>
+          {/* ── SEO Section ── */}
+          <div className="prose-premium" style={{ marginTop: 56 }}>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+
+            <h1>GitHub README Generator: Build Stunning Project Docs</h1>
+            
+            <h2>About the Tool</h2>
+            <p>
+              A great project with a terrible landing page gets ignored. In the open source world, your README is that landing page.
+            </p>
+            <p>
+              The <strong>GitHub README Generator</strong> is a visual builder that helps you create professional repository documentation without writing raw markdown. Instead of hunting down badge URLs or remembering how to format tables, you just fill out a simple form. The tool instantly generates a clean, well-structured <code>readme.md</code> file complete with dynamic shields, tech stack icons, and installation guides. 
+            </p>
+
+            <h2>How to Use the Builder</h2>
+            <p>
+              Creating your documentation takes less than two minutes:
+            </p>
+            <ol>
+              <li><strong>Add project details:</strong> Type your project name, short description, and repository link into the inputs.</li>
+              <li><strong>Click your stack:</strong> Select the programming languages and frameworks you used. The tool automatically adds the correct icons.</li>
+              <li><strong>Check the preview:</strong> Watch the live preview update on the right side of your screen as you type.</li>
+              <li><strong>Export:</strong> Click the copy button or download the final <code>README.md</code> file directly to your computer.</li>
+            </ol>
+
+            <h2>Privacy & Security</h2>
+            <p>
+              Here is the best part — everything happens right on your device.
+            </p>
+            <p>
+              This tool does not use a backend database. We never read your source code, ask for GitHub access tokens, or save your text. The markdown is generated locally in your browser memory. When you close the tab, your draft is gone. Your project details remain 100% private.
+            </p>
+
+            <h2>Features</h2>
+            <p>
+              Writing good documentation shouldn't feel like a chore. Here is what this tool handles for you:
+            </p>
+            <ul>
+              <li><strong>Dynamic Badges:</strong> Add live GitHub stars, forks, and license shields with a single click.</li>
+              <li><strong>Live Visual Preview:</strong> See exactly how your markdown will look on GitHub before you commit it.</li>
+              <li><strong>Tech Stack Icons:</strong> Choose from dozens of pre-configured language and tool icons that scale perfectly.</li>
+              <li><strong>Ready-to-Use Sections:</strong> Automatically format prerequisites, installation steps, and usage guides into clean code blocks.</li>
+            </ul>
+
+            <h2>Technical Specifications</h2>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Detail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Processing Type</strong></td>
+                    <td>100% Client-side (Browser)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Output Format</strong></td>
+                    <td>Standard GitHub Flavored Markdown</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Preview Engine</strong></td>
+                    <td>Real-time DOM rendering</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Badge Provider</strong></td>
+                    <td>Shields.io integration</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Storage</strong></td>
+                    <td>None (Stateless)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className={card}>
-              <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-3">How this tool works</h2>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                Fill in the form sections — project info, features, tech stack, getting started steps, author details — and your README.md is built live in real time inside your browser. 
-                No data leaves your device. Copy the Markdown or download the file and drop it at the root of your repository.
-              </p>
-            </div>
+
+            <h2>FAQ</h2>
+            <h3>Why do I need a README generator?</h3>
+            <p>
+              Writing markdown from scratch takes time. A generator handles the formatting, badges, and structure so you can focus on shipping your code. It ensures you don't forget crucial sections like how to install the app.
+            </p>
+
+            <h3>Does this work for a GitHub profile README?</h3>
+            <p>
+              Yes. While it's optimized for projects, you can use it to build your personal profile by focusing on the tech stack icons, author details, and social links.
+            </p>
+
+            <h3>Are the badges automatically updated?</h3>
+            <p>
+              Yes. The tool links to live shields. If someone stars your repository, the star count badge in your README will automatically increase the next time the page loads.
+            </p>
           </div>
         </div>
       </div>

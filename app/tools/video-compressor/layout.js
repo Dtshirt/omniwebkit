@@ -46,6 +46,11 @@ const webAppSchema = {
   applicationCategory: 'MultimediaApplication',
   operatingSystem: 'Any',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  author: {
+    '@type': 'Organization',
+    name: 'Lazydesigners',
+    url: 'https://github.com/Dtshirt/omniwebkit'
+  },
   publisher: { '@type': 'Organization', name: 'OmniWebKit', url: 'https://omniwebkit.com' },
   featureList: [
     'Server-side FFmpeg H.264/VP9 encoding',

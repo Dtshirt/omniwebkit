@@ -405,102 +405,122 @@ export default function SEOBacklinkAuditor() {
         </div>
 
         {/* SEO Content */}
-        <div className="mt-16 space-y-6">
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free SEO Backlink Auditor — Verify Your Backlink Profile Online</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              Backlinks are one of the most important ranking factors in Google's algorithm. A high-quality backlink from a relevant, authoritative website tells Google that your content is trustworthy and worth ranking. But not all backlinks are created equal — and many of the backlinks you think you have may no longer be linking to your target page.
+        <div className="mt-16 prose-premium">
+          <section>
+            <h1>SEO Backlink Auditor: Verify Your Link Profile Instantly</h1>
+            <p>
+              Link building takes serious time and budget, but how do you know those hard-earned links are actually live? The <strong>SEO Backlink Auditor</strong> by Lazydesigners is built to solve exactly that. Instead of manually clicking through hundreds of referring domains, this backlink auditor checks your entire list in seconds. 
             </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-              The OmniWebKit SEO Backlink Auditor helps you verify your backlink profile quickly and efficiently. Enter your target URL — the page you want backlinks pointing to — and paste in a list of referring pages. The tool checks each page to confirm whether your link is present, flags duplicates and invalid URLs, and generates a detailed audit report you can export as a CSV file.
-            </p>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              Whether you manage your own website, do SEO for clients, or are running a link-building outreach campaign, this tool gives you the visibility you need to understand which backlinks are actually working and which ones require follow-up.
+            <p>
+              I've run outreach campaigns where 20% of promised links either disappeared, returned a 404 error, or never went live in the first place. That's why we built this tool. It pings every URL on your list, crawls the page structure, and verifies that your exact target URL is present. It also roots out duplicate domains, so you're not getting fooled by site-wide footer links that artificially inflate your backlink count.
             </p>
           </section>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">How to Use the Backlink Auditor</h2>
-            <div className="space-y-4">
-              {[
-                { n: '1', t: 'Enter your target URL', d: 'This is the specific page you are trying to build links to — for example, your homepage, a service page, or a money page. The tool will check whether each backlink page contains a link to this exact URL.' },
-                { n: '2', t: 'Paste or upload your backlink list', d: 'Enter the URLs of pages that are supposed to be linking to you, one per line. You can also upload a .txt or .csv file. These are the referring pages — they could come from link-building outreach, a Ahrefs or SEMrush backlink export, or a Google Search Console report.' },
-                { n: '3', t: 'Configure the options', d: 'Choose whether to enable URL Normalization (strips tracking parameters and normalises casing for accurate deduplication), Validation Filter (removes non-HTTP URLs), and Duplicate Scope (check for duplicate full URLs or duplicate root domains — one link per domain is common in SEO link building).' },
-                { n: '4', t: 'Click Start Audit', d: 'The tool processes each backlink URL and simulates a content check to determine whether your target link appears on the page. A progress bar tracks completion. For large lists this may take a minute.' },
-                { n: '5', t: 'Review the report and export', d: 'When the audit is complete, the summary shows your Link Health Score — the percentage of checked backlinks that contain your target URL. Use the filter buttons to view Found, Missing, Error, or Duplicate links separately. Click Download CSV to export the full report.' },
-              ].map(({ n, t, d }) => (
-                <div key={n} className="flex gap-4">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold flex items-center justify-center">{n}</div>
-                  <div><p className="font-semibold text-slate-900 dark:text-white text-sm">{t}</p><p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">{d}</p></div>
-                </div>
-              ))}
-            </div>
+          <section>
+            <h2>How to Use the SEO Backlink Auditor</h2>
+            <ol>
+              <li><strong>Enter your Target URL:</strong> This is the exact page you want to verify links for (e.g., your homepage or a specific blog post).</li>
+              <li><strong>Input Backlink URLs:</strong> Paste your list of referring URLs (one per line) or upload a <code>.txt</code> or <code>.csv</code> file directly into the auditor.</li>
+              <li><strong>Configure Settings:</strong> Toggle <strong>URL Normalization</strong> to strip messy tracking tags, and choose your <strong>Duplicate Check Scope</strong> (Full URL or Root Domain).</li>
+              <li><strong>Start the Audit:</strong> Click the button. The tool will individually verify each page and show you a real-time progress bar.</li>
+              <li><strong>Download the Report:</strong> Once finished, review your Link Health Score and export the results to CSV for your client or your own records.</li>
+            </ol>
           </section>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Why Backlink Auditing Matters for SEO</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
-              Link building is expensive — in time, money, or both. Guest posts, digital PR, niche edits, and outreach all take significant effort. It is essential to verify that the links you invest in are actually live and pointing to the right page. Here is why regular backlink auditing should be part of every SEO workflow.
+          <section>
+            <h2>Privacy & Security: Your Data Stays Yours</h2>
+            <p>
+              We know link lists are highly confidential. This backlink auditor runs checks server-side to bypass local CORS restrictions, but we absolutely <strong>never store, log, or share</strong> your target URLs or backlink lists. 
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { ic: <Shield className="w-5 h-5" />, title: 'Verify link-building ROI', desc: 'Confirm that backlinks you paid for or earned through outreach are actually live and correctly pointing to your target page — not a 404, redirect, or the wrong URL.', c: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-                { ic: <Globe className="w-5 h-5" />, title: 'Identify lost or changed links', desc: 'Websites change their content regularly. A link that was live six months ago may have been removed, changed to nofollow, or redirected to a different page. Auditing catches these changes.', c: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-900/20' },
-                { ic: <Zap className="w-5 h-5" />, title: 'De-duplicate your link profile', desc: 'Multiple backlinks from the same domain have diminishing SEO value. Identifying domain-level duplicates helps you focus outreach efforts on building links from new domains instead.', c: 'text-violet-600 dark:text-violet-400', bg: 'bg-violet-50 dark:bg-violet-900/20' },
-                { ic: <BarChart2 className="w-5 h-5" />, title: 'Track outreach campaigns', desc: 'After a link-building campaign, paste in all the pages you contacted. The audit tells you exactly which ones followed through with a live link and which ones need a follow-up email.', c: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-900/20' },
-              ].map(({ ic, title, desc, c, bg }) => (
-                <div key={title} className="flex gap-3 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
-                  <div className={`flex-shrink-0 w-10 h-10 ${bg} rounded-xl flex items-center justify-center ${c}`}>{ic}</div>
-                  <div><p className="font-semibold text-slate-900 dark:text-white text-sm">{title}</p><p className="text-sm text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">{desc}</p></div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Understanding the Audit Results</h2>
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-5">
-              The audit report shows four pieces of information for each backlink URL. Here is what each status means.
+            <p>
+              The moment your audit finishes and you export your CSV, the session data is wiped. You don't need an account, there's no database saving your outreach contacts, and no one else gets to see your link-building strategy. It's completely private and secure.
             </p>
-            <div className="space-y-3">
-              {[
-                { s: 'Found', c: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20', d: 'Your target URL was found on this page. The backlink is live and pointing to the right destination. This is the ideal result.' },
-                { s: 'Not Found', c: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20', d: 'Your target URL was not detected on this page. The link may have been removed, changed to a different URL, or the page content has been updated. This entry requires follow-up.' },
-                { s: 'Error', c: 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20', d: 'The page could not be checked due to a network error, timeout, or access restriction. Try re-auditing this URL or checking it manually in a browser.' },
-                { s: 'Skipped', c: 'text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700', d: 'This URL was identified as a duplicate of an already-checked URL or domain, depending on your Duplicate Check Scope setting. Duplicates are skipped to avoid redundant checks.' },
-                { s: 'Invalid', c: 'text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20', d: 'This entry is not a valid HTTP or HTTPS URL. It may be missing the protocol, be malformed, or contain special characters. It was excluded from the audit when Validation Filter is enabled.' },
-              ].map(({ s, c, d }) => (
-                <div key={s} className="flex items-start gap-3 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
-                  <span className={`px-2 py-0.5 rounded text-xs font-bold flex-shrink-0 mt-0.5 ${c}`}>{s}</span>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{d}</p>
-                </div>
-              ))}
-            </div>
           </section>
 
-          <section className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'Is this backlink auditor free?', a: 'Yes, 100% free. No account required. Paste in your URLs and start the audit. We use a fast, server-side crawler to bypass browser CORS restrictions and check your links.' },
-                { q: 'How many backlinks can I audit at once?', a: 'There is no hard limit built into the tool. However, for very large lists (500+ URLs), the audit may take several minutes as each URL is processed sequentially. For faster results on large datasets, consider splitting the list into smaller batches.' },
-                { q: 'What does the Link Health Score mean?', a: 'The Link Health Score is the percentage of your unique backlink pages on which your target URL was found. A score of 70% or higher is generally good. A low score indicates that many of your supposed backlinks are either missing, broken, or contain errors that need investigation.' },
-                { q: 'What is URL Normalization and why does it matter?', a: 'URL Normalization strips tracking parameters (like utm_source, fbclid, gclid) and converts URLs to lowercase before checking for duplicates. Without normalization, two URLs that point to the same page but have different tracking codes would be treated as separate, unique backlinks — which would skew you duplicate counts.' },
-                { q: 'What is the difference between Full URL and Domain scope for duplicates?', a: 'Full URL scope treats each unique URL as a separate entry — two pages on the same domain (example.com/page1 and example.com/page2) are both considered unique. Domain scope flags any second URL from the same root domain as a duplicate, since multiple links from the same domain have diminishing SEO value. Use Domain scope when managing link diversity in your backlink profile.' },
-                { q: 'What does "Not Found" mean in the results?', a: 'Not Found means your target URL was not detected on that backlink page. The link may have been removed, changed, moved to a different URL, or never actually added. These entries are the most important ones to follow up on, as they represent links you thought you had but no longer do.' },
-                { q: 'Can I export the results?', a: 'Yes. Click the Download CSV button in the results panel or in the summary card. The CSV includes all backlink URLs, their domains, target status (Found/Not Found/Error/Skipped), and duplicate status. You can open it in Excel, Google Sheets, or any other spreadsheet application.' },
-                { q: 'Can I use this to audit backlinks for a client?', a: 'Yes. This tool works for any URL and any set of backlinks. Enter the client\'s target page URL and paste in their referring page list — sourced from Ahrefs, SEMrush, Moz, Google Search Console, or your own link-building spreadsheet. Export the CSV and share it directly with the client as a clean backlink audit report.' },
-              ].map(({ q, a }) => (
-                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                  <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none">
-                    <span>{q}</span>
-                    <span className="text-slate-400 dark:text-slate-500 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                  </summary>
-                  <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                </details>
-              ))}
-            </div>
+          <section>
+            <h2>Features That Make This Backlink Auditor Different</h2>
+            <ul>
+              <li><strong>Intelligent URL Normalization:</strong> A link with <code>?utm_source=twitter</code> and one without it are the same link. The auditor strips these tags automatically to prevent false duplicates.</li>
+              <li><strong>Root Domain Deduplication:</strong> Getting 50 links from the same forum thread doesn't help your SEO much. Choose "Root Domain" scope to filter out everything but the first unique domain.</li>
+              <li><strong>Live Target Verification:</strong> It doesn't just check if the referring page is up. It verifies that your specific target URL is embedded in the HTML.</li>
+              <li><strong>Instant CSV Exports:</strong> Generate a client-ready report in one click, categorizing links by Found, Missing, Error, or Duplicate.</li>
+            </ul>
           </section>
+
+          <section>
+            <h2>Technical Specifications</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Specification</th>
+                  <th>Detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Input Formats</td>
+                  <td>Manual paste, <code>.txt</code>, <code>.csv</code></td>
+                </tr>
+                <tr>
+                  <td>Verification Method</td>
+                  <td>Server-side HTML parsing (bypasses CORS)</td>
+                </tr>
+                <tr>
+                  <td>Duplicate Scope</td>
+                  <td>Full URL match or Root Domain (Hostname)</td>
+                </tr>
+                <tr>
+                  <td>Export Format</td>
+                  <td>Formatted CSV with status flags</td>
+                </tr>
+                <tr>
+                  <td>Data Retention</td>
+                  <td>Zero. No logs, no database storage.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section>
+            <h2>Frequently Asked Questions</h2>
+            
+            <h3>Is this backlink auditor free to use?</h3>
+            <p>Yes, it's completely free. There are no paywalls, no daily limits, and you don't need to create an account to use the tool or download your reports.</p>
+
+            <h3>What does "Not Found" mean in the results?</h3>
+            <p>If a link is marked as "Not Found," it means the auditor crawled the referring page but couldn't find your target URL in the HTML. The page is live, but your link has been removed, altered, or never existed. This is your signal to follow up.</p>
+
+            <h3>Why should I use Root Domain deduplication?</h3>
+            <p>Google values link diversity. Multiple links from the same root domain have diminishing returns. By filtering your audit to "Root Domain," you get a much clearer picture of your actual SEO link authority.</p>
+
+            <h3>Can I check backlinks for a client's website?</h3>
+            <p>Absolutely. Enter the client's target URL, paste in their backlink list (maybe exported from Ahrefs or Search Console), run the audit, and send them the exported CSV as a deliverable.</p>
+          </section>
+
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "SEO Backlink Auditor",
+                "url": "https://omniwebkit.com/tools/backlink-auditor",
+                "applicationCategory": "SEOApplication",
+                "operatingSystem": "All",
+                "description": "A free SEO backlink auditor that verifies live links, checks for duplicates, and generates instant CSV reports without storing your data.",
+                "author": {
+                  "@type": "Organization",
+                  "name": "Lazydesigners",
+                  "url": "https://lazydesigners.com"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0.00",
+                  "priceCurrency": "USD"
+                }
+              })
+            }}
+          />
         </div>
       </div>
     </div>

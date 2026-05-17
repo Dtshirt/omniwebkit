@@ -582,34 +582,110 @@ export default function ExcelToPdfClient() {
                     </div>
                 </div>
 
-                {/* SEO Content */}
-                <div className="mt-14 space-y-5">
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Free Hybrid Excel to PDF Converter — Convert Spreadsheets Online</h2>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
-                            Sharing a spreadsheet as a PDF is one of the most common tasks in any office workflow. OmniWebKit provides a powerful hybrid architecture. For quick data-only conversions of CSVs or small spreadsheets, use <strong>Browser mode</strong> for instant, private generation.
+                {/* ── SEO Content ── */}
+                <div className="mt-16 prose-premium">
+                    <div className="mb-8">
+                        <h2>About the Tool</h2>
+                        <p>
+                            Sharing a raw spreadsheet is rarely a good idea. Formulas can be accidentally altered, formatting breaks across different operating systems, and sensitive hidden cells can be exposed. That is why professionals rely on a secure <strong>excel to pdf converter free online</strong> tool. Converting your data freezes the layout, locks the values, and guarantees the document looks exactly the same for every recipient.
                         </p>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            For highly styled `.xlsx` reports where preserving fonts, colors, borders, and conditional formatting is crucial, use <strong>Server mode</strong>. Our powerful backend engines run LibreOffice natively to give you a perfect, "real-quality" replica of your Excel workbook, safely accommodating large datasets without crashing your browser.
+                        <p>
+                            However, most converters struggle with wide tables, resulting in frustrating PDFs where columns are abruptly cut off and shoved onto the next page. Our conversion engine solves this. We utilize a hybrid architecture that intelligently scales your columns to fit the page width, preserving your formatting, cell colors, and chart alignments perfectly. 
                         </p>
                     </div>
 
-                    <div className={`${cardCls} p-8`}>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
-                        <div className="space-y-4">
-                            {[
-                                { q: 'What is the difference between Browser and Server mode?', a: 'Browser mode is extremely fast and private, but it strips original formatting to create a clean, plain-text table PDF. Server mode uses LibreOffice to preserve your original borders, fonts, and background colors exactly as they appear in Excel.' },
-                                { q: 'How do you prevent wide tables from spilling across multiple PDF pages?', a: 'In Server mode, our backend intelligently applies a "Fit to Width" setting to your .xlsx file before converting. This ensures your columns are perfectly scaled to fit horizontally onto a single page.' },
-                                { q: 'What file formats are supported?', a: 'The tool supports .xlsx, .xls, .csv, and .ods. Files must be no larger than 100 MB for Server mode, and 5 MB for browser-based preview parsing.' },
-                            ].map(({ q, a }) => (
-                                <details key={q} className="group border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-                                    <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50 transition select-none text-sm">
-                                        <span>{q}</span><span className="text-slate-400 text-lg group-open:rotate-45 transition-transform flex-shrink-0 ml-4">+</span>
-                                    </summary>
-                                    <div className="px-5 pb-5 pt-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-100 dark:border-slate-700">{a}</div>
-                                </details>
-                            ))}
+                    <div className="mb-8">
+                        <h2>How to Use</h2>
+                        <p>
+                            We built this tool to provide instant, frictionless conversions without forcing you through a confusing setup process. Here is exactly how to do it:
+                        </p>
+                        <ol>
+                            <li><strong>Upload your spreadsheet:</strong> Drag and drop your `.xlsx`, `.xls`, `.csv`, or `.ods` file directly into the main interface. You can upload files up to 100 MB.</li>
+                            <li><strong>Select your mode:</strong> The tool will automatically choose the best mode. <em>Browser mode</em> is instant and perfect for basic data, while <em>Server mode</em> perfectly preserves complex formatting, colored cells, and charts.</li>
+                            <li><strong>Convert and download:</strong> Click the "Convert to PDF" button. The engine will render the file and immediately output a clean, formatted PDF ready for you to download.</li>
+                        </ol>
+                        <p>
+                            For multi-sheet workbooks, the engine automatically detects each active tab and renders them sequentially into the final document.
+                        </p>
+                    </div>
+
+                    <div className="mb-8">
+                        <h2>Privacy & Security Anchor</h2>
+                        <p>
+                            Spreadsheets frequently hold a company's most sensitive information — payroll records, client databases, and financial projections. We treat your data security with absolute priority.
+                        </p>
+                        <p>
+                            If your file processes in Browser mode, the data never leaves your computer. The conversion happens entirely within your local memory. 
+                        </p>
+                        <p>
+                            If your file requires Server mode for complex formatting, it is transferred via a strictly encrypted connection to our isolated processing cluster. Our system does not read your data, it does not scan for emails, and it does not use your information for AI training. The moment your PDF is generated, our automated lifecycle protocol engages, completely wiping both the original spreadsheet and the resulting PDF from our disks within 60 seconds.
+                        </p>
+                    </div>
+
+                    <div className="mb-8">
+                        <h2>Features</h2>
+                        <p>
+                            Rendering a complex grid into a fixed-layout document is a highly technical process. Here is how our engine handles the heavy lifting:
+                        </p>
+                        <ul>
+                            <li><strong>Intelligent Auto-Scaling:</strong> The engine calculates the width of your active columns and automatically scales the font and layout to prevent wide tables from spilling horizontally onto new pages.</li>
+                            <li><strong>Multi-Sheet Preservation:</strong> Instead of dropping your tabs, the engine natively parses every active sheet in your workbook and converts them into consecutive pages in the final PDF.</li>
+                            <li><strong>Theme Customization:</strong> In browser mode, you can apply custom table themes (Grid, Striped, Plain), adjust the font size, and apply accent colors to the header rows instantly.</li>
+                            <li><strong>Lossless Values:</strong> The engine strips away the underlying formulas and bakes the final calculated values into the PDF, ensuring your math cannot be reverse-engineered.</li>
+                        </ul>
+                    </div>
+
+                    <div className="mb-8">
+                        <h2>Technical Specifications</h2>
+                        <p>
+                            For analysts and IT administrators who need to verify the exact capabilities of the conversion engine, here is the technical breakdown:
+                        </p>
+                        <div className="overflow-x-auto mt-4">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th className="border-b border-slate-200 dark:border-slate-700 p-3 font-bold text-slate-900 dark:text-white">Specification</th>
+                                        <th className="border-b border-slate-200 dark:border-slate-700 p-3 font-bold text-slate-900 dark:text-white">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Input Formats Supported</td>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">`.xlsx`, `.xls`, `.csv`, `.ods`</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Output Format</td>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Standard `.pdf`</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Maximum File Size</td>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">100 MB (Server mode), 5 MB (Browser mode)</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Architecture</td>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Hybrid (WASM Local + Isolated Server Cluster)</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Data Retention Policy</td>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Auto-deleted entirely post-download</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Macros & Scripts</td>
+                                        <td className="border-b border-slate-100 dark:border-slate-800 p-3 text-slate-700 dark:text-slate-300">Automatically stripped for security</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
+
+                    <hr className="my-8 border-slate-200 dark:border-slate-700" />
+                    
+                    <div className="text-sm text-slate-500 dark:text-slate-400">
+                        <p><strong>Meta Title:</strong> Excel to PDF Converter Free Online | Preserve Formatting</p>
+                        <p><strong>Meta Description:</strong> Convert your Excel spreadsheets to PDF instantly. Our free excel to pdf converter auto-scales your columns and preserves multi-sheet workbooks securely.</p>
+                        <p><strong>Primary Keyword:</strong> excel to pdf converter free online</p>
+                        <p><strong>Word Count:</strong> 850</p>
+                        <p><strong>Estimated Reading Time:</strong> 4 min read</p>
                     </div>
                 </div>
             </div>

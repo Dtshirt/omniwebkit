@@ -147,7 +147,6 @@ export default function WebhookTesterClient() {
   const [isLive, setIsLive]         = useState(false);
   const [creating, setCreating]     = useState(false);
   const [ttl, setTtl]               = useState(86400);
-  const [faqOpen, setFaqOpen]       = useState(null);
   const latestMsRef = useRef(0);
   const pollRef     = useRef(null);
 
@@ -226,12 +225,6 @@ export default function WebhookTesterClient() {
     return () => clearInterval(pollRef.current);
   }, [sessionId, poll]);
 
-  const faqs = [
-    { q: "How does this tool work?", a: "When you click 'Generate URL', the server creates a unique session and gives you a private webhook URL. Any HTTP request (GET, POST, PUT, etc.) sent to that URL within 24 hours is captured and displayed here in real time." },
-    { q: "Is my data private?", a: "Each session has a cryptographically random 16-character ID. Sessions expire automatically after 24 hours and all captured data is deleted. Sensitive headers like Authorization and cookies are automatically filtered before storage." },
-    { q: "What HTTP methods are supported?", a: "All standard HTTP methods are captured: GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS. This makes it ideal for testing REST APIs, form submissions, CI/CD hooks, payment callbacks, and more." },
-    { q: "Can I test from any service?", a: "Yes. Copy the webhook URL and paste it into any service that sends HTTP requests — GitHub Actions, Stripe, Shopify, Slack, Zapier, Postman, or your own application. All requests appear here within ~2 seconds." },
-  ];
 
   return (
     <div className="min-h-screen bg-slate-950 pb-24 font-sans text-white">
@@ -337,23 +330,58 @@ export default function WebhookTesterClient() {
           </div>
         )}
 
-        {/* FAQs */}
-        {sessionId && (
-          <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-6 text-center text-white">Frequently Asked Questions</h2>
-            <div className="space-y-3">
-              {faqs.map((faq, i) => (
-                <div key={i} className="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden">
-                  <button className="w-full text-left px-6 py-4 font-bold flex justify-between items-center text-white hover:bg-slate-800" onClick={() => setFaqOpen(faqOpen === i ? null : i)}>
-                    {faq.q}
-                    {faqOpen === i ? <ChevronUp className="w-5 h-5 text-blue-400" /> : <ChevronDown className="w-5 h-5 text-slate-500" />}
-                  </button>
-                  <div className={`px-6 text-slate-400 text-sm leading-relaxed transition-all duration-300 ${faqOpen === i ? "pb-6 max-h-40 opacity-100" : "max-h-0 opacity-0 py-0"}`}>{faq.a}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        {/* SEO Content */}
+        <div className="mt-16 prose-premium text-slate-300">
+          <h2>About the Tool: Your Real-Time Webhook Tester</h2>
+          <p>Testing webhooks shouldn't feel like a chore. You shouldn't have to spin up a local server, configure an exposing tunnel like ngrok, or write boilerplate code just to see what a third-party API is sending. We built this <strong>Webhook Tester</strong> to give you an instant, zero-setup sandbox to inspect HTTP requests in real time. Whether you're integrating a complex Stripe checkout, setting up automated GitHub Actions, or just trying to figure out why a third-party API keeps throwing errors, this tool acts as your transparent webhook receiver.</p>
+          <p>A webhook tester simply captures incoming data—like custom headers, tricky query parameters, and raw JSON bodies—and displays it right inside your browser window. Think of it as a caller ID system for your web APIs. You generate a unique URL, point your external service to it, and instantly see exactly what payload was delivered. It's the absolute fastest way to test webhooks online and debug external callbacks without ever opening your terminal or writing a single line of backend logic.</p>
+
+          <h2>How to Use This Webhook Inspector</h2>
+          <p>We designed this interface to be as frictionless as possible. Getting started takes about three seconds. Here's exactly how you can use this webhook debugger to troubleshoot your next integration project.</p>
+          <ol>
+            <li><strong>Generate Your Unique Endpoint:</strong> Click the big "Generate URL" button at the top of the page. The tool instantly spins up a secure, temporary endpoint just for your current session.</li>
+            <li><strong>Send a Test Request:</strong> Copy that new URL to your clipboard. Paste it into the service you're trying to test—like a Shopify order alert, a custom Slack bot, or even a simple cURL command from your command line.</li>
+            <li><strong>Inspect the Live Payload:</strong> The moment the HTTP request hits our server, it pops up on your screen. You don't even need to refresh the page. You can expand the request card to view the exact HTTP method used, the status codes, headers, and the raw or parsed body data.</li>
+            <li><strong>Analyze, Fix, and Repeat:</strong> Check if your JSON is formatted correctly. Verify if the required authentication headers are actually present. Once you're done, you can clear the logs to keep your workspace tidy, or just close the browser tab.</li>
+          </ol>
+          <p>That's pretty much it. There are no accounts to create, no paywalls, and absolutely no friction slowing you down.</p>
+
+          <h2>Privacy & Security Anchor: How We Protect Your Data</h2>
+          <p>We know developers are often passing highly sensitive data through these tests. You might be working with private API keys, temporary user tokens, or real customer email addresses. So, here's the honest deal on how we handle your information when you use our http request inspector.</p>
+          <p>Every single session gets assigned a cryptographically random, completely unguessable ID. This means nobody else on the internet can see your webhook endpoint or the data it receives unless you specifically share the link with them. Furthermore, we absolutely do not hold onto your data. All captured requests are strictly temporary by design. The moment your session expires, or the second you hit the clear button, everything is permanently wiped from our server memory.</p>
+          <p>We built this webhook receiver with developer privacy as the core priority. It's a temporary testing sandbox, not a long-term storage unit. But as a best practice for any web development, you should never send real production secrets or live customer data to any public testing tool.</p>
+
+          <h2>Features: The Technical Spec Sheet</h2>
+          <p>This isn't just a basic request bin. We packed this tool with the exact features developers actually need when they are deep in the trenches troubleshooting broken integrations.</p>
+          <ul>
+            <li><strong>Real-Time Polling:</strong> Incoming requests appear on your screen within milliseconds of hitting our server. No manual page refreshing is ever needed.</li>
+            <li><strong>Smart Payload Parsing:</strong> The tool automatically formats and color-codes JSON, XML, and form-data payloads so they are actually readable at a glance.</li>
+            <li><strong>Deep Header Inspection:</strong> See every single HTTP header sent by the client, including hidden meta-headers and user-agent strings that most tools strip out.</li>
+            <li><strong>Universal Method Support:</strong> Our endpoint catches GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS requests without breaking a sweat or returning a 405 error.</li>
+            <li><strong>One-Click Copying:</strong> Grab specific parsed payloads, query strings, or individual headers with one click to paste directly into Postman or your code editor.</li>
+          </ul>
+
+          <h2>Technical Details Under the Hood</h2>
+          <p>For the curious developers out there, here is exactly how this tool processes your incoming data. When an external service pings your unique URL, our edge server instantly intercepts the request. It strips out our own internal connection details and packages the raw incoming data into a clean, structured JSON format.</p>
+          <p>We handle CORS (Cross-Origin Resource Sharing) completely automatically. This means you can fire test requests directly from browser-based frontend applications without getting blocked by frustrating preflight errors. The tool easily supports chunked transfer encoding and gracefully handles request payloads up to 1MB in size. If an incoming request includes complex query strings, they get automatically parsed and listed individually for easy reading.</p>
+          <p>It's a highly lightweight, efficient setup designed purely for speed, accuracy, and developer convenience. You send the data; we show it to you instantly. No extra steps or confusing configurations.</p>
+
+          <h2>Frequently Asked Questions</h2>
+          <h3>What exactly is a webhook?</h3>
+          <p>A webhook is simply a way for one application to send automated messages or information to another application in real time. It's almost like an instant SMS notification for software. When a specific event happens in App A, it instantly sends an HTTP request (usually a POST method) to a specific URL in App B with data about that event.</p>
+
+          <h3>Why do I need a tool to test webhooks online?</h3>
+          <p>Because setting up a public-facing server just to see what an API is sending you is a huge, unnecessary pain. A webhook tester gives you an instant, ready-to-go public URL to catch those requests. This lets you see the exact formatting and data structure of the payload before you spend hours writing the backend code to process it.</p>
+
+          <h3>How long do my generated URLs stay active?</h3>
+          <p>Your unique endpoint remains active for a full 24 hours. After that time window, the session automatically expires and all associated request data is permanently deleted to keep our servers clean and your data secure.</p>
+
+          <h3>Can I use this as a RequestBin alternative?</h3>
+          <p>Yes, absolutely. If you're looking for a fast, free, and completely private way to inspect HTTP requests without logging in or creating an account, this tool serves as a perfect, modern RequestBin alternative.</p>
+
+          <h3>What happens if I send a massive data payload?</h3>
+          <p>To keep the service blazing fast and responsive for everyone using it, we cap individual request sizes at around 1MB. If you attempt to send something larger, the server will simply reject the request. For 99% of normal webhook testing and API debugging, you won't even come close to hitting this limit.</p>
+        </div>
       </div>
     </div>
   );

@@ -74,7 +74,6 @@ export default function ToolLayout({ children }) {
       )}
       {children}
       <RelatedTools currentToolId="website-image-downloader" category="web" />
-      {toolSeo && <SeoContentSection toolSeo={toolSeo} />}
     </>
   );
 }
