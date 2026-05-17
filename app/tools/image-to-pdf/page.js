@@ -130,7 +130,7 @@ export default function ImageToPdf() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-8 px-4">
             <div className="max-w-5xl mx-auto">
-        <Breadcrumbs items={[{ name: 'Image to PDF', href: '/tools/image-to-pdf' }]} />
+                <Breadcrumbs items={[{ name: 'Image to PDF', href: '/tools/image-to-pdf' }]} />
 
                 {/* Header */}
                 <div className="text-center mb-8">
@@ -157,8 +157,8 @@ export default function ImageToPdf() {
                                     {Object.entries(PAGE_SIZES).map(([key, { label }]) => (
                                         <button key={key} onClick={() => setPageSize(key)}
                                             className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all text-left ${pageSize === key
-                                                    ? 'border-sky-500 bg-sky-50 dark:bg-sky-900/10 text-sky-700 dark:text-sky-400'
-                                                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600'
+                                                ? 'border-sky-500 bg-sky-50 dark:bg-sky-900/10 text-sky-700 dark:text-sky-400'
+                                                : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600'
                                                 }`}>
                                             {label}
                                         </button>
@@ -173,8 +173,8 @@ export default function ImageToPdf() {
                                     {['portrait', 'landscape'].map(o => (
                                         <button key={o} onClick={() => setOrientation(o)}
                                             className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all capitalize ${orientation === o
-                                                    ? 'border-sky-500 bg-sky-50 dark:bg-sky-900/10 text-sky-700 dark:text-sky-400'
-                                                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
+                                                ? 'border-sky-500 bg-sky-50 dark:bg-sky-900/10 text-sky-700 dark:text-sky-400'
+                                                : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
                                                 }`}>
                                             {o === 'portrait' ? '◻ Portrait' : '▭ Landscape'}
                                         </button>
@@ -189,8 +189,8 @@ export default function ImageToPdf() {
                                     {FIT_MODES.map(({ val, label, desc }) => (
                                         <button key={val} onClick={() => setFitMode(val)}
                                             className={`flex items-center justify-between py-2 px-3 rounded-xl text-left border transition-all ${fitMode === val
-                                                    ? 'border-sky-500 bg-sky-50 dark:bg-sky-900/10'
-                                                    : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
+                                                ? 'border-sky-500 bg-sky-50 dark:bg-sky-900/10'
+                                                : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                                                 }`}>
                                             <span className={`text-xs font-bold ${fitMode === val ? 'text-sky-700 dark:text-sky-400' : 'text-slate-700 dark:text-slate-300'}`}>{label}</span>
                                             <span className="text-[10px] text-slate-400 ml-2">{desc}</span>
@@ -249,7 +249,7 @@ export default function ImageToPdf() {
                                 onDrop={e => { e.preventDefault(); setDragOver(false); addImages(e.dataTransfer.files); }}
                                 onClick={() => fileRef.current?.click()}
                                 className={`p-10 text-center cursor-pointer transition-all border-2 border-dashed m-4 rounded-2xl ${dragOver ? 'border-sky-500 bg-sky-50 dark:bg-sky-900/10'
-                                        : 'border-slate-300 dark:border-slate-600 hover:border-sky-400 hover:bg-slate-50 dark:hover:bg-slate-700/30'
+                                    : 'border-slate-300 dark:border-slate-600 hover:border-sky-400 hover:bg-slate-50 dark:hover:bg-slate-700/30'
                                     }`}>
                                 <input ref={fileRef} type="file" accept="image/*" multiple className="hidden" onChange={e => addImages(e.target.files)} />
                                 <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-2xl mb-3 shadow-md shadow-sky-500/20">
@@ -325,7 +325,7 @@ export default function ImageToPdf() {
                         <section>
                             <h2>About the Tool</h2>
                             <p>
-                                Sending ten separate photos in an email is messy. That is why we built this <strong>image to PDF converter</strong>. It takes your scattered photos, receipts, or screenshots and binds them into a single, clean document that is easy to share and print. 
+                                Sending ten separate photos in an email is messy. That is why we built this <strong>image to PDF converter</strong>. It takes your scattered photos, receipts, or screenshots and binds them into a single, clean document that is easy to share and print.
                             </p>
                             <p>
                                 Unlike basic tools that lock you into one size, you get full control. You can pick standard document sizes like A4 or US Letter, adjust the white space around your pictures, and set exactly how the images fit on the page. Whether you need to convert JPG to PDF or combine PNGs, the result looks professional every time.
@@ -348,7 +348,7 @@ export default function ImageToPdf() {
                         <section className="mt-8">
                             <h2>Privacy & Security Anchor</h2>
                             <p>
-                                When you convert personal documents like tax forms or family photos, privacy is a big deal. 
+                                When you convert personal documents like tax forms or family photos, privacy is a big deal.
                             </p>
                             <p>
                                 Here is the truth: your files never leave your computer. This converter runs completely inside your web browser using local processing. We do not upload your images to our servers, we do not store your PDFs, and no one else can see your files. It is 100% private and secure.
@@ -372,7 +372,7 @@ export default function ImageToPdf() {
                         <section className="mt-8">
                             <h2>Technical Specs</h2>
                             <p>
-                                For the tech-curious, here is how we handle your files without a server. 
+                                For the tech-curious, here is how we handle your files without a server.
                             </p>
                             <p>
                                 The tool uses the powerful jsPDF library to generate documents client-side. When you drag an image in, we read it as a Data URL and process it directly in your browser's memory. Regardless of whether you upload a PNG or WebP, the engine converts it to an optimized JPEG internally to keep the final PDF size low. You control the compression ratio through the quality slider.
@@ -381,7 +381,7 @@ export default function ImageToPdf() {
 
                         <section className="mt-8">
                             <h2>Frequently Asked Questions</h2>
-                            
+
                             <h3>Is there a limit on how many images I can convert?</h3>
                             <p>
                                 There is no hard block. Each image becomes one page. Most modern browsers can handle batches of 20 to 50 photos easily. If you load hundreds of huge files, your browser might slow down.
@@ -404,6 +404,7 @@ export default function ImageToPdf() {
                         </section>
                     </div>
                 </div>
+            </div>
         </div>
     );
 }
