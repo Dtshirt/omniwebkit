@@ -361,6 +361,176 @@ export default function PstToEstConverter() {
           <p>
             The tool automatically updates the calendar date. If you convert a late-night PST time (like 11:00 PM) into EST, the result will correctly show 2:00 AM on the next calendar day. You don't have to worry about accidentally scheduling a meeting on the wrong day.
           </p>
+
+          <h2>Common PST to EST Time Conversions — Quick Reference</h2>
+          <p>
+            PST is always 3 hours behind EST. Add 3 hours to any Pacific time to get the Eastern equivalent. Here's every commonly searched conversion in one place.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Pacific Time (PST / PT)</th>
+                <th>Eastern Time (EST / ET)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>6:00 AM PST</td><td>9:00 AM EST</td></tr>
+              <tr><td>7:00 AM PST</td><td>10:00 AM EST</td></tr>
+              <tr><td>8:00 AM PST</td><td>11:00 AM EST</td></tr>
+              <tr><td>9:00 AM PST</td><td>12:00 PM EST (Noon)</td></tr>
+              <tr><td>10:00 AM PST</td><td>1:00 PM EST</td></tr>
+              <tr><td>10:30 AM PST</td><td>1:30 PM EST</td></tr>
+              <tr><td>11:00 AM PST</td><td>2:00 PM EST</td></tr>
+              <tr><td>11:30 AM PST</td><td>2:30 PM EST</td></tr>
+              <tr><td>11:59 AM PST</td><td>2:59 PM EST</td></tr>
+              <tr><td>12:00 PM PST</td><td>3:00 PM EST</td></tr>
+              <tr><td>1:30 PM PST</td><td>4:30 PM EST</td></tr>
+              <tr><td>2:30 PM PST</td><td>5:30 PM EST</td></tr>
+              <tr><td>4:00 PM PST</td><td>7:00 PM EST</td></tr>
+              <tr><td>5:00 PM PST</td><td>8:00 PM EST</td></tr>
+              <tr><td>6:30 PM PST</td><td>9:30 PM EST</td></tr>
+              <tr><td>7:00 PM PST</td><td>10:00 PM EST</td></tr>
+              <tr><td>9:00 PM PST</td><td>12:00 AM EST (Next Day)</td></tr>
+              <tr><td>9:30 PM PST</td><td>12:30 AM EST (Next Day)</td></tr>
+            </tbody>
+          </table>
+
+          <h3>6 AM Pacific Time to Eastern Time</h3>
+          <p>
+            <strong>6:00 AM PST = 9:00 AM EST.</strong> If your West Coast team starts a standup at 6 AM, the New York office is already well into their morning at 9 AM Eastern. Early for you, mid-morning for them.
+          </p>
+
+          <h3>7 AM PT to ET</h3>
+          <p>
+            <strong>7:00 AM PT = 10:00 AM ET.</strong> A 7 AM Pacific call lands right at the mid-morning slot for East Coast participants — a solid window for cross-country syncs before anyone breaks for lunch.
+          </p>
+
+          <h3>8 AM PST Is What Time EST?</h3>
+          <p>
+            <strong>8:00 AM PST = 11:00 AM EST.</strong> East Coast colleagues will see this as a late-morning message. Good timing if you want to reach someone before their New York lunch break.
+          </p>
+
+          <h3>9 AM PST to EST</h3>
+          <p>
+            <strong>9:00 AM PST = 12:00 PM EST (noon).</strong> This one trips people up. Your 9 AM West Coast standup is someone else's lunch hour in New York. Schedule accordingly — or expect a few late joiners.
+          </p>
+
+          <h3>10 AM Pacific Time to Eastern Time</h3>
+          <p>
+            <strong>10:00 AM PST = 1:00 PM EST.</strong> One of the most searched conversions on this page. A 10 AM Pacific meeting lands right after the East Coast lunch break — usually a good slot for both sides.
+          </p>
+
+          <h3>10:30 AM PST to EST</h3>
+          <p>
+            <strong>10:30 AM PST = 1:30 PM EST.</strong> Mid-afternoon for the East Coast. Works well for check-ins where New York folks are past lunch and still sharp.
+          </p>
+
+          <h3>11 AM PST Is What Time EST?</h3>
+          <p>
+            <strong>11:00 AM PST = 2:00 PM EST.</strong> A popular meeting slot. West Coast is hitting its pre-lunch stride while the East Coast is in the post-lunch afternoon zone — both sides tend to be free and focused.
+          </p>
+
+          <h3>11:30 AM PST to EST</h3>
+          <p>
+            <strong>11:30 AM PST = 2:30 PM EST.</strong> Late morning on the West Coast, mid-afternoon on the East. If you're scheduling a 30-minute call, this slot rarely conflicts with anyone's lunch.
+          </p>
+
+          <h3>11:59 AM PST to EST</h3>
+          <p>
+            <strong>11:59 AM PST = 2:59 PM EST.</strong> Just one minute before noon Pacific — but it's nearly 3 PM for your Eastern counterparts. Worth knowing if you're racing against an East Coast deadline.
+          </p>
+
+          <h3>12 PM Pacific to EST</h3>
+          <p>
+            <strong>12:00 PM PST (noon) = 3:00 PM EST.</strong> Noon on the West Coast is mid-afternoon on the East. If an East Coast office closes at 5 PM EST, you still have two hours to reach them after your own lunch.
+          </p>
+
+          <h3>1:30 PM PST to EST</h3>
+          <p>
+            <strong>1:30 PM PST = 4:30 PM EST.</strong> Getting close to the end of the East Coast business day. If you need a quick reply from an Eastern office, send before this window.
+          </p>
+
+          <h3>2:30 PM PST to EST</h3>
+          <p>
+            <strong>2:30 PM PST = 5:30 PM EST.</strong> East Coast is officially after hours by this point. Most 9-to-5 offices in New York or Boston have already closed — plan for an async reply.
+          </p>
+
+          <h3>4:00 PM PST to EST</h3>
+          <p>
+            <strong>4:00 PM PST = 7:00 PM EST.</strong> Evening on the East Coast. Fine for personal calls, but don't expect business contacts to still be at their desks.
+          </p>
+
+          <h3>5 PM PST to EST</h3>
+          <p>
+            <strong>5:00 PM PST = 8:00 PM EST.</strong> End of the West Coast workday. East Coast is solidly in evening hours. Great for a casual personal call — not ideal for last-minute business asks.
+          </p>
+
+          <h3>6:30 PM PST to EST</h3>
+          <p>
+            <strong>6:30 PM PST = 9:30 PM EST.</strong> Late evening on the East Coast. Most people are winding down. Stick to a text or async message rather than a call at this hour.
+          </p>
+
+          <h3>7 PM Pacific to Eastern</h3>
+          <p>
+            <strong>7:00 PM PST = 10:00 PM EST.</strong> Late night on the East Coast. Unless you know someone keeps late hours, this is too late for a phone call across the country.
+          </p>
+
+          <h3>9 PM PST to EST</h3>
+          <p>
+            <strong>9:00 PM PST = 12:00 AM EST (midnight).</strong> The calendar date has flipped in the East. Our converter automatically rolls the date forward so you always know which day the timestamp belongs to.
+          </p>
+
+          <h3>9:30 PM PST to EST</h3>
+          <p>
+            <strong>9:30 PM PST = 12:30 AM EST (next day).</strong> Well past midnight on the East Coast. The tool correctly shows the next calendar day in the result — no manual date math needed.
+          </p>
+
+          <h2>EST to Pacific Time — Common Conversions</h2>
+          <p>
+            Need to go the other direction? Subtract 3 hours from any Eastern time to get Pacific. Here are the most searched East-to-West conversions.
+          </p>
+
+          <h3>11 AM EST to PST</h3>
+          <p>
+            <strong>11:00 AM EST = 8:00 AM PST.</strong> East Coast late-morning becomes early morning on the West Coast. If New York schedules an 11 AM call, your Pacific team joins at 8 AM sharp.
+          </p>
+
+          <h3>11 AM Pacific Time to Eastern Time</h3>
+          <p>
+            <strong>11:00 AM PST = 2:00 PM EST.</strong> West Coast late-morning maps to early afternoon Eastern — one of the cleaner cross-country meeting slots available.
+          </p>
+
+          <h3>1:30 PM EST to PST</h3>
+          <p>
+            <strong>1:30 PM EST = 10:30 AM PST.</strong> East Coast post-lunch becomes mid-morning on the West Coast. A great slot — both sides are fully awake and no one is distracted by food yet.
+          </p>
+
+          <h3>4 PM Eastern Time to Pacific Time</h3>
+          <p>
+            <strong>4:00 PM EST = 1:00 PM PST.</strong> End-of-day East Coast is early afternoon Pacific. West Coast teams can take this call comfortably right after lunch — no one's rushing to wrap up.
+          </p>
+
+          <h2>More Frequently Asked Questions</h2>
+
+          <h3>10 AM PST Is What Time EST?</h3>
+          <p>
+            10:00 AM PST is <strong>1:00 PM EST</strong>. Just add 3 hours to convert any Pacific time to Eastern.
+          </p>
+
+          <h3>12 PM PST Is What Time EST?</h3>
+          <p>
+            Noon Pacific is <strong>3:00 PM Eastern</strong>. Easy to remember — noon plus three hours.
+          </p>
+
+          <h3>What Is the Difference Between PT and ET?</h3>
+          <p>
+            PT (Pacific Time) and ET (Eastern Time) are casual abbreviations that cover both standard and daylight saving versions. The gap is always exactly 3 hours — ET is always ahead of PT, every day of the year.
+          </p>
+
+          <h3>7 PM PT to EST — How Late Is That?</h3>
+          <p>
+            <strong>7:00 PM PT = 10:00 PM EST.</strong> Late evening on the East Coast. Fine for personal calls to night-owl friends, but well outside business hours.
+          </p>
         </div>
 
         {/* Schema */}
@@ -385,6 +555,134 @@ export default function PstToEstConverter() {
                 "url": "https://github.com/Dtshirt/omniwebkit"
               },
               "description": "Instantly convert Pacific Standard Time (PST) to Eastern Standard Time (EST) with this free, private, browser-based timezone calculator."
+            })
+          }}
+        />
+
+        {/* FAQPage Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "10 AM PST is what time EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "10:00 AM PST is 1:00 PM EST. Pacific Standard Time is 3 hours behind Eastern Standard Time, so add 3 hours to any PST time to get the EST equivalent." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "10:30 AM PST to EST — what time is it?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "10:30 AM PST equals 1:30 PM EST. PST is always 3 hours behind EST." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "11 AM PST is what time EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "11:00 AM PST is 2:00 PM EST. Add 3 hours to convert Pacific Standard Time to Eastern Standard Time." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "11:30 AM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "11:30 AM PST equals 2:30 PM EST." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "11:59 AM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "11:59 AM PST is 2:59 PM EST. Just one minute before noon Pacific, but nearly 3 PM Eastern." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "12 PM PST is what time EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "12:00 PM (noon) PST is 3:00 PM EST. Noon Pacific equals mid-afternoon Eastern." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "8 AM PST is what time EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "8:00 AM PST is 11:00 AM EST. Your early West Coast morning is late morning on the East Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "9 AM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "9:00 AM PST is 12:00 PM (noon) EST. Your 9 AM West Coast time is the lunch hour on the East Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "1:30 PM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "1:30 PM PST equals 4:30 PM EST — close to the end of the East Coast business day." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "2:30 PM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "2:30 PM PST is 5:30 PM EST. The East Coast is after business hours at this point." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "4 PM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "4:00 PM PST is 7:00 PM EST — evening on the East Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "5 PM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "5:00 PM PST is 8:00 PM EST. End of the West Coast workday, solidly evening on the East Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "6:30 PM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "6:30 PM PST is 9:30 PM EST — late evening on the East Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "6 AM Pacific Time to Eastern Time?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "6:00 AM PST is 9:00 AM EST. The East Coast is already well into their morning." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "7 AM PT to ET?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "7:00 AM PT is 10:00 AM ET — mid-morning on the East Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "7 PM Pacific to Eastern?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "7:00 PM PST is 10:00 PM EST — late night on the East Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "9 PM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "9:00 PM PST is 12:00 AM (midnight) EST. The calendar date changes in Eastern Time — our tool automatically rolls the date forward." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "9:30 PM PST to EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "9:30 PM PST is 12:30 AM EST on the next day. The converter correctly shows the new date so you never get confused." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "11 AM EST to PST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "11:00 AM EST is 8:00 AM PST. Subtract 3 hours to convert from Eastern to Pacific time." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "1:30 PM EST to PST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "1:30 PM EST is 10:30 AM PST — mid-morning on the West Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "4 PM Eastern Time to Pacific Time?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "4:00 PM EST is 1:00 PM PST — early afternoon on the West Coast." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How many hours is PST behind EST?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "PST is exactly 3 hours behind EST. This difference stays the same year-round because both coasts observe Daylight Saving Time on the same dates." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What is the difference between PT and ET?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "PT (Pacific Time) and ET (Eastern Time) are informal abbreviations that include both standard and daylight saving time. The gap between them is always 3 hours — ET is always 3 hours ahead of PT." }
+                }
+              ]
             })
           }}
         />
